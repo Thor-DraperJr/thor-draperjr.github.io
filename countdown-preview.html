@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Thor Draper Jr - Countdown Preview</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    /* Design Tokens */
+    :root {
+      --color-primary: #0066cc;
+      --color-secondary: #2c3e50;
+      --color-accent: #28a745;
+      --color-text-primary: #212529;
+      --color-text-secondary: #495057;
+      --color-text-muted: #6c757d;
+      --color-bg-primary: #ffffff;
+      --color-bg-secondary: #f8f9fa;
+      --color-bg-tertiary: #f1f3f4;
+      --color-border: #e9ecef;
+      --font-family-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+      --content-padding: 1.5rem;
+      --section-spacing: 4rem;
+    }
+
+    /* Reset */
+    *, *::before, *::after { box-sizing: border-box; }
+    * { margin: 0; padding: 0; }
+    
+    body {
+      font-family: var(--font-family-sans);
+      font-size: 1rem;
+      line-height: 1.5;
+      color: var(--color-text-primary);
+      background-color: var(--color-bg-primary);
+    }
+
+    /* Enhanced Navigation */
+    .site-navigation {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--color-border);
+      transition: all 0.3s ease;
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 var(--content-padding);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 70px;
+    }
+
+    .nav-brand {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-name {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--color-primary);
+      text-decoration: none;
+    }
+
+    .brand-subtitle {
+      font-size: 0.75rem;
+      color: var(--color-text-secondary);
+      margin-top: -2px;
+    }
+
+    .nav-desktop {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .nav-link {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 0;
+      color: var(--color-text-secondary);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s ease;
+    }
+
+    .nav-link:hover, .nav-link.active {
+      color: var(--color-primary);
+    }
+
+    .nav-link.active::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--color-primary);
+      border-radius: 1px;
+    }
+
+    .nav-counter {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 20px;
+      height: 20px;
+      padding: 0 6px;
+      background: var(--color-bg-secondary);
+      color: var(--color-text-muted);
+      font-size: 0.75rem;
+      font-weight: 600;
+      border-radius: 10px;
+      transition: all 0.2s ease;
+    }
+
+    .nav-link:hover .nav-counter {
+      background: var(--color-primary);
+      color: white;
+    }
+
+    .search-container {
+      position: relative;
+    }
+
+    .search-input {
+      width: 200px;
+      padding: 0.5rem 2.5rem 0.5rem 1rem;
+      border: 1px solid var(--color-border);
+      border-radius: 20px;
+      background: var(--color-bg-primary);
+      font-size: 0.9rem;
+      transition: all 0.2s ease;
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+      width: 250px;
+    }
+
+    .search-button {
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 28px;
+      height: 28px;
+      border: none;
+      background: none;
+      color: var(--color-text-muted);
+      cursor: pointer;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .search-icon {
+      width: 16px;
+      height: 16px;
+      stroke-width: 2;
+    }
+
+    /* Hero Section */
+    .hero-section {
+      background: linear-gradient(135deg, var(--color-bg-primary) 0%, var(--color-bg-secondary) 100%);
+      padding: 4rem 0;
+      text-align: center;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .hero-content {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 0 var(--content-padding);
+    }
+
+    .hero-title {
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      line-height: 1.1;
+    }
+
+    .hero-subtitle {
+      font-size: 1.25rem;
+      color: var(--color-text-secondary);
+      margin-bottom: 3rem;
+    }
+
+    /* Countdown Container */
+    .countdown-container {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(248, 249, 250, 0.9) 100%);
+      border: 1px solid var(--color-border);
+      border-radius: 16px;
+      padding: 2rem;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    }
+
+    .countdown-header {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .countdown-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--color-text-primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .countdown-motivation {
+      color: var(--color-text-secondary);
+      font-size: 1rem;
+      margin: 0;
+    }
+
+    .countdown-display {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .countdown-unit {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 1rem;
+      background: var(--color-bg-primary);
+      border: 1px solid var(--color-border);
+      border-radius: 12px;
+      min-width: 80px;
+      transition: all 0.3s ease;
+    }
+
+    .countdown-unit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .countdown-number {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--color-primary);
+      line-height: 1;
+      margin-bottom: 0.25rem;
+      animation: pulse 2s infinite ease-in-out;
+    }
+
+    .countdown-label {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--color-text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .countdown-message {
+      text-align: center;
+      padding: 1rem;
+      background: linear-gradient(135deg, #fd7e14 0%, #dc3545 100%);
+      border-radius: 8px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .countdown-message::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      animation: shimmer 3s infinite;
+    }
+
+    .message-text {
+      color: white;
+      font-weight: 600;
+      font-size: 1rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Posts Section */
+    .posts-section {
+      padding: var(--section-spacing) 0;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-left: var(--content-padding);
+      padding-right: var(--content-padding);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 3rem;
+    }
+
+    .section-title {
+      font-size: 2rem;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    .view-options {
+      display: flex;
+      background: var(--color-bg-secondary);
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .view-toggle {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1rem;
+      background: none;
+      border: none;
+      color: var(--color-text-secondary);
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .view-toggle svg {
+      width: 16px;
+      height: 16px;
+      stroke-width: 2;
+    }
+
+    .view-toggle:hover {
+      background: var(--color-bg-primary);
+      color: var(--color-text-primary);
+    }
+
+    .view-toggle.active {
+      background: var(--color-primary);
+      color: white;
+    }
+
+    .posts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .post-card {
+      position: relative;
+      background: var(--color-bg-primary);
+      border: 1px solid var(--color-border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      transition: all 0.3s ease;
+      overflow: hidden;
+    }
+
+    .post-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+      border-color: var(--color-primary);
+    }
+
+    .post-tags {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .post-tag {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      background: var(--color-bg-secondary);
+      color: var(--color-text-secondary);
+      font-size: 0.75rem;
+      font-weight: 500;
+      border-radius: 12px;
+      border: 1px solid var(--color-border);
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .post-tag:hover {
+      background: var(--color-primary);
+      color: white;
+      border-color: var(--color-primary);
+      transform: translateY(-1px);
+    }
+
+    .post-tag:nth-child(odd) {
+      background: rgba(0, 102, 204, 0.1);
+      color: var(--color-primary);
+      border-color: rgba(0, 102, 204, 0.2);
+    }
+
+    .post-tag:nth-child(even) {
+      background: rgba(40, 167, 69, 0.1);
+      color: var(--color-accent);
+      border-color: rgba(40, 167, 69, 0.2);
+    }
+
+    .post-tag:nth-child(3n) {
+      background: rgba(44, 62, 80, 0.1);
+      color: var(--color-secondary);
+      border-color: rgba(44, 62, 80, 0.2);
+    }
+
+    .post-title a {
+      color: var(--color-text-primary);
+      text-decoration: none;
+      font-size: 1.25rem;
+      font-weight: 600;
+      line-height: 1.3;
+      transition: color 0.2s ease;
+    }
+
+    .post-title a:hover {
+      color: var(--color-primary);
+    }
+
+    .post-excerpt {
+      color: var(--color-text-secondary);
+      line-height: 1.6;
+      margin: 0.75rem 0 1rem;
+      font-size: 0.95rem;
+    }
+
+    .post-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      color: var(--color-text-muted);
+    }
+
+    /* Animations */
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes shimmer {
+      0% { left: -100%; }
+      100% { left: 100%; }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .post-card {
+      animation: fadeInUp 0.6s ease forwards;
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+      .nav-desktop { display: none; }
+      .hero-title { font-size: 2.25rem; }
+      .posts-grid { grid-template-columns: 1fr; }
+      .section-header { flex-direction: column; gap: 1rem; align-items: flex-start; }
+      .countdown-display { gap: 1rem; }
+      .countdown-unit { min-width: 70px; padding: 0.75rem; }
+      .countdown-number { font-size: 1.75rem; }
+    }
+
+    @media (max-width: 480px) {
+      .countdown-display { gap: 0.75rem; }
+      .countdown-unit { min-width: 60px; padding: 0.5rem; }
+      .countdown-number { font-size: 1.5rem; }
+      .countdown-label { font-size: 0.75rem; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Enhanced Navigation -->
+  <nav class="site-navigation">
+    <div class="nav-container">
+      <div class="nav-brand">
+        <a href="#" class="brand-name">Thor Draper Jr</a>
+        <span class="brand-subtitle">Security Solution Engineer</span>
+      </div>
+      
+      <div class="nav-desktop">
+        <div class="nav-links">
+          <a href="#" class="nav-link active">Home</a>
+          <a href="#" class="nav-link">
+            All Posts <span class="nav-counter">25</span>
+          </a>
+          <a href="#" class="nav-link">About</a>
+        </div>
+        
+        <div class="search-container">
+          <input type="text" class="search-input" placeholder="Search posts...">
+          <button class="search-button">
+            <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <circle cx="11" cy="11" r="8"></circle>
+              <path d="m21 21-4.35-4.35"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section with Countdown -->
+  <section class="hero-section">
+    <div class="hero-content">
+      <h1 class="hero-title">Welcome to Thor Draper Jr</h1>
+      <p class="hero-subtitle">Senior Security Solution Engineer at Microsoft. Technical tutorials, career advice, and cybersecurity insights.</p>
+      
+      <!-- Last Post Countdown -->
+      <div class="countdown-container">
+        <div class="countdown-header">
+          <h3 class="countdown-title">Time Since Last Post</h3>
+          <p class="countdown-motivation">Ready for the next one? 🚀</p>
+        </div>
+        
+        <div class="countdown-display">
+          <div class="countdown-unit">
+            <span class="countdown-number" id="days">48</span>
+            <span class="countdown-label">Days</span>
+          </div>
+          <div class="countdown-unit">
+            <span class="countdown-number" id="hours">13</span>
+            <span class="countdown-label">Hours</span>
+          </div>
+          <div class="countdown-unit">
+            <span class="countdown-number" id="minutes">27</span>
+            <span class="countdown-label">Minutes</span>
+          </div>
+          <div class="countdown-unit">
+            <span class="countdown-number" id="seconds">42</span>
+            <span class="countdown-label">Seconds</span>
+          </div>
+        </div>
+        
+        <div class="countdown-message">
+          <span class="message-text">🚨 Time to break the silence!</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Posts Section -->
+  <section class="posts-section">
+    <div class="section-header">
+      <h2 class="section-title">Latest Posts</h2>
+      <div class="section-actions">
+        <div class="view-options">
+          <button class="view-toggle active" data-view="grid">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <rect x="3" y="3" width="7" height="7"></rect>
+              <rect x="14" y="3" width="7" height="7"></rect>
+              <rect x="14" y="14" width="7" height="7"></rect>
+              <rect x="3" y="14" width="7" height="7"></rect>
+            </svg>
+            Grid
+          </button>
+          <button class="view-toggle" data-view="list">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <line x1="8" y1="6" x2="21" y2="6"></line>
+              <line x1="8" y1="12" x2="21" y2="12"></line>
+              <line x1="8" y1="18" x2="21" y2="18"></line>
+              <line x1="3" y1="6" x2="3.01" y2="6"></line>
+              <line x1="3" y1="12" x2="3.01" y2="12"></line>
+              <line x1="3" y1="18" x2="3.01" y2="18"></line>
+            </svg>
+            List
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <div class="posts-grid">
+      <!-- Flexible Posts with Tags -->
+      <article class="post-card" data-tags="github,copilot,devops,ai">
+        <div class="post-tags">
+          <span class="post-tag">github</span>
+          <span class="post-tag">copilot</span>
+          <span class="post-tag">devops</span>
+        </div>
+        
+        <div class="post-content">
+          <h3 class="post-title">
+            <a href="#">Getting Started with GitHub Copilot for DevOps</a>
+          </h3>
+          
+          <p class="post-excerpt">
+            Learn how to leverage GitHub Copilot to supercharge your DevOps workflow with AI-powered coding assistance and automation...
+          </p>
+          
+          <div class="post-meta">
+            <time class="post-date">June 4, 2025</time>
+            <span class="reading-time">📖 5 min read</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Career Post -->
+      <article class="post-card" data-tags="cybersecurity,career,advice,certification">
+        <div class="post-tags">
+          <span class="post-tag">cybersecurity</span>
+          <span class="post-tag">career</span>
+          <span class="post-tag">advice</span>
+        </div>
+        
+        <div class="post-content">
+          <h3 class="post-title">
+            <a href="#">Choosing the Right Cybersecurity Career Path</a>
+          </h3>
+          
+          <p class="post-excerpt">
+            Are you interested in pursuing a career in cybersecurity, but not sure which path to take? Here's my comprehensive guide...
+          </p>
+          
+          <div class="post-meta">
+            <time class="post-date">August 10, 2024</time>
+            <span class="reading-time">📖 7 min read</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Leadership Post -->
+      <article class="post-card" data-tags="leadership,contribution,mindset,growth">
+        <div class="post-tags">
+          <span class="post-tag">leadership</span>
+          <span class="post-tag">contribution</span>
+          <span class="post-tag">mindset</span>
+        </div>
+        
+        <div class="post-content">
+          <h3 class="post-title">
+            <a href="#">Don't Wait. Contribute Now.</a>
+          </h3>
+          
+          <p class="post-excerpt">
+            There are two types of people—those who find problems and those who bring solutions. Here's how to be the latter...
+          </p>
+          
+          <div class="post-meta">
+            <time class="post-date">June 3, 2021</time>
+            <span class="reading-time">📖 4 min read</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Technical Post -->
+      <article class="post-card" data-tags="infrastructure,azure,terraform,iac">
+        <div class="post-tags">
+          <span class="post-tag">infrastructure</span>
+          <span class="post-tag">azure</span>
+          <span class="post-tag">terraform</span>
+        </div>
+        
+        <div class="post-content">
+          <h3 class="post-title">
+            <a href="#">Infrastructure as Code Best Practices</a>
+          </h3>
+          
+          <p class="post-excerpt">
+            A comprehensive guide to implementing Infrastructure as Code with Azure Resource Manager, Terraform, and Bicep...
+          </p>
+          
+          <div class="post-meta">
+            <time class="post-date">September 1, 2021</time>
+            <span class="reading-time">📖 8 min read</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Personal Development -->
+      <article class="post-card" data-tags="habits,productivity,personal-development,success">
+        <div class="post-tags">
+          <span class="post-tag">habits</span>
+          <span class="post-tag">productivity</span>
+          <span class="post-tag">success</span>
+        </div>
+        
+        <div class="post-content">
+          <h3 class="post-title">
+            <a href="#">Building Habits That Stick</a>
+          </h3>
+          
+          <p class="post-excerpt">
+            The science behind habit formation and how to build systems that create lasting change in your personal and professional life...
+          </p>
+          
+          <div class="post-meta">
+            <time class="post-date">January 29, 2023</time>
+            <span class="reading-time">📖 6 min read</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Mixed Topic -->
+      <article class="post-card" data-tags="feedback,learning,continuous-improvement,growth">
+        <div class="post-tags">
+          <span class="post-tag">feedback</span>
+          <span class="post-tag">learning</span>
+          <span class="post-tag">growth</span>
+        </div>
+        
+        <div class="post-content">
+          <h3 class="post-title">
+            <a href="#">Building Effective Feedback Loops</a>
+          </h3>
+          
+          <p class="post-excerpt">
+            How to create systems that help you learn faster and improve continuously in your career and business...
+          </p>
+          
+          <div class="post-meta">
+            <time class="post-date">July 29, 2021</time>
+            <span class="reading-time">📖 5 min read</span>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <script>
+    // Live countdown functionality
+    function updateCountdown() {
+      const days = document.getElementById('days');
+      const hours = document.getElementById('hours');
+      const minutes = document.getElementById('minutes');
+      const seconds = document.getElementById('seconds');
+      
+      // Simulate live countdown
+      let currentSeconds = parseInt(seconds.textContent);
+      currentSeconds--;
+      
+      if (currentSeconds < 0) {
+        currentSeconds = 59;
+        let currentMinutes = parseInt(minutes.textContent);
+        currentMinutes--;
+        
+        if (currentMinutes < 0) {
+          currentMinutes = 59;
+          let currentHours = parseInt(hours.textContent);
+          currentHours--;
+          
+          if (currentHours < 0) {
+            currentHours = 23;
+            let currentDays = parseInt(days.textContent);
+            currentDays++;
+            days.textContent = currentDays;
+          }
+          hours.textContent = currentHours;
+        }
+        minutes.textContent = currentMinutes;
+      }
+      seconds.textContent = currentSeconds;
+    }
+    
+    // Update every second
+    setInterval(updateCountdown, 1000);
+    
+    // Tag filtering
+    document.querySelectorAll('.post-tag').forEach(tag => {
+      tag.addEventListener('click', function() {
+        this.style.background = 'var(--color-primary)';
+        this.style.color = 'white';
+        this.style.transform = 'translateY(-1px)';
+        this.style.boxShadow = '0 2px 8px rgba(0, 102, 204, 0.3)';
+      });
+    });
+  </script>
+</body>
+</html>

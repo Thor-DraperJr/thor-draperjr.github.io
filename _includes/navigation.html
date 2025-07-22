@@ -1,0 +1,129 @@
+<!-- Enhanced Navigation Component -->
+<nav class="site-navigation" role="navigation">
+  <div class="nav-container">
+    <!-- Brand -->
+    <div class="nav-brand">
+      <a href="{{ '/' | relative_url }}" class="brand-link">
+        <span class="brand-name">{{ site.title }}</span>
+        <span class="brand-subtitle">{{ site.tagline }}</span>
+      </a>
+    </div>
+
+    <!-- Desktop Navigation -->
+    <div class="nav-desktop">
+      <div class="nav-links">
+        <a href="{{ '/' | relative_url }}" class="nav-link {% if page.url == '/' %}active{% endif %}">
+          Home
+        </a>
+        
+        <!-- Simple Navigation -->
+        <a href="{{ '/archive/' | relative_url }}" class="nav-link {% if page.url contains 'archive' %}active{% endif %}">
+          All Posts <span class="nav-counter">{{ site.posts.size }}</span>
+        </a>
+        <a href="{{ '/about/' | relative_url }}" class="nav-link {% if page.url contains 'about' %}active{% endif %}">
+          About
+        </a>
+      </div>
+
+      <!-- Search Component -->
+      <div class="nav-search">
+        <div class="search-container">
+          <input type="text" 
+                 id="search-input" 
+                 class="search-input" 
+                 placeholder="Search posts..."
+                 autocomplete="off">
+          <button class="search-button" type="button" aria-label="Search">
+            <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <circle cx="11" cy="11" r="8"></circle>
+              <path d="m21 21-4.35-4.35"></path>
+            </svg>
+          </button>
+          
+          <!-- Search Results Dropdown -->
+          <div class="search-results" id="search-results" hidden>
+            <div class="search-results-content">
+              <!-- Results populated by JavaScript -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Menu Toggle -->
+    <button class="mobile-menu-toggle" aria-label="Toggle mobile menu" aria-expanded="false">
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+    </button>
+  </div>
+
+  <!-- Mobile Navigation Overlay -->
+  <div class="mobile-nav-overlay" hidden>
+    <div class="mobile-nav-content">
+      <div class="mobile-nav-header">
+        <span class="mobile-brand">{{ site.title }}</span>
+        <button class="mobile-nav-close" aria-label="Close mobile menu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      
+      <div class="mobile-nav-links">
+        <a href="{{ '/' | relative_url }}" class="mobile-nav-link">Home</a>
+        <a href="{{ '/archive/' | relative_url }}" class="mobile-nav-link">
+          All Posts <span class="mobile-nav-counter">{{ site.posts.size }}</span>
+        </a>
+        <a href="{{ '/about/' | relative_url }}" class="mobile-nav-link">About</a>
+      </div>
+      
+      <!-- Mobile Search -->
+      <div class="mobile-search">
+        <input type="text" 
+               class="mobile-search-input" 
+               placeholder="Search posts..."
+               autocomplete="off">
+      </div>
+      
+      <!-- Mobile Social Links -->
+      <div class="mobile-social">
+        <a href="{{ site.social.linkedin }}" class="mobile-social-link" target="_blank" rel="noopener">
+          LinkedIn
+        </a>
+        <a href="{{ site.social.github }}" class="mobile-social-link" target="_blank" rel="noopener">
+          GitHub
+        </a>
+        <a href="{{ site.social.twitter }}" class="mobile-social-link" target="_blank" rel="noopener">
+          Twitter
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- Category Filter Component -->
+<div class="category-filter" id="category-filter" hidden>
+  <div class="filter-container">
+    <div class="filter-header">
+      <h3 class="filter-title">Filter by Category</h3>
+      <button class="filter-close" aria-label="Close filter">×</button>
+    </div>
+    
+    <div class="filter-options">
+      <button class="filter-option active" data-filter="all">
+        All Posts <span class="filter-count">{{ site.posts.size }}</span>
+      </button>
+      <button class="filter-option" data-filter="tech">
+        Tech <span class="filter-count">{{ tech_posts.size }}</span>
+      </button>
+      <button class="filter-option" data-filter="career">
+        Career <span class="filter-count">{{ career_posts.size }}</span>
+      </button>
+      <button class="filter-option" data-filter="business">
+        Business <span class="filter-count">{{ business_posts.size }}</span>
+      </button>
+    </div>
+  </div>
+</div>

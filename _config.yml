@@ -1,0 +1,99 @@
+title: "Thor Draper Jr"
+tagline: "Professional Breaker of Things (Then Fixer of Things)"
+author: "Thor Draper Jr"
+description: "Where cybersecurity and cloud solutions meet questionable life choices. Join me for technical tutorials, career advice, and some other nonsense too."
+permalink: /:categories/:title/
+lang: "en"
+date_format: "%B %d, %Y"
+timezone: America/New_York
+
+# Site Settings
+url: "https://thor-draperjr.github.io"
+baseurl: ""
+repository: "Thor-DraperJr/thor-draperjr.github.io"
+
+# Layout
+show_excerpts: true
+show_reading_time: true
+show_related_posts: true
+posts_per_page: 12
+
+# Navigation
+navigation:
+  - {title: "Home", url: "/"}
+  - {title: "Tech", url: "/tech/"}
+  - {title: "Career", url: "/career/"}
+  - {title: "Business", url: "/business/"}
+  - {title: "About", url: "/about/"}
+
+# Social Links
+social:
+  linkedin: "https://www.linkedin.com/in/thor-draperjr/"
+  github: "https://github.com/Thor-DraperJr"
+  twitter: "https://twitter.com/Thor_DraperJr"
+  email: "thor.draper@gmail.com"
+
+# Content Categories
+categories:
+  tech:
+    name: "Tech"
+    description: "Technical tutorials, Azure, AWS, DevOps, and cybersecurity guides"
+    color: "#0066cc"
+  career:
+    name: "Career"
+    description: "Professional development and career advice for IT professionals"
+    color: "#28a745"
+  business:
+    name: "Business"
+    description: "Business insights, entrepreneurship, and leadership"
+    color: "#6f42c1"
+
+# Build Settings
+markdown: kramdown
+highlighter: rouge
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    block:
+      line_numbers: true
+
+# Plugins
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
+  - jekyll-paginate
+
+# Pagination
+paginate: 12
+paginate_path: "/page:num/"
+
+# SEO
+author:
+  name: "Thor Draper Jr"
+  bio: "Professional overthinker and security enthusiast. Helping IT professionals navigate careers without falling into the void of endless certifications and buzzword bingo."
+  location: "United States"
+  links:
+    - label: "LinkedIn"
+      icon: "fab fa-linkedin"
+      url: "https://www.linkedin.com/in/thor-draperjr/"
+    - label: "GitHub"
+      icon: "fab fa-github"
+      url: "https://github.com/Thor-DraperJr"
+
+# Analytics (add your tracking ID when ready)
+# google_analytics: "G-XXXXXXXXXX"
+
+# Exclude from processing
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+  - MODERNIZATION_PLAN.md
+  - PHASE_COMMANDS.md
+  - copilot-instructions.md

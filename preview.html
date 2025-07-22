@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Thor Draper Jr - Preview</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    /* Design Tokens */
+    :root {
+      --color-primary: #0066cc;
+      --color-secondary: #2c3e50;
+      --color-accent: #28a745;
+      --color-text-primary: #212529;
+      --color-text-secondary: #495057;
+      --color-text-muted: #6c757d;
+      --color-bg-primary: #ffffff;
+      --color-bg-secondary: #f8f9fa;
+      --color-bg-tertiary: #f1f3f4;
+      --color-border: #e9ecef;
+      --color-border-light: #f1f3f4;
+      --font-family-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+      --spacing-unit: 1rem;
+      --content-padding: 1.5rem;
+      --section-spacing: 4rem;
+    }
+
+    /* Reset */
+    *, *::before, *::after { box-sizing: border-box; }
+    * { margin: 0; padding: 0; }
+    
+    body {
+      font-family: var(--font-family-sans);
+      font-size: 1rem;
+      line-height: 1.5;
+      color: var(--color-text-primary);
+      background-color: var(--color-bg-primary);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Layout */
+    .site-layout {
+      min-height: 100vh;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      background-color: var(--color-bg-primary);
+      border-bottom: 1px solid var(--color-border);
+      backdrop-filter: blur(8px);
+    }
+
+    .site-main { padding: var(--section-spacing) 0; }
+    
+    .site-footer {
+      background-color: var(--color-bg-secondary);
+      border-top: 1px solid var(--color-border);
+    }
+
+    .content-area {
+      max-width: 768px;
+      margin: 0 auto;
+      padding: 0 var(--content-padding);
+    }
+
+    /* Navigation */
+    .nav-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 0;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .nav-link {
+      font-weight: 500;
+      color: var(--color-text-secondary);
+      text-decoration: none;
+      transition: color 0.15s ease;
+    }
+
+    .nav-link:hover {
+      color: var(--color-primary);
+    }
+
+    /* Typography */
+    h1, h2, h3, h4, h5, h6 {
+      font-weight: 700;
+      line-height: 1.25;
+      letter-spacing: -0.025em;
+      color: var(--color-text-primary);
+      margin-bottom: 1rem;
+    }
+
+    h1 { font-size: 2.25rem; }
+    h2 { font-size: 1.875rem; }
+    h3 { font-size: 1.5rem; }
+
+    /* Grid System */
+    .grid { display: grid; gap: 1.5rem; }
+    .grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
+    .grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
+
+    @media (min-width: 768px) {
+      .md\\:grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
+      .md\\:grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    @media (min-width: 1024px) {
+      .lg\\:grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    /* Cards */
+    .card {
+      background-color: var(--color-bg-primary);
+      border: 1px solid var(--color-border);
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+      transition: all 0.2s ease-in-out;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+      border-color: var(--color-primary);
+    }
+
+    /* Utilities */
+    .flex { display: flex; }
+    .items-center { align-items: center; }
+    .justify-between { justify-content: space-between; }
+    .text-center { text-align: center; }
+    .gap-1 { gap: 0.25rem; }
+    .gap-4 { gap: 1rem; }
+    .gap-6 { gap: 1.5rem; }
+  </style>
+</head>
+
+<body class="site-layout">
+  <header class="site-header">
+    <div class="content-area">
+      <nav class="nav-container">
+        <div class="flex items-center gap-3">
+          <h1 style="margin: 0; font-size: 1.5rem; font-weight: 700; color: var(--color-primary);">
+            Thor Draper Jr
+          </h1>
+        </div>
+        
+        <div class="nav-links">
+          <a href="#" class="nav-link">Home</a>
+          <a href="#" class="nav-link">Tech</a>
+          <a href="#" class="nav-link">Career</a>
+          <a href="#" class="nav-link">Business</a>
+          <a href="#" class="nav-link">About</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main class="site-main">
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="content-area">
+        <div style="text-align: center; padding: 3rem 0;">
+          <h1 style="font-size: 3rem; margin-bottom: 1rem; font-weight: 700;">
+            Welcome to Thor Draper Jr
+          </h1>
+          <p style="font-size: 1.25rem; color: var(--color-text-secondary); margin-bottom: 2rem; max-width: 600px; margin-left: auto; margin-right: auto;">
+            Senior Security Solution Engineer at Microsoft. Technical tutorials, career advice, and cybersecurity insights.
+          </p>
+          <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+            <span style="background: var(--color-primary); color: white; padding: 0.5rem 1rem; border-radius: 0.5rem; font-size: 0.875rem;">
+              Technical Tutorials
+            </span>
+            <span style="background: var(--color-accent); color: white; padding: 0.5rem 1rem; border-radius: 0.5rem; font-size: 0.875rem;">
+              Career Advice
+            </span>
+            <span style="background: var(--color-secondary); color: white; padding: 0.5rem 1rem; border-radius: 0.5rem; font-size: 0.875rem;">
+              Professional Insights
+            </span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Posts Section -->
+    <section class="posts-section">
+      <div class="content-area">
+        <h2 style="margin-bottom: 2rem; font-size: 2rem;">Latest Posts</h2>
+        
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Sample Post Cards -->
+          <article class="card">
+            <div style="margin-bottom: 1rem;">
+              <span style="display: inline-block; background: var(--color-bg-secondary); color: var(--color-text-secondary); padding: 0.25rem 0.75rem; border-radius: 1rem; font-size: 0.75rem;">
+                Tech
+              </span>
+            </div>
+            
+            <h3 style="margin-bottom: 0.75rem; font-size: 1.25rem; line-height: 1.4;">
+              <a href="#" style="color: var(--color-text-primary); text-decoration: none;">
+                Getting Started with GitHub Copilot for DevOps
+              </a>
+            </h3>
+            
+            <p style="color: var(--color-text-secondary); margin-bottom: 1rem; font-size: 0.875rem;">
+              Learn how to leverage GitHub Copilot to supercharge your DevOps workflow with AI-powered coding assistance...
+            </p>
+            
+            <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem; color: var(--color-text-muted);">
+              <time>June 4, 2025</time>
+              <span>5 min read</span>
+            </div>
+          </article>
+
+          <article class="card">
+            <div style="margin-bottom: 1rem;">
+              <span style="display: inline-block; background: var(--color-bg-secondary); color: var(--color-text-secondary); padding: 0.25rem 0.75rem; border-radius: 1rem; font-size: 0.75rem;">
+                Career
+              </span>
+            </div>
+            
+            <h3 style="margin-bottom: 0.75rem; font-size: 1.25rem; line-height: 1.4;">
+              <a href="#" style="color: var(--color-text-primary); text-decoration: none;">
+                Choosing the Right Cybersecurity Career Path
+              </a>
+            </h3>
+            
+            <p style="color: var(--color-text-secondary); margin-bottom: 1rem; font-size: 0.875rem;">
+              Are you interested in pursuing a career in cybersecurity, but not sure which path to take? Here's my advice...
+            </p>
+            
+            <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem; color: var(--color-text-muted);">
+              <time>August 10, 2024</time>
+              <span>7 min read</span>
+            </div>
+          </article>
+
+          <article class="card">
+            <div style="margin-bottom: 1rem;">
+              <span style="display: inline-block; background: var(--color-bg-secondary); color: var(--color-text-secondary); padding: 0.25rem 0.75rem; border-radius: 1rem; font-size: 0.75rem;">
+                Business
+              </span>
+            </div>
+            
+            <h3 style="margin-bottom: 0.75rem; font-size: 1.25rem; line-height: 1.4;">
+              <a href="#" style="color: var(--color-text-primary); text-decoration: none;">
+                Don't Wait. Contribute Now.
+              </a>
+            </h3>
+            
+            <p style="color: var(--color-text-secondary); margin-bottom: 1rem; font-size: 0.875rem;">
+              There are two types of people—those who find problems and those who bring solutions. Here's how to be the latter...
+            </p>
+            
+            <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem; color: var(--color-text-muted);">
+              <time>June 3, 2021</time>
+              <span>4 min read</span>
+            </div>
+          </article>
+        </div>
+        
+        <div style="text-align: center; margin-top: 3rem;">
+          <a href="#" 
+             style="display: inline-block; background: var(--color-primary); color: white; padding: 0.75rem 2rem; border-radius: 0.5rem; text-decoration: none; font-weight: 500;">
+            View All Posts
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="content-area">
+      <div style="padding: 2rem 0;">
+        <div class="flex justify-between items-center" style="flex-wrap: wrap; gap: 1.5rem;">
+          <div>
+            <h3 style="margin-bottom: 0.5rem; font-size: 1rem;">Thor Draper Jr</h3>
+            <p style="margin: 0; color: var(--color-text-secondary); font-size: 0.875rem;">
+              Senior Security Solution Engineer at Microsoft
+            </p>
+          </div>
+          
+          <div class="flex items-center gap-4">
+            <a href="#" style="color: var(--color-text-secondary);">LinkedIn</a>
+            <a href="#" style="color: var(--color-text-secondary);">GitHub</a>
+            <a href="#" style="color: var(--color-text-secondary);">Twitter</a>
+            <a href="#" style="color: var(--color-text-secondary);">Email</a>
+          </div>
+        </div>
+        
+        <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--color-border); text-align: center;">
+          <p style="margin: 0; color: var(--color-text-muted); font-size: 0.875rem;">
+            © 2025 Thor Draper Jr. Built with Jekyll.
+          </p>
+        </div>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,184 @@
+<!-- Hero Section -->
+<section class="hero-section">
+  <div class="hero-content">
+    <h1 class="hero-title">Welcome to {{ site.title }}</h1>
+    <p class="hero-subtitle">{{ site.description }}</p>
+    
+    <!-- Last Post Countdown -->
+    <div class="countdown-container">
+      <div class="countdown-header">
+        <h3 class="countdown-title">Time Since Last Post</h3>
+        <p class="countdown-motivation">Ready for the next one? 🚀</p>
+      </div>
+      
+      <div class="countdown-display" id="countdown-display">
+        <div class="countdown-unit">
+          <span class="countdown-number" id="days">0</span>
+          <span class="countdown-label">Days</span>
+        </div>
+        <div class="countdown-unit">
+          <span class="countdown-number" id="hours">0</span>
+          <span class="countdown-label">Hours</span>
+        </div>
+        <div class="countdown-unit">
+          <span class="countdown-number" id="minutes">0</span>
+          <span class="countdown-label">Minutes</span>
+        </div>
+        <div class="countdown-unit">
+          <span class="countdown-number" id="seconds">0</span>
+          <span class="countdown-label">Seconds</span>
+        </div>
+      </div>
+      
+      <!-- Dynamic Messages -->
+      <div class="countdown-message" id="countdown-message">
+        <span class="message-text">Keep the momentum going!</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Posts Grid -->
+<section class="posts-section">
+  <div class="section-header">
+    <h2 class="section-title">Latest Posts</h2>
+    <div class="section-actions">
+      <div class="view-options">
+        <button class="view-toggle active" data-view="grid">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <rect x="3" y="3" width="7" height="7"></rect>
+            <rect x="14" y="3" width="7" height="7"></rect>
+            <rect x="14" y="14" width="7" height="7"></rect>
+            <rect x="3" y="14" width="7" height="7"></rect>
+          </svg>
+          Grid
+        </button>
+        <button class="view-toggle" data-view="list">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <line x1="8" y1="6" x2="21" y2="6"></line>
+            <line x1="8" y1="12" x2="21" y2="12"></line>
+            <line x1="8" y1="18" x2="21" y2="18"></line>
+            <line x1="3" y1="6" x2="3.01" y2="6"></line>
+            <line x1="3" y1="12" x2="3.01" y2="12"></line>
+            <line x1="3" y1="18" x2="3.01" y2="18"></line>
+          </svg>
+          List
+        </button>
+      </div>
+    </div>
+  </div>
+  
+  <div class="posts-grid" id="posts-container">
+    {%- assign posts = paginator.posts | default: site.posts -%}
+    {% for post in posts limit:9 %}
+      <article class="post-card" data-tags="{{ post.tags | join: ',' }}">
+        <!-- Tags Display (instead of rigid categories) -->
+        <div class="post-tags">
+          {% for tag in post.tags limit:3 %}
+            <span class="post-tag">{{ tag }}</span>
+          {% endfor %}
+        </div>
+        
+        <!-- Post Content -->
+        <div class="post-content">
+          <h3 class="post-title">
+            <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+          </h3>
+          
+          <p class="post-excerpt">
+            {{ post.excerpt | strip_html | truncatewords: 25 }}
+          </p>
+          
+          <!-- Post Meta -->
+          <div class="post-meta">
+            <time class="post-date" datetime="{{ post.date | date_to_xmlschema }}">
+              {{ post.date | date: "%B %d, %Y" }}
+            </time>
+            <span class="reading-time">
+              {% assign words = post.content | number_of_words %}
+              {% assign reading_time = words | divided_by: 200 | plus: 1 %}
+              {{ reading_time }} min read
+            </span>
+          </div>
+        </div>
+        
+        <!-- Hover Effect -->
+        <div class="post-overlay">
+          <a href="{{ post.url | relative_url }}" class="post-link" aria-label="Read {{ post.title }}">
+            <svg class="post-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <line x1="7" y1="17" x2="17" y2="7"></line>
+              <polyline points="7,7 17,7 17,17"></polyline>
+            </svg>
+          </a>
+        </div>
+      </article>
+    {% endfor %}
+  </div>
+  
+  <!-- Load More / Pagination -->
+  {% if paginator.total_pages > 1 %}
+    <div class="pagination-section">
+      <div class="pagination-info">
+        <span>Showing {{ paginator.posts.size }} of {{ site.posts.size }} posts</span>
+      </div>
+      
+      <div class="pagination-controls">
+        {% if paginator.previous_page %}
+          <a href="{{ paginator.previous_page_path | relative_url }}" class="pagination-btn pagination-prev">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <polyline points="15,18 9,12 15,6"></polyline>
+            </svg>
+            Newer Posts
+          </a>
+        {% endif %}
+        
+        <span class="pagination-current">
+          Page {{ paginator.page }} of {{ paginator.total_pages }}
+        </span>
+        
+        {% if paginator.next_page %}
+          <a href="{{ paginator.next_page_path | relative_url }}" class="pagination-btn pagination-next">
+            Older Posts
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <polyline points="9,18 15,12 9,6"></polyline>
+            </svg>
+          </a>
+        {% endif %}
+      </div>
+    </div>
+  {% else %}
+    <div class="all-posts-link">
+      <a href="{{ '/archive/' | relative_url }}" class="btn btn-primary">
+        View All Posts
+      </a>
+    </div>
+  {% endif %}
+</section>
+
+<!-- Newsletter Signup Component -->
+<section class="newsletter-section">
+  <div class="newsletter-container">
+    <div class="newsletter-content">
+      <h3 class="newsletter-title">Stay Updated</h3>
+      <p class="newsletter-description">
+        Get the latest tutorials, career advice, and cybersecurity insights delivered to your inbox.
+      </p>
+    </div>
+    
+    <form class="newsletter-form" action="#" method="post">
+      <div class="newsletter-input-group">
+        <input type="email" 
+               class="newsletter-input" 
+               placeholder="Enter your email address"
+               required
+               aria-label="Email address">
+        <button type="submit" class="newsletter-submit">
+          Subscribe
+        </button>
+      </div>
+      <p class="newsletter-privacy">
+        No spam, unsubscribe anytime. Your privacy is important to us.
+      </p>
+    </form>
+  </div>
+</section>

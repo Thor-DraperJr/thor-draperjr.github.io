@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="{{ page.lang | default: site.lang | default: 'en' }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="{{ page.author | default: site.author | escape }}">
+  <meta name="generator" content="Jekyll v{{ jekyll.version }}">
+  
+  {% seo %}
+  
+  <link rel="canonical" href="{{ page.url | absolute_url }}">
+  <link rel="stylesheet" href="{{ '/assets/css/index.css' | relative_url }}">
+  
+  <!-- Preload critical fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  {% if site.feed.path %}
+    <link rel="alternate" href="{{ site.feed.path | absolute_url }}" type="application/atom+xml" title="{{ site.title }}">
+  {% endif %}
+  
+  <!-- Theme color for mobile browsers -->
+  <meta name="theme-color" content="#0066cc">
+  <meta name="msapplication-TileColor" content="#0066cc">
+</head>
+
+  <body class="site-layout">
+    <!-- Enhanced Navigation -->
+    {% include navigation.html %}
+
+    <!-- Main Content Area -->
+    <main class="site-main" role="main">
+      <div class="content-area">
+        {{ content }}
+      </div>
+    </main>
+
+  <footer class="site-footer">
+    <div class="content-area">
+      <div style="padding: 2rem 0;">
+        <div class="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+          <!-- About -->
+          <div>
+            <h3 style="margin-bottom: 0.5rem; font-size: 1rem;">{{ site.title }}</h3>
+            <p style="margin: 0; color: var(--color-text-secondary); font-size: 0.875rem;">
+              {{ site.description }}
+            </p>
+          </div>
+          
+          <!-- Social Links -->
+          <div class="flex items-center gap-4">
+            {% if site.social.linkedin %}
+              <a href="{{ site.social.linkedin }}" style="color: var(--color-text-secondary);">LinkedIn</a>
+            {% endif %}
+            {% if site.social.github %}
+              <a href="{{ site.social.github }}" style="color: var(--color-text-secondary);">GitHub</a>
+            {% endif %}
+            {% if site.social.twitter %}
+              <a href="{{ site.social.twitter }}" style="color: var(--color-text-secondary);">Twitter</a>
+            {% endif %}
+            {% if site.social.email %}
+              <a href="mailto:{{ site.social.email }}" style="color: var(--color-text-secondary);">Email</a>
+            {% endif %}
+          </div>
+        </div>
+        
+        <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--color-border); text-align: center;">
+          <p style="margin: 0; color: var(--color-text-muted); font-size: 0.875rem;">
+            © {{ 'now' | date: "%Y" }} {{ site.title }}. Built with Jekyll.
+          </p>
+        </div>
+      </div>
+    </div>
+  </footer>
+    <!-- Enhanced JavaScript -->
+    <script src="{{ '/assets/js/navigation.js' | relative_url }}"></script>
+    <script src="{{ '/assets/js/countdown.js' | relative_url }}"></script>
+  </body>
+</html>

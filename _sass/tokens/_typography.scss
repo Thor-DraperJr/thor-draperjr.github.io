@@ -1,0 +1,79 @@
+// Typography Design Tokens
+// Optimized for technical content and structured writing
+
+// Font Families
+$font-family-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 
+                   'Helvetica Neue', Arial, sans-serif;
+$font-family-mono: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', 
+                   'Source Code Pro', monospace;
+$font-family-serif: 'Georgia', 'Times New Roman', serif;
+
+// Font Weights
+$font-weight-light: 300;
+$font-weight-normal: 400;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+$font-weight-extrabold: 800;
+
+// Font Sizes - Modular Scale
+$font-size-xs: 0.75rem;      // 12px
+$font-size-sm: 0.875rem;     // 14px
+$font-size-base: 1rem;       // 16px
+$font-size-lg: 1.125rem;     // 18px
+$font-size-xl: 1.25rem;      // 20px
+$font-size-2xl: 1.5rem;      // 24px
+$font-size-3xl: 1.875rem;    // 30px
+$font-size-4xl: 2.25rem;     // 36px
+$font-size-5xl: 3rem;        // 48px
+$font-size-6xl: 3.75rem;     // 60px
+
+// Line Heights - Optimized for readability
+$line-height-tight: 1.25;
+$line-height-snug: 1.375;
+$line-height-normal: 1.5;
+$line-height-relaxed: 1.625;
+$line-height-loose: 2;
+
+// Letter Spacing
+$letter-spacing-tight: -0.025em;
+$letter-spacing-normal: 0;
+$letter-spacing-wide: 0.025em;
+$letter-spacing-wider: 0.05em;
+$letter-spacing-widest: 0.1em;
+
+// Typography Scales
+$heading-font-family: $font-family-sans;
+$heading-font-weight: $font-weight-bold;
+$heading-line-height: $line-height-tight;
+$heading-letter-spacing: $letter-spacing-tight;
+
+$body-font-family: $font-family-sans;
+$body-font-weight: $font-weight-normal;
+$body-line-height: $line-height-normal;
+$body-letter-spacing: $letter-spacing-normal;
+
+$code-font-family: $font-family-mono;
+$code-font-weight: $font-weight-normal;
+$code-line-height: $line-height-normal;
+
+// Semantic Typography Sizes
+$h1-font-size: $font-size-4xl;   // 36px - Main page titles
+$h2-font-size: $font-size-3xl;   // 30px - Post titles
+$h3-font-size: $font-size-2xl;   // 24px - Section headers
+$h4-font-size: $font-size-xl;    // 20px - Sub-sections
+$h5-font-size: $font-size-lg;    // 18px - Minor headings
+$h6-font-size: $font-size-base;  // 16px - Smallest headings
+
+$lead-font-size: $font-size-lg;     // 18px - Lead paragraphs
+$body-font-size: $font-size-base;   // 16px - Body text
+$small-font-size: $font-size-sm;    // 14px - Captions, metadata
+$tiny-font-size: $font-size-xs;     // 12px - Fine print
+
+// Mobile Typography (responsive scaling)
+$mobile-scale-factor: 0.875;
+
+$h1-font-size-mobile: $h1-font-size * $mobile-scale-factor;
+$h2-font-size-mobile: $h2-font-size * $mobile-scale-factor;
+$h3-font-size-mobile: $h3-font-size * $mobile-scale-factor;
+$h4-font-size-mobile: $h4-font-size * $mobile-scale-factor;
