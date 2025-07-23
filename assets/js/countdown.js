@@ -21,10 +21,16 @@ class LastPostCountdown {
   }
 
   getLastPostDate() {
-    // In a real Jekyll site, this would be populated from site.posts[0].date
-    // For demo purposes, let's use a recent date
-    const mockLastPost = new Date('2025-06-04T00:00:00Z'); // GitHub Copilot DevOps post
-    return mockLastPost;
+    // Get the last post date from Jekyll data attribute
+    const countdownContainer = document.querySelector('.countdown-container');
+    const lastPostDateStr = countdownContainer?.dataset?.lastPostDate;
+    
+    if (lastPostDateStr) {
+      return new Date(lastPostDateStr);
+    }
+    
+    // Fallback to current date if no post date found
+    return new Date();
   }
 
   updateCountdown() {

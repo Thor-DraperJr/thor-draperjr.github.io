@@ -5,7 +5,7 @@
     <p class="hero-subtitle">{{ site.description }}</p>
     
     <!-- Last Post Countdown -->
-    <div class="countdown-container">
+    <div class="countdown-container" data-last-post-date="{{ site.posts.first.date | date: '%Y-%m-%dT%H:%M:%S%z' }}">
       <div class="countdown-header">
         <h3 class="countdown-title">Time Since Last Post</h3>
         <p class="countdown-motivation">Ready for the next one? 🚀</p>
