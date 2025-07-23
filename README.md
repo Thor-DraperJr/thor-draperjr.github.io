@@ -1,14 +1,47 @@
 ---
-title: "About"
-permalink: "/about/"
+title: About
+permalink: /about/
 layout: page
 ---
-## Is Thor your real name?
 
-What up! My name *is* Thor Draper Jr. I currently work as a Sr. Security Technical Specialist at Microsoft. In addition, I am a cybersecurity instructor at 2U education. One big thing of note is that I'm a career changer.
+## From Gym Owner to Cloud Defender
 
-If you're interested in learning more about my professional background then take a peek at my resume [here](https://docs.google.com/document/d/1N4-WyCdHKMZeZFeP1eDQpWHJ-N7198xA/edit?usp=sharing&ouid=108609017036717166398&rtpof=true&sd=true).
+I’m Thor Draper Jr—Senior Security Solutions Engineer at Microsoft by day and perpetual puzzle-solver at heart. After selling my Charlotte gym to an escape-room operator, I traded dumbbells for dashboards and discovered my passion for protecting healthcare’s most critical clouds.
 
-### Professional Background
+---
 
-I didn't begin my IT journey until the second half of 2019. My first career was all over the place, from sales, management, entrepreneurship, and the military. I had the opportunity to purchase a gym in my hometown. While running my business, I began to explore my next career move and discovered a passion for the IT industry. I took the CompTIA ITF+ in June and was hooked. My father had been in cybersecurity for years and I found that I shared his interest in the field. I was able to earn my associate's degree in Cloud and Virtualization in July 2021 and earned my bachelor's degree from SANS in applied cybersecurity in early 2024. I completed both of these primarily through certifications. You can view my full list of certifications on my [LinkedIn](https://www.linkedin.com/in/thor-draperjr/).
+## My Unconventional Journey
+
+- Army National Guard (E-4 Infantryman): mastering grit and teamwork  
+- Branch Manager at Enterprise Rent-A-Car’s largest non-airport location: delivering top-tier customer experiences  
+- Mid-Market Consultant at Paychex: solving payroll puzzles for small businesses  
+- Founder & Owner of Stay Fit LLC in Charlotte (2020): built and sold my own gym to an escape-room operator  
+- Cybersecurity Bootcamp Instructor (2020–2024): guided career-changers through hands-on labs and cert prep  
+- Senior Security Solutions Engineer at Microsoft (Apr 2024–present): advising U.S. payors, providers & life-sciences on Sentinel, XDR & Azure security  
+
+Each chapter taught me that true security starts by understanding real human needs.
+
+---
+
+## Why I Wake Up Excited
+
+Every morning I journal under my Year-One Word—**Magical**—to spark creativity and keep my goals playful. Whether I’m threat-hunting in Log Analytics or sketching a 3D-printed desk lamp, I’m always asking: “How can I make this more meaningful?”
+
+---
+
+## Beyond the Keyboard
+
+- Savoring coffee at hidden cafés on road-trip detours—Jaspers’ Ottos Cache remains unmatched
+- Mapping strategic financial blueprints to fuel future adventures  
+- Experimenting with AI tools to automate routine tasks and free up headspace  
+- Crafting pun-fueled icebreakers to keep security conversations human  
+
+---
+
+## Let’s Connect
+
+I love swapping war stories about cloud security, sharing journaling hacks, or recommending off-the-map cafés. Drop me a line:
+
+<section class="cta">
+  <a class="btn" href="https://linkedin.com/in/thor-draperjr/" target="_blank">Connect on LinkedIn</a>
+</section>

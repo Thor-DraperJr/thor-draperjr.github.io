@@ -24,6 +24,7 @@ navigation:
   - {title: "Tech", url: "/tech/"}
   - {title: "Career", url: "/career/"}
   - {title: "Business", url: "/business/"}
+  - {title: "Resume", url: "/resume/"}
   - {title: "About", url: "/about/"}
 
 # Social Links
