@@ -21,9 +21,7 @@ posts_per_page: 12
 # Navigation
 navigation:
   - {title: "Home", url: "/"}
-  - {title: "Tech", url: "/tech/"}
-  - {title: "Career", url: "/career/"}
-  - {title: "Business", url: "/business/"}
+  - {title: "Archive", url: "/archive/"}
   - {title: "Resume", url: "/resume/"}
   - {title: "About", url: "/about/"}
 
