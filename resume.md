@@ -219,12 +219,12 @@ The role of an ISC handler is to deploy DShield sensors and web application hone
   text-align: center;
   margin-bottom: 2rem;
   padding-bottom: 1rem;
-  border-bottom: 2px solid var(--primary-color, #2563eb);
+  border-bottom: 2px solid #2563eb;
 }
 
 .resume-name {
   margin-bottom: 0.5rem;
-  color: var(--primary-color, #2563eb);
+  color: #2563eb;
 }
 
 .resume-contact {
@@ -239,12 +239,11 @@ The role of an ISC handler is to deploy DShield sensors and web application hone
   align-items: center;
   gap: 0.5rem;
   text-decoration: none;
-  color: var(--text-color, #334155);
   transition: color 0.2s ease;
 }
 
 .contact-item:hover {
-  color: var(--primary-color, #2563eb);
+  color: #2563eb;
 }
 
 .certifications-grid,
@@ -257,17 +256,29 @@ The role of an ISC handler is to deploy DShield sensors and web application hone
 
 .cert-category,
 .competency-category {
-  background: var(--surface-color, #f8fafc);
+  background: rgba(37, 99, 235, 0.05);
+  border: 1px solid rgba(37, 99, 235, 0.15);
   padding: 1.5rem;
   border-radius: 8px;
-  border-left: 4px solid var(--primary-color, #2563eb);
+  border-left: 4px solid #2563eb;
+  backdrop-filter: blur(10px);
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .cert-category,
+  .competency-category {
+    background: rgba(37, 99, 235, 0.1);
+    border: 1px solid rgba(37, 99, 235, 0.3);
+  }
 }
 
 .cert-category h4,
 .competency-category h4 {
   margin-top: 0;
   margin-bottom: 1rem;
-  color: var(--primary-color, #2563eb);
+  color: #2563eb;
+  font-weight: 600;
 }
 
 .cert-category ul,
@@ -285,16 +296,16 @@ The role of an ISC handler is to deploy DShield sensors and web application hone
   text-align: center;
   margin-top: 3rem;
   padding-top: 2rem;
-  border-top: 1px solid var(--border-color, #e2e8f0);
+  border-top: 1px solid rgba(37, 99, 235, 0.2);
 }
 
 .download-note {
   font-style: italic;
-  color: var(--muted-color, #64748b);
+  opacity: 0.8;
 }
 
 .download-note a {
-  color: var(--primary-color, #2563eb);
+  color: #2563eb;
   text-decoration: none;
 }
 
