@@ -1,0 +1,333 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getAboutPage, getCategoryCounts, getPosts, getTagCounts, getYearCounts } from '../lib/content';
+
+const about = getAboutPage();
+const posts = getPosts();
+const featured = posts.slice(0, 3);
+const stream = posts.slice(3, 9);
+const latest = posts[0];
+const firstPost = posts[posts.length - 1];
+const topTags = getTagCounts().sort((left, right) => right.count - left.count).slice(0, 4);
+const categorySignals = getCategoryCounts().slice(0, 4);
+const writingTempo = getYearCounts().slice(0, 4);
+const maxCategoryCount = Math.max(...categorySignals.map((item) => item.count), 1);
+const maxTempoCount = Math.max(...writingTempo.map((item) => item.count), 1);
+const tempoCoordinates = writingTempo.map((item, index) => {
+	const x = 32 + (index * 216) / Math.max(writingTempo.length - 1, 1);
+	const y = 176 - (item.count / maxTempoCount) * 124;
+	return { ...item, x, y };
+});
+const tempoPoints = tempoCoordinates.map((item) => `${item.x},${item.y}`).join(' ');
+const tempoArea = [`M 32 176`, ...tempoCoordinates.map((item) => `L ${item.x} ${item.y}`), `L 248 176 Z`].join(' ');
+---
+
+<Layout pageTitle="Home" currentPath="/" wide>
+	<section class="shell-container shell-container-wide">
+		<div class="home-grid" data-reveal>
+			<div>
+				<span class="eyebrow">Field notes on security, AI, and leadership</span>
+				<h1 class="home-headline">A cleaner editorial archive for cloud defense, modern engineering, and career growth.</h1>
+				<p class="home-copy">
+					This site collects practical writing from the edge of enterprise technology: security engineering,
+					Azure and AI workflows, and the habits that make technical careers durable over time.
+				</p>
+
+				<p class="home-copy home-copy-compact">
+					The front page now behaves more like an editorial briefing than a blog roll, so the strongest ideas,
+					themes, and recent signals surface immediately.
+				</p>
+
+				<div class="button-row">
+					<a class="button" href="/archive/">Browse the archive</a>
+					{latest && <a class="button-ghost" href={latest.permalink}>Read the latest piece</a>}
+				</div>
+
+				<div class="topic-list" style="margin-top: 1.1rem;">
+					{topTags.map(({ tag }) => <span class="topic-pill">{tag}</span>)}
+				</div>
+			</div>
+
+			<div class="home-rail">
+				{latest && (
+					<article class="feature-panel" data-reveal data-reveal-delay="1">
+						<span class="eyebrow">Latest dispatch</span>
+						<h2 class="feature-panel-title"><a href={latest.permalink}>{latest.title}</a></h2>
+						<p class="card-copy">{latest.excerpt}</p>
+						<div class="meta-row">
+							<span>{latest.date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
+							<span>{latest.readingTime} min read</span>
+						</div>
+					</article>
+				)}
+
+				<div class="signal-grid">
+					<article class="signal-card" data-reveal data-reveal-delay="2">
+						<span class="signal-value">{posts.length}</span>
+						<span class="signal-label">Published pieces</span>
+					</article>
+					<article class="signal-card" data-reveal data-reveal-delay="3">
+						<span class="signal-value">{firstPost?.date.getFullYear()}</span>
+						<span class="signal-label">Archive begins</span>
+					</article>
+					<article class="signal-card" data-reveal data-reveal-delay="4">
+						<span class="signal-value">{topTags.length > 0 ? topTags[0].count : 0}</span>
+						<span class="signal-label">Top theme mentions</span>
+					</article>
+				</div>
+			</div>
+		</div>
+
+		<section class="section-block" data-reveal>
+			<div class="section-header section-header-tight">
+				<div>
+					<span class="eyebrow">Archive signals</span>
+					<h2 class="section-title">What the writing actually concentrates on.</h2>
+				</div>
+				<p class="section-copy">The archive leans heavily toward practical technology work: cloud security, technical habits, leadership, and translating complexity into action.</p>
+			</div>
+
+			<div class="signal-board">
+				<article class="panel signal-board-primary" data-reveal data-reveal-delay="1">
+					<div class="signal-board-heading">
+						<span class="eyebrow">Topic distribution</span>
+						<p class="section-copy">Top categories across the published archive.</p>
+					</div>
+
+					<div class="signal-bars">
+						{categorySignals.map((item) => (
+							<div class="signal-bar-row">
+								<div class="signal-bar-labels">
+									<span>{item.category}</span>
+									<span>{item.count}</span>
+								</div>
+								<div class="signal-bar-track">
+									<div class="signal-bar-fill" style={`width: ${(item.count / maxCategoryCount) * 100}%`}></div>
+								</div>
+							</div>
+						))}
+					</div>
+				</article>
+
+				<article class="panel signal-board-secondary" data-reveal data-reveal-delay="2">
+					<span class="eyebrow">Writing tempo</span>
+					<div class="timeline-list">
+						{writingTempo.map((item) => (
+							<div class="timeline-item">
+								<span class="timeline-year">{item.year}</span>
+								<span class="timeline-count">{item.count} posts</span>
+							</div>
+						))}
+					</div>
+				</article>
+			</div>
+		</section>
+
+		<section class="section-block" data-reveal>
+			<div class="section-header section-header-tight">
+				<div>
+					<span class="eyebrow">Visual notes</span>
+					<h2 class="section-title">Research-style figures make the archive easier to read at a glance.</h2>
+				</div>
+				<p class="section-copy">The inspiration page works because it turns signals into evidence. These figure panels borrow that pacing without turning the homepage into a dashboard.</p>
+			</div>
+
+			<div class="chart-gallery">
+				<figure class="panel chart-figure" data-reveal data-reveal-delay="1">
+					<div class="chart-frame">
+						<svg viewBox="0 0 320 220" class="chart-svg" aria-hidden="true">
+							<defs>
+								<linearGradient id="categoryGradient" x1="0%" x2="100%" y1="0%" y2="0%">
+									<stop offset="0%" stop-color="#0e6a61" />
+									<stop offset="100%" stop-color="#195ca6" />
+								</linearGradient>
+							</defs>
+							<rect x="20" y="18" width="280" height="184" rx="18" fill="rgba(255,255,255,0.72)" stroke="rgba(19,34,53,0.08)" />
+							{categorySignals.map((item, index) => {
+								const width = 172 * (item.count / maxCategoryCount);
+								const y = 42 + index * 38;
+								return (
+									<g>
+										<text x="36" y={y} class="chart-label">{item.category}</text>
+										<text x="282" y={y} class="chart-value">{item.count}</text>
+										<rect x="36" y={y + 10} width="220" height="12" rx="999" fill="rgba(19,34,53,0.08)" />
+										<rect x="36" y={y + 10} width={width} height="12" rx="999" fill="url(#categoryGradient)" />
+									</g>
+								);
+							})}
+						</svg>
+					</div>
+					<figcaption class="chart-caption">
+						<span class="eyebrow">Figure 01</span>
+						<p class="chart-copy">Technology and business writing carry most of the archive, while life notes appear more selectively as connective tissue.</p>
+					</figcaption>
+				</figure>
+
+				<figure class="panel chart-figure" data-reveal data-reveal-delay="2">
+					<div class="chart-frame">
+						<svg viewBox="0 0 320 220" class="chart-svg" aria-hidden="true">
+							<defs>
+								<linearGradient id="tempoGradient" x1="0%" x2="0%" y1="0%" y2="100%">
+									<stop offset="0%" stop-color="rgba(25,92,166,0.28)" />
+									<stop offset="100%" stop-color="rgba(25,92,166,0.02)" />
+								</linearGradient>
+							</defs>
+							<rect x="20" y="18" width="280" height="184" rx="18" fill="rgba(255,255,255,0.72)" stroke="rgba(19,34,53,0.08)" />
+							<path d="M 32 176 H 248" class="chart-axis" />
+							<path d={tempoArea} fill="url(#tempoGradient)" opacity="0.9" />
+							<polyline points={tempoPoints} fill="none" stroke="#195ca6" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+							{tempoCoordinates.map((item) => (
+								<g>
+									<circle cx={item.x} cy={item.y} r="5.5" fill="#0e6a61" />
+									<text x={item.x} y="194" text-anchor="middle" class="chart-label">{item.year}</text>
+								</g>
+							))}
+						</svg>
+					</div>
+					<figcaption class="chart-caption">
+						<span class="eyebrow">Figure 02</span>
+						<p class="chart-copy">Publishing tempo shifts year to year, but the archive keeps returning to durable lessons instead of short-lived commentary.</p>
+					</figcaption>
+				</figure>
+
+				<figure class="panel chart-figure chart-figure-quote" data-reveal data-reveal-delay="3">
+					<div class="chart-quote-block">
+						<span class="chart-quote-kicker">Reading pattern</span>
+						<p class="chart-quote">The strongest entries usually do one job well: they take technical ambiguity and make it useful.</p>
+						<div class="chart-micro-grid">
+							{topTags.map(({ tag, count }) => (
+								<div class="chart-micro-item">
+									<span>{tag}</span>
+									<strong>{count}</strong>
+								</div>
+							))}
+						</div>
+					</div>
+					<figcaption class="chart-caption">
+						<span class="eyebrow">Figure 03</span>
+						<p class="chart-copy">A lighter companion figure gives the section the asymmetry and pacing the Microsoft reference uses effectively.</p>
+					</figcaption>
+				</figure>
+			</div>
+		</section>
+
+		<section class="section-block" data-reveal>
+			<div class="section-header">
+				<div>
+					<span class="eyebrow">Selected writing</span>
+					<h2 class="section-title">Deep dives, experiments, and career briefings worth surfacing first.</h2>
+				</div>
+				<p class="section-copy">
+					These are the pieces that best represent the mix of technical depth and practical judgment the archive is built around.
+				</p>
+			</div>
+
+			<div class="feature-grid">
+				{featured.map((post, index) => (
+					<article class:list={[ 'feature-card', index === 0 && 'feature-card-dark' ]} data-reveal data-reveal-delay={String(index + 1)}>
+						<div class="card-topline">
+							<span class="card-index">0{index + 1}</span>
+							<span class="eyebrow">Featured brief</span>
+						</div>
+						<h3 class="card-title"><a href={post.permalink}>{post.title}</a></h3>
+						<p class="card-copy">{post.excerpt}</p>
+						<div class="meta-row" style="margin-top: 1rem;">
+							<span>{post.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
+							<span>{post.readingTime} min read</span>
+						</div>
+						<div class="card-tags" style="margin-top: 1rem;">
+							{post.tags.slice(0, 3).map((tag) => <span class="card-tag">{tag}</span>)}
+						</div>
+					</article>
+				))}
+			</div>
+		</section>
+
+		<section class="section-block" data-reveal>
+			<article class="note-card" data-reveal data-reveal-delay="1">
+				<span class="eyebrow">Editorial frame</span>
+				<h2 class="section-title">Three recurring threads run through the archive.</h2>
+				<div class="note-grid" style="margin-top: 1.25rem;">
+					<div>
+						<h3>Security that stays concrete</h3>
+						<p class="section-copy">The strongest posts translate architecture, cloud platforms, and defensive practice into language that can be used immediately.</p>
+					</div>
+					<div>
+						<h3>Career development with specifics</h3>
+						<p class="section-copy">The career writing focuses on momentum, feedback, habits, and long-range positioning instead of generic motivational advice.</p>
+					</div>
+					<div>
+						<h3>AI and platform change in context</h3>
+						<p class="section-copy">Recent pieces connect new tooling to real technical work, with enough restraint to be useful after the launch cycle fades.</p>
+					</div>
+				</div>
+			</article>
+		</section>
+
+		<section class="section-block" data-reveal>
+			<div class="section-header">
+				<div>
+					<span class="eyebrow">From the archive</span>
+					<h2 class="section-title">Recent posts, kept in a calmer reading order.</h2>
+				</div>
+				<p class="section-copy">The chronological feed still matters, but it no longer has to do all the work of being the homepage.</p>
+			</div>
+
+			<div class="stream-list">
+				{stream.map((post) => (
+					<article class="stream-item" data-reveal>
+						<div class="stream-date">{post.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</div>
+						<div>
+							<h3 class="stream-title"><a href={post.permalink}>{post.title}</a></h3>
+							<p class="stream-excerpt">{post.excerpt}</p>
+						</div>
+						<div class="stream-meta">{post.readingTime} min read</div>
+					</article>
+				))}
+			</div>
+		</section>
+
+		<section class="section-block" data-reveal>
+			<div class="section-header">
+				<div>
+					<span class="eyebrow">About Thor</span>
+					<h2 class="section-title">An unconventional path from gyms and rentals to cloud security and career coaching.</h2>
+				</div>
+				<p class="section-copy">The through-line is practical experience carried across different environments, industries, and leadership responsibilities.</p>
+			</div>
+
+			<article class="panel" data-reveal data-reveal-delay="1">
+				<p class="section-copy">{about.excerpt}</p>
+				<div class="button-row" style="margin-top: 1rem;">
+					<a class="button-ghost" href="/about/">Read the full story</a>
+					<a class="button-ghost" href="/resume/">View the resume</a>
+				</div>
+			</article>
+		</section>
+	</section>
+
+	<script>
+		const revealItems = Array.from(document.querySelectorAll('[data-reveal]'));
+		const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+		if (prefersReducedMotion) {
+			revealItems.forEach((item) => item.classList.add('is-visible'));
+		} else {
+			const observer = new IntersectionObserver(
+				(entries) => {
+					entries.forEach((entry) => {
+						if (!entry.isIntersecting) {
+							return;
+						}
+
+						entry.target.classList.add('is-visible');
+						observer.unobserve(entry.target);
+					});
+				},
+				{ threshold: 0.18, rootMargin: '0px 0px -6% 0px' }
+			);
+
+			revealItems.forEach((item) => observer.observe(item));
+		}
+	</script>
+</Layout>

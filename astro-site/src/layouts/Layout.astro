@@ -1,0 +1,79 @@
+---
+import '../styles/global.css';
+import { getSiteConfig } from '../lib/content';
+
+interface Props {
+	pageTitle?: string;
+	pageDescription?: string;
+	currentPath?: string;
+	wide?: boolean;
+}
+
+const site = getSiteConfig();
+const {
+	pageTitle,
+	pageDescription = site.description,
+	currentPath = '/',
+	wide = false,
+} = Astro.props;
+
+const documentTitle = pageTitle ? `${pageTitle} | ${site.title}` : site.title;
+---
+
+<!doctype html>
+<html lang={site.lang}>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="color-scheme" content="light" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" href="/favicon.ico" />
+		<meta name="generator" content={Astro.generator} />
+		<meta name="description" content={pageDescription} />
+		<meta name="theme-color" content="#14212f" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+		<title>{documentTitle}</title>
+	</head>
+	<body>
+		<div class="site-shell">
+			<header class="site-header">
+				<div class="shell-container shell-container-wide site-header-inner">
+					<a class="brand-lockup" href="/">
+						<span class="brand-name">{site.title}</span>
+						<span class="brand-tagline">{site.tagline}</span>
+					</a>
+
+					<nav class="site-nav" aria-label="Primary navigation">
+						{site.navigation.map((item) => (
+							<a class:list={[ 'site-nav-link', currentPath === item.url && 'is-active' ]} href={item.url}>
+								{item.title}
+							</a>
+						))}
+					</nav>
+				</div>
+			</header>
+
+			<main class:list={[ 'site-main', wide && 'site-main-wide' ]}>
+				<slot />
+			</main>
+
+			<footer class="site-footer">
+				<div class="shell-container shell-container-wide site-footer-inner">
+					<div>
+						<p class="footer-title">{site.title}</p>
+						<p class="footer-copy">{site.description}</p>
+					</div>
+
+					<div class="footer-links">
+						{site.social.linkedin && <a href={site.social.linkedin}>LinkedIn</a>}
+						{site.social.github && <a href={site.social.github}>GitHub</a>}
+						{site.social.twitter && <a href={site.social.twitter}>X</a>}
+						{site.social.email && <a href={`mailto:${site.social.email}`}>Email</a>}
+					</div>
+				</div>
+			</footer>
+		</div>
+	</body>
+</html>

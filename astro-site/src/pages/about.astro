@@ -1,0 +1,18 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getAboutPage } from '../lib/content';
+
+const page = getAboutPage();
+---
+
+<Layout pageTitle={page.title} pageDescription={page.excerpt} currentPath="/about/">
+  <section class="post-layout">
+    <header class="page-hero">
+      <span class="eyebrow">About</span>
+      <h1 class="page-title">{page.title}</h1>
+      <p class="section-copy">The original personal story, carried into the new site without rewriting it into generic bio copy.</p>
+    </header>
+
+    <article class="prose panel" set:html={page.html}></article>
+  </section>
+</Layout>

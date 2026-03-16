@@ -1,0 +1,62 @@
+<figure class="post-visual post-visual-chart">
+  <div class="chart-shell">
+    <svg class="runtime-chart" viewBox="0 0 980 330" role="img" aria-labelledby="runtime-chart-title runtime-chart-desc">
+      <title id="runtime-chart-title">Enterprise AI control ladder</title>
+      <desc id="runtime-chart-desc">A ladder diagram showing Level 0 AI-enhanced app, a split into two Level 1 assistive agent shapes, then Level 2 autonomous, and Level 3 agent users.</desc>
+      <style>
+        .level-kicker { font: 600 10px 'SFMono-Regular', Consolas, monospace; letter-spacing: 0.08em; text-transform: uppercase; fill: rgba(232,242,251,0.82); }
+        .level-title { font: 700 16px Manrope, Arial, sans-serif; fill: #f8fbff; }
+        .connector { stroke: rgba(193, 214, 236, 0.72); stroke-width: 3.5; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+      </style>
+
+      <g opacity="0">
+        <animate attributeName="opacity" from="0" to="1" dur="0.35s" begin="0s" fill="freeze" />
+        <rect x="36" y="132" width="184" height="64" rx="18" fill="#1a81d6" stroke="#d7eaff" stroke-opacity="0.6" />
+        <text x="128" y="158" text-anchor="middle" class="level-kicker">Level 0</text>
+        <text x="128" y="178" text-anchor="middle" class="level-title">AI-enhanced app</text>
+      </g>
+
+      <defs>
+        <marker id="ladder-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+          <path d="M 0 0 L 10 5 L 0 10 z" fill="rgba(193, 214, 236, 0.82)" />
+        </marker>
+      </defs>
+
+      <g opacity="0.84">
+        <path class="connector" marker-end="url(#ladder-arrow)" d="M220 164 C255 164 258 112 292 112" />
+        <path class="connector" marker-end="url(#ladder-arrow)" d="M220 164 C255 164 258 216 292 216" />
+        <path class="connector" marker-end="url(#ladder-arrow)" d="M502 112 C548 112 560 164 606 164" />
+        <path class="connector" marker-end="url(#ladder-arrow)" d="M502 216 C548 216 560 164 606 164" />
+        <path class="connector" marker-end="url(#ladder-arrow)" d="M790 164 C824 164 834 164 848 164" />
+      </g>
+
+      <g opacity="0">
+        <animate attributeName="opacity" from="0" to="1" dur="0.35s" begin="0.12s" fill="freeze" />
+        <rect x="292" y="80" width="210" height="64" rx="18" fill="#1a81d6" stroke="#d7eaff" stroke-opacity="0.6" />
+        <text x="397" y="106" text-anchor="middle" class="level-kicker">Level 1</text>
+        <text x="397" y="126" text-anchor="middle" class="level-title">Narrow assistive</text>
+      </g>
+
+      <g opacity="0">
+        <animate attributeName="opacity" from="0" to="1" dur="0.35s" begin="0.24s" fill="freeze" />
+        <rect x="292" y="184" width="210" height="64" rx="18" fill="#1a81d6" stroke="#d7eaff" stroke-opacity="0.6" />
+        <text x="397" y="210" text-anchor="middle" class="level-kicker">Level 1</text>
+        <text x="397" y="230" text-anchor="middle" class="level-title">Rich assistive</text>
+      </g>
+
+      <g opacity="0">
+        <animate attributeName="opacity" from="0" to="1" dur="0.35s" begin="0.36s" fill="freeze" />
+        <rect x="606" y="132" width="184" height="64" rx="18" fill="#1a81d6" stroke="#d7eaff" stroke-opacity="0.6" />
+        <text x="698" y="158" text-anchor="middle" class="level-kicker">Level 2</text>
+        <text x="698" y="178" text-anchor="middle" class="level-title">Autonomous</text>
+      </g>
+
+      <g opacity="0">
+        <animate attributeName="opacity" from="0" to="1" dur="0.35s" begin="0.48s" fill="freeze" />
+        <rect x="848" y="132" width="116" height="64" rx="18" fill="#1a81d6" stroke="#d7eaff" stroke-opacity="0.6" />
+        <text x="906" y="158" text-anchor="middle" class="level-kicker">Level 3</text>
+        <text x="906" y="178" text-anchor="middle" class="level-title">Agent users</text>
+      </g>
+    </svg>
+  </div>
+</figure>

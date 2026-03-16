@@ -1,47 +1,24 @@
----
-title: About
-permalink: /about/
-layout: page
----
+# My personal blog
 
-## From Gym Owner to Cloud Defender
+This repo is the Astro version of `thor-draperjr.github.io`. I've gone through a few iterations of Jekyll, but Astro is the first time I've felt like the stack is working for me instead of against me.
 
-I’m Thor Draper Jr—Senior Security Solutions Engineer at Microsoft by day and perpetual puzzle-solver at heart. After selling my Charlotte gym to an escape-room operator, I traded dumbbells for dashboards and discovered my passion for protecting healthcare’s most critical clouds.
+## The point of the site
 
----
+- A working resume that I can link to and update without friction.
+- A place to share ideas and lessons from my work in security, cloud, AI, and leadership.
+- Feel intentional and editorial instead of like a default blog template.
 
-## My Unconventional Journey
+## Where the real work happens
 
-- Army National Guard (E-4 Infantryman): mastering grit and teamwork  
-- Branch Manager at Enterprise Rent-A-Car’s largest non-airport location: delivering top-tier customer experiences  
-- Mid-Market Consultant at Paychex: solving payroll puzzles for small businesses  
-- Founder & Owner of Stay Fit LLC in Charlotte (2020): built and sold my own gym to an escape-room operator  
-- Cybersecurity Bootcamp Instructor (2020–2024): guided career-changers through hands-on labs and cert prep  
-- Senior Security Solutions Engineer at Microsoft (Apr 2024–present): advising U.S. payors, providers & life-sciences on Sentinel, XDR & Azure security  
+- [astro-site](astro-site) is the actual app.
+- [astro-site/src/content/posts](astro-site/src/content/posts) is where blog posts go.
+- [astro-site/public/assets/images](astro-site/public/assets/images) is where post images go.
+- [astro-site/src/content/post-template.md](astro-site/src/content/post-template.md) is the starter template.
 
-Each chapter taught me that true security starts by understanding real human needs.
+## Publishing reminder
 
----
-
-## Why I Wake Up Excited
-
-Every morning I journal under my Year-One Word—**Magical**—to spark creativity and keep my goals playful. Whether I’m threat-hunting in Log Analytics or sketching a 3D-printed desk lamp, I’m always asking: “How can I make this more meaningful?”
-
----
-
-## Beyond the Keyboard
-
-- Savoring coffee at hidden cafés on road-trip detours—Jaspers’ Ottos Cache remains unmatched
-- Mapping strategic financial blueprints to fuel future adventures  
-- Experimenting with AI tools to automate routine tasks and free up headspace  
-- Crafting pun-fueled icebreakers to keep security conversations human  
-
----
-
-## Let’s Connect
-
-I love swapping war stories about cloud security, sharing journaling hacks, or recommending off-the-map cafés. Drop me a line:
-
-<section class="cta">
-  <a class="btn" href="https://linkedin.com/in/thor-draperjr/" target="_blank">Connect on LinkedIn</a>
-</section>
+- New posts go in `astro-site/src/content/posts/` as `YYYY-MM-DD-slug.md`.
+- The first category sets the URL bucket.
+- Default categories are `tech`, `business`, and `life`.
+- Tags should stay lower-case and reusable.
+- Run the build before pushing.

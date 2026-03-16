@@ -1,0 +1,66 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getPosts, getTagCounts } from '../lib/content';
+
+const posts = getPosts();
+const tags = getTagCounts();
+---
+
+<Layout pageTitle="Archive" currentPath="/archive/" wide>
+  <section class="shell-container shell-container-wide">
+    <header class="page-hero">
+      <span class="eyebrow">Archive</span>
+      <h1 class="page-title">All posts</h1>
+      <p class="section-copy">{posts.length} posts and counting. Filter by tags or browse chronologically.</p>
+    </header>
+
+    <div class="archive-tools panel">
+      <span class="eyebrow">Filter by topic</span>
+      <div class="tag-filter-list">
+        <button class="tag-filter-button is-active" data-tag="all">All posts <span>{posts.length}</span></button>
+        {tags.map(({ tag, count }) => (
+          <button class="tag-filter-button" data-tag={tag.toLowerCase()}>{tag} <span>{count}</span></button>
+        ))}
+      </div>
+    </div>
+
+    <div class="archive-grid">
+      {posts.map((post) => (
+        <article class="panel archive-card" data-tags={post.tags.map((tag) => tag.toLowerCase()).join(',')}>
+          <div class="meta-row">
+            <span>{post.date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
+            <span>{post.readingTime} min read</span>
+          </div>
+
+          <h2 class="archive-card-title"><a href={post.permalink}>{post.title}</a></h2>
+          <p class="card-copy">{post.excerpt}</p>
+
+          <div class="post-tags" style="margin-top: 1rem; margin-bottom: 1rem;">
+            {post.tags.map((tag) => <span class="post-tag">{tag}</span>)}
+          </div>
+
+          <a class="read-link" href={post.permalink}>Read more</a>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <script>
+    const buttons = Array.from(document.querySelectorAll('.tag-filter-button'));
+    const cards = Array.from(document.querySelectorAll('.archive-card'));
+
+    buttons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const tag = button.dataset.tag ?? 'all';
+
+        buttons.forEach((item) => item.classList.toggle('is-active', item === button));
+
+        cards.forEach((card) => {
+          const cardTags = (card.getAttribute('data-tags') ?? '').split(',').filter(Boolean);
+          const matches = tag === 'all' || cardTags.includes(tag);
+          card.style.display = matches ? '' : 'none';
+        });
+      });
+    });
+  </script>
+</Layout>

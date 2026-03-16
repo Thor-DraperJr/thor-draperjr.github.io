@@ -1,0 +1,73 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import RuntimeControlChart from '../../components/RuntimeControlChart.astro';
+import { getPosts } from '../../lib/content';
+
+export function getStaticPaths() {
+  const posts = getPosts();
+
+  return posts.map((post, index) => ({
+    params: {
+      category: post.category,
+      slug: post.slug,
+    },
+    props: {
+      post,
+      previous: posts[index + 1] ?? null,
+      next: posts[index - 1] ?? null,
+    },
+  }));
+}
+
+const { post, previous, next } = Astro.props;
+const runtimeChartMarker = '[[RUNTIME_CONTROL_CHART]]';
+const normalizedHtml = post.html.replace(`<p>${runtimeChartMarker}</p>`, runtimeChartMarker);
+const htmlParts = normalizedHtml.split(runtimeChartMarker);
+const hasRuntimeChart = htmlParts.length > 1;
+---
+
+<Layout pageTitle={post.title} pageDescription={post.excerpt}>
+  <article class="post-layout">
+    <header class="post-hero">
+      <span class="eyebrow">{post.category}</span>
+      <h1 class="post-heading">{post.title}</h1>
+      <div class="post-meta-row">
+        <span>{post.date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
+        <span>{post.readingTime} min read</span>
+      </div>
+      {post.tags.length > 0 && (
+        <div class="post-tags" style="margin-top: 1rem;">
+          {post.tags.map((tag) => <span class="post-tag">{tag}</span>)}
+        </div>
+      )}
+    </header>
+
+    <section class="prose panel">
+      {hasRuntimeChart ? (
+        <>
+          <Fragment set:html={htmlParts[0]} />
+          <RuntimeControlChart />
+          <Fragment set:html={htmlParts.slice(1).join(runtimeChartMarker)} />
+        </>
+      ) : (
+        <Fragment set:html={post.html} />
+      )}
+    </section>
+
+    <nav class="post-pagination">
+      {previous ? (
+        <a href={previous.permalink}>
+          <span>Older</span>
+          {previous.title}
+        </a>
+      ) : <div></div>}
+
+      {next ? (
+        <a href={next.permalink} style="text-align: right;">
+          <span>Newer</span>
+          {next.title}
+        </a>
+      ) : <div></div>}
+    </nav>
+  </article>
+</Layout>
