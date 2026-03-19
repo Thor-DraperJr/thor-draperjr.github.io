@@ -136,24 +136,25 @@ Agent ID starts to answer those questions directly.
 
 The governance overview for Agent ID is useful because it frames the problem correctly. Agent identities can be governed with sponsorship, entitlement management, access packages, lifecycle decisions, and accountability models that are meant for agents as agents, not just apps as apps.
 
-That is the difference I think people miss. Agent ID is trying to solve agent-estate governance, not just authentication.
+That is the difference I think people miss. Agent ID is trying to solve agent governance, not just authentication.
 
 ## Question 7: How Is Audit Evidence Layered?
 
 Agent-aware identity does not remove the need for runtime telemetry.
 
-I think about three evidence layers separately:
+I think about four evidence layers separately:
 
 1. Azure control-plane activity
 2. Entra sign-in and token evidence
-3. application-level runtime and retrieval telemetry
+3. tool and connector telemetry
+4. application-level runtime and retrieval telemetry
 
-Both a service-principal-based workload and an Agent ID-native runtime can produce Entra and Azure evidence. But identity evidence is not the same thing as runtime evidence.
+Both a service-principal-based workload and an Agent ID-native runtime can produce Entra and Azure evidence. But identity evidence is not the same thing as runtime evidence. When an agent calls tools through MCP servers, each server sits between the agent runtime and the downstream system. The MCP protocol defines a standard logging capability, so every connected server can produce its own audit trail. If the only evidence you have is the identity token and the application log, you have a gap between "the agent decided to act" and "the downstream system was affected."
 
-Even with Agent ID, you still need application-side logs to understand:
+Even with Agent ID and tool-level telemetry, you still need application-side logs to understand:
 
 - what the agent retrieved
-- which tools it called
+- which tools it called and what those servers did downstream
 - why it took an action
 - whether a proposed or completed action was user-approved or self-initiated
 
@@ -221,7 +222,7 @@ What I'm hoping for in the next iterations:
 2. A way to tag agent identities as production or development. That would help separate the noise for a risk acceptance perspective and make it easier to understand which identities are actually representing risk that can affect the organization.
 3. Unifying the way identities are represented. A single logical agent should have a single identity. Separating our blueprints and project identities - if you think of these as templates for onboarding a blueprint is more similar to a job role/id from an HR SOA than it is to a specific agent runtime. So it's important to keep the identity account list for the actual runtimes separate from the templates and blueprints that help us create them.
 
-Sorry for the range and variety of questions. You can only begin at the beginning. I hope this was a useful sketch of how to think about the problem and where to start when you are ready to modernize.
+You can only begin at the beginning. I hope this was a useful sketch of how to think about the problem and where to start when you are ready to modernize.
 
 ## References
 
