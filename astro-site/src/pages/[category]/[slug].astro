@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import RuntimeControlChart from '../../components/RuntimeControlChart.astro';
+import CareerDevelopmentPlan from '../../components/CareerDevelopmentPlan.astro';
 import { getPosts } from '../../lib/content';
 
 export function getStaticPaths() {
@@ -20,10 +21,19 @@ export function getStaticPaths() {
 }
 
 const { post, previous, next } = Astro.props;
+
 const runtimeChartMarker = '[[RUNTIME_CONTROL_CHART]]';
-const normalizedHtml = post.html.replace(`<p>${runtimeChartMarker}</p>`, runtimeChartMarker);
-const htmlParts = normalizedHtml.split(runtimeChartMarker);
-const hasRuntimeChart = htmlParts.length > 1;
+const careerDevPlanMarker = '[[CAREER_DEV_PLAN]]';
+
+let processedHtml = post.html;
+processedHtml = processedHtml.replace(`<p>${runtimeChartMarker}</p>`, runtimeChartMarker);
+processedHtml = processedHtml.replace(`<p>${careerDevPlanMarker}</p>`, careerDevPlanMarker);
+
+const hasRuntimeChart = processedHtml.includes(runtimeChartMarker);
+const hasCareerDevPlan = processedHtml.includes(careerDevPlanMarker);
+
+const runtimeParts = hasRuntimeChart ? processedHtml.split(runtimeChartMarker) : [];
+const careerParts = hasCareerDevPlan ? processedHtml.split(careerDevPlanMarker) : [];
 ---
 
 <Layout pageTitle={post.title} pageDescription={post.excerpt}>
@@ -45,12 +55,18 @@ const hasRuntimeChart = htmlParts.length > 1;
     <section class="prose panel">
       {hasRuntimeChart ? (
         <>
-          <Fragment set:html={htmlParts[0]} />
+          <Fragment set:html={runtimeParts[0]} />
           <RuntimeControlChart />
-          <Fragment set:html={htmlParts.slice(1).join(runtimeChartMarker)} />
+          <Fragment set:html={runtimeParts.slice(1).join(runtimeChartMarker)} />
+        </>
+      ) : hasCareerDevPlan ? (
+        <>
+          <Fragment set:html={careerParts[0]} />
+          <CareerDevelopmentPlan />
+          <Fragment set:html={careerParts.slice(1).join(careerDevPlanMarker)} />
         </>
       ) : (
-        <Fragment set:html={post.html} />
+        <Fragment set:html={processedHtml} />
       )}
     </section>
 

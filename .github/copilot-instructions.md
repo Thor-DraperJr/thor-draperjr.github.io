@@ -13,6 +13,11 @@ This is a personal blog for Thor Draper Jr, a Senior Security Solution Engineer 
 
 ### /new-session
 1. Review the content of copilot-instructions.md and README.md to understand the context and tone of the blog.
+2. Check for open PRs in `thor-draperjr/thor-draperjr.github.io` using the GitHub MCP tools. For each open PR, review the changes and present a summary table:
+   - PR number, title, and author
+   - Files changed
+   - Quick assessment: approve, request changes, or needs discussion
+3. Present the PR review table and ask which PRs to approve, request changes on, or discuss further before moving on to other work.
 
 ### /end-session
 1. Summarize the key points of the chat session, including any decisions made about the blog's content, style, or structure.

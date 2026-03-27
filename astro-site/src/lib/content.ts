@@ -1,7 +1,7 @@
-import fs from 'node:fs';
-import path from 'node:path';
 import matter from 'gray-matter';
 import { marked } from 'marked';
+import fs from 'node:fs';
+import path from 'node:path';
 import { siteConfig } from './site';
 
 export interface SiteConfig {
@@ -38,6 +38,7 @@ export interface Post {
   date: Date;
   permalink: string;
   readingTime: number;
+  draft: boolean;
 }
 
 const contentRoot = path.join(process.cwd(), 'src', 'content');
@@ -174,6 +175,7 @@ export function getPosts(): Post[] {
       const dateFromFileName = path.basename(fileName).slice(0, 10);
       const dateValue = String(data.date ?? dateFromFileName);
       const excerpt = deriveExcerpt(content, String(data.excerpt ?? ''));
+      const draft = data.draft === true;
 
       return {
         title: String(data.title ?? slug.replace(/-/g, ' ')),
@@ -187,8 +189,10 @@ export function getPosts(): Post[] {
         date: new Date(dateValue),
         permalink: `/${category}/${slug}/`,
         readingTime: calculateReadingTime(content),
+        draft,
       } satisfies Post;
     })
+    .filter((post) => import.meta.env.DEV || !post.draft)
     .sort((left, right) => right.date.getTime() - left.date.getTime());
 
   cachedPosts = entries;
