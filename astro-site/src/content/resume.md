@@ -11,9 +11,9 @@ layout: page
       <i class="fas fa-envelope"></i>
       thordraper2@outlook.com
     </a>
-    <a href="https://linkedin.com/in/thor-draperjr/" target="_blank" class="contact-item">
+    <a href="https://www.linkedin.com/in/thor-draper-jr/" target="_blank" class="contact-item">
       <i class="fab fa-linkedin"></i>
-      linkedin.com/in/thor-draperjr/
+      linkedin.com/in/thor-draper-jr/
     </a>
   </div>
 </div>
@@ -209,7 +209,7 @@ The role of an ISC handler is to deploy DShield sensors and web application hone
 <div class="resume-footer">
   <p class="download-note">
     <strong>Looking for a PDF version?</strong> Feel free to reach out via 
-    <a href="https://linkedin.com/in/thor-draperjr/" target="_blank">LinkedIn</a> 
+    <a href="https://www.linkedin.com/in/thor-draper-jr/" target="_blank">LinkedIn</a> 
     for additional formats or to discuss opportunities.
   </p>
 </div>
