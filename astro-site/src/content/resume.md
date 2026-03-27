@@ -7,9 +7,9 @@ layout: page
 <div class="resume-header">
   <h1 class="resume-name">Thor G. Draper Jr</h1>
   <div class="resume-contact">
-    <a href="mailto:thordraper2@outlook.com" class="contact-item">
+    <a href="mailto:thor@thordraper.com" class="contact-item">
       <i class="fas fa-envelope"></i>
-      thordraper2@outlook.com
+      thor@thordraper.com
     </a>
     <a href="https://linkedin.com/in/thor-draperjr/" target="_blank" class="contact-item">
       <i class="fab fa-linkedin"></i>
