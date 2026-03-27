@@ -35,6 +35,7 @@ body {
     radial-gradient(circle at top left, rgba(14, 106, 97, 0.12), transparent 28%),
     radial-gradient(circle at 85% 0%, rgba(25, 92, 166, 0.1), transparent 24%),
     linear-gradient(180deg, #fbfaf6 0%, #f4f2ea 100%);
+  background-attachment: fixed;
 }
 
 body::before {
@@ -132,7 +133,7 @@ img {
 
 .brand-name,
 .footer-title {
-  font-family: 'Fraunces', serif;
+  font-family: 'Lora', serif;
   font-size: 1.3rem;
   line-height: 1;
 }
@@ -170,6 +171,26 @@ img {
   bottom: -0.55rem;
   height: 2px;
   background: var(--ink);
+  transition: opacity 0.2s ease;
+}
+
+.nav-toggle {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.nav-toggle-bar {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--ink);
+  border-radius: 2px;
+  transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
 .site-main {
@@ -285,7 +306,7 @@ img {
 .home-headline,
 .section-title,
 .post-heading {
-  font-family: 'Fraunces', serif;
+  font-family: 'Lora', serif;
   letter-spacing: -0.04em;
 }
 
@@ -435,7 +456,7 @@ img {
 .signal-value {
   display: block;
   margin-bottom: 0.2rem;
-  font-family: 'Fraunces', serif;
+  font-family: 'Lora', serif;
   font-size: 2.2rem;
   line-height: 1;
 }
@@ -552,7 +573,7 @@ img {
 
 .chart-quote {
   margin: 0;
-  font-family: 'Fraunces', serif;
+  font-family: 'Lora', serif;
   font-size: clamp(1.5rem, 2vw, 2rem);
   line-height: 1.18;
   letter-spacing: -0.03em;
@@ -643,7 +664,7 @@ img {
 }
 
 .timeline-year {
-  font-family: 'Fraunces', serif;
+  font-family: 'Lora', serif;
   font-size: 1.35rem;
 }
 
@@ -739,7 +760,7 @@ img {
 
 .archive-card-title {
   margin: 0.6rem 0;
-  font-family: 'Fraunces', serif;
+  font-family: 'Lora', serif;
   font-size: 1.4rem;
   line-height: 1.15;
 }
@@ -796,7 +817,7 @@ img {
 .prose h5,
 .prose h6 {
   margin: 2rem 0 0.75rem;
-  font-family: 'Fraunces', serif;
+  font-family: 'Lora', serif;
   line-height: 1.08;
   letter-spacing: -0.03em;
 }
@@ -957,6 +978,85 @@ img {
   text-align: center;
 }
 
+.certifications-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: 0.75rem;
+}
+
+.certifications-grid details {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--bg-soft);
+  padding: 0;
+  overflow: hidden;
+}
+
+.certifications-grid summary {
+  cursor: pointer;
+  list-style: none;
+  padding: 0.85rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.certifications-grid summary::-webkit-details-marker {
+  display: none;
+}
+
+.certifications-grid summary::after {
+  content: '+';
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--ink-soft);
+  transition: transform 0.2s ease;
+}
+
+.certifications-grid details[open] summary::after {
+  content: '-';
+}
+
+.certifications-grid summary h4 {
+  margin: 0;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.cert-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.5rem;
+  height: 1.5rem;
+  padding: 0 0.4rem;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.certifications-grid ul {
+  margin: 0;
+  padding: 0 1rem 0.85rem;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.certifications-grid li {
+  padding: 0.25rem 0.6rem;
+  border-radius: 6px;
+  background: var(--accent-soft);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--accent);
+}
+
 @media (max-width: 960px) {
 
   .home-grid,
@@ -981,10 +1081,30 @@ img {
 
 @media (max-width: 720px) {
 
+  .nav-toggle {
+    display: flex;
+  }
+
+  .site-nav {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    gap: 0.5rem;
+    padding-top: 0.5rem;
+  }
+
+  .site-nav.is-open {
+    display: flex;
+  }
+
+  .site-header-inner {
+    flex-wrap: wrap;
+  }
+
   .site-header-inner,
   .site-footer-inner {
-    flex-direction: column;
-    align-items: flex-start;
+    flex-direction: row;
+    align-items: center;
     padding: 1rem 0;
   }
 

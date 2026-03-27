@@ -6,7 +6,7 @@ layout: page
 
 ## From Gym Owner to Cloud Defender
 
-I’m Thor Draper Jr—Senior Security Solutions Engineer at Microsoft by day and perpetual puzzle-solver at heart. After selling my Charlotte gym to an escape-room operator, I traded dumbbells for dashboards and discovered my passion for protecting healthcare’s most critical clouds.
+I’m Thor Draper Jr—Senior Security Solution Engineer at Microsoft by day and perpetual puzzle-solver at heart. After selling my Charlotte gym to an escape-room operator, I traded dumbbells for dashboards and discovered my passion for protecting healthcare’s most critical clouds.
 
 ---
 
@@ -17,7 +17,7 @@ I’m Thor Draper Jr—Senior Security Solutions Engineer at Microsoft by day an
 - Mid-Market Consultant at Paychex: solving payroll puzzles for small businesses  
 - Founder & Owner of Stay Fit LLC in Charlotte (2020): built and sold my own gym to an escape-room operator  
 - Cybersecurity Bootcamp Instructor (2020–2024): guided career-changers through hands-on labs and cert prep  
-- Senior Security Solutions Engineer at Microsoft (Apr 2024–present): advising U.S. payors, providers & life-sciences on Sentinel, XDR & Azure security  
+- Senior Security Solution Engineer at Microsoft (Apr 2024–present): advising U.S. payors, providers & life-sciences on Sentinel, XDR & Azure security  
 
 Each chapter taught me that true security starts by understanding real human needs.
 
@@ -25,7 +25,7 @@ Each chapter taught me that true security starts by understanding real human nee
 
 ## Why I Wake Up Excited
 
-Every morning I journal under my Year-One Word—**Magical**—to spark creativity and keep my goals playful. Whether I’m threat-hunting in Log Analytics or sketching a 3D-printed desk lamp, I’m always asking: “How can I make this more meaningful?”
+Every morning I journal under my word for the year—**Velocity**—to sharpen focus and keep momentum. Whether I'm threat-hunting in Log Analytics or sketching a 3D-printed desk lamp, I'm always asking: "How can I make this more meaningful?"
 
 ---
 
@@ -42,6 +42,4 @@ Every morning I journal under my Year-One Word—**Magical**—to spark creativi
 
 I love swapping war stories about cloud security, sharing journaling hacks, or recommending off-the-map cafés. Drop me a line:
 
-<section class="cta">
-  <a class="btn" href="https://linkedin.com/in/thor-draperjr/" target="_blank">Connect on LinkedIn</a>
-</section>
+<a class="button-ghost" href="https://www.linkedin.com/in/thor-draper-jr/" target="_blank">Connect on LinkedIn</a>

@@ -186,7 +186,7 @@ export function getPosts(): Post[] {
         excerpt,
         html,
         rawContent: content,
-        date: new Date(dateValue),
+        date: new Date(`${dateValue}T12:00:00`),
         permalink: `/${category}/${slug}/`,
         readingTime: calculateReadingTime(content),
         draft,

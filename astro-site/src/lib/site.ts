@@ -15,7 +15,7 @@ export const siteConfig: SiteConfig = {
 	],
 	social: {
 		linkedin: 'https://www.linkedin.com/in/thor-draper-jr/',
-		github: 'https://github.com/thordraper',
-		email: 'thor@thordraper.com',
+		github: 'https://github.com/Thor-DraperJr',
+		email: 'thordraper2@outlook.com',
 	},
 };

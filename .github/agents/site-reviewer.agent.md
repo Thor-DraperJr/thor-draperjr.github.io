@@ -1,7 +1,7 @@
 ---
 description: "Use when: site review, visual review, page review, UX review, co-develop site improvements, review blog layout and design"
 name: "Site Reviewer"
-tools: [web, read, search, edit, execute, todo, github/*]
+tools: [web, read, search, edit, execute, todo, github/*, open_browser_page]
 argument-hint: "Tell me which page to review, or say 'review all pages'"
 ---
 
@@ -36,8 +36,9 @@ When proposing or implementing changes, consult these files:
 ## Review Workflow
 
 1. **Start** the Astro dev server (`npm run dev` in `astro-site/`) as a background process if not already running.
-2. **Fetch** the rendered HTML for a page using `fetch_webpage` against the localhost URL.
-3. **Read** the corresponding source files (page, layout, styles) to understand how the output is produced.
+2. **Open** the page in the integrated browser using `open_browser_page` to visually inspect the rendered result. Use this for any visual concerns (color, spacing, layout consistency across pages).
+3. **Fetch** the rendered HTML for a page using `fetch_webpage` against the localhost URL when you need to inspect markup or class structure.
+4. **Read** the corresponding source files (page, layout, styles) to understand how the output is produced.
 4. **Analyze** the page against the review criteria below and present findings.
 5. **Present the action table** (see format below). For each finding, recommend whether it should be handled via **Edit mode** (interactive, local) or **Copilot PR** (autonomous, via GitHub Issue). Use these guidelines to decide:
    - **Edit mode**: Subjective design decisions, copy rewrites, layout reordering, anything that benefits from back-and-forth discussion or visual judgment.

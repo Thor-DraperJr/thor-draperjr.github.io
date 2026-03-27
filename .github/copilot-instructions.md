@@ -5,6 +5,8 @@ Ground rules:
 - No emoji's.
 - Prune dead code.
 - While creating, be mindful to validate your assumptions.
+- Before starting the Astro dev server, check if one is already running (e.g., `curl http://localhost:4321` or check terminal output). Do not spawn a second instance.
+- For visual bugs (color, layout, spacing), use `open_browser_page` or the Site Reviewer agent to visually inspect the page. Do not rely solely on HTML source inspection -- rendered appearance depends on content length, viewport, and stacking context.
 
 ## Project Overview
 This is a personal blog for Thor Draper Jr, a Senior Security Solution Engineer at Microsoft and a former cybersecurity instructor. My goals for this are to highlight my experience and interests in multiple facets of technology and leadership to hopefully help advertise me for the next step in my career. The blog should be a reflection of my expertise and personality, while also providing value to readers interested in technology, cybersecurity, and career development.
