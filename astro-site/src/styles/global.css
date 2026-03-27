@@ -67,6 +67,22 @@ a {
   color: inherit;
 }
 
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.button:focus-visible,
+.button-ghost:focus-visible {
+  outline-offset: 4px;
+}
+
+.feature-card-dark :focus-visible,
+.chart-figure-quote :focus-visible {
+  outline-color: white;
+}
+
 img {
   max-width: 100%;
 }
