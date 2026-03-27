@@ -1,10 +1,10 @@
 ---
 title: "Career Development Plan - H1 FY26 Edition"
 date: 2026-03-24
-draft: true
+draft: false
 categories: [career]
 tags: [career-development, leadership, microsoft, career-planning, cdp]
-excerpt: "My GM asked the team for career development plans. I decided to make mine public. This is the first edition of a series I will publish every six months."
+excerpt: "I decided to make my career development plan public. This is the first edition of a series I will publish every six months -- because the kind of accountability that drives real growth does not happen in a file share."
 ---
 
 # Career Development Plan - H1 FY26 Edition
@@ -18,16 +18,18 @@ Most career advice says pick a lane. I think that limits your surface area for o
 Each target role exercises different muscles, but the foundation is the same: **technical credibility, customer empathy, and the ability to make others better**.
 
 - **Principal SSE** is the depth play. Write the frameworks, shape the architecture patterns, become the person the field calls when the deal gets technical
-- **Account Technology Strategist** is the breadth play. Own the customer relationship end-to-end, build executive trust, drive strategic transformation
+- **Account Executive** is the breadth play. Own the customer relationship end-to-end, build executive trust, drive strategic transformation
 - **SSE Manager** is the multiplier play. Build the team, set the culture, create leverage through people development
+
+All three paths point in the same direction. The long game is leading an organization that shapes how healthcare security gets done -- one that connects the security transformation our customers need with the AI and data platform investments that make it real. These near-term moves are how I build the credibility, the relationships, and the operating muscle to get there.
 
 By investing in the shared foundation -- executive presence, content creation, cross-org collaboration -- I stay positioned for whichever path opens up at the right time.
 
-## The Power of Building in Public
+## Accountability Through Transparency
 
 There is a culture in corporate environments where career aspirations stay hidden. You tell your manager one thing, your skip-level another, and your peers nothing. That creates friction, not momentum.
 
-Publishing this creates a feedback loop. In six months when I post the H2 FY26 edition, anyone can compare it against this one and see what moved. That is the kind of accountability that actually drives behavior change.
+Publishing this creates a feedback loop. In six months when I post the H2 FY26 edition, anyone can compare it against this one and see what moved. That is the kind of accountability that actually drives behavior change. It is also how I practice what I preach -- if I am going to ask customers to be transparent about their security posture, I should be willing to be transparent about where I am headed and where I still need to grow.
 
 ## Closing Thought
 

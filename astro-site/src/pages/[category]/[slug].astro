@@ -37,53 +37,95 @@ const careerParts = hasCareerDevPlan ? processedHtml.split(careerDevPlanMarker) 
 ---
 
 <Layout pageTitle={post.title} pageDescription={post.excerpt}>
-  <article class="post-layout">
-    <header class="post-hero">
-      <span class="eyebrow">{post.category}</span>
-      <h1 class="post-heading">{post.title}</h1>
-      <div class="post-meta-row">
-        <span>{post.date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
-        <span>{post.readingTime} min read</span>
+  {hasCareerDevPlan ? (
+    <>
+      <article class="post-layout">
+        <header class="post-hero">
+          <span class="eyebrow">{post.category}</span>
+          <h1 class="post-heading">{post.title}</h1>
+          <div class="post-meta-row">
+            <span>{post.date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
+            <span>{post.readingTime} min read</span>
+          </div>
+          {post.tags.length > 0 && (
+            <div class="post-tags" style="margin-top: 1rem;">
+              {post.tags.map((tag) => <span class="post-tag">{tag}</span>)}
+            </div>
+          )}
+        </header>
+      </article>
+
+      <div class="cdp-breakout">
+        <CareerDevelopmentPlan />
       </div>
-      {post.tags.length > 0 && (
-        <div class="post-tags" style="margin-top: 1rem;">
-          {post.tags.map((tag) => <span class="post-tag">{tag}</span>)}
+
+      <article class="post-layout">
+        {careerParts.length > 1 && (
+          <section class="prose panel">
+            <Fragment set:html={careerParts.slice(1).join(careerDevPlanMarker)} />
+          </section>
+        )}
+
+        <nav class="post-pagination">
+          {previous ? (
+            <a href={previous.permalink}>
+              <span>Older</span>
+              {previous.title}
+            </a>
+          ) : <div></div>}
+
+          {next ? (
+            <a href={next.permalink} style="text-align: right;">
+              <span>Newer</span>
+              {next.title}
+            </a>
+          ) : <div></div>}
+        </nav>
+      </article>
+    </>
+  ) : (
+    <article class="post-layout">
+      <header class="post-hero">
+        <span class="eyebrow">{post.category}</span>
+        <h1 class="post-heading">{post.title}</h1>
+        <div class="post-meta-row">
+          <span>{post.date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
+          <span>{post.readingTime} min read</span>
         </div>
-      )}
-    </header>
+        {post.tags.length > 0 && (
+          <div class="post-tags" style="margin-top: 1rem;">
+            {post.tags.map((tag) => <span class="post-tag">{tag}</span>)}
+          </div>
+        )}
+      </header>
 
-    <section class="prose panel">
-      {hasRuntimeChart ? (
-        <>
-          <Fragment set:html={runtimeParts[0]} />
-          <RuntimeControlChart />
-          <Fragment set:html={runtimeParts.slice(1).join(runtimeChartMarker)} />
-        </>
-      ) : hasCareerDevPlan ? (
-        <>
-          <Fragment set:html={careerParts[0]} />
-          <CareerDevelopmentPlan />
-          <Fragment set:html={careerParts.slice(1).join(careerDevPlanMarker)} />
-        </>
-      ) : (
-        <Fragment set:html={processedHtml} />
-      )}
-    </section>
+      <section class="prose panel">
+        {hasRuntimeChart ? (
+          <>
+            <Fragment set:html={runtimeParts[0]} />
+            <RuntimeControlChart />
+            <Fragment set:html={runtimeParts.slice(1).join(runtimeChartMarker)} />
+          </>
+        ) : (
+          <Fragment set:html={processedHtml} />
+        )}
+      </section>
 
-    <nav class="post-pagination">
-      {previous ? (
-        <a href={previous.permalink}>
-          <span>Older</span>
-          {previous.title}
-        </a>
-      ) : <div></div>}
+      <nav class="post-pagination">
+        {previous ? (
+          <a href={previous.permalink}>
+            <span>Older</span>
+            {previous.title}
+          </a>
+        ) : <div></div>}
 
-      {next ? (
-        <a href={next.permalink} style="text-align: right;">
-          <span>Newer</span>
-          {next.title}
-        </a>
-      ) : <div></div>}
-    </nav>
-  </article>
+        {next ? (
+          <a href={next.permalink} style="text-align: right;">
+            <span>Newer</span>
+            {next.title}
+          </a>
+        ) : <div></div>}
+      </nav>
+    </article>
+  )}
 </Layout>

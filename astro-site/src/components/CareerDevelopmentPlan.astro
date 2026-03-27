@@ -1,92 +1,49 @@
-<!-- ===== Career Development Plan - Edition H1 FY26 ===== -->
-<div class="cdp">
-  <!-- Edition banner -->
+---
+import { cdp } from '../lib/careerPlan';
+---
+
+<div class="cdp" data-cdp>
   <div class="cdp-edition">
     <span class="cdp-edition-label">Career Development Plan</span>
-    <span class="cdp-edition-date">Edition: H1 FY26 &middot; March 2026</span>
+    <span class="cdp-edition-date">Edition: {cdp.edition} &middot; {cdp.editionDate}</span>
   </div>
 
-  <!-- ===== HEADER: Name + Title ===== -->
   <header class="cdp-header">
     <div class="cdp-header-text">
-      <h2 class="cdp-name">Thor G. Draper Jr</h2>
-      <p class="cdp-title">Sr. Security Solution Engineer</p>
-      <p class="cdp-org">Microsoft &middot; US Healthcare &amp; Life Sciences</p>
+      <h2 class="cdp-name">{cdp.name}</h2>
+      <p class="cdp-title">{cdp.title}</p>
+      <p class="cdp-org">{cdp.org}</p>
     </div>
     <div class="cdp-header-meta">
-      <div class="cdp-meta-pill"><span class="cdp-meta-key">Level</span><span class="cdp-meta-val">--</span></div>
-      <div class="cdp-meta-pill"><span class="cdp-meta-key">Months at MSFT</span><span class="cdp-meta-val">59</span></div>
-      <div class="cdp-meta-pill"><span class="cdp-meta-key">Time to Move</span><span class="cdp-meta-val">FY27/28</span></div>
+      {cdp.meta.map((m) => (
+        <div class="cdp-meta-pill">
+          <span class="cdp-meta-key">{m.label}</span>
+          <span class="cdp-meta-val" data-count-to={/^\d+$/.test(m.value) ? m.value : undefined}>{m.value}</span>
+        </div>
+      ))}
     </div>
   </header>
 
-  <!-- ===== MAIN THREE-COLUMN BODY ===== -->
   <div class="cdp-body">
-
-    <!-- Column 1: About Leader + Work History -->
+    <!-- Column 1: About Leader -->
     <div class="cdp-col cdp-col-about">
       <div class="cdp-col-header cdp-col-header-teal">About Leader</div>
       <div class="cdp-col-content">
         <dl class="cdp-facts">
-          <div class="cdp-fact"><dt>Career Goal</dt><dd>Strategic Technical Leadership</dd></div>
-          <div class="cdp-fact"><dt>Potential Next Role</dt><dd>Principal SE, AE, SSE Manager</dd></div>
-          <div class="cdp-fact"><dt>Language(s)</dt><dd>English</dd></div>
-          <div class="cdp-fact"><dt>Willingness to Relocate</dt><dd>Open to discussion</dd></div>
+          {cdp.facts.map((f) => (
+            <div class="cdp-fact"><dt>{f.label}</dt><dd>{f.value}</dd></div>
+          ))}
         </dl>
 
-        <div class="cdp-subsection">
-          <h5 class="cdp-subsection-title">Recent Impact</h5>
-          <ul class="cdp-impact-list">
-            <li>Published AI agent taxonomy framework adopted by field security teams for customer advisory</li>
-            <li>Transitioned from Azure Network Support to Security SSE, demonstrating cross-domain adaptability</li>
-            <li>Created thought leadership content pipeline with 15+ blog posts reaching the security community</li>
-            <li>Completed SANS ISC Handler apprenticeship, contributing threat analysis to global infosec community</li>
-          </ul>
-        </div>
+        <p class="cdp-impact-summary">{cdp.impact.summary}</p>
 
-        <div class="cdp-subsection">
-          <h5 class="cdp-subsection-title">Education</h5>
-          <ul class="cdp-edu-list">
-            <li><strong>B.S. Applied Cybersecurity</strong><span>SANS Technology Institute (2024)</span></li>
-            <li><strong>A.A.S. Cloud &amp; Virtualization</strong><span>Central Piedmont CC (2021)</span></li>
-          </ul>
-        </div>
-
-        <div class="cdp-subsection">
-          <h5 class="cdp-subsection-title">Work History</h5>
-          <div class="cdp-timeline">
-            <div class="cdp-timeline-item cdp-timeline-current">
-              <span class="cdp-timeline-dates">4/2024 &ndash; Present</span>
-              <span class="cdp-timeline-company">Microsoft</span>
-              <span class="cdp-timeline-role">Sr. Security Solution Engineer</span>
-            </div>
-            <div class="cdp-timeline-item">
-              <span class="cdp-timeline-dates">4/2021 &ndash; 3/2024</span>
-              <span class="cdp-timeline-company">Microsoft</span>
-              <span class="cdp-timeline-role">Azure Network Support Engineer, ARR</span>
-            </div>
-            <div class="cdp-timeline-item">
-              <span class="cdp-timeline-dates">1/2020 &ndash; 3/2024</span>
-              <span class="cdp-timeline-company">Trilogy Education</span>
-              <span class="cdp-timeline-role">Cybersecurity Instructor</span>
-            </div>
-            <div class="cdp-timeline-item">
-              <span class="cdp-timeline-dates">1/2020 &ndash; 12/2020</span>
-              <span class="cdp-timeline-company">Nucentric Solutions</span>
-              <span class="cdp-timeline-role">Network Administrator</span>
-            </div>
-            <div class="cdp-timeline-item">
-              <span class="cdp-timeline-dates">2013 &ndash; 2019</span>
-              <span class="cdp-timeline-company">Enterprise Rent-A-Car</span>
-              <span class="cdp-timeline-role">Branch Manager</span>
-            </div>
-            <div class="cdp-timeline-item">
-              <span class="cdp-timeline-dates">2010 &ndash; 2016</span>
-              <span class="cdp-timeline-company">Army National Guard</span>
-              <span class="cdp-timeline-role">E-4 Infantryman</span>
-            </div>
+        <h5 class="cdp-subsection-title">Summary of Impact</h5>
+        {cdp.impact.what.map((w) => (
+          <div class="cdp-impact-what">
+            <span class="cdp-impact-goal">{w.goal}</span>
+            <p class="cdp-impact-result">{w.result}</p>
           </div>
-        </div>
+        ))}
       </div>
     </div>
 
@@ -94,73 +51,15 @@
     <div class="cdp-col cdp-col-strengths">
       <div class="cdp-col-header cdp-col-header-purple">Core Strengths</div>
       <div class="cdp-col-content">
-        <h5 class="cdp-subsection-title">Core Leadership &amp; Strengths</h5>
-        <ul class="cdp-strength-list">
-          <li>
-            <svg class="cdp-icon" viewBox="0 0 16 16"><path d="M8 1l2.1 4.2 4.7.7-3.4 3.3.8 4.6L8 11.6l-4.2 2.2.8-4.6L1.2 5.9l4.7-.7z" fill="currentColor"/></svg>
-            Deep Security &amp; Cloud Domain Expertise
-          </li>
-          <li>
-            <svg class="cdp-icon" viewBox="0 0 16 16"><path d="M8 1l2.1 4.2 4.7.7-3.4 3.3.8 4.6L8 11.6l-4.2 2.2.8-4.6L1.2 5.9l4.7-.7z" fill="currentColor"/></svg>
-            Technical Enablement &amp; Teaching
-          </li>
-          <li>
-            <svg class="cdp-icon" viewBox="0 0 16 16"><path d="M8 1l2.1 4.2 4.7.7-3.4 3.3.8 4.6L8 11.6l-4.2 2.2.8-4.6L1.2 5.9l4.7-.7z" fill="currentColor"/></svg>
-            Customer Empathy &amp; Pre-Sales Advisory
-          </li>
-          <li>
-            <svg class="cdp-icon" viewBox="0 0 16 16"><path d="M8 1l2.1 4.2 4.7.7-3.4 3.3.8 4.6L8 11.6l-4.2 2.2.8-4.6L1.2 5.9l4.7-.7z" fill="currentColor"/></svg>
-            Content Creation &amp; Thought Leadership
-          </li>
-          <li>
-            <svg class="cdp-icon" viewBox="0 0 16 16"><path d="M8 1l2.1 4.2 4.7.7-3.4 3.3.8 4.6L8 11.6l-4.2 2.2.8-4.6L1.2 5.9l4.7-.7z" fill="currentColor"/></svg>
-            Community Building &amp; Mentorship
-          </li>
-          <li>
-            <svg class="cdp-icon" viewBox="0 0 16 16"><path d="M8 1l2.1 4.2 4.7.7-3.4 3.3.8 4.6L8 11.6l-4.2 2.2.8-4.6L1.2 5.9l4.7-.7z" fill="currentColor"/></svg>
-            Cross-Functional Relationship Building
-          </li>
-          <li>
-            <svg class="cdp-icon" viewBox="0 0 16 16"><path d="M8 1l2.1 4.2 4.7.7-3.4 3.3.8 4.6L8 11.6l-4.2 2.2.8-4.6L1.2 5.9l4.7-.7z" fill="currentColor"/></svg>
-            Innovation &amp; Problem-Solving Mindset
-          </li>
-        </ul>
+        {cdp.coreStrengths.map((s, i) => (
+          <div class={`cdp-strength-block${i > 0 ? ' cdp-subsection' : ''}`}>
+            <h5 class="cdp-strength-heading">{s.title}</h5>
+            <p class="cdp-strength-narrative">{s.narrative}</p>
+          </div>
+        ))}
 
-        <h5 class="cdp-subsection-title" style="margin-top: 1.25rem;">Subject Matter Expertise</h5>
         <div class="cdp-sme-grid">
-          <span class="cdp-sme-tag">Microsoft Sentinel</span>
-          <span class="cdp-sme-tag">XDR / Defender Suite</span>
-          <span class="cdp-sme-tag">Entra ID &amp; Identity</span>
-          <span class="cdp-sme-tag">Azure Networking</span>
-          <span class="cdp-sme-tag">Data Security / Purview</span>
-          <span class="cdp-sme-tag">AI Agent Security</span>
-          <span class="cdp-sme-tag">Threat Hunting</span>
-          <span class="cdp-sme-tag">SIEM Architecture</span>
-          <span class="cdp-sme-tag">PowerShell Automation</span>
-        </div>
-
-        <h5 class="cdp-subsection-title" style="margin-top: 1.25rem;">Certifications</h5>
-        <div class="cdp-cert-row">
-          <div class="cdp-cert-block">
-            <span class="cdp-cert-count">9</span>
-            <span class="cdp-cert-org">GIAC</span>
-          </div>
-          <div class="cdp-cert-block">
-            <span class="cdp-cert-count">8</span>
-            <span class="cdp-cert-org">CompTIA</span>
-          </div>
-          <div class="cdp-cert-block">
-            <span class="cdp-cert-count">3</span>
-            <span class="cdp-cert-org">Microsoft</span>
-          </div>
-          <div class="cdp-cert-block">
-            <span class="cdp-cert-count">1</span>
-            <span class="cdp-cert-org">Cisco</span>
-          </div>
-          <div class="cdp-cert-block">
-            <span class="cdp-cert-count">1</span>
-            <span class="cdp-cert-org">VMware</span>
-          </div>
+          {cdp.sme.map((tag) => <span class="cdp-sme-tag">{tag}</span>)}
         </div>
       </div>
     </div>
@@ -171,103 +70,96 @@
       <div class="cdp-col-content">
         <h5 class="cdp-subsection-title">Areas of Development</h5>
         <ul class="cdp-dev-list">
-          <li>Elevate executive presence and visibility</li>
-          <li>Strengthen strategic account planning skills</li>
-          <li>Deepen cross-org collaboration (ATU, STU, Partners, Engineering)</li>
-          <li>Sharpen business acumen and deal economics</li>
-          <li>Scale beyond individual contribution to force multiplication</li>
+          {cdp.developmentAreas.map((item) => <li>{item}</li>)}
         </ul>
 
-        <h5 class="cdp-subsection-title" style="margin-top: 1.25rem;">Development Actions (Next 12 Months)</h5>
+        <h5 class="cdp-subsection-title" style="margin-top: 1rem;">Development Actions</h5>
         <ul class="cdp-dev-list cdp-dev-actions">
-          <li>Establish 2x/month content cadence on blog and internal channels to build brand</li>
-          <li>Request stretch assignment on strategic HLS account with executive exposure</li>
-          <li>Identify and engage executive mentor (Principal or Director+)</li>
-          <li>Enroll in internal leadership development or presentation skills program</li>
-          <li>Build 3+ executive sponsor relationships in HLS accounts</li>
-          <li>Create reusable security playbook for field adoption at scale</li>
-          <li>Lead cross-team enablement initiative or deep dive series</li>
-          <li>Present at internal or external security conference</li>
-          <li>Mentor 2+ peers on the security specialization path</li>
+          {cdp.developmentActions.map((item) => <li>{item}</li>)}
         </ul>
+      </div>
+    </div>
 
-        <h5 class="cdp-subsection-title" style="margin-top: 1.25rem;">Target Roles</h5>
-        <div class="cdp-target-cards">
-          <div class="cdp-target-card cdp-target-card-1">
-            <span class="cdp-target-label">Technical Depth</span>
-            <strong>Principal Security SSE</strong>
-          </div>
-          <div class="cdp-target-card cdp-target-card-2">
-            <span class="cdp-target-label">Strategic Accounts</span>
-            <strong>Account Technology Strategist</strong>
-          </div>
-          <div class="cdp-target-card cdp-target-card-3">
-            <span class="cdp-target-label">People Leadership</span>
-            <strong>SSE Manager</strong>
-          </div>
+    <!-- Column 4: Career History -->
+    <div class="cdp-col cdp-col-history">
+      <div class="cdp-col-header cdp-col-header-steel">Career History</div>
+      <div class="cdp-col-content">
+        <div class="cdp-timeline">
+          {cdp.workHistory.map((w) => (
+            <div class={`cdp-timeline-item${w.current ? ' cdp-timeline-current' : ''}`}>
+              <span class="cdp-timeline-dates">{w.dates}</span>
+              <span class="cdp-timeline-company">{w.company}</span>
+              <span class="cdp-timeline-role">{w.role}</span>
+            </div>
+          ))}
+        </div>
+        <p class="cdp-prior-experience">Prior: {cdp.priorExperience}</p>
+
+        <div class="cdp-subsection">
+          <h5 class="cdp-subsection-title">Education</h5>
+          <ul class="cdp-edu-list">
+            {cdp.education.map((e) => (
+              <li><strong>{e.degree}</strong><span>{e.school}</span></li>
+            ))}
+          </ul>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ===== FULL-WIDTH BOTTOM: Progress Since Last Review ===== -->
-  <div class="cdp-progress-section">
+  <section class="cdp-progress-section">
     <div class="cdp-progress-header">
-      <h4 class="cdp-progress-title">Progress / Actions Since Last Review</h4>
-      <span class="cdp-progress-period">Last 6 months</span>
+      <h3 class="cdp-progress-title">Actions Since Last Review</h3>
+      <span class="cdp-progress-period">{cdp.edition}</span>
     </div>
-    <div class="cdp-progress-grid">
-      <div class="cdp-progress-item">
-        <div class="cdp-progress-dot cdp-dot-done"></div>
-        <div>
-          <strong>Published AI agent taxonomy framework</strong>
-          <p>Created a 4-level agent classification and identity governance model, published on blog and referenced as customer advisory material.</p>
-        </div>
-      </div>
-      <div class="cdp-progress-item">
-        <div class="cdp-progress-dot cdp-dot-done"></div>
-        <div>
-          <strong>Completed B.S. Applied Cybersecurity (SANS)</strong>
-          <p>Earned bachelor's degree from SANS Technology Institute, reinforcing deep technical foundation in incident handling, cloud security, and forensics.</p>
-        </div>
-      </div>
-      <div class="cdp-progress-item">
-        <div class="cdp-progress-dot cdp-dot-done"></div>
-        <div>
-          <strong>Transitioned to Security SSE role</strong>
-          <p>Moved from Azure Network Support to Security Specialist, expanding scope to the full Microsoft security stack for US Healthcare.</p>
-        </div>
-      </div>
-      <div class="cdp-progress-item">
-        <div class="cdp-progress-dot cdp-dot-done"></div>
-        <div>
-          <strong>Established thought leadership cadence</strong>
-          <p>Published 15+ posts covering cloud security, AI, leadership, and career development. Blog built from scratch with Astro and CI/CD.</p>
-        </div>
-      </div>
-      <div class="cdp-progress-item">
-        <div class="cdp-progress-dot cdp-dot-done"></div>
-        <div>
-          <strong>Continued community engagement</strong>
-          <p>Active ISSA education director. Mentored students and career changers in cybersecurity fundamentals and cloud certifications.</p>
-        </div>
-      </div>
-      <div class="cdp-progress-item">
-        <div class="cdp-progress-dot cdp-dot-done"></div>
-        <div>
-          <strong>Maintained 18 active certifications</strong>
-          <p>Including 9 GIAC, 8 CompTIA, 3 Microsoft, CCNA, and VCP-DCV. Demonstrates ongoing technical investment across domains.</p>
-        </div>
-      </div>
-    </div>
-  </div>
+    <ul class="cdp-progress-list">
+      {cdp.progress.map((item) => <li>{item}</li>)}
+    </ul>
+  </section>
 </div>
+
+<script>
+  function initCDP() {
+    const root = document.querySelector('[data-cdp]');
+    if (!root || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    // Animated count-up for numeric values
+    const counters = root.querySelectorAll('[data-count-to]');
+    const counted = new WeakSet();
+    const counterObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting || counted.has(entry.target)) return;
+        counted.add(entry.target);
+        const el = entry.target as HTMLElement;
+        const target = parseInt(el.dataset.countTo!, 10);
+        el.textContent = '0';
+        const duration = 900;
+        const start = performance.now();
+        function tick(now: number) {
+          const elapsed = now - start;
+          const progress = Math.min(elapsed / duration, 1);
+          const eased = 1 - Math.pow(1 - progress, 3);
+          el.textContent = String(Math.round(eased * target));
+          if (progress < 1) requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+      });
+    }, { threshold: 0.3 });
+    counters.forEach((el) => counterObserver.observe(el));
+  }
+
+  // Run on initial load and after Astro view transitions
+  initCDP();
+  document.addEventListener('astro:page-load', initCDP);
+</script>
 
 <style>
   .cdp {
     margin: 2.5rem 0;
     display: grid;
     gap: 0;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
   }
 
   /* ---- Edition banner ---- */
@@ -275,21 +167,23 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0.6rem 1.25rem;
-    background: linear-gradient(90deg, #0e6a61 0%, #195ca6 100%);
-    border-radius: 20px 20px 0 0;
+    padding: 0.35rem 1rem;
+    background: linear-gradient(90deg, #0e6a61 0%, #195ca6 50%, #0e6a61 100%);
+    background-size: 200% 100%;
+    animation: cdpShimmer 6s ease-in-out infinite;
+    border-radius: 14px 14px 0 0;
     color: white;
   }
 
   .cdp-edition-label {
-    font-size: 0.78rem;
+    font-size: 0.68rem;
     font-weight: 800;
     letter-spacing: 0.1em;
     text-transform: uppercase;
   }
 
   .cdp-edition-date {
-    font-size: 0.74rem;
+    font-size: 0.64rem;
     font-weight: 600;
     opacity: 0.8;
   }
@@ -299,40 +193,40 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 1.5rem;
-    padding: 1.25rem 1.5rem;
-    background: rgba(255, 255, 255, 0.92);
+    gap: 1rem;
+    padding: 0.65rem 1.25rem;
+    background: linear-gradient(135deg, #132235 0%, #1e3a5f 100%);
     border-left: 1px solid rgba(19, 34, 53, 0.1);
     border-right: 1px solid rgba(19, 34, 53, 0.1);
-    backdrop-filter: blur(18px);
+    color: white;
   }
 
   .cdp-name {
     margin: 0;
     font-family: 'Fraunces', serif;
-    font-size: 1.8rem;
-    color: #132235;
+    font-size: 1.5rem;
+    color: white;
     letter-spacing: -0.04em;
     line-height: 1;
   }
 
   .cdp-title {
-    margin: 0.2rem 0 0;
-    font-size: 1rem;
+    margin: 0.15rem 0 0;
+    font-size: 0.85rem;
     font-weight: 700;
-    color: #4f6070;
+    color: rgba(255, 255, 255, 0.85);
   }
 
   .cdp-org {
     margin: 0.1rem 0 0;
-    font-size: 0.82rem;
-    color: #728193;
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.6);
     font-weight: 600;
   }
 
   .cdp-header-meta {
     display: flex;
-    gap: 0.5rem;
+    gap: 0.4rem;
     flex-wrap: wrap;
     justify-content: flex-end;
   }
@@ -341,42 +235,48 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.15rem;
-    padding: 0.5rem 0.75rem;
-    border-radius: 12px;
-    background: rgba(19, 34, 53, 0.04);
-    border: 1px solid rgba(19, 34, 53, 0.08);
-    min-width: 5.5rem;
+    gap: 0.1rem;
+    padding: 0.3rem 0.5rem;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    min-width: 4.5rem;
     text-align: center;
   }
 
   .cdp-meta-key {
-    font-size: 0.62rem;
+    font-size: 0.58rem;
     font-weight: 800;
-    color: #728193;
+    color: rgba(255, 255, 255, 0.6);
     text-transform: uppercase;
     letter-spacing: 0.08em;
   }
 
   .cdp-meta-val {
     font-family: 'Fraunces', serif;
-    font-size: 1.1rem;
-    color: #132235;
+    font-size: 0.95rem;
+    color: white;
     line-height: 1;
+    font-variant-numeric: tabular-nums;
   }
 
-  /* ---- Three column body ---- */
+  /* ---- Four-column body ---- */
   .cdp-body {
     display: grid;
-    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.2fr) minmax(0, 1.1fr);
+    grid-template-columns: 1.1fr 1fr 1fr 0.9fr;
+    flex: 1;
     border-left: 1px solid rgba(19, 34, 53, 0.1);
     border-right: 1px solid rgba(19, 34, 53, 0.1);
     background: rgba(255, 255, 255, 0.82);
     backdrop-filter: blur(18px);
+    overflow: hidden;
   }
 
   .cdp-col {
     border-right: 1px solid rgba(19, 34, 53, 0.06);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
   }
 
   .cdp-col:last-child {
@@ -384,12 +284,13 @@
   }
 
   .cdp-col-header {
-    padding: 0.6rem 1rem;
-    font-size: 0.78rem;
+    padding: 0.35rem 0.75rem;
+    font-size: 0.68rem;
     font-weight: 800;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: white;
+    flex-shrink: 0;
   }
 
   .cdp-col-header-teal {
@@ -404,25 +305,31 @@
     background: linear-gradient(90deg, #132235 0%, #1e3a5f 100%);
   }
 
+  .cdp-col-header-steel {
+    background: linear-gradient(90deg, #475b6f 0%, #5e7589 100%);
+  }
+
   .cdp-col-content {
-    padding: 1rem;
+    padding: 0.55rem 0.7rem;
+    flex: 1;
+    overflow: hidden;
   }
 
   /* ---- Facts ---- */
   .cdp-facts {
     margin: 0;
     display: grid;
-    gap: 0.55rem;
+    gap: 0.3rem;
   }
 
   .cdp-fact {
     display: grid;
     grid-template-columns: auto 1fr;
-    gap: 0.35rem;
+    gap: 0.3rem;
   }
 
   .cdp-fact dt {
-    font-size: 0.72rem;
+    font-size: 0.65rem;
     font-weight: 800;
     color: #0e6a61;
     white-space: nowrap;
@@ -434,43 +341,128 @@
 
   .cdp-fact dd {
     margin: 0;
-    font-size: 0.82rem;
+    font-size: 0.72rem;
     font-weight: 600;
     color: #132235;
-    line-height: 1.4;
+    line-height: 1.35;
   }
 
   /* ---- Subsections ---- */
   .cdp-subsection {
-    margin-top: 1rem;
-    padding-top: 0.85rem;
+    margin-top: 0.5rem;
+    padding-top: 0.4rem;
     border-top: 1px solid rgba(19, 34, 53, 0.08);
   }
 
   .cdp-subsection-title {
-    margin: 0 0 0.55rem;
-    font-size: 0.72rem;
+    margin: 0 0 0.3rem;
+    font-size: 0.62rem;
     font-weight: 800;
     color: #728193;
     text-transform: uppercase;
     letter-spacing: 0.08em;
   }
 
-  /* ---- Impact list ---- */
-  .cdp-impact-list {
-    margin: 0;
-    padding: 0 0 0 0.9rem;
-    font-size: 0.8rem;
+  /* ---- Impact section ---- */
+  .cdp-impact-summary {
+    margin: 0.45rem 0 0.35rem;
+    padding-top: 0.4rem;
+    border-top: 1px solid rgba(19, 34, 53, 0.08);
+    font-size: 0.7rem;
     color: #4f6070;
-    line-height: 1.55;
+    line-height: 1.45;
+    font-style: italic;
   }
 
-  .cdp-impact-list li {
+  .cdp-impact-what {
     margin-bottom: 0.35rem;
   }
 
-  .cdp-impact-list li::marker {
+  .cdp-impact-what:last-child {
+    margin-bottom: 0;
+  }
+
+  .cdp-impact-goal {
+    display: inline-block;
+    padding: 0.08rem 0.35rem;
+    border-radius: 3px;
+    background: rgba(14, 106, 97, 0.1);
+    font-size: 0.58rem;
+    font-weight: 800;
     color: #0e6a61;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .cdp-impact-result {
+    margin: 0.15rem 0 0;
+    font-size: 0.68rem;
+    color: #132235;
+    line-height: 1.4;
+  }
+
+  /* ---- Progress section (full-width footer) ---- */
+  .cdp-progress-section {
+    padding: 0.5rem 1rem;
+    background: linear-gradient(135deg, #132235 0%, #1e3a5f 100%);
+    border-radius: 0 0 14px 14px;
+    color: white;
+    flex-shrink: 0;
+  }
+
+  .cdp-progress-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.35rem;
+    padding-bottom: 0.25rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  }
+
+  .cdp-progress-title {
+    margin: 0;
+    font-family: 'Fraunces', serif;
+    font-size: 0.85rem;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+
+  .cdp-progress-period {
+    font-size: 0.64rem;
+    font-weight: 700;
+    opacity: 0.6;
+    white-space: nowrap;
+  }
+
+  .cdp-progress-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.2rem 1rem;
+  }
+
+  .cdp-progress-list li {
+    display: flex;
+    align-items: baseline;
+    gap: 0.4rem;
+    font-size: 0.66rem;
+    line-height: 1.4;
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  .cdp-progress-list li::before {
+    content: '';
+    flex-shrink: 0;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: #0e6a61;
+    box-shadow: 0 0 0 2px rgba(14, 106, 97, 0.3);
+    position: relative;
+    top: -0.1em;
   }
 
   /* ---- Education list ---- */
@@ -481,17 +473,17 @@
   }
 
   .cdp-edu-list li {
-    margin-bottom: 0.4rem;
+    margin-bottom: 0.3rem;
   }
 
   .cdp-edu-list strong {
     display: block;
-    font-size: 0.82rem;
+    font-size: 0.72rem;
     color: #132235;
   }
 
   .cdp-edu-list span {
-    font-size: 0.74rem;
+    font-size: 0.64rem;
     color: #728193;
     font-style: italic;
   }
@@ -506,21 +498,23 @@
     display: grid;
     grid-template-columns: 1fr;
     gap: 0;
-    padding: 0.45rem 0 0.45rem 0.85rem;
+    padding: 0.25rem 0 0.25rem 0.7rem;
     border-left: 2px solid rgba(19, 34, 53, 0.12);
     position: relative;
+    transition: background 0.25s ease, padding-left 0.25s ease;
+    border-radius: 6px;
   }
 
   .cdp-timeline-item::before {
     content: '';
     position: absolute;
-    left: -4.5px;
-    top: 0.65rem;
-    width: 7px;
-    height: 7px;
+    left: -4px;
+    top: 0.5rem;
+    width: 6px;
+    height: 6px;
     border-radius: 50%;
     background: #728193;
-    border: 2px solid rgba(255, 255, 255, 0.9);
+    border: 1.5px solid rgba(255, 255, 255, 0.9);
   }
 
   .cdp-timeline-current {
@@ -529,116 +523,95 @@
 
   .cdp-timeline-current::before {
     background: #0e6a61;
-    box-shadow: 0 0 0 3px rgba(14, 106, 97, 0.2);
+    box-shadow: 0 0 0 2px rgba(14, 106, 97, 0.2);
+  }
+
+  .cdp-timeline-current:hover {
+    background: rgba(14, 106, 97, 0.06);
+    padding-left: 0.85rem;
   }
 
   .cdp-timeline-dates {
-    font-size: 0.68rem;
+    font-size: 0.6rem;
     font-weight: 800;
     color: #728193;
     letter-spacing: 0.04em;
   }
 
   .cdp-timeline-company {
-    font-size: 0.78rem;
+    font-size: 0.68rem;
     font-weight: 700;
     color: #132235;
   }
 
   .cdp-timeline-role {
-    font-size: 0.72rem;
+    font-size: 0.62rem;
     color: #4f6070;
   }
 
-  /* ---- Strength list ---- */
-  .cdp-strength-list {
-    margin: 0;
-    padding: 0;
-    list-style: none;
+  .cdp-prior-experience {
+    margin: 0.4rem 0 0;
+    padding: 0.3rem 0.5rem;
+    font-size: 0.6rem;
+    font-weight: 700;
+    color: #728193;
+    font-style: italic;
+    border-top: 1px dashed rgba(19, 34, 53, 0.12);
   }
 
-  .cdp-strength-list li {
-    display: flex;
-    align-items: flex-start;
-    gap: 0.45rem;
-    padding: 0.4rem 0;
-    border-bottom: 1px solid rgba(19, 34, 53, 0.06);
-    font-size: 0.84rem;
-    font-weight: 600;
+  /* ---- Strength narratives ---- */
+  .cdp-strength-block {
+    margin-bottom: 0.15rem;
+  }
+
+  .cdp-strength-heading {
+    margin: 0 0 0.2rem;
+    font-family: 'Fraunces', serif;
+    font-size: 0.78rem;
+    font-weight: 700;
     color: #132235;
-    line-height: 1.35;
+    letter-spacing: -0.01em;
   }
 
-  .cdp-strength-list li:last-child {
-    border-bottom: 0;
-  }
-
-  .cdp-icon {
-    flex-shrink: 0;
-    width: 14px;
-    height: 14px;
-    margin-top: 0.1rem;
-    color: #5b3a8c;
+  .cdp-strength-narrative {
+    margin: 0;
+    font-size: 0.68rem;
+    color: #4f6070;
+    line-height: 1.45;
   }
 
   /* ---- SME tags ---- */
   .cdp-sme-grid {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.35rem;
+    gap: 0.25rem;
+    margin-top: 0.4rem;
   }
 
   .cdp-sme-tag {
     display: inline-block;
-    padding: 0.25rem 0.55rem;
+    padding: 0.12rem 0.35rem;
     border-radius: 999px;
-    background: rgba(91, 58, 140, 0.08);
-    border: 1px solid rgba(91, 58, 140, 0.14);
-    font-size: 0.7rem;
+    background: #f3f0f8;
+    border: 1px solid #e0d6ed;
+    font-size: 0.54rem;
     font-weight: 700;
     color: #5b3a8c;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
   }
 
-  /* ---- Cert blocks ---- */
-  .cdp-cert-row {
-    display: flex;
-    gap: 0.4rem;
-    flex-wrap: wrap;
-  }
-
-  .cdp-cert-block {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 0.35rem 0.5rem;
-    border-radius: 10px;
-    background: rgba(91, 58, 140, 0.06);
-    border: 1px solid rgba(91, 58, 140, 0.1);
-    min-width: 3.2rem;
-  }
-
-  .cdp-cert-count {
-    font-family: 'Fraunces', serif;
-    font-size: 1.15rem;
-    color: #5b3a8c;
-    line-height: 1;
-  }
-
-  .cdp-cert-org {
-    font-size: 0.6rem;
-    font-weight: 800;
-    color: #728193;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
+  .cdp-sme-tag:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 58, 140, 0.15);
   }
 
   /* ---- Development list ---- */
   .cdp-dev-list {
     margin: 0;
-    padding: 0 0 0 0.9rem;
-    font-size: 0.8rem;
+    padding: 0 0 0 0.8rem;
+    font-size: 0.75rem;
     color: #132235;
-    line-height: 1.55;
+    line-height: 1.5;
   }
 
   .cdp-dev-list li {
@@ -653,146 +626,49 @@
     color: #4f6070;
   }
 
-  /* ---- Target role mini-cards ---- */
-  .cdp-target-cards {
-    display: grid;
-    gap: 0.4rem;
+  /* ---- Shimmer keyframe ---- */
+  @keyframes cdpShimmer {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
   }
 
-  .cdp-target-card {
-    padding: 0.55rem 0.75rem;
-    border-radius: 10px;
-    transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
-  }
+  /* ---- Scroll-driven entrance animations removed ----
+     The 16:9 aspect-ratio container with overflow:hidden prevents
+     animation-timeline: view() from triggering reliably.
+     Count-up animation on meta pills is kept via the script. ---- */
 
-  .cdp-target-card:hover {
-    transform: translateX(4px);
-  }
+  /* ---- Responsive: 2x2 grid ---- */
+  @media (max-width: 1100px) {
+    .cdp {
+      aspect-ratio: unset;
+      overflow: visible;
+    }
 
-  .cdp-target-card-1 {
-    background: linear-gradient(90deg, rgba(14, 106, 97, 0.08) 0%, rgba(14, 106, 97, 0.02) 100%);
-    border-left: 3px solid #0e6a61;
-  }
+    .cdp-body {
+      grid-template-columns: 1fr 1fr;
+      overflow: visible;
+    }
 
-  .cdp-target-card-2 {
-    background: linear-gradient(90deg, rgba(25, 92, 166, 0.08) 0%, rgba(25, 92, 166, 0.02) 100%);
-    border-left: 3px solid #195ca6;
-  }
-
-  .cdp-target-card-3 {
-    background: linear-gradient(90deg, rgba(61, 90, 128, 0.08) 0%, rgba(61, 90, 128, 0.02) 100%);
-    border-left: 3px solid #3d5a80;
-  }
-
-  .cdp-target-label {
-    display: block;
-    font-size: 0.62rem;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: #728193;
-  }
-
-  .cdp-target-card strong {
-    font-size: 0.84rem;
-    color: #132235;
-  }
-
-  /* ---- Progress section (full width bottom) ---- */
-  .cdp-progress-section {
-    background: linear-gradient(180deg, #e74c3c 0%, #c0392b 100%);
-    border-radius: 0 0 20px 20px;
-    padding: 1.25rem 1.5rem;
-    color: white;
-  }
-
-  .cdp-progress-header {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 1rem;
-    margin-bottom: 1rem;
-    padding-bottom: 0.6rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-  }
-
-  .cdp-progress-title {
-    margin: 0;
-    font-family: 'Fraunces', serif;
-    font-size: 1.2rem;
-    letter-spacing: -0.02em;
-    line-height: 1.1;
-  }
-
-  .cdp-progress-period {
-    font-size: 0.74rem;
-    font-weight: 700;
-    opacity: 0.7;
-    white-space: nowrap;
-  }
-
-  .cdp-progress-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0.85rem;
-  }
-
-  .cdp-progress-item {
-    display: flex;
-    gap: 0.6rem;
-    align-items: flex-start;
-  }
-
-  .cdp-progress-dot {
-    flex-shrink: 0;
-    width: 8px;
-    height: 8px;
-    margin-top: 0.35rem;
-    border-radius: 50%;
-  }
-
-  .cdp-dot-done {
-    background: white;
-    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.25);
-  }
-
-  .cdp-progress-item strong {
-    display: block;
-    font-size: 0.84rem;
-    line-height: 1.3;
-  }
-
-  .cdp-progress-item p {
-    margin: 0.15rem 0 0;
-    font-size: 0.76rem;
-    line-height: 1.5;
-    opacity: 0.8;
-  }
-
-  /* ---- Scroll-driven animation (progressive enhancement) ---- */
-  @supports (animation-timeline: view()) {
     .cdp-col {
-      opacity: 0;
-      animation: cdpFadeUp linear both;
-      animation-timeline: view();
-      animation-range: entry 5% cover 25%;
+      overflow: visible;
     }
 
-    .cdp-progress-item {
-      opacity: 0;
-      animation: cdpFadeUp linear both;
-      animation-timeline: view();
-      animation-range: entry 5% cover 30%;
+    .cdp-col:nth-child(2) {
+      border-right: 0;
     }
 
-    @keyframes cdpFadeUp {
-      from { opacity: 0; transform: translateY(16px); }
-      to   { opacity: 1; transform: translateY(0); }
+    .cdp-col:nth-child(1),
+    .cdp-col:nth-child(2) {
+      border-bottom: 1px solid rgba(19, 34, 53, 0.06);
+    }
+
+    .cdp-progress-list {
+      grid-template-columns: repeat(2, 1fr);
     }
   }
 
-  /* ---- Responsive ---- */
-  @media (max-width: 960px) {
+  /* ---- Responsive: single column ---- */
+  @media (max-width: 720px) {
     .cdp-body {
       grid-template-columns: 1fr;
     }
@@ -806,52 +682,45 @@
       border-bottom: 0;
     }
 
+    .cdp-edition {
+      flex-direction: column;
+      gap: 0.2rem;
+      align-items: flex-start;
+      border-radius: 12px 12px 0 0;
+    }
+
     .cdp-header {
       flex-direction: column;
       align-items: flex-start;
+      padding: 0.75rem 1rem;
     }
 
     .cdp-header-meta {
       justify-content: flex-start;
     }
 
-    .cdp-progress-grid {
+    .cdp-name {
+      font-size: 1.3rem;
+    }
+
+    .cdp-col-content {
+      padding: 0.75rem;
+    }
+
+    .cdp-progress-section {
+      padding: 0.75rem;
+      border-radius: 0 0 12px 12px;
+    }
+
+    .cdp-progress-list {
       grid-template-columns: 1fr;
     }
   }
 
-  @media (max-width: 720px) {
-    .cdp-edition {
-      flex-direction: column;
-      gap: 0.2rem;
-      align-items: flex-start;
-      border-radius: 16px 16px 0 0;
-    }
-
-    .cdp-header {
-      padding: 1rem;
-    }
-
-    .cdp-name {
-      font-size: 1.4rem;
-    }
-
-    .cdp-col-content {
-      padding: 0.85rem;
-    }
-
-    .cdp-progress-section {
-      padding: 1rem;
-      border-radius: 0 0 16px 16px;
-    }
-  }
-
   @media (prefers-reduced-motion: reduce) {
-    .cdp-col,
-    .cdp-progress-item {
-      opacity: 1;
+    .cdp-edition {
       animation: none;
-      transform: none;
+      background-size: 100% 100%;
     }
   }
 </style>
