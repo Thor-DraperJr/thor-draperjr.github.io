@@ -2,6 +2,7 @@
 title:  "Balancing Work, Education, and Personal Life: A Time Blocking Schedule"
 layout: post
 categories: life
+tags: [productivity, career]
 ---
 
 As someone who works a full-time job at Microsoft, teaches part-time, and is also working on obtaining multiple certifications through the SANS Institute, I understand the importance of balancing work, education, and personal life. To help manage my time and stay organized, I've adopted the time blocking technique.

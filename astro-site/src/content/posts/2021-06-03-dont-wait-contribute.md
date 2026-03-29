@@ -2,6 +2,7 @@
 title:  "Don’t Wait. Contribute Now."
 layout: post
 categories: business
+tags: [career, leadership]
 ---
 There are two types of people—those who find problems and those who bring solutions.
 

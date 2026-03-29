@@ -2,6 +2,7 @@
 title:  "Planning for Success"
 layout: post
 categories: business
+tags: [career, productivity]
 ---
 
 Imagine walking into a sales presentation and right as you finish shaking hands with your prospect, they turn to you and say, “you know what? Forget the slides. I’m ready to sign”. Are you prepared to respond? How many of us aren’t ready for that moment? The answer might surprise you. We’ve been told “no” so often in the sales world that it almost becomes expected. That mindset is what we will focus on today. I’m going to go over how to *Plan for Success* and how this strategy can directly increase your closing ratio. After reading this – you’ll not only be prepared for the “yes”; you’ll anticipate it..

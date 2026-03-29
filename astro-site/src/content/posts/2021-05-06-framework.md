@@ -2,6 +2,7 @@
 title:  "Building a Framework: Soft skills to help you dominate a career change"
 layout: post
 categories: business
+tags: [career, productivity]
 ---
 Changing careers is a daunting task.
 

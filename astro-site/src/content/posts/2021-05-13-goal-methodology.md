@@ -2,6 +2,7 @@
 title:  "Goal Methodology"
 layout: post
 categories: business
+tags: [career, productivity]
 ---
 Go from ‘Goal-Changer’ to ‘Goal-Doer’.
 

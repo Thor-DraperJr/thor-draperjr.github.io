@@ -2,6 +2,7 @@
 title:  "Taking Your Career to the Next Level"
 layout: post
 categories: business
+tags: [career, leadership]
 ---
 
 ## Introduction

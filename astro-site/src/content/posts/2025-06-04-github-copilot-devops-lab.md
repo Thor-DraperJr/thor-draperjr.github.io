@@ -2,6 +2,7 @@
 title: "Getting Started with GitHub Copilot for DevOps: Building Your Azure Lab with Vibe Coding"
 layout: post
 categories: tech
+tags: [ai, devops, cloud]
 ---
 
 Are you ready to supercharge your DevOps workflow with AI-powered coding assistance? GitHub Copilot isn't just for application development—it's a game-changer for infrastructure automation and DevOps practices. In this tutorial, we'll explore how to leverage GitHub Copilot to kickstart your "vibe coding" journey in the DevOps space, specifically focusing on building and managing infrastructure in Azure.

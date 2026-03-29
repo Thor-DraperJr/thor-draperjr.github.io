@@ -2,6 +2,7 @@
 title:  "Creating your momentum"
 layout: post
 categories: business
+tags: [career, productivity]
 ---
 
 ## Tagline

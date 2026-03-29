@@ -1,22 +1,10 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { getAboutPage } from '../lib/content';
-
-const page = getAboutPage();
+import AboutPage from '../components/AboutPage.astro';
 ---
 
-<Layout pageTitle={page.title} pageDescription={page.excerpt} currentPath="/about/">
-  <section class="post-layout">
-    <header class="page-hero">
-      <span class="eyebrow">About</span>
-      <h1 class="page-title">{page.title}</h1>
-    </header>
-
-    <article class="prose panel" set:html={page.html}></article>
-
-    <div class="button-row" style="margin-top: 1.5rem;">
-      <a class="button-ghost" href="/resume/">View the resume</a>
-      <a class="button-ghost" href="/archive/">Browse the archive</a>
-    </div>
+<Layout pageTitle="About" pageDescription="About Thor Draper Jr — Senior Security Solution Engineer at Microsoft protecting healthcare cloud environments." currentPath="/about/">
+  <section class="shell-container shell-container-wide">
+    <AboutPage />
   </section>
 </Layout>

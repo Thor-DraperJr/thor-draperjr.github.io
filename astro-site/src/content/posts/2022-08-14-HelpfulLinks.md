@@ -2,6 +2,7 @@
 title:  "Helpful Links"
 layout: post
 categories: tech
+tags: [cybersecurity, productivity]
 ---
 I often get asked for some links that would would help supplement learning and add in a bit of gamification to cyber. Here are my top 10 links:
 

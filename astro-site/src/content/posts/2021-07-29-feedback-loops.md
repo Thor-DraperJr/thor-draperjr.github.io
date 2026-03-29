@@ -2,6 +2,7 @@
 title:  "How to choose your cybersecurity career with Feedback Loops"
 layout: post
 categories: tech
+tags: [cybersecurity, career]
 ---
 I’ve had a tough time answering the question - “How do I get into Cybersecurity?”
 

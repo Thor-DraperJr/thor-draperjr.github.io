@@ -2,6 +2,7 @@
 title:  "Twitter to Power BI"
 layout: post
 categories: tech
+tags: [cloud, devops, productivity]
 ---
 Another tech tutorial!
 

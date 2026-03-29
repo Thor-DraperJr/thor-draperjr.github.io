@@ -2,6 +2,7 @@
 title:  "Growing your network virtually"
 layout: post
 categories: business
+tags: [career, leadership]
 ---
 
 It's not what you know. It’s who you know. So if your career changes or the world gets flipped on its head, and you're not allowed to meet people in person - how the heck do you go on meeting anyone?

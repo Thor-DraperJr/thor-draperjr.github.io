@@ -3,7 +3,7 @@ title: "Career Development Plan - H1 FY26 Edition"
 date: 2026-03-24
 draft: false
 categories: [career]
-tags: [career-development, leadership, microsoft, career-planning, cdp]
+tags: [career, leadership]
 excerpt: "I decided to make my career development plan public. This is the first edition of a series I will publish every six months -- because the kind of accountability that drives real growth does not happen in a file share."
 ---
 

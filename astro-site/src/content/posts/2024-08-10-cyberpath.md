@@ -2,6 +2,7 @@
 title:  "Choosing the Right Cybersecurity Career Path"
 layout: post
 categories: tech
+tags: [cybersecurity, career]
 ---
 
 ## Cybersecurity Career Path Questions

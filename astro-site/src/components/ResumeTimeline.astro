@@ -6,10 +6,10 @@ const totalCerts = certifications.reduce((s, g) => s + g.count, 0);
 
 <div class="resume-timeline" data-resume-timeline>
   <!-- Hero Header -->
-  <header class="rt-hero" data-reveal>
-    <span class="rt-hero-eyebrow">Resume</span>
-    <h1 class="rt-name">{summary.name}</h1>
-    <p class="rt-hero-role">Senior Security Solution Engineer at Microsoft</p>
+  <header class="hero-dark" data-reveal>
+    <span class="hero-dark-eyebrow">Resume</span>
+    <h1 class="hero-dark-name">{summary.name}</h1>
+    <p class="hero-dark-role" style="margin-bottom: 1.5rem">Senior Security Solution Engineer at Microsoft</p>
     <div class="rt-hero-stats">
       <div class="rt-stat">
         <span class="rt-stat-value">6</span>
@@ -163,18 +163,6 @@ const totalCerts = certifications.reduce((s, g) => s + g.count, 0);
   document.addEventListener('DOMContentLoaded', () => {
     const root = document.querySelector('[data-resume-timeline]');
     if (!root) return;
-
-    // Scroll-triggered reveal
-    const revealEls = root.querySelectorAll('[data-reveal]');
-    const revealObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-          revealObserver.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.15 });
-    revealEls.forEach(el => revealObserver.observe(el));
 
     // Timeline line fill
     const lineFill = root.querySelector('[data-timeline-fill]');

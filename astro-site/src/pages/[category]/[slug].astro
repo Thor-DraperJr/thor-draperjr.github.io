@@ -39,7 +39,7 @@ const careerParts = hasCareerDevPlan ? processedHtml.split(careerDevPlanMarker) 
 <Layout pageTitle={post.title} pageDescription={post.excerpt}>
   {hasCareerDevPlan ? (
     <>
-      <article class="post-layout">
+      <article class="shell-container">
         <header class="post-hero">
           <span class="eyebrow">{post.category}</span>
           <h1 class="post-heading">{post.title}</h1>
@@ -59,7 +59,7 @@ const careerParts = hasCareerDevPlan ? processedHtml.split(careerDevPlanMarker) 
         <CareerDevelopmentPlan />
       </div>
 
-      <article class="post-layout">
+      <article class="shell-container">
         {careerParts.length > 1 && (
           <section class="prose panel">
             <Fragment set:html={careerParts.slice(1).join(careerDevPlanMarker)} />
@@ -84,7 +84,7 @@ const careerParts = hasCareerDevPlan ? processedHtml.split(careerDevPlanMarker) 
       </article>
     </>
   ) : (
-    <article class="post-layout">
+    <article class="shell-container">
       <header class="post-hero">
         <span class="eyebrow">{post.category}</span>
         <h1 class="post-heading">{post.title}</h1>

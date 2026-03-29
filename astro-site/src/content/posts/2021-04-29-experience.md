@@ -2,6 +2,7 @@
 title:  "Experience without experience"
 layout: post
 categories: business
+tags: [career, productivity]
 ---
 Has anyone else heard the advice of “just ignore the experience requirement and apply anyway?” I agree (mainly because I’m a believer in you miss 100% of shots you don’t take). But I do feel like it’s a bit lazy. Don’t just blindly apply places, do something about it!
 

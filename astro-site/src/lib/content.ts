@@ -173,7 +173,9 @@ export function getPosts(): Post[] {
       const tags = ensureArray(data.tags);
       const category = normalizeSegment(categories[0] ?? 'posts');
       const dateFromFileName = path.basename(fileName).slice(0, 10);
-      const dateValue = String(data.date ?? dateFromFileName);
+      const dateValue = data.date instanceof Date
+        ? data.date.toISOString().slice(0, 10)
+        : String(data.date ?? dateFromFileName);
       const excerpt = deriveExcerpt(content, String(data.excerpt ?? ''));
       const draft = data.draft === true;
 

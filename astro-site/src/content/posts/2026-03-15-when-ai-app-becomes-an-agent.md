@@ -3,7 +3,7 @@ layout: post
 title: "AI in the Enterprise Is Crossing a Control Boundary"
 date: 2026-03-15
 categories: [tech]
-tags: [agent-id, entra, microsoft-foundry, service-principals, ai-agents, identity]
+tags: [ai, cybersecurity, cloud]
 excerpt: "The current enterprise AI conversation is full of category mistakes. This post starts a series on how to tell the difference between an AI-enhanced app, an assistive agent, an autonomous runtime, and the security controls that should change as authority increases."
 ---
 
