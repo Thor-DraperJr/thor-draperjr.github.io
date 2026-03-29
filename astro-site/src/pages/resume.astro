@@ -1,17 +1,10 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { getResumePage } from '../lib/content';
-
-const page = getResumePage();
+import ResumeTimeline from '../components/ResumeTimeline.astro';
 ---
 
-<Layout pageTitle={page.title} pageDescription={page.excerpt} currentPath="/resume/">
-  <section class="post-layout">
-    <header class="page-hero">
-      <span class="eyebrow">Resume</span>
-      <h1 class="page-title">{page.title}</h1>
-    </header>
-
-    <article class="prose panel" set:html={page.html}></article>
+<Layout pageTitle="Resume" pageDescription="Thor Draper Jr's career timeline -- from military service to Microsoft security leadership." currentPath="/resume/">
+  <section class="rt-page-width">
+    <ResumeTimeline />
   </section>
 </Layout>

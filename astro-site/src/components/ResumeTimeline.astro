@@ -1,0 +1,235 @@
+---
+import { summary, education, certifications, timeline, specialRoles, speakingEngagements, competencies } from '../lib/resume';
+
+const totalCerts = certifications.reduce((s, g) => s + g.count, 0);
+---
+
+<div class="resume-timeline" data-resume-timeline>
+  <!-- Hero Header -->
+  <header class="rt-hero" data-reveal>
+    <span class="rt-hero-eyebrow">Resume</span>
+    <h1 class="rt-name">{summary.name}</h1>
+    <p class="rt-hero-role">Senior Security Solution Engineer at Microsoft</p>
+    <div class="rt-hero-stats">
+      <div class="rt-stat">
+        <span class="rt-stat-value">6</span>
+        <span class="rt-stat-label">Career Chapters</span>
+      </div>
+      <div class="rt-stat">
+        <span class="rt-stat-value">{totalCerts}</span>
+        <span class="rt-stat-label">Certifications</span>
+      </div>
+      <div class="rt-stat">
+        <span class="rt-stat-value">5+</span>
+        <span class="rt-stat-label">Years at Microsoft</span>
+      </div>
+    </div>
+    <div class="rt-contact">
+      <a href={`mailto:${summary.contact.email}`}>{summary.contact.email}</a>
+      <a href={summary.contact.linkedin} target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+  </header>
+
+  <!-- Summary -->
+  <section class="rt-summary-block" data-reveal>
+    <p class="rt-summary">{summary.headline}</p>
+    <p class="rt-summary rt-summary-sub">{summary.sub}</p>
+  </section>
+
+  <!-- Education & Certs -->
+  <section class="rt-credentials" data-reveal>
+    <div class="rt-education">
+      <h2 class="rt-section-title">Education</h2>
+      {education.map(e => (
+        <div class="rt-edu-item">
+          <span class="rt-edu-degree">{e.degree}</span>
+          <span class="rt-edu-school">{e.school} &middot; {e.year}</span>
+        </div>
+      ))}
+    </div>
+    <div class="rt-certs">
+      <h2 class="rt-section-title">Certifications <span class="rt-cert-total">{totalCerts}</span></h2>
+      <div class="rt-cert-grid">
+        {certifications.map(g => (
+          <details class="rt-cert-group">
+            <summary>
+              {g.vendor}
+              <span class="cert-count">{g.count}</span>
+            </summary>
+            <ul>
+              {g.certs.map(c => <li>{c}</li>)}
+            </ul>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Timeline -->
+  <section class="rt-journey">
+    <h2 class="rt-section-title rt-journey-title" data-reveal>Experience</h2>
+
+    <div class="rt-track">
+      <div class="rt-line" aria-hidden="true">
+        <div class="rt-line-fill" data-timeline-fill></div>
+      </div>
+
+      {timeline.map((era, i) => (
+        <article
+          class={`rt-era ${i % 2 === 0 ? 'rt-era-left' : 'rt-era-right'}`}
+          data-reveal
+          data-era-id={era.id}
+        >
+          <div class="rt-era-dot" aria-hidden="true"></div>
+          <div class="rt-era-card panel">
+            <span class="rt-era-years">{era.years}</span>
+            <h3 class="rt-era-title">{era.title}</h3>
+            <span class="rt-era-org">{era.org}</span>
+            <p class="rt-era-desc">{era.description}</p>
+            <div class="rt-era-skills">
+              {era.skills.map(s => <span class="rt-skill-pill">{s}</span>)}
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <!-- Special Roles -->
+  {specialRoles.length > 0 && (
+    <section class="rt-special" data-reveal>
+      <h2 class="rt-section-title">Special Roles</h2>
+      {specialRoles.map(r => (
+        <div class="rt-special-item panel">
+          <span class="rt-era-years">{r.year}</span>
+          <h3 class="rt-era-title">{r.title}</h3>
+          <span class="rt-era-org">{r.org}</span>
+          <p class="rt-era-desc">{r.description}</p>
+          {r.link && <a href={r.link.url} target="_blank" rel="noopener" class="read-link">{r.link.label}</a>}
+        </div>
+      ))}
+    </section>
+  )}
+
+  <!-- Speaking Engagements & Publications -->
+  {speakingEngagements.length > 0 && (
+    <section class="rt-special" data-reveal>
+      <h2 class="rt-section-title">Speaking Engagements & Publications</h2>
+      {speakingEngagements.map(e => (
+        <div class="rt-special-item panel">
+          <h3 class="rt-era-title">{e.title}</h3>
+          <span class="rt-era-org">{e.venue}</span>
+          {e.url && <a href={e.url} target="_blank" rel="noopener" class="read-link">View</a>}
+        </div>
+      ))}
+    </section>
+  )}
+
+  <!-- Expertise Matrix -->
+  <section class="rt-matrix" data-matrix>
+    <div class="rt-matrix-header">
+      <span class="rt-matrix-eyebrow">Core Competencies</span>
+      <div class="rt-matrix-counter">
+        <span class="rt-matrix-count" data-matrix-count>0</span>
+        <span class="rt-matrix-count-label">skills mapped</span>
+      </div>
+    </div>
+    <div class="rt-matrix-grid">
+      {competencies.map((c, i) => (
+        <div class="rt-matrix-card" data-matrix-card style={`--card-index: ${i}`}>
+          <div class="rt-matrix-card-bar" aria-hidden="true"></div>
+          <h4 class="rt-matrix-card-label">{c.label}</h4>
+          <div class="rt-matrix-card-skills">
+            {c.skills.map((s, j) => (
+              <span class="rt-matrix-skill" style={`--skill-index: ${j}`}>{s}</span>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <div class="rt-footer" data-reveal>
+    <p>
+      <strong>Looking for a PDF version?</strong> Reach out via{' '}
+      <a href={summary.contact.linkedin} target="_blank" rel="noopener">LinkedIn</a>{' '}
+      for additional formats or to discuss opportunities.
+    </p>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const root = document.querySelector('[data-resume-timeline]');
+    if (!root) return;
+
+    // Scroll-triggered reveal
+    const revealEls = root.querySelectorAll('[data-reveal]');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    revealEls.forEach(el => revealObserver.observe(el));
+
+    // Timeline line fill
+    const lineFill = root.querySelector('[data-timeline-fill]');
+    const track = root.querySelector('.rt-track');
+    if (lineFill && track) {
+      const updateLine = () => {
+        const trackRect = track.getBoundingClientRect();
+        const viewMid = window.innerHeight * 0.6;
+        const progress = Math.min(1, Math.max(0, (viewMid - trackRect.top) / trackRect.height));
+        lineFill.style.transform = `scaleY(${progress})`;
+      };
+      window.addEventListener('scroll', updateLine, { passive: true });
+      updateLine();
+    }
+
+    // Expertise Matrix: staggered card + skill cascade
+    const matrix = root.querySelector('[data-matrix]');
+    if (matrix) {
+      const cards = matrix.querySelectorAll('[data-matrix-card]');
+      const counter = matrix.querySelector('[data-matrix-count]');
+      const totalSkills = matrix.querySelectorAll('.rt-matrix-skill').length;
+      let counted = false;
+
+      const matrixObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            matrix.classList.add('is-active');
+            matrixObserver.unobserve(entry.target);
+
+            // Stagger cards
+            cards.forEach((card, i) => {
+              setTimeout(() => {
+                card.classList.add('is-visible');
+              }, i * 180);
+            });
+
+            // Animate counter
+            if (counter && !counted) {
+              counted = true;
+              const duration = 1200;
+              const start = performance.now();
+              const tick = (now) => {
+                const elapsed = now - start;
+                const progress = Math.min(elapsed / duration, 1);
+                const eased = 1 - Math.pow(1 - progress, 3);
+                counter.textContent = Math.round(eased * totalSkills);
+                if (progress < 1) requestAnimationFrame(tick);
+              };
+              requestAnimationFrame(tick);
+            }
+          }
+        });
+      }, { threshold: 0.1 });
+
+      matrixObserver.observe(matrix);
+    }
+  });
+</script>
