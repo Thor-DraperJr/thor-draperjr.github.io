@@ -1,35 +1,26 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { getCategoryCounts, getPosts, getTagCounts, getYearCounts } from '../lib/content';
+import { getPosts } from '../lib/content';
 
 const posts = getPosts();
 const recentPosts = posts.slice(0, 8);
 const latest = posts[0];
-const firstPost = posts[posts.length - 1];
-const topTags = getTagCounts().sort((left, right) => right.count - left.count).slice(0, 4);
-const categorySignals = getCategoryCounts().slice(0, 4);
-const writingTempo = getYearCounts().slice(0, 4);
-const maxCategoryCount = Math.max(...categorySignals.map((item) => item.count), 1);
 ---
 
 <Layout pageTitle="Home" currentPath="/" wide>
 	<section class="shell-container shell-container-wide">
 		<div class="home-grid" data-reveal>
 			<div>
-				<span class="eyebrow">Field notes on security, AI, and leadership</span>
-				<h1 class="home-headline">Cloud defense, career strategy, and modern engineering from the field.</h1>
+				<span class="eyebrow">Operator's notebook</span>
+				<h1 class="home-headline">What holds up after the meeting.</h1>
 				<p class="home-copy">
-					I write about security engineering, Azure and AI workflows, and the habits that make technical
-					careers durable over time. Most of it comes from doing the work at Microsoft and teaching it to others.
+					I use this site to think in public, make sense of what I am learning, and keep a record of the ideas I want to come back to.
+					It is a working library built from the work itself: security, cloud, AI, leadership, and the long game of execution.
 				</p>
 
 				<div class="button-row">
 					<a class="button" href="/archive/">Browse the archive</a>
 					{latest && <a class="button-ghost" href={latest.permalink}>Read the latest piece</a>}
-				</div>
-
-				<div class="topic-list" style="margin-top: 1.1rem;">
-					{categorySignals.map(({ category }) => <span class="topic-pill">{category}</span>)}
 				</div>
 			</div>
 
@@ -45,76 +36,16 @@ const maxCategoryCount = Math.max(...categorySignals.map((item) => item.count), 
 						</div>
 					</article>
 				)}
-
-				<div class="signal-grid">
-					<article class="signal-card" data-reveal data-reveal-delay="2">
-						<span class="signal-value">{posts.length}</span>
-						<span class="signal-label">Published pieces</span>
-					</article>
-					<article class="signal-card" data-reveal data-reveal-delay="3">
-						<span class="signal-value">{firstPost?.date.getFullYear()}</span>
-						<span class="signal-label">Archive begins</span>
-					</article>
-					<article class="signal-card" data-reveal data-reveal-delay="4">
-						<span class="signal-value">{topTags.length > 0 ? topTags[0].count : 0}</span>
-						<span class="signal-label">Top theme mentions</span>
-					</article>
-				</div>
 			</div>
 		</div>
-
-		<section class="section-block" data-reveal>
-			<div class="section-header section-header-tight">
-				<div>
-					<span class="eyebrow">Archive signals</span>
-					<h2 class="section-title">Where the focus lands.</h2>
-				</div>
-				<p class="section-copy">Cloud security, technical habits, leadership, and translating complexity into action.</p>
-			</div>
-
-			<div class="signal-board">
-				<article class="panel signal-board-primary" data-reveal data-reveal-delay="1">
-					<div class="signal-board-heading">
-						<span class="eyebrow">Topic distribution</span>
-						<p class="section-copy">Top categories across the published archive.</p>
-					</div>
-
-					<div class="signal-bars">
-						{categorySignals.map((item) => (
-							<div class="signal-bar-row">
-								<div class="signal-bar-labels">
-									<span>{item.category}</span>
-									<span>{item.count}</span>
-								</div>
-								<div class="signal-bar-track">
-									<div class="signal-bar-fill" style={`width: ${(item.count / maxCategoryCount) * 100}%`}></div>
-								</div>
-							</div>
-						))}
-					</div>
-				</article>
-
-				<article class="panel signal-board-secondary" data-reveal data-reveal-delay="2">
-					<span class="eyebrow">Writing tempo</span>
-					<div class="timeline-list">
-						{writingTempo.map((item) => (
-							<div class="timeline-item">
-								<span class="timeline-year">{item.year}</span>
-								<span class="timeline-count">{item.count} posts</span>
-							</div>
-						))}
-					</div>
-				</article>
-			</div>
-		</section>
 
 		<section class="section-block" data-reveal>
 			<div class="section-header">
 				<div>
 					<span class="eyebrow">Recent writing</span>
-					<h2 class="section-title">From the archive.</h2>
+					<h2 class="section-title">What I'm working through now.</h2>
 				</div>
-				<p class="section-copy">The latest pieces on security, career strategy, and hands-on engineering.</p>
+				<p class="section-copy">The latest posts I'm testing, sharpening, or trying to make more useful.</p>
 			</div>
 
 			<div class="stream-list">
@@ -139,25 +70,25 @@ const maxCategoryCount = Math.max(...categorySignals.map((item) => item.count), 
 			<div class="section-header">
 				<div>
 					<span class="eyebrow">About Thor</span>
-					<h2 class="section-title">The non-traditional path is the point.</h2>
+					<h2 class="section-title">What keeps showing up in the work.</h2>
 				</div>
-				<p class="section-copy">Every chapter was a deliberate bet that paid compound interest into the next one.</p>
+				<p class="section-copy">Trust, translation, and a longer view than the room usually wants to take.</p>
 			</div>
 
 			<article class="panel" data-reveal data-reveal-delay="1">
-				<p class="section-copy">I sold gym memberships, managed a rental car fleet, ran my own business, taught cybersecurity to career-changers, and now I architect security solutions for healthcare's most critical clouds. A decade in sales and management taught me to read rooms, build trust fast, and translate complexity into action.</p>
+				<p class="section-copy">The roles changed over time, but the pattern did not. I keep getting pulled toward work that rewards clarity, trust, and the ability to make complicated things usable for someone else.</p>
 				<div class="note-grid" style="margin-top: 1.25rem;">
 					<div>
-						<h3>Security that stays concrete</h3>
-						<p class="section-copy">Architecture, cloud platforms, and defensive practice translated into language that can be used immediately.</p>
+						<h3>Technology without theater</h3>
+						<p class="section-copy">Architecture, platforms, and new tools explained in ways people can actually use.</p>
 					</div>
 					<div>
-						<h3>Career development with specifics</h3>
-						<p class="section-copy">Momentum, feedback, habits, and long-range positioning instead of generic motivational advice.</p>
+						<h3>Career advice without fluff</h3>
+						<p class="section-copy">Momentum, feedback, habits, and positioning without pretending a title solves the problem.</p>
 					</div>
 					<div>
-						<h3>AI and platform change in context</h3>
-						<p class="section-copy">New tooling connected to real technical work, with enough restraint to be useful after the launch cycle fades.</p>
+						<h3>Experiments worth keeping</h3>
+						<p class="section-copy">Drafts, operating principles, and technology experiments captured before they disappear into a notes app.</p>
 					</div>
 				</div>
 				<div class="button-row" style="margin-top: 1rem;">

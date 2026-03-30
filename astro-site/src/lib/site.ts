@@ -2,9 +2,9 @@ import type { SiteConfig } from './content';
 
 export const siteConfig: SiteConfig = {
 	title: 'Thor Draper Jr',
-	tagline: 'Senior Security Solution Engineer | Cloud security, AI, and career strategy',
+	tagline: 'Operator notes on technology, leadership, AI, and the long game',
 	description:
-		'Writing on cloud security, AI workflows, leadership, and career development from Thor Draper Jr.',
+		'A working library of ideas, experiments, and operator notes on technology, leadership, AI, and career development from Thor Draper Jr.',
 	lang: 'en',
 	url: 'https://thor-draperjr.github.io',
 	navigation: [

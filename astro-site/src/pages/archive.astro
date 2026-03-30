@@ -1,66 +1,170 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { getPosts, getTagCounts } from '../lib/content';
+import { getPosts } from '../lib/content';
 
 const posts = getPosts();
-const tags = getTagCounts();
+const archiveBegins = posts[posts.length - 1]?.date.getFullYear();
+
+function normalizeSearchText(value: string) {
+  return value.toLowerCase().replace(/\s+/g, ' ').trim();
+}
+
+const archivePosts = posts.map((post) => ({
+  ...post,
+  searchText: normalizeSearchText([
+    post.title,
+    post.excerpt,
+    post.rawContent,
+    post.tags.join(' '),
+    post.categories.join(' '),
+    String(post.date.getFullYear()),
+  ].join(' ')),
+}));
+
+const archiveVolumes = [...archivePosts.reduce((map, post) => {
+  const year = post.date.getFullYear();
+  const collection = map.get(year) ?? [];
+  collection.push(post);
+  map.set(year, collection);
+  return map;
+}, new Map<number, typeof archivePosts>())]
+  .sort((left, right) => right[0] - left[0])
+  .map(([year, items]) => ({ year, items }));
 ---
 
 <Layout pageTitle="Archive" currentPath="/archive/" wide>
-  <section class="shell-container shell-container-wide">
-    <header class="page-hero">
-      <span class="eyebrow">Archive</span>
-      <h1 class="page-title">All posts</h1>
-      <p class="section-copy">{posts.length} posts and counting. Filter by tags or browse chronologically.</p>
-    </header>
+  <section class="shell-container shell-container-wide archive-page-shell page-stage-shell">
+  <div class="archive-index-shell">
+      <aside class="panel archive-index-rail">
+        <span class="eyebrow">Archive</span>
+        <h1 class="archive-index-title">Volume index</h1>
+        <p class="section-copy">Search the record or jump straight into a year. The archive starts in {archiveBegins} and stays ordered like a stack, not a feed.</p>
 
-    <div class="archive-tools panel">
-      <span class="eyebrow">Filter by topic</span>
-      <div class="tag-filter-list">
-        <button class="tag-filter-button is-active" data-tag="all">All posts <span>{posts.length}</span></button>
-        {tags.map(({ tag, count }) => (
-          <button class="tag-filter-button" data-tag={tag.toLowerCase()}>{tag} <span>{count}</span></button>
+        <label class="archive-search-field" for="archive-search-input">
+          <span class="archive-search-label">Search the archive</span>
+          <input id="archive-search-input" class="archive-search-input" type="search" placeholder="Try: agent, momentum, Azure, feedback, planning..." autocomplete="off" data-archive-search />
+        </label>
+
+        <div class="archive-index-status">
+          <span class="archive-index-status-count" data-archive-count>{posts.length}</span>
+          <span class="archive-index-status-copy">records visible</span>
+        </div>
+
+        <div class="archive-index-status archive-index-status-detail">
+          <span class="archive-results-label">Search</span>
+          <span class="archive-results-current" data-archive-query>Any text</span>
+        </div>
+
+        <div class="archive-year-nav">
+          {archiveVolumes.map(({ year, items }) => (
+          <a class="archive-year-link" href={`#volume-${year}`} data-year-link={year} aria-label={`Jump to ${year}`}>
+              <span class="archive-year-link-label">{year}</span>
+              <span class="archive-year-link-count" data-year-link-count>{items.length}</span>
+          </a>
+          ))}
+        </div>
+      </aside>
+
+      <div class="archive-ledger" data-archive-ledger>
+        {archiveVolumes.map(({ year, items }) => (
+          <section id={`volume-${year}`} class="panel archive-year-section" data-archive-year={year}>
+            <header class="archive-year-header">
+              <span class="archive-year-kicker">Volume</span>
+              <h2 class="archive-year-title">{year}</h2>
+              <span class="archive-year-count" data-archive-year-count>{items.length} entries</span>
+            </header>
+
+            <div class="archive-record-list">
+              {items.map((post, index) => (
+                <article class="archive-record" data-category={post.category} data-tags={post.tags.map((tag) => tag.toLowerCase()).join(',')} data-search={post.searchText} data-year={year}>
+                  <div class="archive-record-spine">
+                    <span class="archive-record-date">{post.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</span>
+                    <span class="archive-record-call">{year}.{String(index + 1).padStart(2, '0')}</span>
+                  </div>
+
+                  <div class="archive-record-main">
+                    <div class="archive-record-topline">
+                      <span class="archive-record-desk">{post.categories[0] ?? post.category}</span>
+                      <span class="archive-record-time">{post.readingTime} min read</span>
+                    </div>
+
+                    <h3 class="archive-record-title"><a href={post.permalink}>{post.title}</a></h3>
+                    <p class="archive-record-excerpt">{post.excerpt}</p>
+
+                    <div class="archive-record-index">
+                      <span class="archive-record-index-label">Index terms</span>
+                      <div class="archive-record-terms">
+                        {post.tags.map((tag) => <span class="archive-record-term">{tag}</span>)}
+                      </div>
+                    </div>
+                  </div>
+
+                  <a class="read-link archive-record-link" href={post.permalink}>Open article</a>
+                </article>
+              ))}
+            </div>
+          </section>
         ))}
       </div>
     </div>
 
-    <div class="archive-grid">
-      {posts.map((post) => (
-        <article class="panel archive-card" data-tags={post.tags.map((tag) => tag.toLowerCase()).join(',')}>
-          <div class="meta-row">
-            <span>{post.date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
-            <span>{post.readingTime} min read</span>
-          </div>
-
-          <h2 class="archive-card-title"><a href={post.permalink}>{post.title}</a></h2>
-          <p class="card-copy">{post.excerpt}</p>
-
-          <div class="post-tags" style="margin-top: 1rem; margin-bottom: 1rem;">
-            {post.tags.map((tag) => <span class="post-tag">{tag}</span>)}
-          </div>
-
-          <a class="read-link" href={post.permalink}>Read more</a>
-        </article>
-      ))}
+    <div class="panel empty-state" data-archive-empty hidden>
+      <h2 class="archive-empty-title">No entries match this view.</h2>
+	  <p class="section-copy">Try a broader search term or clear the query to widen the record.</p>
     </div>
   </section>
 
   <script>
-    const buttons = Array.from(document.querySelectorAll('.tag-filter-button'));
-    const cards = Array.from(document.querySelectorAll('.archive-card'));
+    const records = Array.from(document.querySelectorAll('.archive-record'));
+    const yearSections = Array.from(document.querySelectorAll('[data-archive-year]'));
+    const yearLinks = Array.from(document.querySelectorAll('[data-year-link]'));
+    const countNode = document.querySelector('[data-archive-count]');
+    const emptyState = document.querySelector('[data-archive-empty]');
+    const queryNode = document.querySelector('[data-archive-query]');
+    const searchInput = document.querySelector('[data-archive-search]');
 
-    buttons.forEach((button) => {
-      button.addEventListener('click', () => {
-        const tag = button.dataset.tag ?? 'all';
+    let activeQuery = '';
 
-        buttons.forEach((item) => item.classList.toggle('is-active', item === button));
+    function updateArchiveView() {
+      let visibleCount = 0;
+      const normalizedQuery = activeQuery.toLowerCase().trim();
 
-        cards.forEach((card) => {
-          const cardTags = (card.getAttribute('data-tags') ?? '').split(',').filter(Boolean);
-          const matches = tag === 'all' || cardTags.includes(tag);
-          card.style.display = matches ? '' : 'none';
-        });
+      records.forEach((record) => {
+        const searchText = record.getAttribute('data-search') ?? '';
+        const matchesQuery = !normalizedQuery || searchText.includes(normalizedQuery);
+        const visible = matchesQuery;
+
+        record.toggleAttribute('hidden', !visible);
+        if (visible) visibleCount += 1;
       });
-    });
+
+      yearSections.forEach((section) => {
+        const sectionYear = section.getAttribute('data-archive-year');
+        const visibleInSection = section.querySelectorAll('.archive-record:not([hidden])').length;
+        const countLabel = section.querySelector('[data-archive-year-count]');
+        section.toggleAttribute('hidden', visibleInSection === 0);
+        if (countLabel) countLabel.textContent = `${visibleInSection} entr${visibleInSection === 1 ? 'y' : 'ies'}`;
+
+        const yearLink = yearLinks.find((link) => link.getAttribute('data-year-link') === sectionYear);
+        if (yearLink) {
+          yearLink.toggleAttribute('hidden', visibleInSection === 0);
+          const countNode = yearLink.querySelector('[data-year-link-count]');
+          if (countNode) countNode.textContent = String(visibleInSection);
+        }
+      });
+
+      if (countNode) countNode.textContent = String(visibleCount);
+      if (queryNode) queryNode.textContent = normalizedQuery ? `"${activeQuery}"` : 'Any text';
+      if (emptyState) emptyState.toggleAttribute('hidden', visibleCount > 0);
+    }
+
+    if (searchInput instanceof HTMLInputElement) {
+      searchInput.addEventListener('input', () => {
+        activeQuery = searchInput.value.trim();
+        updateArchiveView();
+      });
+    }
+
+    updateArchiveView();
   </script>
 </Layout>
