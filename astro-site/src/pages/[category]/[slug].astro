@@ -2,6 +2,7 @@
 import Layout from '../../layouts/Layout.astro';
 import RuntimeControlChart from '../../components/RuntimeControlChart.astro';
 import CareerDevelopmentPlan from '../../components/CareerDevelopmentPlan.astro';
+import CharlotteArtsMap from '../../components/CharlotteArtsMap.astro';
 import { getPosts } from '../../lib/content';
 
 export function getStaticPaths() {
@@ -24,16 +25,20 @@ const { post, previous, next } = Astro.props;
 
 const runtimeChartMarker = '[[RUNTIME_CONTROL_CHART]]';
 const careerDevPlanMarker = '[[CAREER_DEV_PLAN]]';
+const charlotteArtsMapMarker = '[[CHARLOTTE_ARTS_MAP]]';
 
 let processedHtml = post.html;
 processedHtml = processedHtml.replace(`<p>${runtimeChartMarker}</p>`, runtimeChartMarker);
 processedHtml = processedHtml.replace(`<p>${careerDevPlanMarker}</p>`, careerDevPlanMarker);
+processedHtml = processedHtml.replace(`<p>${charlotteArtsMapMarker}</p>`, charlotteArtsMapMarker);
 
 const hasRuntimeChart = processedHtml.includes(runtimeChartMarker);
 const hasCareerDevPlan = processedHtml.includes(careerDevPlanMarker);
+const hasCharlotteArtsMap = processedHtml.includes(charlotteArtsMapMarker);
 
 const runtimeParts = hasRuntimeChart ? processedHtml.split(runtimeChartMarker) : [];
 const careerParts = hasCareerDevPlan ? processedHtml.split(careerDevPlanMarker) : [];
+const charlotteArtsMapParts = hasCharlotteArtsMap ? processedHtml.split(charlotteArtsMapMarker) : [];
 ---
 
 <Layout pageTitle={post.title} pageDescription={post.excerpt}>
@@ -105,6 +110,12 @@ const careerParts = hasCareerDevPlan ? processedHtml.split(careerDevPlanMarker) 
             <Fragment set:html={runtimeParts[0]} />
             <RuntimeControlChart />
             <Fragment set:html={runtimeParts.slice(1).join(runtimeChartMarker)} />
+          </>
+        ) : hasCharlotteArtsMap ? (
+          <>
+            <Fragment set:html={charlotteArtsMapParts[0]} />
+            <CharlotteArtsMap />
+            <Fragment set:html={charlotteArtsMapParts.slice(1).join(charlotteArtsMapMarker)} />
           </>
         ) : (
           <Fragment set:html={processedHtml} />
