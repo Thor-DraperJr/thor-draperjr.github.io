@@ -1,6 +1,5 @@
 ---
 import {
-  artsMapCenter,
   artsMapFilters,
   artsRailStations,
   artsVenues,
@@ -111,24 +110,28 @@ const mapCanvasId = 'charlotte-arts-map-canvas';
   </div>
 </section>
 
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+  import * as L from 'leaflet';
+  import 'leaflet/dist/leaflet.css';
+  import { artsMapCenter as mapCenter, artsRailStations as stations, artsVenues as venues } from '../lib/charlotteArtsMap';
 
-<script define:vars={{ venues: artsVenues, stations: artsRailStations, mapCenter: artsMapCenter }}>
   function initCharlotteArtsMaps() {
     const roots = Array.from(document.querySelectorAll('[data-charlotte-arts-map]'));
-    if (!roots.length || !window.L) return;
+    if (!roots.length) return;
 
     roots.forEach((root) => {
       if (root.dataset.initialized === 'true') return;
       root.dataset.initialized = 'true';
 
-      const L = window.L;
       const mapCanvas = root.querySelector('[data-map-canvas]');
       const filterButtons = Array.from(root.querySelectorAll('[data-map-filter]'));
       const venueCards = Array.from(root.querySelectorAll('[data-venue-card]'));
       const focusButtons = Array.from(root.querySelectorAll('[data-focus-venue]'));
 
       if (!mapCanvas) return;
+
+      const fallback = mapCanvas.querySelector('.arts-map-fallback');
+      fallback?.remove();
 
       const stationLookup = new Map(stations.map((station) => [station.id, station]));
       const venueLookup = new Map(venues.map((venue) => [venue.id, venue]));
@@ -392,13 +395,16 @@ const mapCanvasId = 'charlotte-arts-map-canvas';
     });
   }
 
-  initCharlotteArtsMaps();
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initCharlotteArtsMaps, { once: true });
+  } else {
+    initCharlotteArtsMaps();
+  }
+
   document.addEventListener('astro:page-load', initCharlotteArtsMaps);
 </script>
 
 <style is:global>
-  @import url('https://unpkg.com/leaflet@1.9.4/dist/leaflet.css');
-
   .arts-map-shell {
     margin: 2.5rem 0;
     padding: 1.4rem;
@@ -555,10 +561,12 @@ const mapCanvasId = 'charlotte-arts-map-canvas';
     display: grid;
     gap: 0.8rem;
     max-height: 41rem;
-    overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
   }
 
   .arts-map-card {
+    min-width: 0;
     padding: 0.95rem;
     border: 1px solid rgba(19, 34, 53, 0.1);
     border-radius: 18px;
@@ -573,6 +581,7 @@ const mapCanvasId = 'charlotte-arts-map-canvas';
   }
 
   .arts-map-card-hit {
+    min-width: 0;
     width: 100%;
     padding: 0;
     border: none;
@@ -592,6 +601,7 @@ const mapCanvasId = 'charlotte-arts-map-canvas';
 
   .arts-map-card-title {
     display: block;
+    min-width: 0;
     font-weight: 800;
     color: var(--ink);
   }
@@ -632,17 +642,22 @@ const mapCanvasId = 'charlotte-arts-map-canvas';
     flex-wrap: wrap;
     gap: 0.55rem;
     margin-top: 0.8rem;
+    min-width: 0;
   }
 
   .arts-map-card-actions a,
   .arts-map-card-static {
     display: inline-flex;
     align-items: center;
+    max-width: 100%;
     padding: 0.5rem 0.72rem;
     border-radius: 999px;
     text-decoration: none;
     font-size: 0.78rem;
     font-weight: 800;
+    line-height: 1.35;
+    overflow-wrap: anywhere;
+    white-space: normal;
   }
 
   .arts-map-card-actions a {
