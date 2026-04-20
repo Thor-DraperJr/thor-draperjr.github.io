@@ -60,7 +60,7 @@ The host app still owns the logic, permissions, and runtime. Least privilege on 
 
 ### Level 1: Assistive agent
 
-These workloads are typically divided into two sub-levels: Narrow Assistive and Rich Assistive. These workloads are typically grounded in a constrained source and are mostly user-led, using permissions extended on behalf of (OBO) the user. The controls that matter here tend to be your regular RBAC controls. An agent that is only fetching content shoul only be able to read, no need to delete. An agent that can schedule meetings needs calendar write permissions, but only to the calendar app and not all SaaS.
+These workloads are typically divided into two sub-levels: Narrow Assistive and Rich Assistive. These workloads are typically grounded in a constrained source and are mostly user-led, using permissions extended on behalf of (OBO) the user. The controls that matter here tend to be your regular RBAC controls. An agent that is only fetching content should only be able to read, no need to delete. An agent that can schedule meetings needs calendar write permissions, but only to the calendar app and not all SaaS.
 
 **Narrow Assistive**: An example would be an FAQ bot that only retrieves from a single SharePoint site.
 
@@ -70,11 +70,11 @@ These workloads are typically divided into two sub-levels: Narrow Assistive and 
 
 This is where the runtime begins acting without direct human steering. An event triggers actions. These can range from single directive tasks that may turn into more complex steps over time. Now that the runtime is taking more actions over time, the control model has to harden materially. The workload needs to be owned, the evidence needs to be clear, and the approval boundary needs to be stronger. A mix of authentication, privilege escalation, and time-bound access to toolsets needs to be on the table.
 
-As the agent receives a signal there maybe scenarios where they can take an action with default permissions, but if they need to acces a more sensitive source, we'll want to have a clear approval flow that can be audited and monitored. By nature the agent may be ephemeral, so speed of request, approval become more important.
+As the agent receives a signal there may be scenarios where they can take an action with default permissions, but if they need to access a more sensitive source, we'll want to have a clear approval flow that can be audited and monitored. By nature the agent may be ephemeral, so speed of request, approval become more important.
 
 ### Level 3: Agent user
 
-Here the workload either starts looking like a worker identity in systems such as mail, Teams, meetings, calendars, and documents, or multiple higher-authority runtimes coordinate across systems. The more they resemble a user, the more you full security estate controls should be applied.
+Here the workload either starts looking like a worker identity in systems such as mail, Teams, meetings, calendars, and documents, or multiple higher-authority runtimes coordinate across systems. The more they resemble a user, the more your full security estate controls should be applied.
 
 ## Question 4: Whose permissions are actually in play?
 
@@ -219,8 +219,8 @@ Assigning identities to AI workloads hopefully gives security teams confidence t
 
 What I'm hoping for in the next iterations:
 1. A clear way to tag agent classes. I'd like to see at a glance whether an agent is assistive, autonomous, or an agent user.
-2. A way to tag agent identities as production or development. That would help separate the noise for a risk acceptance perspective and make it easier to understand which identities are actually representing risk that can affect the organization.
-3. Unifying the way identities are represented. A single logical agent should have a single identity. Separating our blueprints and project identities - if you think of these as templates for onboarding a blueprint is more similar to a job role/id from an HR SOA than it is to a specific agent runtime. So it's important to keep the identity account list for the actual runtimes separate from the templates and blueprints that help us create them.
+2. A way to tag agent identities as production or development. That would help separate the noise from a risk acceptance perspective and make it easier to understand which identities are actually representing risk that can affect the organization.
+3. Unifying the way identities are represented. A single logical agent should have a single identity. Separating our blueprints and project identities - if you think of these as templates for onboarding, a blueprint is more similar to a job role/id from an HR SOA than it is to a specific agent runtime. So it's important to keep the identity account list for the actual runtimes separate from the templates and blueprints that help us create them.
 
 You can only begin at the beginning. I hope this was a useful sketch of how to think about the problem and where to start when you are ready to modernize.
 
