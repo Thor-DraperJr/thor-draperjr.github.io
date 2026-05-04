@@ -16,7 +16,7 @@ Feedback loops are everywhere. In nature, business, the arts, and everything in 
 
 To start your search, take a peek at the list of Cybersecurity Domains and choose a random five that seem remotely interesting to you.
 
-![Cyber Domains v3.1](/assets/images/cyberdomainsv31.png)
+![Cyber Domains v3.1](/assets/images/posts/2021-07-29-feedback-loops/cyberdomainsv31.png)
 
 Once you have your five, dedicate time learning/doing something related to the domain every day for a month. It can be extremely challenging when you don’t know what you’re passionate about. Unfortunately, by waiting for something or someone to come around and motivate, you are choosing inaction over action.
 

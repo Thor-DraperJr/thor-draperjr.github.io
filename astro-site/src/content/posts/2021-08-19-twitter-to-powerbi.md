@@ -12,7 +12,7 @@ From a high level: I'm going to use Azure Logic Apps to pull the content of my t
 
 To keep a simple and cost-effective task, I wanted to make sure that I was only grabbing the information I needed. So I decided on this structure for my tweets:
 
-![1](/assets/images/1-tweet-structure.png)
+![1](/assets/images/posts/2021-08-19-twitter-to-powerbi/1-tweet-structure.png)
 
 The Key:
 
@@ -45,7 +45,7 @@ Azure SQL Database is a relational database-as-a-service (DBaaS) hosted in Azure
 
 While creating the SQL Database, the first thing you need to do is search for SQL Databases.
 
-![2](/assets/images/2-SQL.png)
+![2](/assets/images/posts/2021-08-19-twitter-to-powerbi/2-SQL.png)
 
 On the next prompt, you'll be taken to the screen to Create SQL Database. This has six pages in the tab: Basics, Networking, Security, Additional settings, Tags, and Review + create.
 
@@ -92,7 +92,7 @@ I choose Basic computing and storage because it was relatively inexpensive, and 
 
 Once the database was provisioned, I used the Query editor (preview) to create my table and columns for the server.
 
-![4](/assets/images/sql-editor.png)
+![4](/assets/images/posts/2021-08-19-twitter-to-powerbi/sql-editor.png)
 
 The next step was to enter the following query:
 
@@ -111,7 +111,7 @@ Azure Logic Apps is a cloud-based platform for creating and running automated wo
 
 The next step is to navigate to the portal and search for Logic Apps.
 
-![5](/assets/images/3-Logic-Apps.png)
+![5](/assets/images/posts/2021-08-19-twitter-to-powerbi/3-Logic-Apps.png)
 
 On the next prompt, you'll be taken to the screen to Create SQL Database. When you open the create option, you'll see a page with five tabs. You don't need to pay attention to them for now because we will choose a consumption plan. Once you select that option, the tabs will simplify to three: Basics, Tabs, and Review + create.
 
@@ -136,11 +136,11 @@ The first 4000 actions are free. So unless you start tweeting a whole bunch, you
 
 A connector is a proxy or a wrapper around an API that the underlying service uses to communicate with Azure Logic Apps. When you build workflows using Azure Logic Apps, you can use connectors to help you quickly and easily access data, events, and resources in other apps, services, systems, protocols, and platforms - often without writing any code.
 
-![5](/assets/images/logic-app-designer.png)
+![5](/assets/images/posts/2021-08-19-twitter-to-powerbi/logic-app-designer.png)
 
 We are going to select "[When a new tweet is posted](https://docs.microsoft.com/en-us/connectors/twitter/#when-a-new-tweet-is-posted)". This will take you to the Logic App Designer, where you can connect to Twitter by signing in.
 
-![6](/assets/images/completed-designer.png)
+![6](/assets/images/posts/2021-08-19-twitter-to-powerbi/completed-designer.png)
 
 The trigger is:
 
@@ -170,11 +170,11 @@ You can sign up for Power BI [here](https://powerbi.microsoft.com/en-us/getting-
 
 First, you need to add your data source to your desktop app.
 
-![1](/assets/images/get-data-power-bi.png)
+![1](/assets/images/posts/2021-08-19-twitter-to-powerbi/get-data-power-bi.png)
 
 Next, you'll need to search for the Azure SQL database.
 
-![2](/assets/images/search-for-sql.png)
+![2](/assets/images/posts/2021-08-19-twitter-to-powerbi/search-for-sql.png)
 
 A pop-up will ask for your SQL server name, and for Database Connectivity, you'll need to choose "Import" as DirectQuery will not allow us to transform the data.
 
@@ -188,17 +188,17 @@ I used a Pie chart(Legend/Values = TweetText.2/Count of TweetText.2), a Funnel c
 
 Next, clicking the Analytics button will let you customize the Legend, Data colors, and Title.
 
-![6](/assets/images/dashboard.png)
+![6](/assets/images/posts/2021-08-19-twitter-to-powerbi/dashboard.png)
 
 ### Step 4: Setting Up Auto Refresh
 
 From the [Power BI web portal](https://app.powerbi.com/home) navigate to your newly created workspace and update the settings.
 
-![3](/assets/images/web-portal-settings.png)
+![3](/assets/images/posts/2021-08-19-twitter-to-powerbi/web-portal-settings.png)
 
 Scheduled refresh is one of the options to choose in the drop-down. You can set the frequency so the dashboard updates and pulls the latest data from your Azure SQL database.
 
-![4](/assets/images/final-dash.png)
+![4](/assets/images/posts/2021-08-19-twitter-to-powerbi/final-dash.png)
 
 ## Tips
 

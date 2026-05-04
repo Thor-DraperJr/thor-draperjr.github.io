@@ -17,11 +17,11 @@ The first thing that you'll want to deploy is the Azure Virtual Network Gateway 
 
 Navigate to the [Azure Portal](portal.azure.com)
 
-![1-search-vng.png](/assets/images/1-search-vng.png)
+![1-search-vng.png](/assets/images/posts/2021-07-31-azure-to-aws/1-search-vng.png)
 
 Search for and select `Virtual network gateway` once the page opens press create
 
-![2](/assets/images/2-blank-vng.png)
+![2](/assets/images/posts/2021-07-31-azure-to-aws/2-blank-vng.png)
 
 ```azure cli
 Subscription: [YOUR-SUBSCRIPTION]
@@ -58,7 +58,7 @@ Public IP address
 
 First, we've created a Resource Group, the container that holds related resources for an Azure solution. We've also created a vNet in the 10.0.0.0/16 address space as well as a dedicated GatewaySubnet. Currently, we've left the BGP selector disabled. We'll configure BGP after we've created our AWS resources.
 
-![2](/assets/images/2-blank-vng.png)
+![2](/assets/images/posts/2021-07-31-azure-to-aws/2-blank-vng.png)
 
 Before leaving the Azure platform you should see the Public IP address created fairly quickly.
 
@@ -66,15 +66,15 @@ Before leaving the Azure platform you should see the Public IP address created f
 
 Now we are onto the AWS console. Here we'll be creating our VPC and the VPN gateway. We can use the resource details we generated in Azure to create our Customer gateway. A customer gateway provides information to AWS about your customer gateway device. In our case, it's the VNG.
 
-![3](/assets/images/3-search-vpc.png)
+![3](/assets/images/posts/2021-07-31-azure-to-aws/3-search-vpc.png)
 
 Navigate to your [AWS Console](console.aws.amazon.com).
 
-![4](/assets/images/4-vpc-wizard.png)
+![4](/assets/images/posts/2021-07-31-azure-to-aws/4-vpc-wizard.png)
 
 Search for and select `VPC` once the page opens press `Launch VPC Wizard`
 
-![5](/assets/images/5-s2s-modify-vpn-tunnel.png)
+![5](/assets/images/posts/2021-07-31-azure-to-aws/5-s2s-modify-vpn-tunnel.png)
 
 The launch wizard has four steps. We are going to launch a VPC with a private subnet and VPN access. We'll use a 172 address space, so it's easy to tell with resources are in AWS and which are in Azure. Lastly, we'll need to put in the Public IP of the Azure VNG.
 
@@ -115,7 +115,7 @@ Step 3:
 
 Once our resources are created, we'll want to stay on the VPC page, use the left pane, and navigate the Site-to-Site VPN Connection. We need to do the two things here: changing the inside tunnel addresses and downloading our configuration and tunnel information.
 
-![5](/assets/images/5-s2s-modify-vpn-tunnel.png)
+![5](/assets/images/posts/2021-07-31-azure-to-aws/5-s2s-modify-vpn-tunnel.png)
 
 VIRTUAL PRIVATE NETWORK > Site-to-Site VPN Connections
 
@@ -128,7 +128,7 @@ Right-click on your newly created VPN Connection and select `Modify VPN Tunnel O
   * All other options can be left to their defaults
 ```
 
-![6](/assets/images/6-tunnel-details.png)
+![6](/assets/images/posts/2021-07-31-azure-to-aws/6-tunnel-details.png)
 
 Azure BGP IP in the ranges `169.254.21.*` and `169.254.22.*` while AWS makes you create a /30 CIDR in the 169.254.0.0/16 range. Your tunnel is automatically pulling the first address in the range. In our instance, it will be `169.254.21.1`.
 
@@ -184,7 +184,7 @@ Navigate to the [Azure Portal](portal.azure.com)
 
 Search for and select `Local network gateways` once the page opens, press create
 
-![7](/assets/images/7-lng.png)
+![7](/assets/images/posts/2021-07-31-azure-to-aws/7-lng.png)
 
 This is where you'll reference the config file that we downloaded from the AWS console.
 
@@ -202,7 +202,7 @@ This is where you'll reference the config file that we downloaded from the AWS c
 
 Search for and select `Virtual Network Gateways.` On the left menu pane Settings, choose `Configuration` and check the box `Configure BGP.` Add the Autonomous system number (ASN): 65000 <--- found in the config file [Customer Gateway ASN]
 
-![8](/assets/images/8-vng-bgp.png)
+![8](/assets/images/posts/2021-07-31-azure-to-aws/8-vng-bgp.png)
 
 ```aws cli
 Add the Autonomous system number (ASN): 65000 <--- found in the config file [Customer Gateway ASN]
@@ -215,7 +215,7 @@ To utilize both tunnels to make this a redundant connection, you'd need to creat
 ## Final Architecture
 
 You should now be able to spin up virtual machines in both cloud environments, and they should be able to ping each other. Keep in mind that you'll need to allow ICMP traffic outbound to the Instance in AWS.
-![9](/assets/images/9-final-architecture.png)
+![9](/assets/images/posts/2021-07-31-azure-to-aws/9-final-architecture.png)
 
 ## Troubleshooting
 

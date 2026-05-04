@@ -3,6 +3,7 @@ import Layout from '../../layouts/Layout.astro';
 import RuntimeControlChart from '../../components/RuntimeControlChart.astro';
 import CareerDevelopmentPlan from '../../components/CareerDevelopmentPlan.astro';
 import CharlotteArtsMap from '../../components/CharlotteArtsMap.astro';
+import WalkingDeck from '../../components/WalkingDeck.astro';
 import { getPosts } from '../../lib/content';
 
 export function getStaticPaths() {
@@ -26,19 +27,23 @@ const { post, previous, next } = Astro.props;
 const runtimeChartMarker = '[[RUNTIME_CONTROL_CHART]]';
 const careerDevPlanMarker = '[[CAREER_DEV_PLAN]]';
 const charlotteArtsMapMarker = '[[CHARLOTTE_ARTS_MAP]]';
+const walkingDeckMarker = '[[WALKING_DECK]]';
 
 let processedHtml = post.html;
 processedHtml = processedHtml.replace(`<p>${runtimeChartMarker}</p>`, runtimeChartMarker);
 processedHtml = processedHtml.replace(`<p>${careerDevPlanMarker}</p>`, careerDevPlanMarker);
 processedHtml = processedHtml.replace(`<p>${charlotteArtsMapMarker}</p>`, charlotteArtsMapMarker);
+processedHtml = processedHtml.replace(`<p>${walkingDeckMarker}</p>`, walkingDeckMarker);
 
 const hasRuntimeChart = processedHtml.includes(runtimeChartMarker);
 const hasCareerDevPlan = processedHtml.includes(careerDevPlanMarker);
 const hasCharlotteArtsMap = processedHtml.includes(charlotteArtsMapMarker);
+const hasWalkingDeck = processedHtml.includes(walkingDeckMarker);
 
 const runtimeParts = hasRuntimeChart ? processedHtml.split(runtimeChartMarker) : [];
 const careerParts = hasCareerDevPlan ? processedHtml.split(careerDevPlanMarker) : [];
 const charlotteArtsMapParts = hasCharlotteArtsMap ? processedHtml.split(charlotteArtsMapMarker) : [];
+const walkingDeckParts = hasWalkingDeck ? processedHtml.split(walkingDeckMarker) : [];
 ---
 
 <Layout pageTitle={post.title} pageDescription={post.excerpt}>
@@ -88,6 +93,50 @@ const charlotteArtsMapParts = hasCharlotteArtsMap ? processedHtml.split(charlott
         </nav>
       </article>
     </>
+  ) : hasWalkingDeck ? (
+    <>
+      <article class="shell-container">
+        <header class="post-hero">
+          <span class="eyebrow">{post.category}</span>
+          <h1 class="post-heading">{post.title}</h1>
+          <div class="post-meta-row">
+            <span>{post.date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
+            <span>{post.readingTime} min read</span>
+          </div>
+          {post.tags.length > 0 && (
+            <div class="post-tags" style="margin-top: 1rem;">
+              {post.tags.map((tag) => <span class="post-tag">{tag}</span>)}
+            </div>
+          )}
+        </header>
+      </article>
+
+      <div class="walking-deck-breakout">
+        <WalkingDeck />
+      </div>
+
+      <article class="shell-container">
+        <section class="prose panel">
+          <Fragment set:html={walkingDeckParts.join('')} />
+        </section>
+
+        <nav class="post-pagination">
+          {previous ? (
+            <a href={previous.permalink}>
+              <span>Older</span>
+              {previous.title}
+            </a>
+          ) : <div></div>}
+
+          {next ? (
+            <a href={next.permalink} style="text-align: right;">
+              <span>Newer</span>
+              {next.title}
+            </a>
+          ) : <div></div>}
+        </nav>
+      </article>
+    </>
   ) : (
     <article class="shell-container">
       <header class="post-hero">
@@ -116,6 +165,12 @@ const charlotteArtsMapParts = hasCharlotteArtsMap ? processedHtml.split(charlott
             <Fragment set:html={charlotteArtsMapParts[0]} />
             <CharlotteArtsMap />
             <Fragment set:html={charlotteArtsMapParts.slice(1).join(charlotteArtsMapMarker)} />
+          </>
+        ) : hasWalkingDeck ? (
+          <>
+            <Fragment set:html={walkingDeckParts[0]} />
+            <WalkingDeck />
+            <Fragment set:html={walkingDeckParts.slice(1).join(walkingDeckMarker)} />
           </>
         ) : (
           <Fragment set:html={processedHtml} />
