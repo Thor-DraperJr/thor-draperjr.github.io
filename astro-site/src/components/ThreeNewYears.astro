@@ -1,0 +1,603 @@
+---
+// ThreeNewYears.astro
+// Hero ring for the "Three New Years, Three Words" post.
+// Three personal new years are plotted around a 12-month bezel:
+//   Personal      April 7    -> "No loose ends"
+//   Relationship  July 11    -> "Magical"
+//   Professional  October 1  -> "Uncomfortable"
+// The ring shows a live "today" indicator and a HUD that names the
+// next upcoming new year, its word, and the days remaining.
+
+interface NewYearMark {
+  id: 'personal' | 'relationship' | 'professional';
+  label: string;
+  word: string;
+  dateLabel: string;
+  month: number; // 1-12
+  day: number;
+  // hue token used for the marker glow
+  tone: string;
+}
+
+const marks: NewYearMark[] = [
+  {
+    id: 'personal',
+    label: 'Personal',
+    word: 'No loose ends',
+    dateLabel: 'April 7',
+    month: 4,
+    day: 7,
+    tone: '#c98a3a',
+  },
+  {
+    id: 'relationship',
+    label: 'Relationship',
+    word: 'Magical',
+    dateLabel: 'July 11',
+    month: 7,
+    day: 11,
+    tone: '#d76a8a',
+  },
+  {
+    id: 'professional',
+    label: 'Professional',
+    word: 'Uncomfortable',
+    dateLabel: 'October 1',
+    month: 10,
+    day: 1,
+    tone: '#3aa1c9',
+  },
+];
+
+// Ring geometry
+const RING_RADIUS = 200;
+const TICK_INNER = 188;
+const TICK_OUTER = 212;
+const MARKER_RADIUS = RING_RADIUS;
+const VIEW = 520; // viewBox is -260 -260 520 520
+
+// Day of year (non-leap) for a given month/day
+function dayOfYear(month: number, day: number): number {
+  const cumulative = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
+  return cumulative[month - 1] + day;
+}
+
+function angleForDay(day: number): number {
+  // 0 at top, clockwise
+  return (day / 365) * 360;
+}
+
+function pointOnCircle(angleDeg: number, radius: number) {
+  const r = (angleDeg - 90) * (Math.PI / 180);
+  return { x: Math.cos(r) * radius, y: Math.sin(r) * radius };
+}
+
+const monthLabels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+// Pre-compute marker positions and serialize for client script
+const markerData = marks.map((m) => {
+  const day = dayOfYear(m.month, m.day);
+  const angle = angleForDay(day);
+  const pt = pointOnCircle(angle, MARKER_RADIUS);
+  return { ...m, day, angle, x: pt.x, y: pt.y };
+});
+---
+
+<section class="tny" aria-labelledby="tny-title">
+  <div class="tny-stage">
+    <svg
+      class="tny-svg"
+      viewBox={`-${VIEW / 2} -${VIEW / 2} ${VIEW} ${VIEW}`}
+      role="img"
+      aria-labelledby="tny-title tny-desc"
+    >
+      <title id="tny-title">A year ring with three personal new years</title>
+      <desc id="tny-desc">
+        A circular calendar marking April 7 as the personal new year, July 11 as the relationship
+        new year, and October 1 as the professional new year. A live indicator shows the current
+        date.
+      </desc>
+
+      <defs>
+        <radialGradient id="tny-stage-glow" cx="0.5" cy="0.5" r="0.6">
+          <stop offset="0%" stop-color="rgba(255, 255, 255, 0.45)" />
+          <stop offset="100%" stop-color="rgba(255, 255, 255, 0)" />
+        </radialGradient>
+        {markerData.map((m) => (
+          <radialGradient id={`tny-glow-${m.id}`} cx="0.5" cy="0.5" r="0.5">
+            <stop offset="0%" stop-color={m.tone} stop-opacity="0.85" />
+            <stop offset="60%" stop-color={m.tone} stop-opacity="0.18" />
+            <stop offset="100%" stop-color={m.tone} stop-opacity="0" />
+          </radialGradient>
+        ))}
+      </defs>
+
+      <circle cx="0" cy="0" r={RING_RADIUS + 60} fill="url(#tny-stage-glow)" />
+
+      <!-- main bezel ring -->
+      <circle
+        class="tny-ring"
+        cx="0"
+        cy="0"
+        r={RING_RADIUS}
+        fill="none"
+        stroke="rgba(19, 34, 53, 0.35)"
+        stroke-width="1.5"
+      />
+      <circle
+        class="tny-ring tny-ring-draw"
+        cx="0"
+        cy="0"
+        r={RING_RADIUS}
+        fill="none"
+        stroke="var(--accent)"
+        stroke-width="2"
+        stroke-linecap="round"
+      />
+
+      <!-- month ticks + labels -->
+      {monthLabels.map((label, i) => {
+        const day = dayOfYear(i + 1, 1);
+        const angle = angleForDay(day);
+        const inner = pointOnCircle(angle, TICK_INNER);
+        const outer = pointOnCircle(angle, TICK_OUTER);
+        const labelPt = pointOnCircle(angle + 1.2, TICK_OUTER + 18);
+        return (
+          <g class="tny-tick">
+            <line
+              x1={inner.x}
+              y1={inner.y}
+              x2={outer.x}
+              y2={outer.y}
+              stroke="rgba(19, 34, 53, 0.45)"
+              stroke-width="1"
+            />
+            <text
+              x={labelPt.x}
+              y={labelPt.y}
+              text-anchor="middle"
+              dominant-baseline="middle"
+              class="tny-month"
+            >{label}</text>
+          </g>
+        );
+      })}
+
+      <!-- markers -->
+      {markerData.map((m) => (
+        <g
+          class="tny-marker"
+          data-marker={m.id}
+          transform={`translate(${m.x} ${m.y})`}
+          tabindex="0"
+          role="button"
+          aria-label={`${m.label} new year, ${m.dateLabel}, word: ${m.word}`}
+        >
+          <circle r="42" fill={`url(#tny-glow-${m.id})`} class="tny-marker-glow" />
+          <circle r="9" fill={m.tone} stroke="var(--bg-strong)" stroke-width="2" />
+          <circle r="14" fill="none" stroke={m.tone} stroke-opacity="0.55" stroke-width="1" class="tny-marker-pulse" />
+        </g>
+      ))}
+
+      <!-- today indicator (positioned by script) -->
+      <g class="tny-today" data-today aria-hidden="true">
+        <line x1="0" y1="0" x2="0" y2={-RING_RADIUS - 6} stroke="var(--ink)" stroke-width="1.5" />
+        <circle cx="0" cy={-RING_RADIUS - 6} r="4" fill="var(--ink)" />
+      </g>
+
+      <!-- center readout -->
+      <g class="tny-center" data-center>
+        <text class="tny-center-eyebrow" data-center-eyebrow x="0" y="-26" text-anchor="middle">Next new year</text>
+        <text class="tny-center-word" data-center-word x="0" y="14" text-anchor="middle">Magical</text>
+        <text class="tny-center-meta" data-center-meta x="0" y="46" text-anchor="middle">Relationship · July 11</text>
+      </g>
+    </svg>
+  </div>
+
+  <div class="tny-hud" data-hud>
+    <div class="tny-hud-row">
+      <span class="tny-hud-label">Today</span>
+      <span class="tny-hud-value" data-hud-today>—</span>
+    </div>
+    <div class="tny-hud-row">
+      <span class="tny-hud-label">Up next</span>
+      <span class="tny-hud-value" data-hud-next>—</span>
+    </div>
+    <div class="tny-hud-row">
+      <span class="tny-hud-label">Days away</span>
+      <span class="tny-hud-value tny-hud-countdown" data-hud-days>—</span>
+    </div>
+  </div>
+
+  <div class="tny-legend">
+    {marks.map((m) => (
+      <button class="tny-legend-item" type="button" data-legend={m.id} style={`--tone: ${m.tone};`}>
+        <span class="tny-legend-dot" aria-hidden="true"></span>
+        <span class="tny-legend-text">
+          <span class="tny-legend-label">{m.label}</span>
+          <span class="tny-legend-word">{m.word}</span>
+          <span class="tny-legend-date">{m.dateLabel}</span>
+        </span>
+      </button>
+    ))}
+  </div>
+</section>
+
+<script is:inline define:vars={{ markerData }}>
+  (function () {
+    const root = document.currentScript.previousElementSibling;
+    if (!root || !root.classList.contains('tny')) return;
+
+    const RING = 200;
+    const months = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
+
+    function dayOfYearLocal(d) {
+      return months[d.getMonth()] + d.getDate();
+    }
+
+    function angleFor(day) {
+      return (day / 365) * 360;
+    }
+
+    function point(angleDeg, radius) {
+      const r = ((angleDeg - 90) * Math.PI) / 180;
+      return { x: Math.cos(r) * radius, y: Math.sin(r) * radius };
+    }
+
+    const now = new Date();
+    const today = dayOfYearLocal(now);
+
+    // Today indicator placement
+    const todayGroup = root.querySelector('[data-today]');
+    if (todayGroup) {
+      todayGroup.setAttribute('transform', `rotate(${angleFor(today)})`);
+    }
+
+    // Find next upcoming marker
+    const sorted = markerData
+      .map((m) => ({ ...m, delta: m.day >= today ? m.day - today : 365 - today + m.day }))
+      .sort((a, b) => a.delta - b.delta);
+    const next = sorted[0];
+
+    // Update center + HUD with the active mark
+    const centerWord = root.querySelector('[data-center-word]');
+    const centerMeta = root.querySelector('[data-center-meta]');
+    const centerEyebrow = root.querySelector('[data-center-eyebrow]');
+    const hudToday = root.querySelector('[data-hud-today]');
+    const hudNext = root.querySelector('[data-hud-next]');
+    const hudDays = root.querySelector('[data-hud-days]');
+
+    function setActive(id, isUserPick) {
+      const m = markerData.find((x) => x.id === id);
+      if (!m) return;
+      if (centerWord) centerWord.textContent = m.word;
+      if (centerMeta) centerMeta.textContent = `${m.label} · ${m.dateLabel}`;
+      if (centerEyebrow) centerEyebrow.textContent = isUserPick ? 'Selected' : 'Next new year';
+      // Apply tone to center word
+      if (centerWord) centerWord.style.fill = m.tone;
+      // Mark active in DOM
+      root.querySelectorAll('[data-marker]').forEach((el) => {
+        el.classList.toggle('is-active', el.getAttribute('data-marker') === id);
+      });
+      root.querySelectorAll('[data-legend]').forEach((el) => {
+        el.classList.toggle('is-active', el.getAttribute('data-legend') === id);
+      });
+    }
+
+    // Today HUD value
+    const todayLabel = now.toLocaleDateString(undefined, { month: 'long', day: 'numeric' });
+    if (hudToday) hudToday.textContent = todayLabel;
+    if (hudNext) hudNext.textContent = `${next.label} · ${next.word}`;
+    if (hudDays) hudDays.textContent = `${next.delta} ${next.delta === 1 ? 'day' : 'days'}`;
+
+    setActive(next.id, false);
+
+    // Marker click + keyboard
+    root.querySelectorAll('[data-marker]').forEach((el) => {
+      const id = el.getAttribute('data-marker');
+      el.addEventListener('click', () => setActive(id, true));
+      el.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          setActive(id, true);
+        }
+      });
+    });
+    root.querySelectorAll('[data-legend]').forEach((el) => {
+      const id = el.getAttribute('data-legend');
+      el.addEventListener('click', () => setActive(id, true));
+    });
+
+    // Reveal on intersect
+    if (!('IntersectionObserver' in window)) {
+      root.classList.add('is-ready');
+      return;
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            root.classList.add('is-ready');
+            io.disconnect();
+          }
+        });
+      },
+      { threshold: 0.25 },
+    );
+    io.observe(root);
+  })();
+</script>
+
+<style>
+  .tny {
+    width: min(100%, 60rem);
+    margin: 2.5rem auto;
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: 1fr;
+    align-items: center;
+  }
+
+  .tny-stage {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    max-width: 36rem;
+    margin: 0 auto;
+  }
+
+  .tny-svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+    overflow: visible;
+  }
+
+  .tny-month {
+    font-family: 'Manrope', system-ui, sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    fill: var(--ink-soft);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .tny-ring-draw {
+    stroke-dasharray: 1257; /* 2*pi*200 */
+    stroke-dashoffset: 1257;
+    transition: stroke-dashoffset 1400ms var(--motion-ease);
+  }
+
+  .tny.is-ready .tny-ring-draw {
+    stroke-dashoffset: 0;
+  }
+
+  .tny-marker {
+    cursor: pointer;
+    opacity: 0;
+    transform-box: fill-box;
+    transform-origin: center;
+    transition:
+      opacity 480ms var(--motion-ease),
+      transform 320ms var(--motion-ease);
+  }
+
+  .tny.is-ready .tny-marker {
+    opacity: 1;
+  }
+
+  .tny.is-ready [data-marker='personal'] {
+    transition-delay: 800ms;
+  }
+  .tny.is-ready [data-marker='relationship'] {
+    transition-delay: 950ms;
+  }
+  .tny.is-ready [data-marker='professional'] {
+    transition-delay: 1100ms;
+  }
+
+  .tny-marker:hover,
+  .tny-marker:focus-visible {
+    outline: none;
+  }
+  .tny-marker:hover .tny-marker-glow,
+  .tny-marker:focus-visible .tny-marker-glow,
+  .tny-marker.is-active .tny-marker-glow {
+    transform: scale(1.25);
+  }
+  .tny-marker-glow {
+    transform-box: fill-box;
+    transform-origin: center;
+    transition: transform 360ms var(--motion-ease);
+  }
+
+  .tny-marker-pulse {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: tny-pulse 2.6s ease-in-out infinite;
+  }
+  .tny-marker.is-active .tny-marker-pulse {
+    animation-duration: 1.4s;
+  }
+
+  @keyframes tny-pulse {
+    0%,
+    100% {
+      transform: scale(1);
+      opacity: 0.55;
+    }
+    50% {
+      transform: scale(1.6);
+      opacity: 0;
+    }
+  }
+
+  .tny-today {
+    opacity: 0;
+    transition: opacity 600ms var(--motion-ease) 1300ms;
+  }
+  .tny.is-ready .tny-today {
+    opacity: 1;
+  }
+
+  .tny-center {
+    opacity: 0;
+    transition: opacity 600ms var(--motion-ease) 1500ms;
+  }
+  .tny.is-ready .tny-center {
+    opacity: 1;
+  }
+
+  .tny-center-eyebrow {
+    font-family: 'Manrope', system-ui, sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    fill: var(--ink-muted);
+  }
+  .tny-center-word {
+    font-family: 'Lora', serif;
+    font-size: 32px;
+    font-weight: 600;
+    fill: var(--ink);
+    letter-spacing: -0.02em;
+    transition: fill 320ms var(--motion-ease);
+  }
+  .tny-center-meta {
+    font-family: 'Manrope', system-ui, sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    fill: var(--ink-soft);
+    letter-spacing: 0.04em;
+  }
+
+  .tny-hud {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.5rem 1.25rem;
+    padding: 1rem 1.25rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    background: var(--bg-soft);
+    backdrop-filter: blur(8px);
+  }
+  .tny-hud-row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    min-width: 0;
+  }
+  .tny-hud-label {
+    font-family: 'Manrope', system-ui, sans-serif;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+  .tny-hud-value {
+    font-family: 'Lora', serif;
+    font-size: 1.05rem;
+    color: var(--ink);
+    line-height: 1.2;
+  }
+  .tny-hud-countdown {
+    color: var(--accent);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .tny-legend {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.75rem;
+  }
+  .tny-legend-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    padding: 0.75rem 0.85rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    background: var(--bg-strong);
+    text-align: left;
+    cursor: pointer;
+    font-family: inherit;
+    color: inherit;
+    transition:
+      border-color 220ms var(--motion-ease),
+      transform 220ms var(--motion-ease),
+      box-shadow 220ms var(--motion-ease);
+  }
+  .tny-legend-item:hover,
+  .tny-legend-item:focus-visible,
+  .tny-legend-item.is-active {
+    border-color: var(--tone);
+    box-shadow: 0 12px 32px -18px var(--tone);
+    transform: translateY(-1px);
+    outline: none;
+  }
+  .tny-legend-dot {
+    width: 0.7rem;
+    height: 0.7rem;
+    border-radius: 50%;
+    background: var(--tone);
+    margin-top: 0.4rem;
+    flex-shrink: 0;
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--tone) 18%, transparent);
+  }
+  .tny-legend-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    min-width: 0;
+  }
+  .tny-legend-label {
+    font-family: 'Manrope', system-ui, sans-serif;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+  .tny-legend-word {
+    font-family: 'Lora', serif;
+    font-size: 1.1rem;
+    color: var(--ink);
+    line-height: 1.2;
+  }
+  .tny-legend-date {
+    font-family: 'Manrope', system-ui, sans-serif;
+    font-size: 0.78rem;
+    color: var(--ink-soft);
+  }
+
+  @media (max-width: 640px) {
+    .tny-hud,
+    .tny-legend {
+      grid-template-columns: 1fr;
+    }
+    .tny-month {
+      font-size: 11px;
+    }
+    .tny-center-word {
+      font-size: 26px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tny-ring-draw,
+    .tny-marker,
+    .tny-today,
+    .tny-center {
+      transition: none;
+    }
+    .tny-marker-pulse {
+      animation: none;
+    }
+    .tny.is-ready .tny-ring-draw {
+      stroke-dashoffset: 0;
+    }
+  }
+</style>

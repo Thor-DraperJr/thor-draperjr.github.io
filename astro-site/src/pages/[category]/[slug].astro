@@ -4,6 +4,7 @@ import RuntimeControlChart from '../../components/RuntimeControlChart.astro';
 import CareerDevelopmentPlan from '../../components/CareerDevelopmentPlan.astro';
 import CharlotteArtsMap from '../../components/CharlotteArtsMap.astro';
 import WalkingDeck from '../../components/WalkingDeck.astro';
+import ThreeNewYears from '../../components/ThreeNewYears.astro';
 import { getPosts } from '../../lib/content';
 
 export function getStaticPaths() {
@@ -28,22 +29,26 @@ const runtimeChartMarker = '[[RUNTIME_CONTROL_CHART]]';
 const careerDevPlanMarker = '[[CAREER_DEV_PLAN]]';
 const charlotteArtsMapMarker = '[[CHARLOTTE_ARTS_MAP]]';
 const walkingDeckMarker = '[[WALKING_DECK]]';
+const threeNewYearsMarker = '[[THREE_NEW_YEARS]]';
 
 let processedHtml = post.html;
 processedHtml = processedHtml.replace(`<p>${runtimeChartMarker}</p>`, runtimeChartMarker);
 processedHtml = processedHtml.replace(`<p>${careerDevPlanMarker}</p>`, careerDevPlanMarker);
 processedHtml = processedHtml.replace(`<p>${charlotteArtsMapMarker}</p>`, charlotteArtsMapMarker);
 processedHtml = processedHtml.replace(`<p>${walkingDeckMarker}</p>`, walkingDeckMarker);
+processedHtml = processedHtml.replace(`<p>${threeNewYearsMarker}</p>`, threeNewYearsMarker);
 
 const hasRuntimeChart = processedHtml.includes(runtimeChartMarker);
 const hasCareerDevPlan = processedHtml.includes(careerDevPlanMarker);
 const hasCharlotteArtsMap = processedHtml.includes(charlotteArtsMapMarker);
 const hasWalkingDeck = processedHtml.includes(walkingDeckMarker);
+const hasThreeNewYears = processedHtml.includes(threeNewYearsMarker);
 
 const runtimeParts = hasRuntimeChart ? processedHtml.split(runtimeChartMarker) : [];
 const careerParts = hasCareerDevPlan ? processedHtml.split(careerDevPlanMarker) : [];
 const charlotteArtsMapParts = hasCharlotteArtsMap ? processedHtml.split(charlotteArtsMapMarker) : [];
 const walkingDeckParts = hasWalkingDeck ? processedHtml.split(walkingDeckMarker) : [];
+const threeNewYearsParts = hasThreeNewYears ? processedHtml.split(threeNewYearsMarker) : [];
 ---
 
 <Layout pageTitle={post.title} pageDescription={post.excerpt}>
@@ -165,6 +170,12 @@ const walkingDeckParts = hasWalkingDeck ? processedHtml.split(walkingDeckMarker)
             <Fragment set:html={charlotteArtsMapParts[0]} />
             <CharlotteArtsMap />
             <Fragment set:html={charlotteArtsMapParts.slice(1).join(charlotteArtsMapMarker)} />
+          </>
+        ) : hasThreeNewYears ? (
+          <>
+            <Fragment set:html={threeNewYearsParts[0]} />
+            <ThreeNewYears />
+            <Fragment set:html={threeNewYearsParts.slice(1).join(threeNewYearsMarker)} />
           </>
         ) : hasWalkingDeck ? (
           <>
