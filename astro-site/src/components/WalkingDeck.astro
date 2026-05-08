@@ -2,6 +2,10 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
+interface Props {
+  startInPresent?: boolean;
+}
+
 interface ImageSlot {
   id: string;
   label: string;
@@ -14,6 +18,7 @@ interface ImageSlot {
 }
 
 const publicRoot = path.join(process.cwd(), 'public');
+const { startInPresent = false } = Astro.props;
 
 const imageSlots: ImageSlot[] = [
   {
@@ -186,7 +191,7 @@ const branchLinks = chapters.flatMap((ch, i) =>
 );
 ---
 
-<section class="walking-signal" data-walking-signal>
+<section class="walking-signal" data-walking-signal data-present={startInPresent ? 'true' : undefined}>
   <nav class="signal-rail" aria-label="Walking deck sections">
     <a href="#signal-cover" data-rail-link>Cover</a>
     <a href="#signal-human" data-rail-link>Human</a>
@@ -199,7 +204,7 @@ const branchLinks = chapters.flatMap((ch, i) =>
     <button type="button" class="present-toggle" data-present-toggle aria-label="Enter presentation mode">&#9654; Present</button>
   </nav>
 
-  <div class="present-hud" data-present-hud aria-hidden="true">
+  <div class="present-hud" data-present-hud aria-hidden={startInPresent ? 'false' : 'true'}>
     <span class="present-counter" data-present-counter>Section 01 / 08</span>
     <span class="present-title" data-present-title>Cover</span>
     <div class="present-controls">
@@ -209,7 +214,7 @@ const branchLinks = chapters.flatMap((ch, i) =>
     </div>
   </div>
 
-  <section class="signal-cover" id="signal-cover" data-signal-section aria-labelledby="signal-cover-title">
+  <section class:list={[ 'signal-cover', startInPresent && 'is-current' ]} id="signal-cover" data-signal-section aria-labelledby="signal-cover-title">
     <canvas class="signal-canvas" data-signal-canvas aria-hidden="true"></canvas>
     <div class="cover-copy">
       <span class="signal-kicker">Thor Draper Jr &middot; Walking Deck</span>
@@ -885,8 +890,8 @@ const branchLinks = chapters.flatMap((ch, i) =>
         return link ? link.textContent.trim() : (s.id || '');
       });
 
-      let currentIdx = 0;
-      let isPresenting = false;
+      let currentIdx = Math.max(0, sections.findIndex((s) => s.classList.contains('is-current')));
+      let isPresenting = deck.dataset.present === 'true';
       let leaveTimer = 0;
 
       const supportsViewTransitions = typeof document.startViewTransition === 'function'
@@ -1225,10 +1230,13 @@ const branchLinks = chapters.flatMap((ch, i) =>
     inset: 0;
     z-index: 9000;
     width: 100vw;
-    max-width: none;
+    max-width: 100vw;
+    height: 100vh;
+    height: 100dvh;
     margin: 0;
     transform: none;
     padding: 4.75rem 4vw 1.5rem;
+    box-sizing: border-box;
     background:
       radial-gradient(circle at 18% 22%, rgba(241, 183, 95, 0.18), transparent 38%),
       radial-gradient(circle at 82% 78%, rgba(28, 79, 115, 0.32), transparent 50%),
@@ -1248,7 +1256,9 @@ const branchLinks = chapters.flatMap((ch, i) =>
     position: absolute;
     inset: 4.75rem 4vw 1.5rem;
     margin: 0;
+    width: auto;
     max-width: none;
+    box-sizing: border-box;
     overflow: hidden;
     opacity: 0;
     pointer-events: none;
@@ -3171,8 +3181,27 @@ const branchLinks = chapters.flatMap((ch, i) =>
     .walking-signal .mchapter-branch > span { color: rgba(255, 255, 255, 0.7); }
 
     /* Present mode on mobile: force single-column stacked layout, scroll within slide */
+    .walking-signal[data-present='true'] {
+      width: 100vw;
+      max-width: 100vw;
+      height: 100dvh;
+      padding: calc(4.75rem + env(safe-area-inset-top)) 0.75rem calc(0.75rem + env(safe-area-inset-bottom));
+      overflow: hidden;
+    }
+
+    .walking-signal[data-present='true'] .present-hud {
+      top: max(0.75rem, env(safe-area-inset-top));
+      left: 50%;
+      transform: translateX(-50%);
+      max-width: calc(100vw - 1rem);
+      box-sizing: border-box;
+    }
+
     .walking-signal[data-present='true'] [data-signal-section] {
       display: block;
+      inset: calc(4.75rem + env(safe-area-inset-top)) max(0.75rem, env(safe-area-inset-right)) max(0.75rem, env(safe-area-inset-bottom)) max(0.75rem, env(safe-area-inset-left));
+      width: auto;
+      max-width: none;
       padding: 1rem;
       overflow-y: auto;
       -webkit-overflow-scrolling: touch;
@@ -3187,9 +3216,14 @@ const branchLinks = chapters.flatMap((ch, i) =>
     }
 
     .walking-signal[data-present='true'] .signal-cover h2 {
-      font-size: 1.6rem;
+      font-size: 1.45rem;
       max-width: none;
       margin: 0.4rem 0 0.6rem;
+    }
+
+    .walking-signal[data-present='true'] .cover-role {
+      font-size: 0.92rem;
+      line-height: 1.45;
     }
 
     .walking-signal[data-present='true'] .cover-photo {
@@ -3251,9 +3285,10 @@ const branchLinks = chapters.flatMap((ch, i) =>
     }
 
     .walking-signal[data-present='true'] .pitch-stream {
-      max-height: 14rem;
+      max-height: min(24vh, 8.5rem);
       overflow-y: auto;
       font-size: 0.78rem;
+      scrollbar-width: thin;
     }
 
     .walking-signal[data-present='true'] .photo-collage {
@@ -3301,12 +3336,56 @@ const branchLinks = chapters.flatMap((ch, i) =>
 
   /* Landscape phones: short height, wide. Avoid face-cropping the cover photo. */
   @media (max-width: 920px) and (orientation: landscape) and (max-height: 500px) {
+    .walking-signal[data-present='true'] {
+      padding: calc(3.35rem + env(safe-area-inset-top)) 0.65rem calc(0.65rem + env(safe-area-inset-bottom));
+    }
+
+    .walking-signal[data-present='true'] .present-hud {
+      top: max(0.35rem, env(safe-area-inset-top));
+      gap: 0.45rem;
+      padding: 0.35rem 0.55rem;
+      max-width: calc(100vw - 0.75rem);
+    }
+
+    .walking-signal[data-present='true'] .present-counter,
+    .walking-signal[data-present='true'] .present-title {
+      font-size: 0.62rem;
+    }
+
+    .walking-signal[data-present='true'] .present-title {
+      max-width: 9ch;
+    }
+
+    .walking-signal[data-present='true'] .present-btn {
+      width: 1.65rem;
+      height: 1.65rem;
+    }
+
+    .walking-signal[data-present='true'] [data-signal-section] {
+      inset: calc(3.35rem + env(safe-area-inset-top)) max(0.65rem, env(safe-area-inset-right)) max(0.65rem, env(safe-area-inset-bottom)) max(0.65rem, env(safe-area-inset-left));
+      padding: 0.85rem;
+      overflow-y: auto;
+    }
+
     .walking-signal[data-present='true'] .signal-cover {
       display: grid;
       grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.9fr);
       gap: 0.85rem;
       padding: 0.85rem;
-      align-items: center;
+      align-items: stretch;
+      overflow: hidden;
+    }
+
+    .walking-signal[data-present='true'] .signal-cover .cover-copy {
+      gap: 0.4rem;
+      justify-content: start;
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    .walking-signal[data-present='true'] .signal-cover .signal-kicker {
+      font-size: 0.56rem;
+      letter-spacing: 0.1em;
     }
 
     .walking-signal[data-present='true'] .cover-photo {
@@ -3324,13 +3403,188 @@ const branchLinks = chapters.flatMap((ch, i) =>
     }
 
     .walking-signal[data-present='true'] .signal-cover h2 {
-      font-size: 1.3rem;
-      margin: 0.2rem 0 0.4rem;
+      font-size: clamp(1.05rem, 3vw, 1.3rem);
+      margin: 0.05rem 0 0.15rem;
+    }
+
+    .walking-signal[data-present='true'] .cover-role {
+      font-size: 0.78rem;
+      line-height: 1.35;
+    }
+
+    .walking-signal[data-present='true'] .pitch-terminal {
+      flex: 1;
+      min-height: 0;
     }
 
     .walking-signal[data-present='true'] .pitch-stream {
-      max-height: 9rem;
+      max-height: none;
+      min-height: 0;
+      flex: 1;
       font-size: 0.72rem;
+      overflow: hidden;
+    }
+
+    .walking-signal[data-present='true'] .human-section .section-copy,
+    .walking-signal[data-present='true'] .recordings-section .section-copy,
+    .walking-signal[data-present='true'] .sphere-section .section-copy {
+      gap: 0.25rem;
+    }
+
+    .walking-signal[data-present='true'] .human-section h2,
+    .walking-signal[data-present='true'] .strengths-section h2,
+    .walking-signal[data-present='true'] .recordings-section h2,
+    .walking-signal[data-present='true'] .passion-section h2,
+    .walking-signal[data-present='true'] .sphere-section h2,
+    .walking-signal[data-present='true'] .ask-section h2 {
+      font-size: clamp(1.15rem, 3vw, 1.45rem);
+      line-height: 1.12;
+    }
+
+    .walking-signal[data-present='true'] .human-section p,
+    .walking-signal[data-present='true'] .recordings-section p,
+    .walking-signal[data-present='true'] .sphere-section p,
+    .walking-signal[data-present='true'] .ask-section p {
+      font-size: 0.76rem;
+      line-height: 1.45;
+    }
+
+    .walking-signal[data-present='true'] .photo-collage {
+      gap: 0.5rem;
+      max-height: calc(100dvh - 11rem);
+      overflow: hidden;
+    }
+
+    .walking-signal[data-present='true'] .recordings,
+    .walking-signal[data-present='true'] .passion-grid,
+    .walking-signal[data-present='true'] .strengths-list {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.65rem;
+    }
+
+    .walking-signal[data-present='true'] .recordings-section {
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr);
+      gap: 0.55rem;
+    }
+
+    .walking-signal[data-present='true'] .recordings {
+      min-height: 0;
+      align-items: stretch;
+    }
+
+    .walking-signal[data-present='true'] .recording,
+    .walking-signal[data-present='true'] .passion-grid article,
+    .walking-signal[data-present='true'] .strengths-list li {
+      padding: 0.7rem;
+    }
+
+    .walking-signal[data-present='true'] .recording {
+      display: grid;
+      grid-template-rows: auto auto;
+      align-content: start;
+      gap: 0.5rem;
+      min-height: 0;
+    }
+
+    .walking-signal[data-present='true'] .recording-quote {
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      overflow: hidden;
+    }
+
+    .walking-signal[data-present='true'] .recording-cite {
+      padding-top: 0.35rem;
+    }
+
+    .walking-signal[data-present='true'] .strengths-list li,
+    .walking-signal[data-present='true'] .recording-quote,
+    .walking-signal[data-present='true'] .passion-grid p {
+      font-size: 0.68rem;
+      line-height: 1.35;
+    }
+
+    .walking-signal[data-present='true'] .passion-grid h3,
+    .walking-signal[data-present='true'] .recording-cite strong {
+      font-size: 0.82rem;
+    }
+
+    .walking-signal[data-present='true'] .passion-stat,
+    .walking-signal[data-present='true'] .recording-cite em {
+      font-size: 0.6rem;
+    }
+
+    .walking-signal[data-present='true'] .sphere-section {
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr);
+      gap: 0.45rem;
+    }
+
+    .walking-signal[data-present='true'] .sphere-section .section-copy p,
+    .walking-signal[data-present='true'] .sphere-instruction,
+    .walking-signal[data-present='true'] .sphere-pattern {
+      display: none;
+    }
+
+    .walking-signal[data-present='true'] .sphere-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(14rem, 0.9fr);
+      grid-template-rows: minmax(0, 1fr);
+      gap: 0.65rem;
+      min-height: 0;
+      margin-top: 0;
+    }
+
+    .walking-signal[data-present='true'] .sphere-stage,
+    .walking-signal[data-present='true'] .sphere-readout {
+      display: block;
+    }
+
+    .walking-signal[data-present='true'] .sphere-stage {
+      height: auto;
+      min-height: 0;
+      aspect-ratio: auto;
+      overflow: visible;
+    }
+
+    .walking-signal[data-present='true'] .sphere-svg,
+    .walking-signal[data-present='true'] .sphere-branch-nodes,
+    .walking-signal[data-present='true'] .sphere-nodes {
+      bottom: 0.75rem;
+    }
+
+    .walking-signal[data-present='true'] .sphere-readout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 0.35rem;
+      padding: 0.65rem;
+      overflow: hidden;
+    }
+
+    .walking-signal[data-present='true'] .readout-col-portrait,
+    .walking-signal[data-present='true'] .readout-highlights,
+    .walking-signal[data-present='true'] .readout-branches {
+      display: none;
+    }
+
+    .walking-signal[data-present='true'] .readout-question {
+      font-size: 0.82rem;
+      line-height: 1.25;
+    }
+
+    .walking-signal[data-present='true'] .readout-thesis,
+    .walking-signal[data-present='true'] .ability-detail {
+      font-size: 0.64rem;
+      line-height: 1.35;
+    }
+
+    .walking-signal[data-present='true'] .ability-banner {
+      padding: 0.45rem 0.55rem;
+    }
+
+    .walking-signal[data-present='true'] .sphere-mobile {
+      display: none;
     }
   }
 
