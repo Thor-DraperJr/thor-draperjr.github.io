@@ -1216,6 +1216,10 @@ img {
 
 @media (max-width: 720px) {
 
+  .brand-tagline {
+    display: none;
+  }
+
   .js .nav-toggle {
     display: flex;
   }

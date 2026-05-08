@@ -310,7 +310,7 @@ const branchLinks = chapters.flatMap((ch, i) =>
     <div class="section-copy compact">
       <span class="signal-kicker">Section 05 &middot; Experience with Impact</span>
       <h2 id="signal-impact-title">Three chapters. Each one carried its abilities forward.</h2>
-      <p>A career sphere grid. Click a node to load that chapter. Smaller satellites are the career, education, and service threads that branched off it.</p>
+      <p class="sphere-instruction">A career sphere grid. Click a node to load that chapter. Smaller satellites are the career, education, and service threads that branched off it.</p>
     </div>
 
     <div class="sphere-grid" data-sphere data-sphere-payload={JSON.stringify(chapters)}>
@@ -409,6 +409,43 @@ const branchLinks = chapters.flatMap((ch, i) =>
 
         <p class="sphere-pattern">Sales taught trust. Ownership taught risk. Teaching taught clarity. Microsoft is where they compound.</p>
       </aside>
+
+      <ol class="sphere-mobile" role="list" aria-label="Career chapters (mobile view)">
+        {chapters.map((ch, i) => (
+          <li class={`mchapter is-${ch.id}`}>
+            <header class="mchapter-head">
+              <span class="mchapter-num">{String(i + 1).padStart(2, '0')}<em>/ 03</em></span>
+              <span class="mchapter-glyph" aria-hidden="true">{ch.glyph}</span>
+              <div class="mchapter-titles">
+                <span class="mchapter-tag">{ch.tag}</span>
+                <span class="mchapter-era">{ch.era}</span>
+              </div>
+            </header>
+            <h3 class="mchapter-headline">{ch.headline}</h3>
+            <div class="mchapter-ability">
+              <span class="mchapter-ability-flash">&#9650; Ability Unlocked</span>
+              <strong class="mchapter-ability-name">{ch.ability}</strong>
+              <span class="mchapter-ability-detail">{ch.abilityDetail}</span>
+            </div>
+            <p class="mchapter-thesis">{ch.thesis}</p>
+            <ul class="mchapter-highlights" role="list">
+              {ch.highlights.map((h) => <li>{h}</li>)}
+            </ul>
+            {ch.branches.length > 0 && (
+              <div class="mchapter-branches">
+                {ch.branches.map((b) => (
+                  <span class={`mchapter-branch is-${b.kind}`}>
+                    <em>{b.kind}</em>
+                    <strong>{b.label}</strong>
+                    <span>{b.detail}</span>
+                  </span>
+                ))}
+              </div>
+            )}
+          </li>
+        ))}
+        <p class="mchapter-pattern">Sales taught trust. Ownership taught risk. Teaching taught clarity. Microsoft is where they compound.</p>
+      </ol>
     </div>
   </section>
 
@@ -917,6 +954,16 @@ const branchLinks = chapters.flatMap((ch, i) =>
       presentExit && presentExit.addEventListener('click', exitPresent);
       presentPrev && presentPrev.addEventListener('click', () => setSlide(currentIdx - 1));
       presentNext && presentNext.addEventListener('click', () => setSlide(currentIdx + 1));
+
+      // Deep link: ?present=1 or #present opens directly into presentation mode.
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const wantsPresent = params.get('present') === '1' || window.location.hash === '#present';
+        if (wantsPresent) {
+          // Defer one frame so layout/sections are settled before the slide transition.
+          requestAnimationFrame(() => enterPresent());
+        }
+      } catch (_e) { /* no-op */ }
 
       document.addEventListener('keydown', (event) => {
         if (!isPresenting) return;
@@ -2030,9 +2077,32 @@ const branchLinks = chapters.flatMap((ch, i) =>
 
     .signal-rail {
       top: 4.5rem;
-      justify-content: center;
+      flex-wrap: nowrap;
+      justify-content: flex-start;
       width: 100%;
+      padding: 0.3rem 0.4rem;
       border-radius: 8px;
+      overflow-x: auto;
+      overflow-y: hidden;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .signal-rail::-webkit-scrollbar {
+      display: none;
+    }
+
+    .signal-rail [data-rail-link] {
+      flex: 0 0 auto;
+      font-size: 0.74rem;
+      padding: 0.4rem 0.65rem;
+    }
+
+    .present-toggle {
+      flex: 0 0 auto;
+      margin-left: auto;
+      padding: 0.45rem 0.75rem;
+      font-size: 0.72rem;
     }
 
     .signal-cover,
@@ -2729,6 +2799,9 @@ const branchLinks = chapters.flatMap((ch, i) =>
   .sphere-readout.no-portrait .readout-col-thesis { grid-column: 1; }
   .sphere-readout.no-portrait .readout-col-meta { grid-column: 2; }
 
+  /* Mobile chapter stack (slide 5 fallback for phones) */
+  .sphere-mobile { display: none; }
+
   @media (max-width: 980px) {
     .sphere-readout,
     .sphere-readout.no-portrait { grid-template-columns: 1fr; }
@@ -2742,6 +2815,365 @@ const branchLinks = chapters.flatMap((ch, i) =>
     .pitch-terminal { width: 100%; }
     .node-label strong { font-size: 0.6rem; }
     .node-label em { font-size: 0.56rem; }
+
+    /* Swap the orbital sphere for a thumb-friendly chapter stack */
+    .sphere-stage,
+    .sphere-readout { display: none; }
+
+    .sphere-instruction { display: none; }
+
+    .walking-signal h2 {
+      font-size: 1.55rem;
+      line-height: 1.18;
+    }
+    .essence-section h2 {
+      font-size: 1.35rem;
+    }
+
+    .sphere-section .section-copy h2 {
+      font-size: 1.5rem;
+      line-height: 1.2;
+    }
+
+    .sphere-mobile {
+      display: grid;
+      gap: 0.85rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .mchapter {
+      position: relative;
+      display: grid;
+      gap: 0.7rem;
+      padding: 1rem 1rem 1.1rem;
+      border: 1px solid rgba(241, 183, 95, 0.4);
+      border-left: 4px solid var(--signal-gold);
+      border-radius: 10px;
+      background: linear-gradient(180deg, rgba(19, 34, 53, 0.96), rgba(8, 18, 30, 0.94));
+      color: white;
+      box-shadow: 0 14px 32px rgba(12, 24, 38, 0.18);
+      overflow: hidden;
+    }
+
+    .mchapter::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background: radial-gradient(circle at 100% 0%, rgba(241, 183, 95, 0.18), transparent 45%);
+      pointer-events: none;
+    }
+
+    .mchapter > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .mchapter-head {
+      position: relative;
+      display: grid;
+      grid-template-columns: auto auto 1fr;
+      align-items: center;
+      gap: 0.7rem;
+    }
+
+    .mchapter-num {
+      display: grid;
+      text-align: center;
+      padding: 0.35rem 0.55rem;
+      border: 1px solid rgba(241, 183, 95, 0.5);
+      border-radius: 6px;
+      background: rgba(241, 183, 95, 0.08);
+      color: var(--signal-gold);
+      font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.95rem;
+      font-weight: 900;
+      line-height: 1.05;
+    }
+
+    .mchapter-num em {
+      color: rgba(255, 255, 255, 0.5);
+      font-style: normal;
+      font-size: 0.6rem;
+      margin-top: 0.1rem;
+    }
+
+    .mchapter-glyph {
+      width: 2.4rem;
+      height: 2.4rem;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,255,255,0.95) 0%, rgba(241,183,95,0.85) 35%, rgba(183,121,31,0.7) 70%, rgba(19,34,53,0.9) 100%);
+      box-shadow: 0 0 0 2px rgba(241, 183, 95, 0.55), 0 0 14px rgba(241, 183, 95, 0.4);
+      color: rgba(19, 34, 53, 0.92);
+      font-family: 'Lora', serif;
+      font-size: 0.95rem;
+      font-weight: 900;
+    }
+
+    .mchapter-titles {
+      display: grid;
+      gap: 0.1rem;
+      min-width: 0;
+    }
+
+    .mchapter-tag {
+      color: white;
+      font-size: 0.92rem;
+      font-weight: 850;
+      letter-spacing: 0.02em;
+      line-height: 1.2;
+    }
+
+    .mchapter-era {
+      color: var(--signal-gold);
+      font-size: 0.62rem;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .mchapter-headline {
+      position: relative;
+      margin: 0;
+      font-family: 'Lora', serif;
+      font-size: 1.05rem;
+      line-height: 1.3;
+      color: white;
+    }
+
+    .mchapter-ability {
+      position: relative;
+      display: grid;
+      gap: 0.2rem;
+      padding: 0.65rem 0.75rem;
+      border: 1px solid rgba(241, 183, 95, 0.55);
+      border-radius: 6px;
+      background: linear-gradient(110deg, rgba(241, 183, 95, 0.18), rgba(14, 106, 97, 0.18));
+    }
+
+    .mchapter-ability-flash {
+      color: var(--signal-gold);
+      font-size: 0.62rem;
+      font-weight: 900;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+    }
+
+    .mchapter-ability-name {
+      color: white;
+      font-size: 1rem;
+      font-weight: 900;
+    }
+
+    .mchapter-ability-detail {
+      color: rgba(255, 255, 255, 0.78);
+      font-size: 0.78rem;
+    }
+
+    .mchapter-thesis {
+      position: relative;
+      margin: 0;
+      color: rgba(255, 255, 255, 0.94);
+      font-size: 0.86rem;
+      line-height: 1.55;
+    }
+
+    .mchapter-highlights {
+      position: relative;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 0.35rem;
+    }
+
+    .mchapter-highlights li {
+      position: relative;
+      padding-left: 1.1rem;
+      color: rgba(255, 255, 255, 0.92);
+      font-size: 0.82rem;
+      line-height: 1.45;
+    }
+
+    .mchapter-highlights li::before {
+      content: '';
+      position: absolute;
+      left: 0.1rem;
+      top: 0.5rem;
+      width: 0.45rem;
+      height: 0.45rem;
+      border-radius: 1px;
+      background: var(--signal-gold);
+      transform: rotate(45deg);
+      box-shadow: 0 0 8px rgba(241, 183, 95, 0.6);
+    }
+
+    .mchapter-branches {
+      position: relative;
+      display: grid;
+      gap: 0.4rem;
+    }
+
+    .mchapter-branch {
+      display: grid;
+      gap: 0.15rem;
+      padding: 0.5rem 0.65rem;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-left: 3px solid rgba(255, 255, 255, 0.28);
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .mchapter-branch em {
+      color: rgba(255, 255, 255, 0.55);
+      font-style: normal;
+      font-size: 0.58rem;
+      font-weight: 900;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .mchapter-branch strong {
+      color: white;
+      font-size: 0.82rem;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+
+    .mchapter-branch > span {
+      color: rgba(255, 255, 255, 0.65);
+      font-size: 0.72rem;
+      line-height: 1.35;
+    }
+
+    .mchapter-branch.is-career { border-left-color: var(--signal-gold); }
+    .mchapter-branch.is-career em { color: rgba(241, 183, 95, 0.85); }
+    .mchapter-branch.is-education { border-left-color: #5fb8a6; }
+    .mchapter-branch.is-education em { color: #5fb8a6; }
+    .mchapter-branch.is-service { border-left-color: #d97a5a; }
+    .mchapter-branch.is-service em { color: #d97a5a; }
+
+    .mchapter-pattern {
+      margin: 0.35rem 0 0;
+      padding: 0.75rem 0.5rem 0;
+      border-top: 1px dashed var(--signal-line);
+      color: var(--signal-muted);
+      font-size: 0.85rem;
+      font-style: italic;
+      text-align: center;
+    }
+
+    /* Specificity bump: .walking-signal p (0,1,1) was overriding card text colors */
+    .sphere-mobile .mchapter-thesis,
+    .sphere-mobile .mchapter-pattern,
+    .walking-signal .mchapter-headline,
+    .walking-signal .mchapter-tag,
+    .walking-signal .mchapter-ability-name,
+    .walking-signal .mchapter-ability-detail,
+    .walking-signal .mchapter-highlights li,
+    .walking-signal .mchapter-branch strong,
+    .walking-signal .mchapter-branch > span {
+      line-height: 1.5;
+    }
+    .sphere-mobile .mchapter-thesis { color: rgba(255, 255, 255, 0.94); line-height: 1.55; }
+    .walking-signal .mchapter-headline { color: white; }
+    .walking-signal .mchapter-tag { color: white; }
+    .walking-signal .mchapter-ability-name { color: white; }
+    .walking-signal .mchapter-ability-detail { color: rgba(255, 255, 255, 0.78); }
+    .walking-signal .mchapter-highlights li { color: rgba(255, 255, 255, 0.92); }
+    .walking-signal .mchapter-branch strong { color: white; }
+    .walking-signal .mchapter-branch > span { color: rgba(255, 255, 255, 0.7); }
+
+    /* Present mode on mobile: force single-column stacked layout, scroll within slide */
+    .walking-signal[data-present='true'] [data-signal-section] {
+      display: block;
+      padding: 1rem;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .walking-signal[data-present='true'] .signal-cover,
+    .walking-signal[data-present='true'] .human-section,
+    .walking-signal[data-present='true'] .ask-section,
+    .walking-signal[data-present='true'] .recordings-section,
+    .walking-signal[data-present='true'] .sphere-section {
+      display: block;
+    }
+
+    .walking-signal[data-present='true'] .signal-cover h2 {
+      font-size: 1.6rem;
+      max-width: none;
+      margin: 0.4rem 0 0.6rem;
+    }
+
+    .walking-signal[data-present='true'] .cover-photo {
+      width: 100%;
+      max-width: none;
+      max-height: 18rem;
+      margin: 0.85rem 0 0;
+      aspect-ratio: 4 / 3;
+    }
+
+    .walking-signal[data-present='true'] .cover-photo img {
+      object-position: center 18%;
+    }
+
+    .walking-signal[data-present='true'] .pitch-terminal {
+      width: 100%;
+      max-width: none;
+    }
+
+    .walking-signal[data-present='true'] .pitch-stream {
+      max-height: 14rem;
+      overflow-y: auto;
+      font-size: 0.78rem;
+    }
+
+    .walking-signal[data-present='true'] .photo-collage {
+      grid-template-columns: 1fr;
+      grid-auto-rows: auto;
+      gap: 0.65rem;
+    }
+
+    .walking-signal[data-present='true'] .photo-collage .collage-card {
+      grid-column: 1;
+      grid-row: auto;
+      transform: none;
+    }
+
+    .walking-signal[data-present='true'] .strengths-list {
+      grid-template-columns: 1fr;
+    }
+
+    .walking-signal[data-present='true'] .recordings {
+      grid-template-columns: 1fr;
+    }
+
+    .walking-signal[data-present='true'] .passion-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .walking-signal[data-present='true'] .signal-link {
+      width: 100%;
+    }
+
+    /* Sphere section in present mode on mobile -> use the chapter stack */
+    .walking-signal[data-present='true'] .sphere-stage,
+    .walking-signal[data-present='true'] .sphere-readout {
+      display: none;
+    }
+
+    .walking-signal[data-present='true'] .sphere-mobile {
+      display: grid;
+    }
+
+    .walking-signal[data-present='true'] .sphere-instruction {
+      display: none;
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
