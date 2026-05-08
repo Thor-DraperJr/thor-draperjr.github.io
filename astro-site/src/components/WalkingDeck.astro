@@ -973,6 +973,21 @@ const branchLinks = chapters.flatMap((ch, i) =>
       }
       window.addEventListener('load', () => window.setTimeout(triggerDeepLink, 60), { once: true });
 
+      // Suppress transitions briefly during viewport changes (orientation flip, resize).
+      // Without this, the slide opacity/transform transitions fire mid-reflow and leave
+      // a fading "ghost" of the previous layout.
+      let resizeSuppressTimer = null;
+      const suppressTransitions = () => {
+        deck.classList.add('is-resizing');
+        if (resizeSuppressTimer) window.clearTimeout(resizeSuppressTimer);
+        resizeSuppressTimer = window.setTimeout(() => {
+          deck.classList.remove('is-resizing');
+          resizeSuppressTimer = null;
+        }, 220);
+      };
+      window.addEventListener('resize', suppressTransitions);
+      window.addEventListener('orientationchange', suppressTransitions);
+
       document.addEventListener('keydown', (event) => {
         if (!isPresenting) return;
         if (event.key === 'Escape') {
@@ -1223,6 +1238,16 @@ const branchLinks = chapters.flatMap((ch, i) =>
 
   .walking-signal[data-present='true'][data-present-dir='back'] [data-signal-section] {
     transform: translateX(-60px);
+  }
+
+  /* Kill all transitions/animations during viewport reflow so orientation changes
+     don't leave fading ghosts of prior layout. */
+  .walking-signal.is-resizing,
+  .walking-signal.is-resizing *,
+  .walking-signal.is-resizing *::before,
+  .walking-signal.is-resizing *::after {
+    transition: none !important;
+    animation: none !important;
   }
 
   .walking-signal[data-present='true'] [data-signal-section].is-current {
