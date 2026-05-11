@@ -70,7 +70,7 @@ const pitchStory = [
     <canvas class="signal-canvas" data-signal-canvas aria-hidden="true"></canvas>
     <div class="cover-copy">
       <span class="signal-kicker">Thor Draper Jr &middot; Walking Deck</span>
-      <h2 id="signal-cover-title">A seller's instinct, rebuilt on technical depth.</h2>
+      <h2 id="signal-cover-title" data-pretext-fit data-pretext-lines="3" data-pretext-min-ratio="0.74" data-pretext-width-ratio="0.62">A seller's instinct, rebuilt on technical depth.</h2>
       <p class="cover-role" aria-label="Senior Security Solution Engineer, Microsoft, Charlotte, NC"><span>Senior Security Solution Engineer, Microsoft</span><span>Charlotte, NC</span></p>
 
       <div class="pitch-module" data-pitch-shell data-pitch-mode="executive">
@@ -82,8 +82,8 @@ const pitchStory = [
         <div class="pitch-executive pitch-view" id="pitch-executive-view" data-pitch-executive>
           <div class="pitch-exec-head">
             <span class="pitch-eyebrow">Career signal</span>
-            <h3>I loved sales enough to rebuild the technical depth around it.</h3>
-            <p class="pitch-exec-summary">Sales instinct, operator accountability, cybersecurity instruction, and Microsoft Security credibility in one motion.</p>
+            <h3 data-pretext-fit data-pretext-lines="2" data-pretext-min-ratio="0.78" data-pretext-width-ratio="0.68">I loved sales enough to rebuild the technical depth around it.</h3>
+            <p class="pitch-exec-summary" data-pretext-fit data-pretext-lines="2" data-pretext-min-ratio="0.86" data-pretext-width-ratio="0.72">Sales instinct, operator accountability, cybersecurity instruction, and Microsoft Security credibility in one motion.</p>
           </div>
           <div class="pitch-story" role="list">
             {pitchStory.map((item, index) => (
@@ -99,8 +99,8 @@ const pitchStory = [
           </div>
           <div class="pitch-thesis">
             <span>Thesis</span>
-            <p>I did not leave sales because I was burnt out. I rebuilt on technical depth so the next sales seat compounds.</p>
-            <strong>Next: AE in the AI era, then sales leadership.</strong>
+            <p data-pretext-fit data-pretext-lines="2" data-pretext-min-ratio="0.84" data-pretext-width-ratio="0.72">I did not leave sales because I was burnt out. I rebuilt on technical depth so the next sales seat compounds.</p>
+            <strong data-pretext-fit data-pretext-lines="1" data-pretext-min-ratio="0.82" data-pretext-width-ratio="0.72">Next: AE in the AI era, then sales leadership.</strong>
           </div>
         </div>
 
@@ -263,13 +263,13 @@ const pitchStory = [
         </div>
 
         <div class="readout-col readout-col-thesis">
-          <h3 class="readout-question" data-readout-question>{chapters[0].headline}</h3>
+          <h3 class="readout-question" data-readout-question data-pretext-fit data-pretext-lines="2" data-pretext-min-ratio="0.8" data-pretext-width-ratio="0.92">{chapters[0].headline}</h3>
           <div class="ability-banner" data-ability-banner>
             <span class="ability-flash">&#9650; Ability Unlocked</span>
-            <strong class="ability-name" data-readout-ability>{chapters[0].ability}</strong>
-            <span class="ability-detail" data-readout-ability-detail>{chapters[0].abilityDetail}</span>
+            <strong class="ability-name" data-readout-ability data-pretext-fit data-pretext-lines="1" data-pretext-min-ratio="0.82" data-pretext-width-ratio="0.9">{chapters[0].ability}</strong>
+            <span class="ability-detail" data-readout-ability-detail data-pretext-fit data-pretext-lines="2" data-pretext-min-ratio="0.84" data-pretext-width-ratio="0.94">{chapters[0].abilityDetail}</span>
           </div>
-          <p class="readout-thesis" data-readout-thesis>{chapters[0].thesis}</p>
+          <p class="readout-thesis" data-readout-thesis data-pretext-fit data-pretext-lines="4" data-pretext-min-ratio="0.82" data-pretext-width-ratio="0.96">{chapters[0].thesis}</p>
           <div class="readout-milestones" data-readout-milestones>
             {chapters[0].milestones.map((milestone) => <span>{milestone}</span>)}
           </div>
@@ -304,11 +304,11 @@ const pitchStory = [
                 <span class="mchapter-era">{ch.era}</span>
               </div>
             </header>
-            <h3 class="mchapter-headline">{ch.headline}</h3>
+            <h3 class="mchapter-headline" data-pretext-fit data-pretext-lines="2" data-pretext-min-ratio="0.82" data-pretext-width-ratio="1">{ch.headline}</h3>
             <div class="mchapter-ability">
               <span class="mchapter-ability-flash">&#9650; Ability Unlocked</span>
-              <strong class="mchapter-ability-name">{ch.ability}</strong>
-              <span class="mchapter-ability-detail">{ch.abilityDetail}</span>
+              <strong class="mchapter-ability-name" data-pretext-fit data-pretext-lines="1" data-pretext-min-ratio="0.84" data-pretext-width-ratio="0.94">{ch.ability}</strong>
+              <span class="mchapter-ability-detail" data-pretext-fit data-pretext-lines="2" data-pretext-min-ratio="0.84" data-pretext-width-ratio="0.96">{ch.abilityDetail}</span>
             </div>
             <div class="mchapter-milestones">
               {ch.milestones.map((milestone) => <span>{milestone}</span>)}
@@ -839,6 +839,12 @@ const pitchStory = [
     pointer-events: none;
   }
 
+  .walking-signal[data-present='true'] [data-pretext-fit] {
+    display: block;
+    max-width: 100%;
+    overflow-wrap: break-word;
+  }
+
   @media (min-width: 761px) and (max-height: 820px) {
     .walking-signal[data-present='true'] .signal-cover {
       padding: clamp(1.55rem, 3vw, 2.15rem) clamp(1.35rem, 2.6vw, 2.2rem) clamp(1rem, 2vw, 1.45rem);
@@ -1318,7 +1324,9 @@ const pitchStory = [
     }
 
     .walking-signal[data-present='true'] .readout-portrait {
-      height: clamp(5.8rem, 14vh, 7rem);
+      width: 100%;
+      height: auto;
+      max-height: 7rem;
       aspect-ratio: 16 / 9;
     }
 
@@ -3964,6 +3972,9 @@ const pitchStory = [
 
     .walking-signal[data-present='true'] .sphere-grid {
       display: grid;
+      grid-template-columns: 1fr;
+      grid-template-rows: minmax(0, 1fr);
+      gap: 0;
       min-height: 0;
     }
 
@@ -4072,7 +4083,7 @@ const pitchStory = [
   }
 
   /* Landscape phones: short height, wide. Avoid face-cropping the cover photo. */
-  @media (max-width: 920px) and (orientation: landscape) and (max-height: 500px) {
+  @media (max-width: 999px) and (orientation: landscape) and (max-height: 500px) {
     .walking-signal[data-present='true'] {
       padding: calc(3.35rem + env(safe-area-inset-top)) 0.65rem calc(0.65rem + env(safe-area-inset-bottom));
     }
@@ -4654,7 +4665,7 @@ const pitchStory = [
     }
   }
 
-  @media (max-width: 920px) and (orientation: landscape) and (max-height: 500px) {
+  @media (max-width: 999px) and (orientation: landscape) and (max-height: 500px) {
     .walking-signal[data-present='true'] .present-hud {
       --hud-counter-width: 8rem;
       --hud-title-width: 5.2rem;
@@ -4669,11 +4680,17 @@ const pitchStory = [
       grid-template-columns: minmax(0, 1.05fr) minmax(12.5rem, 0.85fr);
       gap: 0.7rem;
       align-items: center;
+      padding: 1.15rem 0.85rem 0.75rem;
     }
 
     .walking-signal[data-present='true'] .signal-cover .cover-copy {
       gap: 0.3rem;
       overflow: hidden;
+    }
+
+    .walking-signal[data-present='true'] .signal-cover .signal-kicker {
+      font-size: 0.46rem;
+      line-height: 1;
     }
 
     .walking-signal[data-present='true'] .cover-photo img {
@@ -4767,7 +4784,7 @@ const pitchStory = [
     }
 
     .walking-signal[data-present='true'] .pitch-thesis {
-      display: none;
+      display: none !important;
     }
 
     .walking-signal[data-present='true'] .pitch-thesis p,
@@ -4807,6 +4824,123 @@ const pitchStory = [
     .walking-signal[data-present='true'] .sphere-readout {
       gap: 0.28rem;
       padding: 0.5rem;
+    }
+
+    .walking-signal[data-present='true'] .sphere-section {
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr);
+      gap: 0.36rem;
+      overflow: hidden;
+    }
+
+    .walking-signal[data-present='true'] .sphere-section .section-copy {
+      gap: 0.12rem;
+    }
+
+    .walking-signal[data-present='true'] .sphere-section h2 {
+      font-size: clamp(1rem, 2.7vw, 1.34rem);
+      line-height: 1.04;
+    }
+
+    .walking-signal[data-present='true'] .sphere-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-template-rows: minmax(0, 1fr);
+      gap: 0;
+      min-height: 0;
+    }
+
+    .walking-signal[data-present='true'] .sphere-stage,
+    .walking-signal[data-present='true'] .sphere-readout,
+    .walking-signal[data-present='true'] .sphere-instruction {
+      display: none;
+    }
+
+    .walking-signal[data-present='true'] .sphere-mobile {
+      display: grid;
+      grid-template-rows: repeat(3, minmax(0, 1fr));
+      gap: 0.28rem;
+      height: 100%;
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    .walking-signal[data-present='true'] .mchapter {
+      grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+      grid-template-rows: auto minmax(0, 1fr);
+      gap: 0.16rem 0.48rem;
+      min-height: 0;
+      padding: 0.38rem 0.5rem;
+    }
+
+    .walking-signal[data-present='true'] .mchapter-head {
+      grid-column: 1;
+      grid-row: 1;
+      grid-template-columns: auto auto minmax(0, 1fr);
+      gap: 0.28rem;
+    }
+
+    .walking-signal[data-present='true'] .mchapter-num {
+      padding: 0.2rem 0.3rem;
+      font-size: 0.58rem;
+    }
+
+    .walking-signal[data-present='true'] .mchapter-num em {
+      font-size: 0.4rem;
+    }
+
+    .walking-signal[data-present='true'] .mchapter-glyph {
+      width: 1.4rem;
+      height: 1.4rem;
+      font-size: 0.62rem;
+    }
+
+    .walking-signal[data-present='true'] .mchapter-tag {
+      font-size: 0.58rem;
+      line-height: 1.05;
+    }
+
+    .walking-signal[data-present='true'] .mchapter-era {
+      font-size: 0.38rem;
+      letter-spacing: 0.08em;
+    }
+
+    .walking-signal[data-present='true'] .mchapter-headline {
+      grid-column: 1;
+      grid-row: 2;
+      font-size: 0.62rem;
+      line-height: 1.08;
+    }
+
+    .walking-signal[data-present='true'] .mchapter-ability {
+      grid-column: 2;
+      grid-row: 1 / span 2;
+      align-content: center;
+      gap: 0.04rem;
+      padding: 0.28rem 0.36rem;
+    }
+
+    .walking-signal[data-present='true'] .mchapter-ability-flash {
+      font-size: 0.34rem;
+      letter-spacing: 0.1em;
+    }
+
+    .walking-signal[data-present='true'] .mchapter-ability-name {
+      font-size: 0.58rem;
+      line-height: 1.04;
+    }
+
+    .walking-signal[data-present='true'] .mchapter-ability-detail {
+      font-size: 0.46rem;
+      line-height: 1.08;
+    }
+
+    .walking-signal[data-present='true'] .mchapter-highlights,
+    .walking-signal[data-present='true'] .mchapter-milestones,
+    .walking-signal[data-present='true'] .mchapter-thesis,
+    .walking-signal[data-present='true'] .mchapter-branches,
+    .walking-signal[data-present='true'] .mchapter-pattern {
+      display: none;
     }
 
     .walking-signal[data-present='true'] .cover-photo-caption {

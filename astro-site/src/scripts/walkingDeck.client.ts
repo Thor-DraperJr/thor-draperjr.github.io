@@ -1,10 +1,152 @@
+import { measureLineStats, prepareWithSegments } from '@chenglou/pretext';
+
 type ReplayMap = Record<string, () => void>;
 
 type WalkingDeckElement = HTMLElement & {
     _presentReplay?: ReplayMap;
 };
 
+type PreparedFitText = ReturnType<typeof prepareWithSegments>;
+
+type FitCacheEntry = {
+    text: string;
+    font: string;
+    letterSpacing: number;
+    prepared: PreparedFitText;
+};
+
 const initializedDecks = new WeakSet<Element>();
+const fitCache = new WeakMap<HTMLElement, FitCacheEntry>();
+
+const normalizeFitText = (text: string) => text.replace(/\s+/g, ' ').trim();
+
+const parseCssPx = (value: string | null | undefined) => {
+    if (!value || value === 'normal') return 0;
+    const parsed = Number.parseFloat(value);
+    return Number.isFinite(parsed) ? parsed : 0;
+};
+
+const parseDatasetNumber = (value: string | undefined, fallback: number) => {
+    if (value === undefined) return fallback;
+    const parsed = Number.parseFloat(value);
+    return Number.isFinite(parsed) ? parsed : fallback;
+};
+
+const canvasFontFromStyle = (style: CSSStyleDeclaration, fontSize: number) => {
+    const fontStyle = style.fontStyle || 'normal';
+    const fontVariant = style.fontVariant || 'normal';
+    const fontWeight = style.fontWeight || '400';
+    const fontFamily = style.fontFamily || 'sans-serif';
+    return `${fontStyle} ${fontVariant} ${fontWeight} ${fontSize}px ${fontFamily}`;
+};
+
+const getPreparedFitText = (element: HTMLElement, text: string, font: string, letterSpacing: number) => {
+    const cached = fitCache.get(element);
+    if (cached && cached.text === text && cached.font === font && cached.letterSpacing === letterSpacing) {
+        return cached.prepared;
+    }
+    const prepared = prepareWithSegments(text, font, { letterSpacing });
+    fitCache.set(element, { text, font, letterSpacing, prepared });
+    return prepared;
+};
+
+const measureFitLines = (prepared: PreparedFitText, width: number) => measureLineStats(prepared, Math.max(1, Math.floor(width))).lineCount;
+
+const findTightTextWidth = (prepared: PreparedFitText, maxWidth: number, targetLines: number) => {
+    let low = 1;
+    let high = Math.max(1, Math.ceil(maxWidth));
+
+    while (low < high) {
+        const mid = Math.floor((low + high) / 2);
+        if (measureFitLines(prepared, mid) <= targetLines) {
+            high = mid;
+        } else {
+            low = mid + 1;
+        }
+    }
+
+    return low;
+};
+
+const fitPretextElement = (element: HTMLElement) => {
+    const text = normalizeFitText(element.textContent || '');
+    if (!text || !element.isConnected) return;
+
+    element.style.removeProperty('font-size');
+    element.style.removeProperty('width');
+    element.style.maxWidth = '100%';
+
+    const style = window.getComputedStyle(element);
+    if (style.display === 'none' || style.visibility === 'hidden') return;
+
+    const rect = element.getBoundingClientRect();
+    const maxWidth = Math.floor(rect.width);
+    if (maxWidth < 2 || rect.height < 1) return;
+
+    const baseSize = parseCssPx(style.fontSize);
+    if (baseSize <= 0) return;
+
+    const lineTarget = Math.max(0, Math.floor(parseDatasetNumber(element.dataset.pretextLines, 0)));
+    const minRatio = Math.max(0.55, Math.min(1, parseDatasetNumber(element.dataset.pretextMinRatio, 0.82)));
+    const widthRatio = Math.max(0.45, Math.min(1, parseDatasetNumber(element.dataset.pretextWidthRatio, 0.62)));
+    const letterSpacing = parseCssPx(style.letterSpacing);
+
+    let fittedSize = baseSize;
+
+    if (lineTarget > 0) {
+        let low = baseSize * minRatio;
+        let high = baseSize;
+        let best = low;
+
+        for (let step = 0; step < 8; step += 1) {
+            const mid = (low + high) / 2;
+            const font = canvasFontFromStyle(style, mid);
+            const prepared = getPreparedFitText(element, text, font, letterSpacing);
+            if (measureFitLines(prepared, maxWidth) <= lineTarget) {
+                best = mid;
+                low = mid;
+            } else {
+                high = mid;
+            }
+        }
+
+        fittedSize = best;
+        if (fittedSize < baseSize - 0.1) {
+            element.style.fontSize = `${fittedSize.toFixed(2)}px`;
+        }
+    }
+
+    const finalFont = canvasFontFromStyle(style, fittedSize);
+    const prepared = getPreparedFitText(element, text, finalFont, letterSpacing);
+    const currentLineCount = Math.max(1, measureFitLines(prepared, maxWidth));
+    const targetLines = lineTarget > 0 ? Math.min(currentLineCount, lineTarget) : currentLineCount;
+    const tightWidth = findTightTextWidth(prepared, maxWidth, targetLines);
+    const minWidth = maxWidth * widthRatio;
+    const nextWidth = Math.min(maxWidth, Math.max(minWidth, tightWidth + 2));
+
+    element.style.width = `${Math.ceil(nextWidth)}px`;
+};
+
+const fitPretextElements = (root: ParentNode) => {
+    const elements = Array.from(root.querySelectorAll<HTMLElement>('[data-pretext-fit]'));
+    elements.forEach((element) => {
+        try {
+            fitPretextElement(element);
+        } catch (_error) {
+            element.style.removeProperty('font-size');
+            element.style.removeProperty('width');
+        }
+    });
+};
+
+const resetPretextElements = (root: ParentNode) => {
+    const elements = Array.from(root.querySelectorAll<HTMLElement>('[data-pretext-fit]'));
+    elements.forEach((element) => {
+        element.style.removeProperty('font-size');
+        element.style.removeProperty('width');
+        element.style.removeProperty('max-width');
+    });
+};
 
 export function initWalkingDeck(root: ParentNode = document) {
     const decks = Array.from(root.querySelectorAll<WalkingDeckElement>('[data-walking-signal]'));
@@ -101,11 +243,35 @@ function initDeck(deck: WalkingDeckElement) {
 
     resize();
     draw();
+
+    let fitFrame = 0;
+    const scheduleTextFit = () => {
+        if (fitFrame) window.cancelAnimationFrame(fitFrame);
+        fitFrame = window.requestAnimationFrame(() => {
+            fitFrame = 0;
+            if (deck.dataset.present !== 'true') {
+                resetPretextElements(deck);
+                return;
+            }
+            fitPretextElements(deck);
+        });
+    };
+
+    const scheduleTextFitSettled = () => {
+        scheduleTextFit();
+        window.setTimeout(scheduleTextFit, 160);
+    };
+
+    scheduleTextFitSettled();
+    document.fonts?.ready.then(scheduleTextFitSettled, () => undefined);
+
     window.addEventListener('resize', () => {
         window.cancelAnimationFrame(frame);
         resize();
         draw();
+        scheduleTextFitSettled();
     });
+    window.addEventListener('orientationchange', scheduleTextFitSettled);
 
     // Sphere grid (slide 5): activate nodes in sequence, fire ABILITY UNLOCKED on each.
     const sphere = deck.querySelector<HTMLElement>('[data-sphere]');
@@ -242,6 +408,7 @@ function initDeck(deck: WalkingDeckElement) {
                 void banner.offsetWidth;
                 banner.classList.add('is-firing');
             }
+            scheduleTextFitSettled();
         };
 
         buttons.forEach((button, index) => button.addEventListener('click', () => activate(index)));
@@ -349,6 +516,7 @@ function initDeck(deck: WalkingDeckElement) {
                 button.classList.toggle('is-active', isActive);
                 button.setAttribute('aria-pressed', isActive ? 'true' : 'false');
             });
+            scheduleTextFitSettled();
             if (isBackend) void run();
         };
 
@@ -432,6 +600,7 @@ function initDeck(deck: WalkingDeckElement) {
             if (presentTitle) {
                 presentTitle.textContent = sectionLabels[idx] || '';
             }
+            scheduleTextFitSettled();
         };
 
         const setSlide = (idx: number) => {
@@ -470,6 +639,7 @@ function initDeck(deck: WalkingDeckElement) {
             if (presentHud) presentHud.removeAttribute('aria-hidden');
             document.documentElement.classList.add('walking-presenting');
             document.body.classList.add('walking-presenting');
+            scheduleTextFitSettled();
             currentIdx = 0;
             sections.forEach((section) => section.classList.remove('is-current', 'is-leaving'));
             setSlide(0);
@@ -485,6 +655,7 @@ function initDeck(deck: WalkingDeckElement) {
             if (presentHud) presentHud.setAttribute('aria-hidden', 'true');
             document.documentElement.classList.remove('walking-presenting');
             document.body.classList.remove('walking-presenting');
+            resetPretextElements(deck);
             sections.forEach((section) => section.classList.remove('is-current', 'is-leaving'));
             presentToggle.focus();
         };
