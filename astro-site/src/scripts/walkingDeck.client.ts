@@ -117,6 +117,7 @@ function initDeck(deck: WalkingDeckElement) {
             ability: string;
             abilityDetail: string;
             thesis: string;
+            milestones?: string[];
             highlights?: string[];
             branches?: Array<{ kind: string; label: string; detail: string }>;
             image?: string;
@@ -137,6 +138,7 @@ function initDeck(deck: WalkingDeckElement) {
             ability: get('[data-readout-ability]'),
             abilityDetail: get('[data-readout-ability-detail]'),
             thesis: get('[data-readout-thesis]'),
+            milestones: get('[data-readout-milestones]'),
             highlights: get('[data-readout-highlights]'),
             branches: get('[data-readout-branches]'),
             portrait: get('[data-readout-portrait]'),
@@ -179,6 +181,15 @@ function initDeck(deck: WalkingDeckElement) {
             setText(refs.ability, chapter.ability);
             setText(refs.abilityDetail, chapter.abilityDetail);
             setText(refs.thesis, chapter.thesis);
+            if (refs.milestones) {
+                refs.milestones.innerHTML = '';
+                (chapter.milestones || []).forEach((milestone) => {
+                    const item = document.createElement('span');
+                    tagAstro(item);
+                    item.textContent = milestone;
+                    refs.milestones?.appendChild(item);
+                });
+            }
             if (refs.highlights) {
                 refs.highlights.innerHTML = '';
                 (chapter.highlights || []).forEach((highlight) => {

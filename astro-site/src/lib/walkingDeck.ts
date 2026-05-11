@@ -31,6 +31,7 @@ export interface Chapter {
     thesis: string;
     ability: string;
     abilityDetail: string;
+    milestones: string[];
     highlights: string[];
     branches: Branch[];
     cx: number;
@@ -109,12 +110,18 @@ export const chapters: Chapter[] = [
         tag: 'Sales, Ownership, Service',
         glyph: 'I',
         headline: 'A decade of selling, leading, and serving.',
-        thesis: 'My previous career was all in sales: B2B, B2C, and a heavy influence of developing the team around me. Methodical, process-driven, and trained on a four-prong approach: take care of customers, take care of employees, growth and profits follow. All of it while serving in the Army National Guard as an E-4 Specialist, 11B Infantryman.',
+        thesis: 'A decade in sales and service: Enterprise Branch Manager at the largest non-airport location, Paychex seller, hometown gym owner, and Army National Guard infantryman. The through-line was operating discipline: customers first, team development, growth, then profit.',
         ability: 'Trust at Scale',
-        abilityDetail: '+ Lead a 40+ team across full-time and part-time',
+        abilityDetail: '+ Led a 40-plus Enterprise branch team',
+        milestones: [
+            'Enterprise branch leadership',
+            'Paychex B2B selling',
+            'Gym ownership and P&L',
+            'Army National Guard service',
+        ],
         highlights: [
+            'Enterprise Branch Manager: 40-plus team at largest non-airport location',
             'B2B and B2C across Enterprise, Paychex, and gym ownership',
-            'Managed 40+ team members, mix of full-time and part-time',
             'Four-prong approach: customers, employees, growth, profits',
         ],
         branches: [
@@ -135,6 +142,12 @@ export const chapters: Chapter[] = [
         thesis: 'Sold the gym just before the pandemic. Took an MSP role and started studying IT certifications at the front desk. Earned an Associate of Science in Cloud and Virtualization from Central Piedmont Community College in July 2021. By night I taught a cybersecurity bootcamp, which forced me to explain the work without jargon.',
         ability: 'Teach to Sell',
         abilityDetail: '+ Explain it without jargon',
+        milestones: [
+            'Sold business before pandemic',
+            'MSP role and cert stack',
+            'CPCC A.S. in Cloud and Virtualization',
+            'Cyber bootcamp instructor',
+        ],
         highlights: [
             'MSP by day, cybersecurity bootcamp instructor by night',
             'CPCC A.S. in Cloud and Virtualization, July 2021',
@@ -158,6 +171,12 @@ export const chapters: Chapter[] = [
         thesis: 'Started at Microsoft as a contractor in April 2021 - Azure Networking Support Engineer. Converted to FTE in October 2021, supporting Azure Rapid Response in Azure Networking and then moving into Support Escalations Engineer. Now Senior Security Solution Engineer, with a SANS B.S. in cybersecurity earned on Microsoft tuition assistance. Doubled down on technical depth on purpose so the move back to sales lands with credibility, not a learning curve.',
         ability: 'Compounded Range',
         abilityDetail: '+ Sell with deep technical credibility',
+        milestones: [
+            'Microsoft contractor, Apr 2021',
+            'FTE, Oct 2021',
+            'Azure Rapid Response and Escalations',
+            'Security STU and SANS B.S.',
+        ],
         highlights: [
             'Azure Networking Support Engineer (contractor, Apr 2021)',
             'Azure Rapid Response + Support Escalations Engineer (FTE, Oct 2021)',

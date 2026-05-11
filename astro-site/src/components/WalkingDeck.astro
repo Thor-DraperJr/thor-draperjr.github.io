@@ -270,6 +270,9 @@ const pitchStory = [
             <span class="ability-detail" data-readout-ability-detail>{chapters[0].abilityDetail}</span>
           </div>
           <p class="readout-thesis" data-readout-thesis>{chapters[0].thesis}</p>
+          <div class="readout-milestones" data-readout-milestones>
+            {chapters[0].milestones.map((milestone) => <span>{milestone}</span>)}
+          </div>
         </div>
 
         <div class="readout-col readout-col-meta">
@@ -306,6 +309,9 @@ const pitchStory = [
               <span class="mchapter-ability-flash">&#9650; Ability Unlocked</span>
               <strong class="mchapter-ability-name">{ch.ability}</strong>
               <span class="mchapter-ability-detail">{ch.abilityDetail}</span>
+            </div>
+            <div class="mchapter-milestones">
+              {ch.milestones.map((milestone) => <span>{milestone}</span>)}
             </div>
             <p class="mchapter-thesis">{ch.thesis}</p>
             <ul class="mchapter-highlights" role="list">
@@ -538,6 +544,9 @@ const pitchStory = [
 
   /* Presentation HUD - hidden until present mode is active */
   .present-hud {
+    --hud-counter-width: 10.75rem;
+    --hud-title-width: 6.25rem;
+    --hud-controls-width: 9.25rem;
     display: none;
     position: fixed;
     top: 1rem;
@@ -545,7 +554,8 @@ const pitchStory = [
     transform: translateX(-50%);
     z-index: 10001;
     align-items: center;
-    gap: 0.85rem;
+    grid-template-columns: var(--hud-counter-width) var(--hud-title-width) var(--hud-controls-width);
+    gap: 0.65rem;
     max-width: calc(100vw - 1rem);
     box-sizing: border-box;
     padding: 0.5rem 0.75rem;
@@ -567,6 +577,7 @@ const pitchStory = [
   }
 
   .present-title {
+    min-width: 0;
     padding-left: 0.85rem;
     border-left: 1px solid rgba(255, 255, 255, 0.2);
     color: rgba(255, 255, 255, 0.85);
@@ -574,12 +585,19 @@ const pitchStory = [
     font-weight: 800;
     letter-spacing: 0.06em;
     text-transform: uppercase;
+    overflow: hidden;
+    text-overflow: ellipsis;
     white-space: nowrap;
   }
 
   .present-controls {
     display: inline-flex;
+    align-items: center;
+    justify-content: flex-start;
     gap: 0.35rem;
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
     padding-left: 0.6rem;
     border-left: 1px solid rgba(255, 255, 255, 0.2);
   }
@@ -608,7 +626,7 @@ const pitchStory = [
   }
 
   .present-btn-exit {
-    width: auto;
+    width: 4rem;
     padding: 0 0.85rem;
     border-radius: 999px;
     font-size: 0.7rem;
@@ -642,7 +660,7 @@ const pitchStory = [
   }
 
   .walking-signal[data-present='true'] .present-hud {
-    display: inline-flex;
+    display: grid;
   }
 
   .walking-signal[data-present='true'] [data-signal-section] {
@@ -1052,7 +1070,7 @@ const pitchStory = [
 
   .walking-signal[data-present='true'] .sphere-section {
     display: grid;
-    grid-template-rows: auto auto 1fr;
+    grid-template-rows: auto minmax(0, 1fr);
     align-content: stretch;
     gap: 0.75rem;
     overflow: hidden;
@@ -1123,6 +1141,256 @@ const pitchStory = [
   .walking-signal[data-present='true'] .sphere-pattern {
     font-size: 0.78rem;
     padding-top: 0.4rem;
+  }
+
+  @media (min-width: 1000px) and (max-height: 820px) {
+    .walking-signal[data-present='true'] .human-section {
+      gap: 0.65rem;
+    }
+
+    .walking-signal[data-present='true'] .human-section .section-copy {
+      gap: 0.35rem;
+    }
+
+    .walking-signal[data-present='true'] .human-section h2 {
+      font-size: clamp(1.85rem, 2.7vw, 2.35rem);
+      line-height: 1.08;
+    }
+
+    .walking-signal[data-present='true'] .human-section p {
+      max-width: 76rem;
+      font-size: 0.88rem;
+      line-height: 1.45;
+    }
+
+    .walking-signal[data-present='true'] .photo-collage {
+      height: 100%;
+      min-height: 0;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      grid-template-rows: repeat(2, minmax(0, 1fr));
+      grid-auto-rows: unset;
+      gap: 0.65rem;
+      padding: 0.8rem;
+      overflow: hidden;
+    }
+
+    .walking-signal[data-present='true'] .photo-collage .collage-card {
+      padding: 0.48rem 0.48rem 1.65rem;
+      transform: rotate(calc(var(--tilt, 0deg) * 0.38));
+    }
+
+    .walking-signal[data-present='true'] .photo-collage .collage-card::before {
+      top: 0.22rem;
+      width: 2.6rem;
+      height: 0.6rem;
+    }
+
+    .walking-signal[data-present='true'] .photo-collage .collage-card.charlotte {
+      grid-column: 1 / span 6;
+      grid-row: 1;
+    }
+
+    .walking-signal[data-present='true'] .photo-collage .collage-card.banff {
+      grid-column: 7 / span 6;
+      grid-row: 1;
+    }
+
+    .walking-signal[data-present='true'] .photo-collage .collage-card.lloyd {
+      grid-column: 1 / span 4;
+      grid-row: 2;
+      --photo-pos: center 24%;
+    }
+
+    .walking-signal[data-present='true'] .photo-collage .collage-card.teacher {
+      grid-column: 5 / span 8;
+      grid-row: 2;
+      --photo-pos: center 45%;
+    }
+
+    .walking-signal[data-present='true'] .photo-collage .collage-card figcaption {
+      left: 0.62rem;
+      right: 0.62rem;
+      bottom: 0.42rem;
+      padding-top: 0.3rem;
+      font-size: clamp(0.78rem, 0.9vw, 0.92rem);
+      line-height: 1.05;
+    }
+
+    .walking-signal[data-present='true'] .sphere-section {
+      gap: 0.55rem;
+    }
+
+    .walking-signal[data-present='true'] .sphere-section .section-copy {
+      gap: 0.25rem;
+    }
+
+    .walking-signal[data-present='true'] .sphere-section h2 {
+      font-size: clamp(1.35rem, 2.15vw, 1.9rem);
+      line-height: 1.08;
+    }
+
+    .walking-signal[data-present='true'] .sphere-instruction {
+      display: none;
+    }
+
+    .walking-signal[data-present='true'] .sphere-grid {
+      grid-template-rows: auto auto;
+      gap: 0.55rem;
+      min-height: 0;
+    }
+
+    .walking-signal[data-present='true'] .sphere-stage {
+      height: clamp(9rem, 21vh, 10.75rem);
+    }
+
+    .walking-signal[data-present='true'] .sphere-svg,
+    .walking-signal[data-present='true'] .sphere-branch-nodes,
+    .walking-signal[data-present='true'] .sphere-nodes {
+      bottom: 1rem;
+    }
+
+    .walking-signal[data-present='true'] .sphere-branch[style*="--cy:360"] .branch-label,
+    .walking-signal[data-present='true'] .sphere-branch[style*="--cy:340"] .branch-label,
+    .walking-signal[data-present='true'] .sphere-branch[style*="--cy:300"] .branch-label {
+      top: auto;
+      bottom: 100%;
+      transform: translate(-50%, -0.26rem);
+    }
+
+    .walking-signal[data-present='true'] .sphere-readout,
+    .walking-signal[data-present='true'] .sphere-readout.no-portrait {
+      grid-template-columns: minmax(7.5rem, 9.5rem) minmax(0, 1.18fr) minmax(0, 1fr);
+      gap: 0.5rem 0.75rem;
+      padding: 0.62rem 0.75rem 0.68rem;
+      align-content: start;
+    }
+
+    .walking-signal[data-present='true'] .sphere-readout.no-portrait .readout-col-thesis {
+      grid-column: 2;
+    }
+
+    .walking-signal[data-present='true'] .sphere-readout.no-portrait .readout-col-meta {
+      grid-column: 3;
+    }
+
+    .walking-signal[data-present='true'] .readout-col {
+      gap: 0.4rem;
+    }
+
+    .walking-signal[data-present='true'] .readout-head {
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 0.4rem;
+      align-items: start;
+    }
+
+    .walking-signal[data-present='true'] .readout-counter {
+      padding: 0.28rem 0.42rem;
+    }
+
+    .walking-signal[data-present='true'] .readout-counter strong {
+      font-size: 0.82rem;
+    }
+
+    .walking-signal[data-present='true'] .readout-counter em {
+      font-size: 0.54rem;
+    }
+
+    .walking-signal[data-present='true'] .readout-tag {
+      font-size: 0.72rem;
+      line-height: 1.1;
+    }
+
+    .walking-signal[data-present='true'] .readout-year {
+      font-size: 0.52rem;
+      letter-spacing: 0.12em;
+    }
+
+    .walking-signal[data-present='true'] .readout-portrait {
+      height: clamp(5.8rem, 14vh, 7rem);
+      aspect-ratio: 16 / 9;
+    }
+
+    .walking-signal[data-present='true'] .readout-question {
+      font-size: 0.92rem;
+      line-height: 1.22;
+    }
+
+    .walking-signal[data-present='true'] .ability-banner {
+      gap: 0.12rem;
+      padding: 0.42rem 0.55rem;
+    }
+
+    .walking-signal[data-present='true'] .ability-flash {
+      font-size: 0.5rem;
+      letter-spacing: 0.14em;
+    }
+
+    .walking-signal[data-present='true'] .ability-name {
+      font-size: 0.86rem;
+      line-height: 1.1;
+    }
+
+    .walking-signal[data-present='true'] .ability-detail,
+    .walking-signal[data-present='true'] .readout-thesis {
+      font-size: 0.7rem;
+      line-height: 1.34;
+    }
+
+    .walking-signal[data-present='true'] .readout-milestones {
+      gap: 0.28rem;
+      margin-top: 0.04rem;
+    }
+
+    .walking-signal[data-present='true'] .readout-milestones span {
+      min-height: 1.32rem;
+      padding: 0.2rem 0.38rem;
+      font-size: 0.56rem;
+      line-height: 1.1;
+    }
+
+    .walking-signal[data-present='true'] .readout-highlights {
+      gap: 0.22rem;
+    }
+
+    .walking-signal[data-present='true'] .readout-highlights li {
+      padding-left: 0.82rem;
+      font-size: 0.62rem;
+      line-height: 1.25;
+    }
+
+    .walking-signal[data-present='true'] .readout-highlights li::before {
+      top: 0.36rem;
+      width: 0.36rem;
+      height: 0.36rem;
+    }
+
+    .walking-signal[data-present='true'] .readout-branches {
+      gap: 0.28rem;
+    }
+
+    .walking-signal[data-present='true'] .branch-chip {
+      gap: 0.08rem;
+      padding: 0.32rem 0.45rem;
+    }
+
+    .walking-signal[data-present='true'] .branch-chip em {
+      font-size: 0.48rem;
+      letter-spacing: 0.12em;
+    }
+
+    .walking-signal[data-present='true'] .branch-chip strong {
+      font-size: 0.64rem;
+      line-height: 1.12;
+    }
+
+    .walking-signal[data-present='true'] .branch-chip > span {
+      font-size: 0.56rem;
+      line-height: 1.18;
+    }
+
+    .walking-signal[data-present='true'] .sphere-pattern {
+      display: none;
+    }
   }
 
   .walking-signal[data-present='true'] .ask-section {
@@ -2585,6 +2853,26 @@ const pitchStory = [
     line-height: 1.6;
   }
 
+  .readout-milestones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+
+  .readout-milestones span {
+    display: inline-flex;
+    align-items: center;
+    min-height: 1.55rem;
+    padding: 0.25rem 0.48rem;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 999px;
+    color: rgba(255, 255, 255, 0.82);
+    background: rgba(255, 255, 255, 0.06);
+    font-size: 0.66rem;
+    font-weight: 850;
+    line-height: 1.15;
+  }
+
   .readout-highlights {
     list-style: none;
     margin: 0;
@@ -2672,11 +2960,10 @@ const pitchStory = [
     text-align: center;
   }
 
-  /* Hide portrait column entirely when no image so the layout collapses cleanly */
-  .sphere-readout.no-portrait { grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); }
-  .sphere-readout.no-portrait .readout-col-portrait { display: none; }
-  .sphere-readout.no-portrait .readout-col-thesis { grid-column: 1; }
-  .sphere-readout.no-portrait .readout-col-meta { grid-column: 2; }
+  .sphere-readout.no-portrait { grid-template-columns: minmax(9rem, 12rem) minmax(0, 1.2fr) minmax(0, 1fr); }
+  .sphere-readout.no-portrait .readout-portrait { display: none; }
+  .sphere-readout.no-portrait .readout-col-thesis { grid-column: 2; }
+  .sphere-readout.no-portrait .readout-col-meta { grid-column: 3; }
 
   /* Mobile chapter stack (slide 5 fallback for phones) */
   .sphere-mobile { display: none; }
@@ -2855,6 +3142,26 @@ const pitchStory = [
       font-size: 0.78rem;
     }
 
+    .mchapter-milestones {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.32rem;
+    }
+
+    .mchapter-milestones span {
+      display: inline-flex;
+      align-items: center;
+      min-height: 1.45rem;
+      padding: 0.22rem 0.46rem;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 999px;
+      color: rgba(255, 255, 255, 0.82);
+      background: rgba(255, 255, 255, 0.06);
+      font-size: 0.62rem;
+      font-weight: 850;
+      line-height: 1.15;
+    }
+
     .mchapter-thesis {
       position: relative;
       margin: 0;
@@ -2955,6 +3262,7 @@ const pitchStory = [
     .walking-signal .mchapter-tag,
     .walking-signal .mchapter-ability-name,
     .walking-signal .mchapter-ability-detail,
+    .walking-signal .mchapter-milestones span,
     .walking-signal .mchapter-highlights li,
     .walking-signal .mchapter-branch strong,
     .walking-signal .mchapter-branch > span {
@@ -2965,6 +3273,7 @@ const pitchStory = [
     .walking-signal .mchapter-tag { color: white; }
     .walking-signal .mchapter-ability-name { color: white; }
     .walking-signal .mchapter-ability-detail { color: rgba(255, 255, 255, 0.78); }
+    .walking-signal .mchapter-milestones span { color: rgba(255, 255, 255, 0.82); }
     .walking-signal .mchapter-highlights li { color: rgba(255, 255, 255, 0.92); }
     .walking-signal .mchapter-branch strong { color: white; }
     .walking-signal .mchapter-branch > span { color: rgba(255, 255, 255, 0.7); }
@@ -3030,6 +3339,9 @@ const pitchStory = [
 
     /* Compact HUD so it never overflows the viewport on small screens */
     .walking-signal[data-present='true'] .present-hud {
+      --hud-counter-width: 7.8rem;
+      --hud-title-width: 3.8rem;
+      --hud-controls-width: 7.3rem;
       gap: 0.5rem;
       padding: 0.4rem 0.6rem;
       font-size: 0.7rem;
@@ -3042,12 +3354,8 @@ const pitchStory = [
 
     .walking-signal[data-present='true'] .present-title {
       padding-left: 0.5rem;
-      max-width: 8ch;
       font-size: 0.66rem;
       letter-spacing: 0.04em;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
     }
 
     .walking-signal[data-present='true'] .present-controls {
@@ -3062,8 +3370,8 @@ const pitchStory = [
     }
 
     .walking-signal[data-present='true'] .present-btn-exit {
-      width: auto;
-      padding: 0 0.6rem;
+      width: 2.9rem;
+      padding: 0;
       font-size: 0.62rem;
       letter-spacing: 0.08em;
     }
@@ -3124,6 +3432,571 @@ const pitchStory = [
 
     .walking-signal[data-present='true'] .sphere-instruction {
       display: none;
+    }
+  }
+
+  @media (min-width: 761px) and (max-width: 999px) {
+    .walking-signal[data-present='true'] {
+      padding: 4.75rem 0.65rem 0.75rem;
+    }
+
+    .walking-signal[data-present='true'] [data-signal-section] {
+      inset: 4.75rem 0.65rem 0.75rem;
+      padding: 0.95rem;
+    }
+
+    .walking-signal[data-present='true'] .signal-cover {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(17rem, 0.82fr);
+      gap: 0.75rem;
+      align-items: center;
+      padding: 0.95rem 1rem 1rem;
+      overflow: hidden;
+    }
+
+    .walking-signal[data-present='true'] .signal-cover .cover-copy {
+      gap: 0.42rem;
+      justify-content: center;
+      overflow: hidden;
+      padding-bottom: 0.1rem;
+    }
+
+    .walking-signal[data-present='true'] .signal-cover .signal-kicker {
+      display: block;
+      font-size: 0.58rem;
+      letter-spacing: 0.12em;
+      line-height: 1.15;
+    }
+
+    .walking-signal[data-present='true'] .signal-cover h2 {
+      max-width: 12ch;
+      margin: 0;
+      padding-bottom: 0.18rem;
+      font-size: clamp(1.55rem, 4.6vw, 2.05rem);
+      line-height: 0.98;
+    }
+
+    .walking-signal[data-present='true'] .cover-role {
+      gap: 0.04rem;
+      font-size: 0.78rem;
+      line-height: 1.24;
+    }
+
+    .walking-signal[data-present='true'] .cover-role span + span {
+      font-size: 0.72em;
+      letter-spacing: 0.1em;
+    }
+
+    .walking-signal[data-present='true'] .pitch-module {
+      gap: 0.36rem;
+      margin-top: 0.05rem;
+      max-width: 24.5rem;
+    }
+
+    .walking-signal[data-present='true'] .pitch-mode button {
+      min-height: 1.55rem;
+      padding: 0 0.5rem;
+      font-size: 0.52rem;
+      letter-spacing: 0.08em;
+    }
+
+    .walking-signal[data-present='true'] .pitch-executive {
+      gap: 0.34rem;
+      padding: 0.52rem 0.58rem;
+    }
+
+    .walking-signal[data-present='true'] .pitch-exec-head {
+      gap: 0.22rem;
+    }
+
+    .walking-signal[data-present='true'] .pitch-eyebrow {
+      padding: 0.12rem 0.32rem;
+      font-size: 0.42rem;
+      letter-spacing: 0.1em;
+    }
+
+    .walking-signal[data-present='true'] .pitch-executive h3 {
+      max-width: none;
+      font-size: 0.92rem;
+      line-height: 1.06;
+    }
+
+    .walking-signal[data-present='true'] .pitch-exec-summary {
+      display: none;
+    }
+
+    .walking-signal[data-present='true'] .pitch-story {
+      gap: 0.3rem;
+      padding-top: 0.05rem;
+    }
+
+    .walking-signal[data-present='true'] .pitch-story::before {
+      top: 0.58rem;
+    }
+
+    .walking-signal[data-present='true'] .pitch-story-item {
+      gap: 0.16rem;
+      padding: 0;
+    }
+
+    .walking-signal[data-present='true'] .pitch-story-index {
+      width: 1rem;
+      height: 1rem;
+      font-size: 0.4rem;
+    }
+
+    .walking-signal[data-present='true'] .pitch-story-label {
+      font-size: 0.4rem;
+      letter-spacing: 0.07em;
+    }
+
+    .walking-signal[data-present='true'] .pitch-story-item strong {
+      font-size: 0.56rem;
+      line-height: 1.08;
+    }
+
+    .walking-signal[data-present='true'] .pitch-story-item p {
+      display: none;
+    }
+
+    .walking-signal[data-present='true'] .pitch-thesis {
+      gap: 0.08rem;
+      margin-top: 0.02rem;
+      padding: 0.4rem 0.5rem 0.44rem 0.58rem;
+      border-left-width: 3px;
+    }
+
+    .walking-signal[data-present='true'] .pitch-thesis span {
+      font-size: 0.42rem;
+      letter-spacing: 0.1em;
+    }
+
+    .walking-signal[data-present='true'] .pitch-thesis p {
+      font-size: 0.56rem;
+      line-height: 1.15;
+    }
+
+    .walking-signal[data-present='true'] .pitch-thesis strong {
+      display: none;
+    }
+
+    .walking-signal[data-present='true'] .cover-photo {
+      align-self: center;
+      width: 100%;
+      max-width: 21rem;
+      max-height: min(58vh, 30rem);
+      margin: 0 0 0 auto;
+      aspect-ratio: 3.8 / 5;
+    }
+
+    .walking-signal[data-present='true'] .cover-photo::before {
+      inset: 0.5rem;
+    }
+
+    .walking-signal[data-present='true'] .cover-photo-caption {
+      padding: 0.85rem 0.62rem 0.52rem;
+    }
+
+    .walking-signal[data-present='true'] .cover-photo-caption strong {
+      font-size: 0.78rem;
+    }
+
+    .walking-signal[data-present='true'] .cover-photo-caption span {
+      font-size: 0.48rem;
+      letter-spacing: 0.09em;
+    }
+
+    .walking-signal[data-present='true'] .sphere-section {
+      display: block;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .walking-signal[data-present='true'] .sphere-section .section-copy {
+      gap: 0.28rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .walking-signal[data-present='true'] .sphere-section h2 {
+      font-size: clamp(1.35rem, 3.1vw, 1.75rem);
+      line-height: 1.12;
+    }
+
+    .walking-signal[data-present='true'] .sphere-instruction,
+    .walking-signal[data-present='true'] .sphere-stage,
+    .walking-signal[data-present='true'] .sphere-readout {
+      display: none;
+    }
+
+    .walking-signal[data-present='true'] .sphere-grid {
+      display: block;
+      margin-top: 0;
+    }
+
+    .walking-signal[data-present='true'] .sphere-mobile {
+      display: grid;
+      gap: 0.72rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .walking-signal[data-present='true'] .mchapter {
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(13rem, 0.82fr);
+      gap: 0.5rem 0.75rem;
+      padding: 0.8rem;
+      border: 1px solid rgba(241, 183, 95, 0.4);
+      border-left: 4px solid var(--signal-gold);
+      border-radius: 10px;
+      background: linear-gradient(180deg, rgba(19, 34, 53, 0.96), rgba(8, 18, 30, 0.94));
+      color: white;
+      box-shadow: 0 14px 32px rgba(12, 24, 38, 0.18);
+      overflow: hidden;
+    }
+
+    .walking-signal[data-present='true'] .mchapter::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background: radial-gradient(circle at 100% 0%, rgba(241, 183, 95, 0.18), transparent 45%);
+      pointer-events: none;
+    }
+
+    .walking-signal[data-present='true'] .mchapter > * {
+      position: relative;
+      z-index: 1;
+      min-width: 0;
+    }
+
+    .walking-signal[data-present='true'] .mchapter-head {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: auto auto minmax(0, 1fr);
+      align-items: center;
+      gap: 0.55rem;
+    }
+
+    .walking-signal[data-present='true'] .mchapter-num {
+      display: grid;
+      text-align: center;
+      padding: 0.3rem 0.48rem;
+      border: 1px solid rgba(241, 183, 95, 0.5);
+      border-radius: 6px;
+      background: rgba(241, 183, 95, 0.08);
+      color: var(--signal-gold);
+      font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.82rem;
+      font-weight: 900;
+      line-height: 1.05;
+    }
+
+    .walking-signal[data-present='true'] .mchapter-num em {
+      color: rgba(255, 255, 255, 0.5);
+      font-style: normal;
+      font-size: 0.52rem;
+      margin-top: 0.08rem;
+    }
+
+    .walking-signal[data-present='true'] .mchapter-glyph {
+      width: 2.1rem;
+      height: 2.1rem;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,255,255,0.95) 0%, rgba(241,183,95,0.85) 35%, rgba(183,121,31,0.7) 70%, rgba(19,34,53,0.9) 100%);
+      box-shadow: 0 0 0 2px rgba(241, 183, 95, 0.55), 0 0 14px rgba(241, 183, 95, 0.4);
+      color: rgba(19, 34, 53, 0.92);
+      font-family: 'Lora', serif;
+      font-size: 0.86rem;
+      font-weight: 900;
+    }
+
+    .walking-signal[data-present='true'] .mchapter-titles {
+      display: grid;
+      gap: 0.05rem;
+      min-width: 0;
+    }
+
+    .walking-signal[data-present='true'] .mchapter-tag {
+      color: white;
+      font-size: 0.84rem;
+      font-weight: 850;
+      line-height: 1.18;
+    }
+
+    .walking-signal[data-present='true'] .mchapter-era {
+      color: var(--signal-gold);
+      font-size: 0.55rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .walking-signal[data-present='true'] .mchapter-headline {
+      grid-column: 1;
+      margin: 0;
+      color: white;
+      font-family: 'Lora', serif;
+      font-size: 0.94rem;
+      line-height: 1.25;
+    }
+
+    .walking-signal[data-present='true'] .mchapter-ability {
+      grid-column: 1;
+      display: grid;
+      gap: 0.12rem;
+      padding: 0.5rem 0.6rem;
+      border: 1px solid rgba(241, 183, 95, 0.55);
+      border-radius: 6px;
+      background: linear-gradient(110deg, rgba(241, 183, 95, 0.18), rgba(14, 106, 97, 0.18));
+    }
+
+    .walking-signal[data-present='true'] .mchapter-ability-flash {
+      color: var(--signal-gold);
+      font-size: 0.5rem;
+      font-weight: 900;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .walking-signal[data-present='true'] .mchapter-ability-name {
+      color: white;
+      font-size: 0.84rem;
+      font-weight: 900;
+    }
+
+    .walking-signal[data-present='true'] .mchapter-ability-detail,
+    .walking-signal[data-present='true'] .mchapter-thesis,
+    .walking-signal[data-present='true'] .mchapter-highlights li,
+    .walking-signal[data-present='true'] .mchapter-branch > span {
+      font-size: 0.66rem;
+      line-height: 1.32;
+    }
+
+    .walking-signal[data-present='true'] .mchapter-milestones {
+      grid-column: 1;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.24rem;
+    }
+
+    .walking-signal[data-present='true'] .mchapter-milestones span {
+      min-height: 1.2rem;
+      padding: 0.16rem 0.32rem;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 999px;
+      color: rgba(255, 255, 255, 0.82);
+      background: rgba(255, 255, 255, 0.06);
+      font-size: 0.52rem;
+      font-weight: 850;
+      line-height: 1.1;
+    }
+
+    .walking-signal[data-present='true'] .mchapter-thesis {
+      grid-column: 1;
+      margin: 0;
+      color: rgba(255, 255, 255, 0.94);
+    }
+
+    .walking-signal[data-present='true'] .mchapter-highlights {
+      grid-column: 2;
+      grid-row: 2 / span 3;
+      display: grid;
+      gap: 0.24rem;
+      align-content: start;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .walking-signal[data-present='true'] .mchapter-highlights li {
+      position: relative;
+      padding-left: 0.82rem;
+      color: rgba(255, 255, 255, 0.92);
+    }
+
+    .walking-signal[data-present='true'] .mchapter-highlights li::before {
+      content: '';
+      position: absolute;
+      left: 0.08rem;
+      top: 0.36rem;
+      width: 0.36rem;
+      height: 0.36rem;
+      border-radius: 1px;
+      background: var(--signal-gold);
+      transform: rotate(45deg);
+      box-shadow: 0 0 8px rgba(241, 183, 95, 0.6);
+    }
+
+    .walking-signal[data-present='true'] .mchapter-branches {
+      grid-column: 2;
+      display: grid;
+      gap: 0.28rem;
+      align-content: start;
+    }
+
+    .walking-signal[data-present='true'] .mchapter-branch {
+      display: grid;
+      gap: 0.08rem;
+      padding: 0.34rem 0.45rem;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-left: 3px solid rgba(255, 255, 255, 0.28);
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .walking-signal[data-present='true'] .mchapter-branch em {
+      color: rgba(255, 255, 255, 0.55);
+      font-style: normal;
+      font-size: 0.48rem;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .walking-signal[data-present='true'] .mchapter-branch strong {
+      color: white;
+      font-size: 0.66rem;
+      line-height: 1.12;
+    }
+
+    .walking-signal[data-present='true'] .mchapter-branch.is-career { border-left-color: var(--signal-gold); }
+    .walking-signal[data-present='true'] .mchapter-branch.is-career em { color: rgba(241, 183, 95, 0.85); }
+    .walking-signal[data-present='true'] .mchapter-branch.is-education { border-left-color: #5fb8a6; }
+    .walking-signal[data-present='true'] .mchapter-branch.is-education em { color: #5fb8a6; }
+    .walking-signal[data-present='true'] .mchapter-branch.is-service { border-left-color: #d97a5a; }
+    .walking-signal[data-present='true'] .mchapter-branch.is-service em { color: #d97a5a; }
+
+    .walking-signal[data-present='true'] .mchapter-pattern {
+      margin: 0.1rem 0 0;
+      padding: 0.7rem 0.5rem 0;
+      border-top: 1px dashed rgba(255, 255, 255, 0.18);
+      color: rgba(255, 255, 255, 0.74);
+      font-size: 0.74rem;
+      font-style: italic;
+      text-align: center;
+    }
+
+    .walking-signal[data-present='true'] .sphere-section {
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr);
+      gap: 0.55rem;
+      overflow: hidden;
+    }
+
+    .walking-signal[data-present='true'] .sphere-section .section-copy {
+      margin-bottom: 0;
+    }
+
+    .walking-signal[data-present='true'] .sphere-grid {
+      display: grid;
+      min-height: 0;
+    }
+
+    .walking-signal[data-present='true'] .sphere-mobile {
+      grid-template-rows: repeat(3, minmax(0, 1fr));
+      gap: 0.42rem;
+      height: 100%;
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    .walking-signal[data-present='true'] .mchapter {
+      grid-template-columns: minmax(0, 1fr) minmax(10.5rem, 0.86fr);
+      gap: 0.28rem 0.55rem;
+      min-height: 0;
+      padding: 0.52rem 0.6rem;
+    }
+
+    .walking-signal[data-present='true'] .mchapter-head {
+      gap: 0.42rem;
+    }
+
+    .walking-signal[data-present='true'] .mchapter-num {
+      padding: 0.24rem 0.38rem;
+      font-size: 0.72rem;
+    }
+
+    .walking-signal[data-present='true'] .mchapter-num em {
+      font-size: 0.48rem;
+    }
+
+    .walking-signal[data-present='true'] .mchapter-glyph {
+      width: 1.75rem;
+      height: 1.75rem;
+      font-size: 0.76rem;
+    }
+
+    .walking-signal[data-present='true'] .mchapter-tag {
+      font-size: 0.72rem;
+      line-height: 1.1;
+    }
+
+    .walking-signal[data-present='true'] .mchapter-era {
+      font-size: 0.48rem;
+      letter-spacing: 0.1em;
+    }
+
+    .walking-signal[data-present='true'] .mchapter-headline {
+      font-size: 0.78rem;
+      line-height: 1.16;
+    }
+
+    .walking-signal[data-present='true'] .mchapter-ability {
+      gap: 0.08rem;
+      padding: 0.34rem 0.45rem;
+    }
+
+    .walking-signal[data-present='true'] .mchapter-ability-flash {
+      font-size: 0.43rem;
+      letter-spacing: 0.12em;
+    }
+
+    .walking-signal[data-present='true'] .mchapter-ability-name {
+      font-size: 0.72rem;
+      line-height: 1.08;
+    }
+
+    .walking-signal[data-present='true'] .mchapter-ability-detail {
+      font-size: 0.56rem;
+      line-height: 1.18;
+    }
+
+    .walking-signal[data-present='true'] .mchapter-milestones {
+      gap: 0.18rem;
+    }
+
+    .walking-signal[data-present='true'] .mchapter-milestones span {
+      min-height: 1rem;
+      padding: 0.12rem 0.26rem;
+      font-size: 0.45rem;
+      line-height: 1.05;
+    }
+
+    .walking-signal[data-present='true'] .mchapter-thesis,
+    .walking-signal[data-present='true'] .mchapter-branches,
+    .walking-signal[data-present='true'] .mchapter-pattern {
+      display: none;
+    }
+
+    .walking-signal[data-present='true'] .mchapter-highlights {
+      grid-row: 2 / span 3;
+      gap: 0.14rem;
+    }
+
+    .walking-signal[data-present='true'] .mchapter-highlights li {
+      padding-left: 0.68rem;
+      font-size: 0.56rem;
+      line-height: 1.16;
+    }
+
+    .walking-signal[data-present='true'] .mchapter-highlights li::before {
+      top: 0.28rem;
+      width: 0.28rem;
+      height: 0.28rem;
     }
   }
 
@@ -3394,6 +4267,23 @@ const pitchStory = [
       bottom: 0.75rem;
     }
 
+    .walking-signal[data-present='true'] .sphere-stage .node-label {
+      width: 5.8rem;
+      white-space: normal;
+      transform: translate(-50%, 0.32rem);
+    }
+
+    .walking-signal[data-present='true'] .sphere-stage .node-label strong {
+      font-size: 0.56rem;
+      letter-spacing: 0.1em;
+      line-height: 1.08;
+    }
+
+    .walking-signal[data-present='true'] .sphere-stage .node-label em {
+      font-size: 0.5rem;
+      line-height: 1.1;
+    }
+
     .walking-signal[data-present='true'] .sphere-readout {
       display: grid;
       grid-template-columns: minmax(0, 1fr);
@@ -3566,14 +4456,30 @@ const pitchStory = [
   }
 
   @media (max-width: 920px) and (orientation: landscape) and (max-height: 500px) {
+    .walking-signal[data-present='true'] .present-hud {
+      --hud-counter-width: 8rem;
+      --hud-title-width: 5.2rem;
+      --hud-controls-width: 7rem;
+    }
+
+    .walking-signal[data-present='true'] .present-title {
+      max-width: none;
+    }
+
     .walking-signal[data-present='true'] .signal-cover {
-      grid-template-columns: minmax(0, 1fr) minmax(11rem, 0.78fr);
+      grid-template-columns: minmax(0, 1.05fr) minmax(12.5rem, 0.85fr);
       gap: 0.7rem;
+      align-items: center;
     }
 
     .walking-signal[data-present='true'] .signal-cover .cover-copy {
       gap: 0.3rem;
-      overflow: visible;
+      overflow: hidden;
+    }
+
+    .walking-signal[data-present='true'] .cover-photo img {
+      object-fit: cover;
+      object-position: center 18%;
     }
 
     .walking-signal[data-present='true'] .signal-cover h2 {
@@ -3662,10 +4568,7 @@ const pitchStory = [
     }
 
     .walking-signal[data-present='true'] .pitch-thesis {
-      gap: 0.07rem;
-      margin-top: 0;
-      padding: 0.34rem 0.44rem 0.36rem 0.52rem;
-      border-left-width: 3px;
+      display: none;
     }
 
     .walking-signal[data-present='true'] .pitch-thesis p,
@@ -3676,6 +4579,35 @@ const pitchStory = [
 
     .walking-signal[data-present='true'] .pitch-thesis strong {
       display: none;
+    }
+
+    .walking-signal[data-present='true'] .readout-thesis {
+      display: none;
+    }
+
+    .walking-signal[data-present='true'] .readout-milestones {
+      gap: 0.22rem;
+    }
+
+    .walking-signal[data-present='true'] .readout-milestones span {
+      min-height: 1.08rem;
+      padding: 0.14rem 0.3rem;
+      font-size: 0.48rem;
+      line-height: 1.08;
+    }
+
+    .walking-signal[data-present='true'] .readout-question {
+      font-size: 0.78rem;
+      line-height: 1.16;
+    }
+
+    .walking-signal[data-present='true'] .ability-name {
+      font-size: 0.82rem;
+    }
+
+    .walking-signal[data-present='true'] .sphere-readout {
+      gap: 0.28rem;
+      padding: 0.5rem;
     }
 
     .walking-signal[data-present='true'] .cover-photo-caption {
