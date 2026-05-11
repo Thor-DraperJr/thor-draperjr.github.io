@@ -4,7 +4,9 @@ import RuntimeControlChart from '../../components/RuntimeControlChart.astro';
 import CareerDevelopmentPlan from '../../components/CareerDevelopmentPlan.astro';
 import CharlotteArtsMap from '../../components/CharlotteArtsMap.astro';
 import WalkingDeck from '../../components/WalkingDeck.astro';
+import Agent365Deck from '../../components/Agent365Deck.astro';
 import ThreeNewYears from '../../components/ThreeNewYears.astro';
+import PerformanceNarrative from '../../components/PerformanceNarrative.astro';
 import { getPosts } from '../../lib/content';
 
 export function getStaticPaths() {
@@ -29,30 +31,90 @@ const runtimeChartMarker = '[[RUNTIME_CONTROL_CHART]]';
 const careerDevPlanMarker = '[[CAREER_DEV_PLAN]]';
 const charlotteArtsMapMarker = '[[CHARLOTTE_ARTS_MAP]]';
 const walkingDeckMarker = '[[WALKING_DECK]]';
+const agent365DeckMarker = '[[AGENT365_DECK]]';
 const threeNewYearsMarker = '[[THREE_NEW_YEARS]]';
+const performanceNarrativeMarker = '[[PERFORMANCE_NARRATIVE]]';
 
 let processedHtml = post.html;
 processedHtml = processedHtml.replace(`<p>${runtimeChartMarker}</p>`, runtimeChartMarker);
 processedHtml = processedHtml.replace(`<p>${careerDevPlanMarker}</p>`, careerDevPlanMarker);
 processedHtml = processedHtml.replace(`<p>${charlotteArtsMapMarker}</p>`, charlotteArtsMapMarker);
 processedHtml = processedHtml.replace(`<p>${walkingDeckMarker}</p>`, walkingDeckMarker);
+processedHtml = processedHtml.replace(`<p>${agent365DeckMarker}</p>`, agent365DeckMarker);
 processedHtml = processedHtml.replace(`<p>${threeNewYearsMarker}</p>`, threeNewYearsMarker);
+processedHtml = processedHtml.replace(`<p>${performanceNarrativeMarker}</p>`, performanceNarrativeMarker);
 
 const hasRuntimeChart = processedHtml.includes(runtimeChartMarker);
 const hasCareerDevPlan = processedHtml.includes(careerDevPlanMarker);
 const hasCharlotteArtsMap = processedHtml.includes(charlotteArtsMapMarker);
 const hasWalkingDeck = processedHtml.includes(walkingDeckMarker);
+const hasAgent365Deck = processedHtml.includes(agent365DeckMarker);
 const hasThreeNewYears = processedHtml.includes(threeNewYearsMarker);
+const hasPerformanceNarrative = processedHtml.includes(performanceNarrativeMarker);
 
 const runtimeParts = hasRuntimeChart ? processedHtml.split(runtimeChartMarker) : [];
 const careerParts = hasCareerDevPlan ? processedHtml.split(careerDevPlanMarker) : [];
 const charlotteArtsMapParts = hasCharlotteArtsMap ? processedHtml.split(charlotteArtsMapMarker) : [];
 const walkingDeckParts = hasWalkingDeck ? processedHtml.split(walkingDeckMarker) : [];
+const agent365DeckParts = hasAgent365Deck ? processedHtml.split(agent365DeckMarker) : [];
 const threeNewYearsParts = hasThreeNewYears ? processedHtml.split(threeNewYearsMarker) : [];
+const performanceNarrativeParts = hasPerformanceNarrative ? processedHtml.split(performanceNarrativeMarker) : [];
 ---
 
 <Layout pageTitle={post.title} pageDescription={post.excerpt}>
-  {hasCareerDevPlan ? (
+  {hasPerformanceNarrative ? (
+    <>
+      <article class="shell-container">
+        <header class="post-hero">
+          <span class="eyebrow">{post.category}</span>
+          <h1 class="post-heading">{post.title}</h1>
+          <div class="post-meta-row">
+            <span>{post.date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
+            <span>{post.readingTime} min read</span>
+          </div>
+          {post.tags.length > 0 && (
+            <div class="post-tags" style="margin-top: 1rem;">
+              {post.tags.map((tag) => <span class="post-tag">{tag}</span>)}
+            </div>
+          )}
+        </header>
+
+        {performanceNarrativeParts.length > 0 && performanceNarrativeParts[0].trim() && (
+          <section class="prose panel">
+            <Fragment set:html={performanceNarrativeParts[0]} />
+          </section>
+        )}
+      </article>
+
+      <div class="cdp-breakout">
+        <PerformanceNarrative />
+      </div>
+
+      <article class="shell-container">
+        {performanceNarrativeParts.length > 1 && (
+          <section class="prose panel">
+            <Fragment set:html={performanceNarrativeParts.slice(1).join(performanceNarrativeMarker)} />
+          </section>
+        )}
+
+        <nav class="post-pagination">
+          {previous ? (
+            <a href={previous.permalink}>
+              <span>Older</span>
+              {previous.title}
+            </a>
+          ) : <div></div>}
+
+          {next ? (
+            <a href={next.permalink} style="text-align: right;">
+              <span>Newer</span>
+              {next.title}
+            </a>
+          ) : <div></div>}
+        </nav>
+      </article>
+    </>
+  ) : hasCareerDevPlan ? (
     <>
       <article class="shell-container">
         <header class="post-hero">
@@ -80,6 +142,50 @@ const threeNewYearsParts = hasThreeNewYears ? processedHtml.split(threeNewYearsM
             <Fragment set:html={careerParts.slice(1).join(careerDevPlanMarker)} />
           </section>
         )}
+
+        <nav class="post-pagination">
+          {previous ? (
+            <a href={previous.permalink}>
+              <span>Older</span>
+              {previous.title}
+            </a>
+          ) : <div></div>}
+
+          {next ? (
+            <a href={next.permalink} style="text-align: right;">
+              <span>Newer</span>
+              {next.title}
+            </a>
+          ) : <div></div>}
+        </nav>
+      </article>
+    </>
+  ) : hasAgent365Deck ? (
+    <>
+      <article class="shell-container">
+        <header class="post-hero">
+          <span class="eyebrow">{post.category}</span>
+          <h1 class="post-heading">{post.title}</h1>
+          <div class="post-meta-row">
+            <span>{post.date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
+            <span>{post.readingTime} min read</span>
+          </div>
+          {post.tags.length > 0 && (
+            <div class="post-tags" style="margin-top: 1rem;">
+              {post.tags.map((tag) => <span class="post-tag">{tag}</span>)}
+            </div>
+          )}
+        </header>
+      </article>
+
+      <div class="walking-deck-breakout">
+        <Agent365Deck />
+      </div>
+
+      <article class="shell-container">
+        <section class="prose panel">
+          <Fragment set:html={agent365DeckParts.join('')} />
+        </section>
 
         <nav class="post-pagination">
           {previous ? (

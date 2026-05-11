@@ -1,0 +1,1592 @@
+---
+interface LicenseTier {
+  tier: string;
+  detail: string;
+  state: 'limited' | 'partial' | 'full';
+  note: string;
+}
+
+const licenseTiers: LicenseTier[] = [
+  {
+    tier: 'A365 + OE3',
+    detail: 'Office E3',
+    state: 'limited',
+    note: 'Visibility and the registry work today. No threat hunting, no Conditional Access for agents, no labeled grounding data.',
+  },
+  {
+    tier: 'A365 + ME3',
+    detail: 'M365 E3',
+    state: 'limited',
+    note: 'Conditional Access for agents turns on. Still no ID Protection, no Defender threat hunting, no DLP on agent grounding data.',
+  },
+  {
+    tier: 'A365 + ME5',
+    detail: 'M365 E5',
+    state: 'partial',
+    note: 'ID Protection, ID Governance, Defender threat hunting, Purview labeling all online. This is where most enterprise scenarios actually work.',
+  },
+  {
+    tier: 'A365 + ME7',
+    detail: 'Frontier',
+    state: 'full',
+    note: 'Everything fully functional. The destination, not the gate. Use it to show runway, not to set a prerequisite.',
+  },
+];
+
+interface Stall {
+  moment: string;
+  signal: string;
+  pivot: string;
+}
+
+const stalls: Stall[] = [
+  {
+    moment: `"We're waiting until AI is safer."`,
+    signal: `They have no plan. Safety is a stand-in for "we have not decided who owns this."`,
+    pivot: `Safer is not a tool you buy. It is something you operate. Let's talk about how you'd run agents, not whether to.`,
+  },
+  {
+    moment: `"We need to figure out governance first."`,
+    signal: `Governance is real, but it's being framed as a prerequisite instead of a parallel track.`,
+    pivot: `Governance and adoption move together. The teams who wait for perfect governance ship nothing. The teams who pick a control plane ship and govern at the same time.`,
+  },
+  {
+    moment: `"We're evaluating tools to monitor this."`,
+    signal: `They're shopping for a product when the gap is an operating model.`,
+    pivot: `Monitoring is the last mile. Who owns each agent? Who approves what it can touch? Start there.`,
+  },
+  {
+    moment: `"Security isn't ready yet."`,
+    signal: `Security is being asked to bless a thing they were never brought into early. They will say no.`,
+    pivot: `Security isn't the blocker. The framing is. Pull security in as a co-owner of the operating model, not as the final approver of someone else's plan.`,
+  },
+];
+
+interface Signal {
+  phrase: string;
+  whoSaidIt: string;
+  read: string;
+  door: string;
+}
+
+const signals: Signal[] = [
+  {
+    phrase: `"We've got a few teams experimenting with Copilot, but nothing official."`,
+    whoSaidIt: `IT director, mid-call`,
+    read: `Shadow agents are already in the building. Nobody owns inventory. They don't know what they don't know.`,
+    door: `"Would it help to put a registry in front of that, so the people experimenting are visible without slowing them down?"`,
+  },
+  {
+    phrase: `"Our M365 admin is asking how she's supposed to manage all these new agents."`,
+    whoSaidIt: `CIO, casually`,
+    read: `Gold. The person who actually runs this is already feeling it. She's the buyer you need.`,
+    door: `"Can we get her in the room? Fifteen minutes. The people who run M365 are the people who'll own this on Monday."`,
+  },
+  {
+    phrase: `"ServiceNow keeps showing up in our AI conversations."`,
+    whoSaidIt: `CIO, IT lead`,
+    read: `They're being pitched a CMDB-led control plane for agents. They're shopping. They will buy something.`,
+    door: `"The question is whether your agents live in your IT ticketing platform or in the productivity platform your users are already in. Worth a side-by-side."`,
+  },
+  {
+    phrase: `"We're not really a Microsoft security shop."`,
+    whoSaidIt: `CISO, defensive`,
+    read: `They're hearing "another security pitch" and bracing. The conversation is in the wrong seat.`,
+    door: `"Totally fair, this isn't asking your SOC to switch. It's a different question for a different team. Who owns AI platform decisions over there?"`,
+  },
+];
+
+interface Competitor {
+  name: string;
+  pitch: string;
+  pedigree: string;
+  why: string;
+}
+
+const competitors: Competitor[] = [
+  {
+    name: 'ServiceNow AI Control Tower',
+    pitch: '"Any AI agent, any model, any identity. One place to control them all."',
+    pedigree: 'Built on the CMDB. Targets the Chief AI Officer, CIO, CTO, and risk leaders. Discovery, lifecycle, value tracking.',
+    why: 'They\'re aiming at Ops, not Security. They know the M365 admin and the IT ops org are who actually run this.',
+  },
+  {
+    name: 'Collibra AI Governance',
+    pitch: '"Unified governance for data and AI."',
+    pedigree: 'Built on data governance pedigree. Targets data office, risk, and compliance. Strong on data lineage and policy.',
+    why: 'They reach the customer through the data governance program, not the security stack. They have the governance committee\'s ear before we do.',
+  },
+  {
+    name: 'Microsoft Agent 365',
+    pitch: '"The control plane for agents, native to where your users already work."',
+    pedigree: 'Built on Entra, Defender, and Purview. The same admin tools the M365 team already uses. SDK to onboard anything.',
+    why: 'Our edge is that the operating environment for the user is the operating environment for the agent. We don\'t bolt on. We extend.',
+  },
+];
+
+interface PersonaRow {
+  who: string;
+  role: string;
+  whatTheyOwn: string;
+  whyTheyMatter: string;
+}
+
+const personaRows: PersonaRow[] = [
+  {
+    who: 'M365 admin / IT Ops lead',
+    role: 'The actual owner',
+    whatTheyOwn: 'Day-to-day administration of users, agents, policies, lifecycle. SDK onboarding lives here.',
+    whyTheyMatter: 'No deal moves without their buy-in. They are the first call, not the last.',
+  },
+  {
+    who: 'CIO / CTO',
+    role: 'The sponsor',
+    whatTheyOwn: 'Platform direction, AI strategy, vendor consolidation, the budget for "the next thing."',
+    whyTheyMatter: 'They decide whether the org is on a platform or on a stack of point tools. They sign the bridge.',
+  },
+  {
+    who: 'Innovation / AI lead',
+    role: 'The accelerator',
+    whatTheyOwn: 'AI council, use case backlog, the timeline that everyone else is now accountable to.',
+    whyTheyMatter: 'They\'re paid to remove friction. They\'ll pull the rest of the org with them when they see velocity.',
+  },
+];
+
+const acceleratorBefore = [
+  'Agent inventory lives in spreadsheets and tribal knowledge.',
+  'Each team picks its own runtime, its own policies, its own audit trail.',
+  'Security reviews trigger six weeks late, after the agent has shipped.',
+  'Ops gets paged for incidents involving agents nobody told them about.',
+];
+
+const acceleratorAfter = [
+  'Single registry. Every agent, first-party and third-party, in one view.',
+  'One identity model. Conditional Access, lifecycle, and sponsor on every agent.',
+  'Policies set once and enforced across Foundry, Copilot Studio, Bedrock, Vertex, custom.',
+  'Ops, security, and platform teams all see the same picture, on day one.',
+];
+
+interface BridgeStage {
+  label: string;
+  title: string;
+  detail: string;
+}
+
+const bridgeStages: BridgeStage[] = [
+  {
+    label: 'Today',
+    title: 'Coexist',
+    detail: 'The customer has Splunk, CrowdStrike, ServiceNow, maybe Collibra. They are not switching. A365 plugs in, lights up the agent registry, and feeds the SIEM and the SOC the signals they already trust.',
+  },
+  {
+    label: 'Bridge',
+    title: 'Operate',
+    detail: 'IT Ops onboards agents through the SDK. The M365 admin owns lifecycle. Conditional Access for agents and ID Governance come online as licensing catches up. The customer is now governing agents in production.',
+  },
+  {
+    label: 'Destination',
+    title: 'Platform',
+    detail: 'The agentic future is a platform decision, not a tool decision. Either the customer stitches their own (every vendor, every interop), or they pick the platform with the roadmap and the operator playbook. We are customer zero on that platform. That is the story.',
+  },
+];
+---
+
+<section class="agent365-deck" data-agent365-deck>
+  <nav class="deck-rail" aria-label="Agent 365 talk track sections">
+    <a href="#a365-cover" data-rail-link>Cover</a>
+    <a href="#a365-motion" data-rail-link>Motion</a>
+    <a href="#a365-tension" data-rail-link>Tension</a>
+    <a href="#a365-stalls" data-rail-link>Stalls</a>
+    <a href="#a365-signals" data-rail-link>Signals</a>
+    <a href="#a365-reframe" data-rail-link>Reframe</a>
+    <a href="#a365-persona" data-rail-link>Persona</a>
+    <a href="#a365-competition" data-rail-link>Competition</a>
+    <a href="#a365-anecdote" data-rail-link>Anecdote</a>
+    <a href="#a365-accelerator" data-rail-link>Accelerator</a>
+    <a href="#a365-bridge" data-rail-link>Bridge</a>
+    <a href="#a365-close" data-rail-link>Close</a>
+    <button type="button" class="present-toggle" data-present-toggle aria-label="Enter presentation mode">&#9654; Present</button>
+  </nav>
+
+  <div class="present-hud" data-present-hud aria-hidden="true">
+    <span class="present-counter" data-present-counter>Section 01 / 12</span>
+    <span class="present-title" data-present-title>Cover</span>
+    <div class="present-controls">
+      <button type="button" class="present-btn" data-present-prev aria-label="Previous section">&lsaquo;</button>
+      <button type="button" class="present-btn" data-present-next aria-label="Next section">&rsaquo;</button>
+      <button type="button" class="present-btn present-btn-exit" data-present-exit aria-label="Exit presentation">Exit</button>
+    </div>
+  </div>
+
+  <section class="deck-cover" id="a365-cover" data-deck-section aria-labelledby="a365-cover-title">
+    <div class="cover-grid">
+      <div class="cover-copy">
+        <span class="deck-kicker">ATS Enablement &middot; Open the door, don't pitch the product</span>
+        <h2 id="a365-cover-title">Agent 365: not just a "security product" (and that's the point).</h2>
+        <p class="cover-thesis">Your job on this call isn't to sell A365. It's to spot the moment where you can open a door, name the right room, and bring the right people into it. A365 is the platform conversation that makes the rest of our security stack make sense.</p>
+        <ul class="cover-takeaways">
+          <li>Hear the signal that means a door is open.</li>
+          <li>Reframe before security becomes the gate.</li>
+          <li>Get the M365 admin and the platform owner in the room.</li>
+          <li>Position A365 as the bridge to a platform decision the customer will make anyway.</li>
+        </ul>
+      </div>
+      <aside class="cover-platform" aria-label="Microsoft IQ platform anchor">
+        <span class="platform-label">Anchor</span>
+        <div class="platform-core">Microsoft IQ</div>
+        <ul class="platform-ring" role="list">
+          <li>Work IQ</li>
+          <li>Fabric IQ</li>
+          <li>Foundry IQ</li>
+        </ul>
+        <p class="platform-note">Intelligence + Trust. The agent layer rides on the platform your customer already operates.</p>
+      </aside>
+    </div>
+  </section>
+
+  <section class="deck-motion" id="a365-motion" data-deck-section aria-labelledby="a365-motion-title">
+    <div class="section-head">
+      <span class="deck-kicker">Section 02 &middot; The sales motion, said honestly</span>
+      <h2 id="a365-motion-title">A365 lands on whatever license the customer already has. Functionality scales with it.</h2>
+      <p class="section-lede">We are not asking the customer to buy E7 to start. We are not asking them to rip and replace. We are asking them to register agents, get a control plane, and let the rest mature on their timeline. The job of this call is to open that door, not to close on the ceiling.</p>
+    </div>
+    <ol class="license-grid" role="list">
+      {licenseTiers.map((t) => (
+        <li class={`license-tier is-${t.state}`}>
+          <span class="tier-state" aria-hidden="true"></span>
+          <div class="tier-head">
+            <strong>{t.tier}</strong>
+            <em>{t.detail}</em>
+          </div>
+          <p>{t.note}</p>
+        </li>
+      ))}
+    </ol>
+    <p class="reality-callout">Healthcare provider reality: identity is shallow today. Adoption runs on a 6&ndash;12 month curve. Sell the entry point, show the runway, and let the buyer walk it. The destination is real, but it is not the first ask.</p>
+  </section>
+
+  <section class="deck-tension" id="a365-tension" data-deck-section aria-labelledby="a365-tension-title">
+    <span class="deck-kicker">Section 03 &middot; The tension</span>
+    <h2 id="a365-tension-title">Every customer is in the age of AI. Almost none of them are moving at the speed they want.</h2>
+    <div class="tension-grid">
+      <article>
+        <strong>Ambition</strong>
+        <p>Boards are asking for AI strategy. Innovation leaders are quoting timelines they can't hit. Builders have prototypes ready to ship.</p>
+      </article>
+      <article>
+        <strong>Hesitation</strong>
+        <p>Security is uncomfortable. Governance is undefined. Identity for agents is a new concept. Nobody wants to be the team that shipped the wrong thing.</p>
+      </article>
+      <article class="tension-bridge">
+        <strong>The blocker</strong>
+        <p>It is not a missing tool. It is a missing operating model. That's where A365 enters: not as a SKU, but as the forcing function that makes everything downstream possible.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="deck-stalls" id="a365-stalls" data-deck-section aria-labelledby="a365-stalls-title">
+    <div class="section-head">
+      <span class="deck-kicker">Section 04 &middot; Where deals stall</span>
+      <h2 id="a365-stalls-title">Four phrases. Each one sounds reasonable. Each one is the same problem in disguise.</h2>
+      <p class="section-lede">When you hear these in the room, don't validate them. Reframe them. The customer is signaling that they have framed the wrong problem with the wrong persona, and they are stuck.</p>
+    </div>
+    <ol class="stall-grid" role="list">
+      {stalls.map((s, i) => (
+        <li class="stall-card">
+          <span class="stall-num">{String(i + 1).padStart(2, '0')}</span>
+          <p class="stall-moment">{s.moment}</p>
+          <p class="stall-signal">{s.signal}</p>
+          <p class="stall-pivot">{s.pivot}</p>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <section class="deck-signals" id="a365-signals" data-deck-section aria-labelledby="a365-signals-title">
+    <div class="section-head">
+      <span class="deck-kicker">Section 05 &middot; Listening for door-openers</span>
+      <h2 id="a365-signals-title">The phrases that mean a door is open. Catch them. Walk through.</h2>
+      <p class="section-lede">ATS calls don't need a deep technical takedown. They need an ear for what the customer is signaling and a tactical response that opens the next meeting. Every line below is something you'll actually hear. The door-opener is what you say next.</p>
+    </div>
+    <ol class="signal-grid" role="list">
+      {signals.map((s) => (
+        <li class="signal-card">
+          <p class="signal-phrase">{s.phrase}</p>
+          <span class="signal-source">{s.whoSaidIt}</span>
+          <div class="signal-row"><em>What it tells you</em><span>{s.read}</span></div>
+          <div class="signal-row is-door"><em>Door-opener</em><span>{s.door}</span></div>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <section class="deck-reframe" id="a365-reframe" data-deck-section aria-labelledby="a365-reframe-title">
+    <div class="section-head">
+      <span class="deck-kicker">Section 06 &middot; The reframe</span>
+      <h2 id="a365-reframe-title">From "what tools do you use?" to "how will you operate agents?"</h2>
+    </div>
+    <div class="reframe-flow">
+      <div class="reframe-col is-from">
+        <span class="col-label">Tooling conversation</span>
+        <ul role="list">
+          <li>Which products are on the shortlist?</li>
+          <li>How does this compare to what we have?</li>
+          <li>What does it cost per seat?</li>
+          <li>Who owns the procurement?</li>
+        </ul>
+        <p class="col-outcome">Outcome: comparison cycle. Months. Often, no decision.</p>
+      </div>
+      <div class="reframe-arrow" aria-hidden="true">&rarr;</div>
+      <div class="reframe-col is-to">
+        <span class="col-label">Readiness conversation</span>
+        <ul role="list">
+          <li>Who owns each agent on Monday?</li>
+          <li>How do you see them, control them, retire them?</li>
+          <li>Where do agents touch identity, data, and decisions?</li>
+          <li>What's the operating model that lets you ship and govern in parallel?</li>
+        </ul>
+        <p class="col-outcome">Outcome: a plan. A control plane. Movement.</p>
+      </div>
+    </div>
+    <p class="reframe-callout">Callout line: "You're not blocked by tools. You're blocked by readiness. Let's talk about that instead."</p>
+  </section>
+
+  <section class="deck-persona" id="a365-persona" data-deck-section aria-labelledby="a365-persona-title">
+    <div class="section-head">
+      <span class="deck-kicker">Section 07 &middot; Persona truth</span>
+      <h2 id="a365-persona-title">The M365 admin is the buyer you didn't put on the deck. Put her on the deck.</h2>
+      <p class="section-lede">A365 onboards through the SDK. Lifecycle, identity, and policy live in the M365 admin center. The first person who has to say yes is not the CISO and not the CTO. It is the IT Ops lead who already runs your customer's productivity tenant. Build the call list around her.</p>
+    </div>
+    <ol class="persona-table" role="list">
+      {personaRows.map((p) => (
+        <li class="persona-row">
+          <div class="persona-who">
+            <strong>{p.who}</strong>
+            <em>{p.role}</em>
+          </div>
+          <div class="persona-detail">
+            <span class="persona-label">What they own</span>
+            <p>{p.whatTheyOwn}</p>
+          </div>
+          <div class="persona-detail">
+            <span class="persona-label">Why they matter</span>
+            <p>{p.whyTheyMatter}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+    <p class="persona-stakeholders"><strong>Stakeholders, not buyers.</strong> The CISO is a co-owner once the platform conversation has a host. The data governance officer (especially in healthcare) speaks for HIPAA and gets Collibra in the door if you ignore them. Engage early, but don't lead with them.</p>
+    <p class="persona-callout">Tactical move: "Before our next conversation, can we get your M365 admin and whoever owns AI strategy in the same room? Twenty minutes. The shape of this changes when those two seats are present."</p>
+  </section>
+
+  <section class="deck-competition" id="a365-competition" data-deck-section aria-labelledby="a365-competition-title">
+    <div class="section-head">
+      <span class="deck-kicker">Section 08 &middot; Where the real fight is</span>
+      <h2 id="a365-competition-title">The competition isn't another security vendor. It's an Ops platform aimed at the same M365 admin we are.</h2>
+      <p class="section-lede">ServiceNow AI Control Tower and Collibra AI Governance are both targeting Operations. That's a tell. They've already figured out what we need to internalize: agent governance is an Ops conversation. The CISO is a stakeholder, not the buyer.</p>
+    </div>
+    <div class="competition-grid">
+      {competitors.map((c) => (
+        <article class={`competitor ${c.name.startsWith('Microsoft') ? 'is-us' : 'is-them'}`}>
+          <header>
+            <strong>{c.name}</strong>
+            <em>{c.pitch}</em>
+          </header>
+          <p class="comp-pedigree"><span class="comp-label">Pedigree</span>{c.pedigree}</p>
+          <p class="comp-why"><span class="comp-label">What it tells us</span>{c.why}</p>
+        </article>
+      ))}
+    </div>
+    <p class="competition-callout">Field read: if a customer brings up ServiceNow or Collibra in an AI context, you are not in a security conversation anymore. You are in a platform conversation. Treat it like one.</p>
+  </section>
+
+  <section class="deck-anecdote" id="a365-anecdote" data-deck-section aria-labelledby="a365-anecdote-title">
+    <div class="section-head">
+      <span class="deck-kicker">Section 09 &middot; The anecdote</span>
+      <h2 id="a365-anecdote-title">"We don't really use Microsoft tools."</h2>
+    </div>
+    <div class="anecdote-stage">
+      <article class="anecdote-card is-stall">
+        <header class="anecdote-bar" aria-hidden="true">
+          <span class="anecdote-dots"><i></i><i></i><i></i></span>
+          <span class="anecdote-path">~/atsenablement/the-stall.log</span>
+        </header>
+        <span class="anecdote-tag">The stall</span>
+        <p>A CISO says it plainly: "We don't really use Microsoft security tools. We're a Splunk shop. We have CrowdStrike. Why are we talking about A365?"</p>
+        <p class="anecdote-meta">If you answer with parity, you lose. You're now in a tooling comparison you can't win, against products that already have budget and trust.</p>
+      </article>
+      <article class="anecdote-card is-pivot">
+        <header class="anecdote-bar" aria-hidden="true">
+          <span class="anecdote-dots"><i></i><i></i><i></i></span>
+          <span class="anecdote-path">~/atsenablement/the-pivot.sh</span>
+        </header>
+        <span class="anecdote-tag">The pivot</span>
+        <p>"You're right that this isn't a tool comparison. A365 isn't asking your SOC to switch. It's asking your IT Ops team a different question: how are you going to inventory, identify, and govern agents that your business is already starting to build, inside the M365 tenant they already manage?"</p>
+        <p class="anecdote-meta">Now you're not the eleventh security vendor in the meeting. You're the first one talking about agents as something the M365 admin will own.</p>
+      </article>
+      <article class="anecdote-card is-extend">
+        <header class="anecdote-bar" aria-hidden="true">
+          <span class="anecdote-dots"><i></i><i></i><i></i></span>
+          <span class="anecdote-path">~/atsenablement/the-extension.sh</span>
+        </header>
+        <span class="anecdote-tag">The extension</span>
+        <p>"A365 connects agents from any platform &mdash; Bedrock, Vertex, Foundry, Copilot Studio, custom &mdash; into one registry. Your existing Splunk and CrowdStrike still get the signal. The control plane just makes sure you have a signal worth sending, owned by the team that already runs your tenant."</p>
+        <p class="anecdote-meta">This is where the conversation stops being a swap and starts being an accelerator. The IT Ops lead pulls in the platform owner. The CISO becomes a partner instead of a gatekeeper.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="deck-accelerator" id="a365-accelerator" data-deck-section aria-labelledby="a365-accelerator-title">
+    <div class="section-head">
+      <span class="deck-kicker">Section 10 &middot; The accelerator story</span>
+      <h2 id="a365-accelerator-title">Without a control plane, agent adoption is fragmented. With one, it compounds.</h2>
+    </div>
+    <div class="accelerator-split">
+      <div class="accel-col is-before">
+        <span class="col-label">Without a control plane</span>
+        <ul role="list">
+          {acceleratorBefore.map((a) => <li>{a}</li>)}
+        </ul>
+        <p class="col-outcome">Slow. Manual. Fragmented. Risk that nobody can articulate end-to-end.</p>
+      </div>
+      <div class="accel-col is-after">
+        <span class="col-label">With A365 as the control plane</span>
+        <ul role="list">
+          {acceleratorAfter.map((a) => <li>{a}</li>)}
+        </ul>
+        <p class="col-outcome">Faster. Scalable. Governed. Ops gets a tool that respects the work they already do.</p>
+      </div>
+    </div>
+    <p class="accelerator-callout">A365 doesn't require the customer to do AI. It removes the reasons they aren't doing AI yet.</p>
+  </section>
+
+  <section class="deck-bridge" id="a365-bridge" data-deck-section aria-labelledby="a365-bridge-title">
+    <div class="section-head">
+      <span class="deck-kicker">Section 11 &middot; Bridge today, platform tomorrow</span>
+      <h2 id="a365-bridge-title">We can coexist with their stack today. The agentic future is going to force a platform decision either way.</h2>
+      <p class="section-lede">No customer is rip-and-replacing. The honest motion is bridge first, then earn the platform call. Either they stitch every vendor's interop themselves, or they pick the platform with the roadmap and the operator playbook. We are customer zero on that platform. That is the trust we get to bring.</p>
+    </div>
+    <ol class="bridge-grid" role="list">
+      {bridgeStages.map((b, i) => (
+        <li class={`bridge-stage stage-${i}${i === 1 ? ' is-now' : ''}`}>
+          <span class="bridge-dot" aria-hidden="true"></span>
+          <span class="bridge-label">{b.label}</span>
+          <h3>{b.title}</h3>
+          <p>{b.detail}</p>
+        </li>
+      ))}
+    </ol>
+    <p class="bridge-callout">Sales-tactical: do not ask for the platform call on day one. Ask for the bridge. Earn the platform conversation by being the one who made the bridge work.</p>
+  </section>
+
+  <section class="deck-close" id="a365-close" data-deck-section aria-labelledby="a365-close-title">
+    <div class="close-stage">
+      <span class="deck-kicker">Section 12 &middot; Close</span>
+      <h2 id="a365-close-title">This isn't security versus AI. This is helping the customer move forward.</h2>
+      <ol class="close-actions" role="list">
+        <li><strong>Listen for the signal.</strong><span>Stall phrase or door-opener, you'll hear it. Name it in real time.</span></li>
+        <li><strong>Reframe the conversation.</strong><span>From tools to readiness. From product to operating model.</span></li>
+        <li><strong>Get the M365 admin in the room.</strong><span>And the platform owner, and the AI lead. The CISO is the partner, not the host.</span></li>
+        <li><strong>Open the bridge.</strong><span>Coexist with what's there today. Earn the platform call by making the bridge real.</span></li>
+        <li><strong>Position A365 as the accelerator.</strong><span>The thing that removes the reasons the customer hasn't started.</span></li>
+      </ol>
+      <p class="close-line">"You don't need A365 to do AI. You need A365 to do AI at the speed your business already wants."</p>
+    </div>
+  </section>
+</section>
+
+<script>
+  (() => {
+    const deck = document.querySelector('[data-agent365-deck]');
+    if (!deck) return;
+
+    const rail = deck.querySelector('.deck-rail');
+    const updateRailHeight = () => {
+      if (!rail) return;
+      const h = rail.getBoundingClientRect().height;
+      deck.style.setProperty('--rail-height', `${Math.round(h)}px`);
+    };
+    updateRailHeight();
+    if ('ResizeObserver' in window && rail) {
+      const ro = new ResizeObserver(updateRailHeight);
+      ro.observe(rail);
+    } else {
+      window.addEventListener('resize', updateRailHeight);
+    }
+
+    const railLinks = Array.from(deck.querySelectorAll('[data-rail-link]'));
+    const sections = Array.from(deck.querySelectorAll('[data-deck-section]'));
+
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((left, right) => right.intersectionRatio - left.intersectionRatio)[0];
+        if (!visible) return;
+        railLinks.forEach((link) => {
+          link.classList.toggle('is-active', link.getAttribute('href') === `#${visible.target.id}`);
+        });
+      }, { threshold: [0.24, 0.45, 0.65], rootMargin: '-15% 0px -55% 0px' });
+      sections.forEach((section) => observer.observe(section));
+    }
+
+    const presentToggle = deck.querySelector('[data-present-toggle]');
+    const presentHud = deck.querySelector('[data-present-hud]');
+    const presentCounter = deck.querySelector('[data-present-counter]');
+    const presentTitle = deck.querySelector('[data-present-title]');
+    const presentPrev = deck.querySelector('[data-present-prev]');
+    const presentNext = deck.querySelector('[data-present-next]');
+    const presentExit = deck.querySelector('[data-present-exit]');
+
+    if (!presentToggle || !sections.length) return;
+
+    const total = sections.length;
+    const totalLabel = String(total).padStart(2, '0');
+    const sectionLabels = sections.map((s) => {
+      const link = railLinks.find((l) => l.getAttribute('href') === `#${s.id}`);
+      return link ? link.textContent.trim() : (s.id || '');
+    });
+
+    let currentIdx = 0;
+    let isPresenting = false;
+    let leaveTimer = 0;
+
+    const setSlide = (idx) => {
+      if (idx < 0) idx = 0;
+      if (idx >= total) idx = total - 1;
+      if (idx === currentIdx && sections[idx].classList.contains('is-current')) return;
+      const previous = sections[currentIdx];
+      const next = sections[idx];
+      const direction = idx >= currentIdx ? 1 : -1;
+      deck.dataset.presentDir = direction > 0 ? 'forward' : 'back';
+      if (previous && previous !== next) {
+        previous.classList.remove('is-current');
+        previous.classList.add('is-leaving');
+        window.clearTimeout(leaveTimer);
+        leaveTimer = window.setTimeout(() => previous.classList.remove('is-leaving'), 460);
+      }
+      next.classList.add('is-current');
+      next.classList.remove('is-leaving');
+      next.scrollTop = 0;
+      currentIdx = idx;
+      if (presentCounter) presentCounter.textContent = `Section ${String(idx + 1).padStart(2, '0')} / ${totalLabel}`;
+      if (presentTitle) presentTitle.textContent = sectionLabels[idx] || '';
+    };
+
+    const enterPresent = () => {
+      if (isPresenting) return;
+      isPresenting = true;
+      deck.dataset.present = 'true';
+      if (presentHud) presentHud.removeAttribute('aria-hidden');
+      document.documentElement.classList.add('deck-presenting');
+      document.body.classList.add('deck-presenting');
+      currentIdx = 0;
+      sections.forEach((s) => s.classList.remove('is-current', 'is-leaving'));
+      setSlide(0);
+      window.setTimeout(() => presentNext && presentNext.focus(), 60);
+    };
+
+    const exitPresent = () => {
+      if (!isPresenting) return;
+      isPresenting = false;
+      delete deck.dataset.present;
+      delete deck.dataset.presentDir;
+      if (presentHud) presentHud.setAttribute('aria-hidden', 'true');
+      document.documentElement.classList.remove('deck-presenting');
+      document.body.classList.remove('deck-presenting');
+      sections.forEach((s) => s.classList.remove('is-current', 'is-leaving'));
+      presentToggle.focus();
+    };
+
+    presentToggle.addEventListener('click', enterPresent);
+    presentExit && presentExit.addEventListener('click', exitPresent);
+    presentPrev && presentPrev.addEventListener('click', () => setSlide(currentIdx - 1));
+    presentNext && presentNext.addEventListener('click', () => setSlide(currentIdx + 1));
+
+    document.addEventListener('keydown', (event) => {
+      if (!isPresenting) return;
+      if (event.key === 'Escape') { event.preventDefault(); exitPresent(); }
+      else if (event.key === 'ArrowRight' || event.key === 'PageDown' || event.key === ' ') { event.preventDefault(); setSlide(currentIdx + 1); }
+      else if (event.key === 'ArrowLeft' || event.key === 'PageUp') { event.preventDefault(); setSlide(currentIdx - 1); }
+      else if (event.key === 'Home') { event.preventDefault(); setSlide(0); }
+      else if (event.key === 'End') { event.preventDefault(); setSlide(total - 1); }
+    });
+  })();
+</script>
+
+<style>
+  .agent365-deck {
+    --ink: #0c1626;
+    --muted: #4d5d72;
+    --line: rgba(12, 22, 38, 0.13);
+    --accent: #1f5fb8;
+    --accent-warm: #b85c1f;
+    --good: #146a4a;
+    --warn: #b08a1f;
+    --bad: #a4421f;
+    --surface: rgba(255, 255, 255, 0.78);
+    width: min(calc(100vw - 2rem), 76rem);
+    margin: 2rem 0 2.5rem 50%;
+    transform: translateX(-50%);
+    color: var(--ink);
+    font-size: 0.98rem;
+  }
+
+  .agent365-deck h2,
+  .agent365-deck h3,
+  .agent365-deck p {
+    margin: 0;
+    letter-spacing: 0;
+    line-height: 1.5;
+  }
+
+  .agent365-deck h2 {
+    font-size: clamp(1.7rem, 3vw, 2.6rem);
+    line-height: 1.12;
+  }
+
+  .agent365-deck p {
+    color: var(--muted);
+    line-height: 1.65;
+  }
+
+  .deck-kicker {
+    display: block;
+    color: var(--accent);
+    font-size: 0.72rem;
+    font-weight: 850;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .deck-rail {
+    position: sticky;
+    top: 5.25rem;
+    z-index: 8;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    align-items: center;
+    padding: 0.5rem 0.65rem;
+    margin-bottom: 1rem;
+    background: rgba(255, 255, 255, 0.92);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    box-shadow: 0 12px 30px rgba(12, 22, 38, 0.06);
+    backdrop-filter: blur(8px);
+  }
+
+  .deck-rail a {
+    padding: 0.3rem 0.7rem;
+    border-radius: 999px;
+    color: var(--muted);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    border: 1px solid transparent;
+    transition: background 160ms ease, color 160ms ease, border-color 160ms ease;
+  }
+
+  .deck-rail a.is-active,
+  .deck-rail a:hover {
+    color: var(--ink);
+    background: rgba(31, 95, 184, 0.1);
+    border-color: rgba(31, 95, 184, 0.25);
+  }
+
+  .present-toggle {
+    margin-left: auto;
+    padding: 0.4rem 0.85rem;
+    border-radius: 999px;
+    border: 1px solid var(--accent);
+    background: var(--accent);
+    color: white;
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    cursor: pointer;
+  }
+
+  .present-toggle:hover { background: #174a92; border-color: #174a92; }
+
+  .deck-cover,
+  .deck-motion,
+  .deck-tension,
+  .deck-stalls,
+  .deck-signals,
+  .deck-reframe,
+  .deck-persona,
+  .deck-competition,
+  .deck-anecdote,
+  .deck-accelerator,
+  .deck-bridge,
+  .deck-close {
+    scroll-margin-top: calc(5.5rem + var(--rail-height, 3rem) + 0.75rem);
+    margin-top: 1rem;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--surface);
+    box-shadow: 0 18px 46px rgba(12, 22, 38, 0.07);
+    padding: clamp(1.1rem, 2.6vw, 1.9rem);
+  }
+
+  .section-head {
+    display: grid;
+    gap: 0.5rem;
+    max-width: 60ch;
+    margin-bottom: 1.2rem;
+  }
+
+  .section-lede { color: var(--muted); }
+
+  /* COVER */
+  .deck-cover {
+    color: white;
+    background:
+      linear-gradient(135deg, rgba(12, 22, 38, 0.98), rgba(31, 95, 184, 0.92) 60%, rgba(184, 92, 31, 0.85)),
+      #0c1626;
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+  .deck-cover .deck-kicker { color: rgba(255, 255, 255, 0.78); }
+  .deck-cover h2 { color: white; }
+  .deck-cover p { color: rgba(255, 255, 255, 0.86); }
+
+  .cover-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(15rem, 0.8fr);
+    gap: 1.6rem;
+    align-items: stretch;
+  }
+
+  .cover-copy { display: grid; gap: 0.9rem; align-content: center; }
+  .cover-thesis { font-size: 1.05rem; max-width: 48ch; }
+
+  .cover-takeaways {
+    list-style: none;
+    padding: 0;
+    margin: 0.6rem 0 0;
+    display: grid;
+    gap: 0.4rem;
+  }
+  .cover-takeaways li {
+    color: white;
+    font-weight: 600;
+    padding-left: 1.1rem;
+    position: relative;
+  }
+  .cover-takeaways li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.55em;
+    width: 0.5rem;
+    height: 0.5rem;
+    background: linear-gradient(135deg, #f1b75f, #e07b3a);
+    border-radius: 999px;
+  }
+
+  .cover-platform {
+    display: grid;
+    gap: 0.7rem;
+    padding: 1.1rem;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    text-align: center;
+    align-content: center;
+  }
+  .platform-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 800;
+  }
+  .platform-core {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: white;
+    padding: 1rem 0.8rem;
+    border-radius: 999px;
+    background: radial-gradient(circle at 30% 30%, rgba(241, 183, 95, 0.6), rgba(31, 95, 184, 0.5));
+    border: 1px solid rgba(255, 255, 255, 0.25);
+  }
+  .platform-ring {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+    animation: a365-ring-drift 24s ease-in-out infinite;
+  }
+  @keyframes a365-ring-drift {
+    0%, 100% { transform: translateX(-0.5rem); }
+    50%      { transform: translateX(0.5rem); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .platform-ring { animation: none; }
+  }
+  .platform-ring li {
+    padding: 0.25rem 0.6rem;
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.92);
+    box-shadow: 0 0 14px rgba(241, 183, 95, 0.2);
+  }
+  .platform-note { font-size: 0.85rem; color: rgba(255, 255, 255, 0.78); }
+
+  /* TENSION */
+  .tension-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.9rem;
+    margin-top: 1rem;
+  }
+  .tension-grid article {
+    padding: 1rem;
+    border-radius: 8px;
+    background: white;
+    border: 1px solid var(--line);
+    display: grid;
+    gap: 0.4rem;
+  }
+  .tension-grid article strong {
+    color: var(--ink);
+    font-size: 1.05rem;
+  }
+  .tension-bridge {
+    background: linear-gradient(135deg, rgba(31, 95, 184, 0.1), rgba(184, 92, 31, 0.1)) !important;
+    border-color: rgba(31, 95, 184, 0.3) !important;
+  }
+
+  /* STALLS */
+  .stall-grid {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.85rem;
+  }
+  .stall-card {
+    position: relative;
+    padding: 1.1rem 1.1rem 1.1rem 3rem;
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    display: grid;
+    gap: 0.6rem;
+  }
+  .stall-num {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    font-size: 0.85rem;
+    font-weight: 850;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+  }
+  .stall-moment {
+    color: var(--ink);
+    font-weight: 700;
+    font-size: 1rem;
+  }
+  .stall-signal {
+    color: var(--accent-warm);
+    font-style: italic;
+    font-size: 0.92rem;
+  }
+  .stall-pivot {
+    color: var(--ink);
+    font-size: 0.92rem;
+    padding-left: 0.85rem;
+    border-left: 2px solid var(--accent);
+  }
+
+  /* REFRAME */
+  .reframe-flow {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 1rem;
+    align-items: stretch;
+    margin: 0.5rem 0 1rem;
+  }
+  .reframe-col {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 1.1rem;
+    display: grid;
+    gap: 0.6rem;
+  }
+  .reframe-col.is-from { border-color: rgba(164, 66, 31, 0.3); background: rgba(164, 66, 31, 0.04); }
+  .reframe-col.is-to { border-color: rgba(20, 106, 74, 0.3); background: rgba(20, 106, 74, 0.04); }
+  .reframe-col ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.35rem; color: var(--muted); }
+  .reframe-col li::before { content: '— '; color: var(--ink); }
+  .col-label {
+    font-size: 0.7rem;
+    font-weight: 850;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .is-from .col-label { color: var(--bad); }
+  .is-to .col-label { color: var(--good); }
+  .col-outcome { font-weight: 700; color: var(--ink); }
+  .reframe-arrow {
+    display: grid;
+    place-items: center;
+    font-size: 2rem;
+    color: var(--accent);
+    font-weight: 800;
+  }
+  .reframe-callout,
+  .persona-callout,
+  .accelerator-callout,
+  .reality-callout {
+    margin-top: 0.6rem;
+    padding: 0.85rem 1rem;
+    border-left: 3px solid var(--accent);
+    background: rgba(31, 95, 184, 0.06);
+    color: var(--ink);
+    font-weight: 600;
+    border-radius: 4px;
+  }
+
+  /* PERSONA */
+  .persona-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.85rem;
+  }
+  .persona-shift {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 1rem;
+    display: grid;
+    gap: 0.55rem;
+  }
+  .persona-shift header,
+  .persona-shift footer {
+    display: grid;
+    gap: 0.15rem;
+  }
+  .persona-shift strong { color: var(--ink); font-size: 1rem; }
+  .persona-shift em { font-style: normal; color: var(--muted); font-size: 0.88rem; }
+  .shift-label {
+    font-size: 0.65rem;
+    font-weight: 850;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent-warm);
+  }
+  .shift-arrow {
+    text-align: center;
+    color: var(--accent);
+    font-size: 1.4rem;
+    font-weight: 800;
+  }
+  .shift-why {
+    margin-top: 0.4rem;
+    padding-top: 0.4rem;
+    border-top: 1px dashed var(--line);
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+
+  /* ANECDOTE */
+  .anecdote-stage {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.85rem;
+  }
+  .anecdote-card {
+    background: #0c1626;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 10px;
+    padding: 0;
+    display: grid;
+    gap: 0;
+    overflow: hidden;
+    box-shadow: 0 14px 38px rgba(12, 22, 38, 0.18);
+  }
+  .anecdote-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.45rem 0.75rem;
+    background: rgba(255, 255, 255, 0.04);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .anecdote-dots { display: inline-flex; gap: 0.3rem; }
+  .anecdote-dots i {
+    width: 0.55rem; height: 0.55rem; border-radius: 999px; display: block;
+    background: #4d5d72;
+  }
+  .anecdote-dots i:nth-child(1) { background: #e3604a; }
+  .anecdote-dots i:nth-child(2) { background: #f1b75f; }
+  .anecdote-dots i:nth-child(3) { background: #5fbf7a; }
+  .anecdote-path {
+    font-family: ui-monospace, "SFMono-Regular", "Cascadia Code", Consolas, monospace;
+    font-size: 0.72rem;
+    color: rgba(255, 255, 255, 0.62);
+    letter-spacing: 0.02em;
+  }
+  .anecdote-card .anecdote-tag,
+  .anecdote-card p {
+    padding-left: 1.05rem;
+    padding-right: 1.05rem;
+  }
+  .anecdote-card .anecdote-tag {
+    padding-top: 0.85rem;
+    font-size: 0.7rem;
+    font-weight: 850;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .anecdote-card p {
+    padding-top: 0.55rem;
+    color: rgba(255, 255, 255, 0.92);
+    font-weight: 500;
+    line-height: 1.55;
+  }
+  .anecdote-card p:last-child { padding-bottom: 1.05rem; }
+  .anecdote-card.is-stall .anecdote-tag { color: #f0a48a; }
+  .anecdote-card.is-pivot .anecdote-tag { color: #7fb1ff; }
+  .anecdote-card.is-extend .anecdote-tag { color: #7fd9b1; }
+  .anecdote-meta { color: rgba(255, 255, 255, 0.62) !important; font-size: 0.86rem; font-style: italic; }
+
+  /* REALITY */
+  .license-grid {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 0.8rem;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.7rem;
+  }
+  .license-tier {
+    position: relative;
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 0.95rem;
+    display: grid;
+    gap: 0.4rem;
+  }
+  .tier-state {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+  .license-tier.is-limited .tier-state { background: var(--bad); }
+  .license-tier.is-partial .tier-state { background: var(--warn); }
+  .license-tier.is-full .tier-state { background: var(--good); }
+  .tier-head { display: grid; gap: 0.1rem; padding-top: 0.3rem; }
+  .tier-head strong { color: var(--ink); font-size: 1rem; }
+  .tier-head em { font-style: normal; font-size: 0.78rem; color: var(--muted); letter-spacing: 0.04em; }
+  .license-tier p { font-size: 0.86rem; }
+
+  /* ACCELERATOR */
+  .accelerator-split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.9rem;
+  }
+  .accel-col {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 1.1rem;
+    display: grid;
+    gap: 0.5rem;
+  }
+  .accel-col.is-before { border-color: rgba(164, 66, 31, 0.3); background: rgba(164, 66, 31, 0.04); }
+  .accel-col.is-after { border-color: rgba(20, 106, 74, 0.3); background: rgba(20, 106, 74, 0.04); }
+  .accel-col.is-before .col-label { color: var(--bad); }
+  .accel-col.is-after .col-label { color: var(--good); }
+  .accel-col ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.35rem; }
+  .accel-col li {
+    padding-left: 1.1rem;
+    position: relative;
+    color: var(--ink);
+    font-size: 0.93rem;
+  }
+  .accel-col li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.5em;
+    width: 0.45rem;
+    height: 0.45rem;
+    border-radius: 999px;
+  }
+  .accel-col.is-before li::before { background: var(--bad); }
+  .accel-col.is-after li::before { background: var(--good); }
+
+  /* CLOSE */
+  .deck-close {
+    color: white;
+    background: linear-gradient(135deg, rgba(12, 22, 38, 0.98), rgba(20, 106, 74, 0.9));
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+  .deck-close .deck-kicker { color: rgba(255, 255, 255, 0.78); }
+  .deck-close h2 { color: white; }
+  .close-stage { display: grid; gap: 1rem; max-width: 64ch; }
+  .close-actions {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0.55rem;
+    counter-reset: close;
+  }
+  .close-actions li {
+    counter-increment: close;
+    display: grid;
+    grid-template-columns: 2.4rem 1fr;
+    gap: 0.6rem;
+    padding: 0.7rem 0.9rem;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 8px;
+    align-items: start;
+  }
+  .close-actions li::before {
+    content: counter(close, decimal-leading-zero);
+    font-weight: 850;
+    color: #f1b75f;
+    font-size: 1rem;
+    letter-spacing: 0.06em;
+    grid-column: 1;
+    grid-row: 1 / span 2;
+  }
+  .close-actions strong { color: white; grid-column: 2; }
+  .close-actions span { color: rgba(255, 255, 255, 0.82); grid-column: 2; font-size: 0.92rem; }
+  .close-line {
+    margin-top: 0.5rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: white;
+    border-left: 3px solid #f1b75f;
+    padding-left: 0.9rem;
+  }
+
+  /* PRESENT MODE */
+  .present-hud {
+    position: fixed;
+    bottom: 1.2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 60;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.55rem 0.9rem;
+    background: rgba(12, 22, 38, 0.92);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 999px;
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.4);
+    transition: opacity 200ms ease, transform 200ms ease;
+  }
+  .present-hud[aria-hidden='true'] {
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(-50%, 1rem);
+  }
+  .present-counter {
+    font-size: 0.72rem;
+    font-weight: 850;
+    letter-spacing: 0.14em;
+    color: #f1b75f;
+  }
+  .present-title {
+    font-weight: 700;
+    font-size: 0.88rem;
+    color: white;
+  }
+  .present-controls { display: flex; gap: 0.3rem; }
+  .present-btn {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: 999px;
+    padding: 0.3rem 0.7rem;
+    font-weight: 800;
+    font-size: 0.85rem;
+    cursor: pointer;
+  }
+  .present-btn:hover { background: rgba(255, 255, 255, 0.18); }
+  .present-btn-exit { font-size: 0.72rem; letter-spacing: 0.1em; }
+
+  .agent365-deck[data-present='true'] {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    max-width: 100vw;
+    height: 100dvh;
+    margin: 0;
+    transform: none;
+    z-index: 50;
+    background: #0c1626;
+    overflow: hidden;
+    padding: clamp(1rem, 4vw, 3rem);
+  }
+  .agent365-deck[data-present='true'] .deck-rail { display: none; }
+  .agent365-deck[data-present='true'] [data-deck-section] {
+    position: absolute;
+    inset: clamp(1rem, 4vw, 3rem);
+    margin: 0;
+    overflow: auto;
+    opacity: 0;
+    transform: translateY(2.5rem);
+    transition: opacity 380ms ease, transform 420ms ease;
+    pointer-events: none;
+    padding-bottom: 4.5rem;
+    background: #111d33;
+    color: rgba(255, 255, 255, 0.92);
+    border-color: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4);
+  }
+  .agent365-deck[data-present='true'] [data-deck-section] h2,
+  .agent365-deck[data-present='true'] [data-deck-section] h3,
+  .agent365-deck[data-present='true'] [data-deck-section] strong {
+    color: white;
+  }
+  .agent365-deck[data-present='true'] [data-deck-section] p,
+  .agent365-deck[data-present='true'] [data-deck-section] li,
+  .agent365-deck[data-present='true'] [data-deck-section] em,
+  .agent365-deck[data-present='true'] [data-deck-section] span {
+    color: rgba(255, 255, 255, 0.86);
+  }
+  .agent365-deck[data-present='true'] [data-deck-section] .deck-kicker {
+    color: #f1b75f;
+  }
+  .agent365-deck[data-present='true'] .stall-card,
+  .agent365-deck[data-present='true'] .signal-card,
+  .agent365-deck[data-present='true'] .license-tier,
+  .agent365-deck[data-present='true'] .tension-grid article,
+  .agent365-deck[data-present='true'] .reframe-col,
+  .agent365-deck[data-present='true'] .persona-row,
+  .agent365-deck[data-present='true'] .competitor,
+  .agent365-deck[data-present='true'] .accel-col,
+  .agent365-deck[data-present='true'] .bridge-stage {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.12);
+  }
+  .agent365-deck[data-present='true'] .bridge-dot {
+    box-shadow: 0 0 0 3px #111d33;
+  }
+  .agent365-deck[data-present='true'] .bridge-stage.stage-1 .bridge-dot {
+    box-shadow: 0 0 0 3px #111d33, 0 0 0 7px rgba(31, 95, 184, 0.35);
+  }
+  .agent365-deck[data-present='true'] [data-deck-section].is-current {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+  .agent365-deck[data-present='true'] [data-deck-section].is-leaving {
+    opacity: 0;
+    transform: translateY(-2.5rem);
+  }
+
+  :global(html.deck-presenting),
+  :global(body.deck-presenting) {
+    overflow: hidden !important;
+  }
+
+  /* SIGNALS */
+  .signal-grid {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.85rem;
+  }
+  .signal-card {
+    background: white;
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--accent);
+    border-radius: 8px;
+    padding: 1rem 1.1rem;
+    display: grid;
+    gap: 0.55rem;
+  }
+  .signal-phrase {
+    color: var(--ink);
+    font-weight: 700;
+    font-size: 1rem;
+    font-style: italic;
+  }
+  .signal-source {
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent-warm);
+  }
+  .signal-row {
+    display: grid;
+    gap: 0.15rem;
+  }
+  .signal-row em {
+    font-style: normal;
+    font-size: 0.7rem;
+    font-weight: 850;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+  }
+  .signal-row.is-door em { color: var(--good); }
+  .signal-row span { color: var(--ink); font-size: 0.92rem; }
+  .signal-row.is-door span { font-weight: 600; }
+
+  /* PERSONA TABLE */
+  .persona-table {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 0.6rem;
+    display: grid;
+    gap: 0.6rem;
+  }
+  .persona-row {
+    display: grid;
+    grid-template-columns: 14rem 1fr 1fr;
+    gap: 1rem;
+    padding: 0.95rem 1.1rem;
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    align-items: start;
+  }
+  .persona-row:nth-child(1) { border-left: 4px solid var(--good); }
+  .persona-row:nth-child(2) { border-left: 4px solid var(--accent); }
+  .persona-row:nth-child(3) { border-left: 4px solid var(--accent-warm); }
+  .persona-stakeholders {
+    margin-top: 0.7rem;
+    padding: 0.7rem 0.95rem;
+    background: rgba(77, 93, 114, 0.06);
+    border: 1px dashed rgba(12, 22, 38, 0.18);
+    border-radius: 6px;
+    color: var(--muted) !important;
+    font-size: 0.88rem;
+    line-height: 1.55;
+  }
+  .persona-stakeholders strong { color: var(--ink); }
+  .persona-who {
+    display: grid;
+    gap: 0.15rem;
+  }
+  .persona-who strong {
+    color: var(--ink);
+    font-size: 1rem;
+  }
+  .persona-who em {
+    font-style: normal;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+  }
+  .persona-detail {
+    display: grid;
+    gap: 0.2rem;
+  }
+  .persona-label {
+    font-size: 0.68rem;
+    font-weight: 850;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+  }
+  .persona-detail p {
+    color: var(--ink);
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  /* COMPETITION */
+  .competition-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.85rem;
+  }
+  .competitor {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 1rem 1.1rem;
+    display: grid;
+    gap: 0.55rem;
+  }
+  .competitor.is-them {
+    background: rgba(164, 66, 31, 0.04);
+    border-color: rgba(164, 66, 31, 0.25);
+  }
+  .competitor.is-us {
+    background: rgba(20, 106, 74, 0.05);
+    border-color: rgba(20, 106, 74, 0.3);
+    border-left: 3px solid var(--good);
+  }
+  .competitor header {
+    display: grid;
+    gap: 0.25rem;
+  }
+  .competitor strong {
+    color: var(--ink);
+    font-size: 1.02rem;
+  }
+  .competitor em {
+    font-style: italic;
+    font-size: 0.92rem;
+    color: var(--muted);
+  }
+  .comp-label {
+    display: block;
+    font-size: 0.66rem;
+    font-weight: 850;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    margin-bottom: 0.15rem;
+  }
+  .competitor.is-them .comp-label { color: var(--bad); }
+  .competitor.is-us .comp-label { color: var(--good); }
+  .comp-pedigree,
+  .comp-why {
+    color: var(--ink);
+    font-size: 0.88rem;
+    line-height: 1.55;
+  }
+
+  /* BRIDGE */
+  .bridge-grid {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 0.6rem;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.7rem;
+    position: relative;
+  }
+  .bridge-grid::before {
+    content: '';
+    position: absolute;
+    left: 6%;
+    right: 6%;
+    top: 1.55rem;
+    height: 2px;
+    background: linear-gradient(90deg, var(--muted) 0%, var(--accent) 50%, var(--good) 100%);
+    opacity: 0.35;
+    z-index: 0;
+  }
+  .bridge-stage {
+    position: relative;
+    padding: 1rem 1.1rem;
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    display: grid;
+    gap: 0.5rem;
+    z-index: 1;
+  }
+  .bridge-dot {
+    position: absolute;
+    top: -0.55rem;
+    left: 1.1rem;
+    width: 0.85rem;
+    height: 0.85rem;
+    border-radius: 999px;
+    background: white;
+    border: 2px solid var(--muted);
+    box-shadow: 0 0 0 3px white;
+  }
+  .bridge-stage.stage-1 .bridge-dot {
+    border-color: var(--accent);
+    background: var(--accent);
+    box-shadow: 0 0 0 3px white, 0 0 0 7px rgba(31, 95, 184, 0.18);
+  }
+  .bridge-stage.stage-2 .bridge-dot { border-color: var(--good); }
+  .bridge-stage.is-now {
+    box-shadow: 0 14px 36px rgba(31, 95, 184, 0.18);
+  }
+  .bridge-stage h3 {
+    color: var(--ink);
+    font-size: 1.15rem;
+    font-weight: 800;
+  }
+  .bridge-stage p {
+    color: var(--ink);
+    font-size: 0.9rem;
+  }
+  .bridge-label {
+    display: inline-block;
+    align-self: start;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    font-size: 0.68rem;
+    font-weight: 850;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .bridge-stage.stage-0 { border-left: 3px solid var(--muted); }
+  .bridge-stage.stage-0 .bridge-label { background: rgba(77, 93, 114, 0.15); color: var(--muted); }
+  .bridge-stage.stage-1 { border-left: 3px solid var(--accent); background: rgba(31, 95, 184, 0.04); }
+  .bridge-stage.stage-1 .bridge-label { background: rgba(31, 95, 184, 0.15); color: var(--accent); }
+  .bridge-stage.stage-2 { border-left: 3px solid var(--good); background: rgba(20, 106, 74, 0.05); }
+  .bridge-stage.stage-2 .bridge-label { background: rgba(20, 106, 74, 0.15); color: var(--good); }
+
+  .bridge-callout,
+  .competition-callout {
+    margin-top: 0.6rem;
+    padding: 0.85rem 1rem;
+    border-left: 3px solid var(--accent);
+    background: rgba(31, 95, 184, 0.06);
+    color: var(--ink);
+    font-weight: 600;
+    border-radius: 4px;
+  }
+
+  @media (max-width: 960px) {
+    .cover-grid,
+    .tension-grid,
+    .stall-grid,
+    .signal-grid,
+    .reframe-flow,
+    .persona-grid,
+    .competition-grid,
+    .anecdote-stage,
+    .license-grid,
+    .accelerator-split,
+    .bridge-grid {
+      grid-template-columns: 1fr;
+    }
+    .persona-row {
+      grid-template-columns: 1fr;
+    }
+    .reframe-arrow { display: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .agent365-deck[data-present='true'] [data-deck-section] {
+      transition: opacity 200ms ease;
+      transform: none;
+    }
+    .agent365-deck[data-present='true'] [data-deck-section].is-leaving {
+      transform: none;
+    }
+  }
+</style>

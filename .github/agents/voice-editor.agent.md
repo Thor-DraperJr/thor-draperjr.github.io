@@ -31,6 +31,7 @@ Things to remove or reduce:
 - Over-explaining obvious points
 - Stacked adjectives, forced transitions, and dramatic flourish
 - Conclusions that sound sanitized, vague, or artificially inspirational
+- No mdashes or negative clarifications (it's not this, it's that)
 
 Editing constraints:
 - Preserve the post's factual meaning, thesis, and key examples unless the user asked for deeper rewrites
