@@ -243,10 +243,11 @@ function initDeck(deck: WalkingDeckElement) {
             window.clearTimeout(introTimer);
             if (prefersReducedMotion) { activate(chapters.length - 1, { fire: false }); return; }
             let index = 0;
+            const sphereIntroStepMs = 1850;
             const tick = () => {
                 activate(index);
                 index += 1;
-                if (index < chapters.length) introTimer = window.setTimeout(tick, 1100);
+                if (index < chapters.length) introTimer = window.setTimeout(tick, sphereIntroStepMs);
             };
             tick();
         };
@@ -263,7 +264,10 @@ function initDeck(deck: WalkingDeckElement) {
     }
 
     // Pitch terminal: typewriter animation with skip + reduced-motion support.
+    const pitchShell = deck.querySelector<HTMLElement>('[data-pitch-shell]');
     const pitch = deck.querySelector<HTMLElement>('[data-pitch]');
+    const executivePitch = pitchShell?.querySelector<HTMLElement>('[data-pitch-executive]');
+    const modeButtons = pitchShell ? Array.from(pitchShell.querySelectorAll<HTMLButtonElement>('[data-pitch-mode-button]')) : [];
     const output = pitch?.querySelector<HTMLElement>('[data-pitch-output]');
     const scriptEl = pitch?.querySelector<HTMLScriptElement>('[data-pitch-script]');
     const stream = pitch?.querySelector<HTMLElement>('[data-pitch-stream]');
@@ -324,8 +328,31 @@ function initDeck(deck: WalkingDeckElement) {
             }
         };
 
+        const setPitchMode = (mode: string) => {
+            const isBackend = mode === 'backend';
+            if (pitchShell) pitchShell.dataset.pitchMode = isBackend ? 'backend' : 'executive';
+            if (executivePitch) executivePitch.hidden = isBackend;
+            pitch.hidden = !isBackend;
+            modeButtons.forEach((button) => {
+                const isActive = button.dataset.pitchModeButton === (isBackend ? 'backend' : 'executive');
+                button.classList.toggle('is-active', isActive);
+                button.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+            });
+            if (isBackend) void run();
+        };
+
+        pitchShell?.addEventListener('click', (event) => {
+            const target = event.target instanceof Element ? event.target : null;
+            const button = target?.closest<HTMLButtonElement>('[data-pitch-mode-button]');
+            if (!button || !pitchShell.contains(button)) return;
+            event.preventDefault();
+            setPitchMode(button.dataset.pitchModeButton || 'executive');
+        });
+
         deck._presentReplay = deck._presentReplay || {};
-        deck._presentReplay['signal-cover'] = () => run(true);
+        deck._presentReplay['signal-cover'] = () => {
+            if ((pitchShell?.dataset.pitchMode || 'backend') === 'backend') void run(true);
+        };
 
         skipBtn?.addEventListener('click', () => {
             cancelled = true;
@@ -336,15 +363,15 @@ function initDeck(deck: WalkingDeckElement) {
         if ('IntersectionObserver' in window) {
             const pitchObserver = new IntersectionObserver((entries) => {
                 entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
+                    if (entry.isIntersecting && (pitchShell?.dataset.pitchMode || 'backend') === 'backend') {
                         run();
                         pitchObserver.disconnect();
                     }
                 });
             }, { threshold: 0.25 });
-            pitchObserver.observe(pitch);
+            pitchObserver.observe(pitchShell || pitch);
         } else {
-            run();
+            if ((pitchShell?.dataset.pitchMode || 'backend') === 'backend') void run();
         }
     }
 

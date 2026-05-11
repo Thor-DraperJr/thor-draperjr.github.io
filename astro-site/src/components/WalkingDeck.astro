@@ -6,6 +6,41 @@ interface Props {
 }
 
 const { startInPresent = false } = Astro.props;
+
+const pitchTerminalLines = [
+  { prompt: '$', text: 'whoami --short' },
+  { out: 'Senior Security Solution Engineer at Microsoft. Career seller before that.' },
+  { prompt: '$', text: 'cat origin.story | head' },
+  { out: 'Prior to my career in tech, I started in sales, military service and entrepreneurship.' },
+  { out: 'Branch manager at Enterprise, largest non-airport location, 40+ team.' },
+  { out: 'Paychex sales, then bought a hometown gym. Studied IT certs while running the business.' },
+  { out: 'Sold the gym just before the pandemic. MSP by day, cyber bootcamp instructor by night.' },
+  { out: 'Microsoft contractor in April 2021. FTE that October. SANS B.P.S in Applied Cybersecurity in 2024 and moved to the Security STU shortly after that.' },
+  { prompt: '$', text: 'echo $THESIS' },
+  { out: 'I did not leave sales because I was burnt out. I loved it.' },
+  { out: 'I rebuilt on technical depth so the next sales seat compounds everything.' },
+  { prompt: '$', text: 'echo $NEXT' },
+  { out: 'Account Executive in the AI era, then sales leadership.' },
+  { prompt: '$', text: '_' },
+];
+
+const pitchStory = [
+  {
+    label: 'Sales operator',
+    title: 'Sales, service, and ownership.',
+    detail: 'Enterprise branch leader, Paychex seller, gym owner, 40-plus team.',
+  },
+  {
+    label: 'Technical rebuild',
+    title: 'MSP by day, cyber instructor by night.',
+    detail: 'Sold the business and rebuilt deliberately around security depth.',
+  },
+  {
+    label: 'Microsoft execution',
+    title: 'Contractor to FTE to Security STU.',
+    detail: 'Azure support, Security STU, SANS B.P.S, sales-ready range.',
+  },
+];
 ---
 
 <section class="walking-signal" data-walking-signal data-present={startInPresent ? 'true' : undefined}>
@@ -36,37 +71,60 @@ const { startInPresent = false } = Astro.props;
     <div class="cover-copy">
       <span class="signal-kicker">Thor Draper Jr &middot; Walking Deck</span>
       <h2 id="signal-cover-title">A seller's instinct, rebuilt on technical depth.</h2>
-      <p class="cover-role">Senior Security Solution Engineer, Microsoft &middot; Charlotte, NC</p>
+      <p class="cover-role" aria-label="Senior Security Solution Engineer, Microsoft, Charlotte, NC"><span>Senior Security Solution Engineer, Microsoft</span><span>Charlotte, NC</span></p>
 
-      <div class="pitch-terminal" data-pitch role="region" aria-label="Elevator pitch terminal">
-        <header class="pitch-bar">
-          <span class="pitch-dots" aria-hidden="true"><i></i><i></i><i></i></span>
-          <span class="pitch-title">~/career/elevator-pitch.sh</span>
-          <button type="button" class="pitch-skip" data-pitch-skip aria-label="Skip typing animation">skip</button>
-        </header>
-        <pre class="pitch-stream" data-pitch-stream aria-live="polite"><code data-pitch-output></code><span class="pitch-cursor" aria-hidden="true">_</span></pre>
-        <script type="application/json" data-pitch-script>{"lines": [
-          {"prompt": "$", "text": "whoami --short"},
-          {"out": "Senior Security Solution Engineer at Microsoft. Career seller before that."},
-          {"prompt": "$", "text": "cat origin.story | head"},
-          {"out": "Prior to my career in tech, I started in sales, military service and entrepreneurship."},
-          {"out": "Branch manager at Enterprise, largest non-airport location, 40+ team."},
-          {"out": "Paychex sales, then bought a hometown gym. Studied IT certs while running the business."},
-          {"out": "Sold the gym just before the pandemic. MSP by day, cyber bootcamp instructor by night."},
-          {"out": "Microsoft contractor in April 2021. FTE that October. SANS B.P.S in Applied Cybersecurity in 2024 and moved to the Security STU shortly after that."},
-          {"prompt": "$", "text": "echo $THESIS"},
-          {"out": "I did not leave sales because I was burnt out. I loved it."},
-          {"out": "I rebuilt on technical depth so the next sales seat compounds everything."},
-          {"prompt": "$", "text": "echo $NEXT"},
-          {"out": "Account Executive in the AI era, then sales leadership."},
-          {"prompt": "$", "text": "_"}
-        ]}</script>
+      <div class="pitch-module" data-pitch-shell data-pitch-mode="executive">
+        <div class="pitch-mode" role="group" aria-label="Pitch display mode">
+          <button type="button" class="is-active" data-pitch-mode-button="executive" aria-pressed="true" aria-controls="pitch-executive-view">Executive</button>
+          <button type="button" data-pitch-mode-button="backend" aria-pressed="false" aria-controls="pitch-backend-view">Backend</button>
+        </div>
+
+        <div class="pitch-executive pitch-view" id="pitch-executive-view" data-pitch-executive>
+          <div class="pitch-exec-head">
+            <span class="pitch-eyebrow">Career signal</span>
+            <h3>I loved sales enough to rebuild the technical depth around it.</h3>
+            <p class="pitch-exec-summary">Sales instinct, operator accountability, cybersecurity instruction, and Microsoft Security credibility in one motion.</p>
+          </div>
+          <div class="pitch-story" role="list">
+            {pitchStory.map((item, index) => (
+              <article class="pitch-story-item" role="listitem">
+                <span class="pitch-story-index">{String(index + 1).padStart(2, '0')}</span>
+                <div>
+                  <span class="pitch-story-label">{item.label}</span>
+                  <strong>{item.title}</strong>
+                  <p>{item.detail}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+          <div class="pitch-thesis">
+            <span>Thesis</span>
+            <p>I did not leave sales because I was burnt out. I rebuilt on technical depth so the next sales seat compounds.</p>
+            <strong>Next: AE in the AI era, then sales leadership.</strong>
+          </div>
+        </div>
+
+        <div class="pitch-terminal pitch-view" id="pitch-backend-view" data-pitch role="region" aria-label="Elevator pitch backend terminal" hidden>
+          <header class="pitch-bar">
+            <span class="pitch-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+            <span class="pitch-title">~/career/elevator-pitch.sh</span>
+            <button type="button" class="pitch-skip" data-pitch-skip aria-label="Skip typing animation">skip</button>
+          </header>
+          <pre class="pitch-stream" data-pitch-stream aria-live="polite"><code data-pitch-output></code><span class="pitch-cursor" aria-hidden="true">_</span></pre>
+          <script type="application/json" data-pitch-script set:html={JSON.stringify({ lines: pitchTerminalLines })}></script>
+        </div>
       </div>
     </div>
 
     <figure class:list={[ 'cover-photo', slotExists(imageSlots[0]) && 'has-image' ]}>
       {slotExists(imageSlots[0]) ? (
-        <img src={imageSlots[0].src} alt={imageSlots[0].alt} loading="eager" />
+        <>
+          <img src={imageSlots[0].src} alt={imageSlots[0].alt} loading="eager" />
+          <figcaption class="cover-photo-caption">
+            <strong>Thor Draper Jr</strong>
+            <span>Senior Security Solution Engineer &middot; Microsoft</span>
+          </figcaption>
+        </>
       ) : (
         <div class="slot-placeholder">
           <span>{imageSlots[0].role}</span>
@@ -287,7 +345,6 @@ const { startInPresent = false } = Astro.props;
         </div>
         <div class="recording-body">
           <header class="recording-head">
-            <span class="recording-tag">SPHERE.LOG // 01</span>
             <span class="recording-role">Microsoft leader</span>
           </header>
           <p class="recording-quote">Thor consistently operates at the next level, demonstrating strong judgment and independence in complex, ambiguous environments. He translates emerging requirements into scalable, repeatable mechanisms that drive measurable impact across teams. His cross-functional influence and ability to create clarity where none exists elevate both execution and strategy.</p>
@@ -303,7 +360,6 @@ const { startInPresent = false } = Astro.props;
         </div>
         <div class="recording-body">
           <header class="recording-head">
-            <span class="recording-tag">SPHERE.LOG // 02</span>
             <span class="recording-role">Sales security peer</span>
           </header>
           <p class="recording-quote">It is a privilege to work with Thor Draper as my Sr. Solution Engineer. Thor has excelled in his role as a Senior Solution Engineer specializing in security. Thor consistently demonstrates a deep understanding of complex security challenges and offers innovative solutions that deliver measurable results. His technical expertise is complemented by exceptional communication skills, allowing him to effectively translate technical concepts to stakeholders at all levels.</p>
@@ -319,7 +375,6 @@ const { startInPresent = false } = Astro.props;
         </div>
         <div class="recording-body">
           <header class="recording-head">
-            <span class="recording-tag">SPHERE.LOG // 03</span>
             <span class="recording-role">Cross-org technical teammate</span>
           </header>
           <p class="recording-quote">Your technical knowledge, easy-going personality and dependability &mdash; I know that if I reach out to for help with a customer of mine, you'll make yourself available to engage as needed. And likewise, I know that you have no hesitation in reaching out to me when you're seeking my input or opinion on a customer matter.</p>
@@ -667,32 +722,64 @@ const { startInPresent = false } = Astro.props;
 
   /* Cover: oversize the terminal, right-size the portrait, fill the stage. */
   .walking-signal[data-present='true'] .signal-cover {
-    grid-template-columns: minmax(0, 1.4fr) minmax(18rem, 0.9fr);
-    gap: clamp(1.25rem, 3vw, 2.5rem);
-    align-items: stretch;
+    grid-template-columns: minmax(0, 1.28fr) minmax(20rem, 0.95fr);
+    gap: clamp(1.5rem, 3.2vw, 3rem);
+    align-items: center;
     min-height: 0;
-    padding: clamp(1.5rem, 3vw, 2.5rem);
+    padding: clamp(2.1rem, 3.7vw, 3.35rem) clamp(1.55rem, 3vw, 2.7rem) clamp(1.35rem, 2.4vw, 2.1rem);
   }
 
   .walking-signal[data-present='true'] .signal-cover .cover-copy {
-    align-content: stretch;
     display: flex;
     flex-direction: column;
-    gap: 0.85rem;
+    gap: 0.72rem;
+    justify-content: flex-start;
     min-height: 0;
   }
 
-  .walking-signal[data-present='true'] .signal-cover h2 {
-    font-size: clamp(2rem, 3.4vw, 3.4rem);
-    max-width: 16ch;
+  .walking-signal[data-present='true'] .signal-cover .signal-kicker {
+    color: rgba(241, 183, 95, 0.9);
   }
 
-  .walking-signal[data-present='true'] .pitch-terminal {
+  .walking-signal[data-present='true'] .signal-cover h2 {
+    position: relative;
+    max-width: 15ch;
+    padding-bottom: 0.28rem;
+    font-size: clamp(2.25rem, 3.8vw, 3.85rem);
+    line-height: 1.02;
+  }
+
+  .walking-signal[data-present='true'] .signal-cover h2::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: min(8rem, 42%);
+    height: 2px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--signal-gold), rgba(241, 183, 95, 0));
+  }
+
+  .walking-signal[data-present='true'] .cover-role {
+    color: rgba(255, 255, 255, 0.86);
+    font-size: clamp(0.98rem, 1.05vw, 1.15rem);
+    font-weight: 900;
+  }
+
+  .walking-signal[data-present='true'] .pitch-module {
     width: 100%;
     max-width: none;
+    flex: 0 1 auto;
+    min-height: 0;
+  }
+
+  .walking-signal[data-present='true'] .pitch-module[data-pitch-mode='backend'] {
     flex: 1;
-    display: flex;
-    flex-direction: column;
+    grid-template-rows: auto minmax(0, 1fr);
+  }
+
+  .walking-signal[data-present='true'] .pitch-executive,
+  .walking-signal[data-present='true'] .pitch-terminal:not([hidden]) {
     min-height: 0;
   }
 
@@ -708,15 +795,120 @@ const { startInPresent = false } = Astro.props;
   .walking-signal[data-present='true'] .cover-photo {
     align-self: center;
     width: 100%;
-    max-width: 32rem;
+    max-width: 34rem;
     max-height: min(78vh, 42rem);
     margin-left: auto;
     aspect-ratio: 4 / 5;
     min-height: 0;
+    border-color: rgba(241, 183, 95, 0.48);
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.08),
+      0 32px 76px rgba(0, 0, 0, 0.48),
+      0 0 62px rgba(241, 183, 95, 0.2);
   }
 
   .walking-signal[data-present='true'] .cover-photo img {
     object-position: center 20%;
+  }
+
+  .walking-signal[data-present='true'] .cover-photo::before {
+    content: '';
+    position: absolute;
+    inset: 0.7rem;
+    z-index: 1;
+    border: 1px solid rgba(255, 255, 255, 0.24);
+    border-radius: 6px;
+    pointer-events: none;
+  }
+
+  @media (min-width: 761px) and (max-height: 820px) {
+    .walking-signal[data-present='true'] .signal-cover {
+      padding: clamp(1.55rem, 3vw, 2.15rem) clamp(1.35rem, 2.6vw, 2.2rem) clamp(1rem, 2vw, 1.45rem);
+      gap: clamp(1rem, 2.4vw, 1.75rem);
+    }
+
+    .walking-signal[data-present='true'] .signal-cover .cover-copy {
+      gap: 0.55rem;
+    }
+
+    .walking-signal[data-present='true'] .signal-cover h2 {
+      font-size: clamp(1.9rem, 3.4vw, 3.05rem);
+      line-height: 1;
+    }
+
+    .walking-signal[data-present='true'] .cover-role {
+      font-size: clamp(0.86rem, 1vw, 1rem);
+      line-height: 1.35;
+    }
+
+    .walking-signal[data-present='true'] .pitch-mode button {
+      min-height: 1.85rem;
+      font-size: 0.66rem;
+    }
+
+    .walking-signal[data-present='true'] .pitch-executive {
+      gap: 0.58rem;
+      padding: 0.78rem;
+    }
+
+    .walking-signal[data-present='true'] .pitch-executive h3 {
+      font-size: clamp(1.15rem, 2.1vw, 1.55rem);
+    }
+
+    .walking-signal[data-present='true'] .pitch-exec-summary {
+      font-size: 0.76rem;
+      line-height: 1.32;
+    }
+
+    .walking-signal[data-present='true'] .pitch-story {
+      gap: 0.46rem;
+    }
+
+    .walking-signal[data-present='true'] .pitch-story-item {
+      gap: 0.36rem;
+      padding: 0.55rem;
+    }
+
+    .walking-signal[data-present='true'] .pitch-story-index {
+      width: 1.35rem;
+      height: 1.35rem;
+      font-size: 0.52rem;
+    }
+
+    .walking-signal[data-present='true'] .pitch-story-label,
+    .walking-signal[data-present='true'] .pitch-thesis span {
+      font-size: 0.52rem;
+    }
+
+    .walking-signal[data-present='true'] .pitch-story-item strong {
+      font-size: 0.74rem;
+    }
+
+    .walking-signal[data-present='true'] .pitch-story-item p {
+      font-size: 0.66rem;
+      line-height: 1.25;
+    }
+
+    .walking-signal[data-present='true'] .pitch-thesis {
+      gap: 0.18rem;
+      margin-top: 0.05rem;
+      padding: 0.58rem 0.72rem 0.62rem 0.85rem;
+    }
+
+    .walking-signal[data-present='true'] .pitch-thesis p,
+    .walking-signal[data-present='true'] .pitch-thesis strong {
+      font-size: 0.68rem;
+      line-height: 1.25;
+    }
+
+    .walking-signal[data-present='true'] .cover-photo {
+      max-width: 31rem;
+      max-height: min(68vh, 32rem);
+    }
+
+    .walking-signal[data-present='true'] .cover-photo-caption {
+      padding: 1.1rem 0.85rem 0.75rem;
+    }
   }
 
   /* Compact, copy-only sections center on the stage. */
@@ -1075,12 +1267,30 @@ const { startInPresent = false } = Astro.props;
   }
 
   .cover-role {
+    display: grid;
+    gap: 0.14rem;
     color: rgba(255, 255, 255, 0.78);
     font-weight: 800;
     letter-spacing: 0.02em;
   }
 
+  .cover-role span {
+    display: block;
+  }
+
+  .cover-role span + span {
+    width: fit-content;
+    padding-bottom: 0.12rem;
+    border-bottom: 1px solid rgba(241, 183, 95, 0.42);
+    color: rgba(241, 183, 95, 0.9);
+    font-size: 0.78em;
+    font-weight: 900;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
   .cover-photo {
+    position: relative;
     margin: 0;
     border: 1px solid rgba(255, 255, 255, 0.25);
     border-radius: 8px;
@@ -1094,6 +1304,34 @@ const { startInPresent = false } = Astro.props;
     width: 100%;
     height: 100%;
     object-fit: cover;
+  }
+
+  .cover-photo-caption {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+    display: grid;
+    gap: 0.12rem;
+    padding: 1.35rem 1rem 0.95rem;
+    background: linear-gradient(180deg, transparent, rgba(8, 18, 30, 0.84) 44%, rgba(8, 18, 30, 0.96));
+    color: white;
+  }
+
+  .cover-photo-caption strong {
+    color: white;
+    font-size: 0.95rem;
+    font-weight: 900;
+    letter-spacing: 0.04em;
+  }
+
+  .cover-photo-caption span {
+    color: rgba(241, 183, 95, 0.86);
+    font-size: 0.68rem;
+    font-weight: 900;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
   }
 
   .slot-placeholder {
@@ -1408,19 +1646,11 @@ const { startInPresent = false } = Astro.props;
     gap: 0.15rem;
   }
 
-  .recording-tag {
+  .recording-role {
     color: var(--rec-color);
     font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
-    font-size: 0.66rem;
-    font-weight: 800;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-  }
-
-  .recording-role {
-    color: rgba(255, 255, 255, 0.6);
-    font-size: 0.7rem;
-    font-weight: 800;
+    font-size: 0.68rem;
+    font-weight: 900;
     letter-spacing: 0.16em;
     text-transform: uppercase;
   }
@@ -1551,16 +1781,235 @@ const { startInPresent = false } = Astro.props;
     }
   }
 
-  /* Pitch terminal */
-  .pitch-terminal {
+  /* Pitch module */
+  .pitch-module {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-rows: auto auto;
+    align-content: start;
+    gap: 0.7rem;
     width: min(100%, 34rem);
     margin-top: 0.25rem;
+    min-width: 0;
+  }
+
+  .pitch-mode {
+    display: inline-flex;
+    width: fit-content;
+    padding: 0.18rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 999px;
+    background: rgba(8, 18, 30, 0.36);
+    backdrop-filter: blur(8px);
+  }
+
+  .pitch-mode button {
+    min-height: 2rem;
+    padding: 0 0.75rem;
+    border: 0;
+    border-radius: 999px;
+    color: rgba(255, 255, 255, 0.74);
+    background: transparent;
+    font: inherit;
+    font-size: 0.72rem;
+    font-weight: 900;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  .pitch-mode button:hover,
+  .pitch-mode button:focus-visible {
+    color: white;
+    outline: none;
+  }
+
+  .pitch-mode button.is-active {
+    color: var(--signal-ink);
+    background: var(--signal-gold);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.22);
+  }
+
+  .pitch-view[hidden] {
+    display: none !important;
+  }
+
+  .pitch-executive {
+    display: grid;
+    align-content: start;
+    gap: 0.85rem;
+    padding: clamp(1rem, 2.2vw, 1.35rem);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 10px;
+    background:
+      radial-gradient(circle at 92% 16%, rgba(241, 183, 95, 0.18), transparent 34%),
+      linear-gradient(90deg, rgba(241, 183, 95, 0.12), transparent 18% 82%, rgba(14, 106, 97, 0.12)),
+      linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.06)),
+      rgba(8, 18, 30, 0.44);
+    box-shadow:
+      0 18px 40px rgba(0, 0, 0, 0.24),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
+  }
+
+  .pitch-exec-head {
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .pitch-eyebrow {
+    width: fit-content;
+    padding: 0.28rem 0.55rem;
+    border: 1px solid rgba(241, 183, 95, 0.36);
+    border-radius: 999px;
+    color: var(--signal-gold);
+    font-size: 0.66rem;
+    font-weight: 900;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .pitch-executive h3 {
+    max-width: 24ch;
+    color: white;
+    font-size: clamp(1.35rem, 2.45vw, 2rem);
+    line-height: 1.1;
+  }
+
+  .pitch-exec-summary {
+    max-width: 58ch;
+    color: rgba(255, 255, 255, 0.78);
+    font-size: 0.86rem;
+    line-height: 1.42;
+  }
+
+  .pitch-story {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+    padding-top: 0.1rem;
+  }
+
+  .pitch-story::before {
+    content: '';
+    position: absolute;
+    left: 1.1rem;
+    right: 1.1rem;
+    top: 1rem;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(241, 183, 95, 0.7), transparent);
+    pointer-events: none;
+  }
+
+  .pitch-story-item {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+    align-content: start;
+    min-width: 0;
+    padding: 0.1rem 0.15rem 0;
+  }
+
+  .pitch-story-index {
+    display: grid;
+    place-items: center;
+    width: 1.55rem;
+    height: 1.55rem;
+    border: 1px solid rgba(241, 183, 95, 0.45);
+    border-radius: 50%;
+    color: var(--signal-gold);
+    font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.58rem;
+    font-weight: 900;
+    line-height: 1;
+    background: rgba(8, 18, 30, 0.85);
+  }
+
+  .pitch-story-item div {
+    display: grid;
+    gap: 0.14rem;
+    min-width: 0;
+  }
+
+  .pitch-story-label {
+    color: rgba(241, 183, 95, 0.82);
+    font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.58rem;
+    font-weight: 900;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    overflow-wrap: anywhere;
+  }
+
+  .pitch-story-item strong {
+    color: white;
+    font-size: 0.86rem;
+    font-weight: 900;
+    line-height: 1.18;
+  }
+
+  .pitch-story-item p {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.68);
+    font-size: 0.75rem;
+    line-height: 1.35;
+  }
+
+  .pitch-thesis {
+    position: relative;
+    display: grid;
+    gap: 0.3rem;
+    margin-top: 0.2rem;
+    padding: 0.78rem 0.92rem 0.82rem 1.05rem;
+    border: 1px solid rgba(241, 183, 95, 0.46);
+    border-left: 4px solid var(--signal-gold);
+    border-radius: 8px;
+    background:
+      linear-gradient(110deg, rgba(241, 183, 95, 0.22), rgba(14, 106, 97, 0.22)),
+      rgba(8, 18, 30, 0.58);
+    box-shadow:
+      inset 0 0 24px rgba(241, 183, 95, 0.08),
+      0 14px 30px rgba(0, 0, 0, 0.16);
+  }
+
+  .pitch-thesis span {
+    color: var(--signal-gold);
+    font-size: 0.62rem;
+    font-weight: 900;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .pitch-thesis p {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.88);
+    font-size: 0.82rem;
+    line-height: 1.42;
+  }
+
+  .pitch-thesis strong {
+    color: white;
+    font-size: 0.8rem;
+    line-height: 1.3;
+  }
+
+  .pitch-terminal {
+    width: 100%;
+    margin-top: 0;
     border: 1px solid rgba(255, 255, 255, 0.18);
     border-radius: 10px;
     background: rgba(8, 18, 30, 0.72);
     box-shadow: 0 18px 40px rgba(0, 0, 0, 0.32);
     overflow: hidden;
     backdrop-filter: blur(8px);
+  }
+
+  .pitch-terminal:not([hidden]) {
+    display: flex;
+    flex-direction: column;
   }
 
   .pitch-bar {
@@ -1715,14 +2164,14 @@ const { startInPresent = false } = Astro.props;
     stroke: rgba(255, 255, 255, 0.18);
     stroke-width: 2.4;
     stroke-dasharray: 6 8;
-    transition: stroke 360ms ease, stroke-width 360ms ease, filter 360ms ease;
+    transition: stroke 760ms ease, stroke-width 760ms ease, filter 760ms ease;
   }
 
   .sphere-link.is-lit {
     stroke: var(--signal-gold);
     stroke-width: 3;
     filter: drop-shadow(0 0 6px rgba(241, 183, 95, 0.85));
-    animation: sphere-flow 1.6s linear infinite;
+    animation: sphere-flow 2.2s linear infinite;
   }
 
   @keyframes sphere-flow {
@@ -2242,7 +2691,9 @@ const { startInPresent = false } = Astro.props;
   }
 
   @media (max-width: 760px) {
-    .pitch-terminal { width: 100%; }
+    .pitch-module { width: 100%; }
+    .pitch-story { grid-template-columns: 1fr; }
+    .pitch-story::before { display: none; }
     .node-label strong { font-size: 0.6rem; }
     .node-label em { font-size: 0.56rem; }
 
@@ -2617,9 +3068,13 @@ const { startInPresent = false } = Astro.props;
       letter-spacing: 0.08em;
     }
 
-    .walking-signal[data-present='true'] .pitch-terminal {
+    .walking-signal[data-present='true'] .pitch-module {
       width: 100%;
       max-width: none;
+    }
+
+    .walking-signal[data-present='true'] .pitch-executive {
+      overflow: hidden;
     }
 
     .walking-signal[data-present='true'] .pitch-stream {
@@ -2750,7 +3205,54 @@ const { startInPresent = false } = Astro.props;
       line-height: 1.35;
     }
 
-    .walking-signal[data-present='true'] .pitch-terminal {
+    .walking-signal[data-present='true'] .pitch-module {
+      flex: 0 1 auto;
+      min-height: 0;
+    }
+
+    .walking-signal[data-present='true'] .pitch-module[data-pitch-mode='backend'] {
+      flex: 1;
+    }
+
+    .walking-signal[data-present='true'] .pitch-executive {
+      gap: 0.45rem;
+      padding: 0.65rem;
+      overflow: hidden;
+    }
+
+    .walking-signal[data-present='true'] .pitch-executive h3 {
+      font-size: clamp(1rem, 2.7vw, 1.25rem);
+    }
+
+    .walking-signal[data-present='true'] .pitch-exec-summary,
+    .walking-signal[data-present='true'] .pitch-story-item p,
+    .walking-signal[data-present='true'] .pitch-thesis p,
+    .walking-signal[data-present='true'] .pitch-thesis strong {
+      font-size: 0.68rem;
+      line-height: 1.3;
+    }
+
+    .walking-signal[data-present='true'] .pitch-story {
+      gap: 0.35rem;
+    }
+
+    .walking-signal[data-present='true'] .pitch-story-item,
+    .walking-signal[data-present='true'] .pitch-thesis {
+      padding: 0.45rem 0.55rem;
+    }
+
+    .walking-signal[data-present='true'] .pitch-eyebrow,
+    .walking-signal[data-present='true'] .pitch-story-label,
+    .walking-signal[data-present='true'] .pitch-story-index,
+    .walking-signal[data-present='true'] .pitch-thesis span {
+      font-size: 0.58rem;
+    }
+
+    .walking-signal[data-present='true'] .pitch-story-item strong {
+      font-size: 0.66rem;
+    }
+
+    .walking-signal[data-present='true'] .pitch-terminal:not([hidden]) {
       flex: 1;
       min-height: 0;
     }
@@ -2923,6 +3425,270 @@ const { startInPresent = false } = Astro.props;
 
     .walking-signal[data-present='true'] .sphere-mobile {
       display: none;
+    }
+  }
+
+  @media (max-width: 760px) and (orientation: portrait) {
+    .walking-signal[data-present='true'] [data-signal-section].signal-cover {
+      display: block;
+      overflow: hidden;
+      padding: 0.9rem;
+    }
+
+    .walking-signal[data-present='true'] .signal-cover .cover-copy {
+      gap: 0.48rem;
+      overflow: visible;
+    }
+
+    .walking-signal[data-present='true'] .signal-cover .signal-kicker {
+      font-size: 0.62rem;
+      letter-spacing: 0.12em;
+    }
+
+    .walking-signal[data-present='true'] .signal-cover h2 {
+      font-size: clamp(1.35rem, 6.3vw, 1.72rem);
+      line-height: 1.04;
+      margin: 0;
+      padding-bottom: 0.22rem;
+    }
+
+    .walking-signal[data-present='true'] .cover-role {
+      gap: 0.06rem;
+      font-size: 0.78rem;
+      line-height: 1.22;
+    }
+
+    .walking-signal[data-present='true'] .cover-role span + span {
+      font-size: 0.72em;
+      letter-spacing: 0.12em;
+    }
+
+    .walking-signal[data-present='true'] .pitch-module {
+      gap: 0.46rem;
+      margin-top: 0.06rem;
+    }
+
+    .walking-signal[data-present='true'] .pitch-mode button {
+      min-height: 1.72rem;
+      padding: 0 0.58rem;
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+    }
+
+    .walking-signal[data-present='true'] .pitch-executive {
+      gap: 0.44rem;
+      padding: 0.68rem 0.75rem;
+      overflow: visible;
+    }
+
+    .walking-signal[data-present='true'] .pitch-exec-head {
+      gap: 0.32rem;
+    }
+
+    .walking-signal[data-present='true'] .pitch-eyebrow {
+      padding: 0.18rem 0.42rem;
+      font-size: 0.52rem;
+      letter-spacing: 0.13em;
+    }
+
+    .walking-signal[data-present='true'] .pitch-executive h3 {
+      max-width: none;
+      font-size: 1.15rem;
+      line-height: 1.08;
+    }
+
+    .walking-signal[data-present='true'] .pitch-exec-summary {
+      font-size: 0.68rem;
+      line-height: 1.28;
+    }
+
+    .walking-signal[data-present='true'] .pitch-story {
+      grid-template-columns: 1fr;
+      gap: 0.32rem;
+      padding-top: 0;
+    }
+
+    .walking-signal[data-present='true'] .pitch-story::before {
+      display: none;
+    }
+
+    .walking-signal[data-present='true'] .pitch-story-item {
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 0.42rem;
+      padding: 0;
+    }
+
+    .walking-signal[data-present='true'] .pitch-story-index {
+      width: 1.22rem;
+      height: 1.22rem;
+      font-size: 0.48rem;
+    }
+
+    .walking-signal[data-present='true'] .pitch-story-item div {
+      gap: 0.02rem;
+    }
+
+    .walking-signal[data-present='true'] .pitch-story-label {
+      font-size: 0.48rem;
+      letter-spacing: 0.1em;
+    }
+
+    .walking-signal[data-present='true'] .pitch-story-item strong {
+      font-size: 0.68rem;
+      line-height: 1.13;
+    }
+
+    .walking-signal[data-present='true'] .pitch-story-item p {
+      display: none;
+    }
+
+    .walking-signal[data-present='true'] .pitch-thesis {
+      gap: 0.14rem;
+      margin-top: 0.02rem;
+      padding: 0.52rem 0.6rem 0.55rem 0.72rem;
+      border-left-width: 3px;
+    }
+
+    .walking-signal[data-present='true'] .pitch-thesis span {
+      font-size: 0.48rem;
+      letter-spacing: 0.12em;
+    }
+
+    .walking-signal[data-present='true'] .pitch-thesis p,
+    .walking-signal[data-present='true'] .pitch-thesis strong {
+      font-size: 0.62rem;
+      line-height: 1.2;
+    }
+
+    .walking-signal[data-present='true'] .cover-photo {
+      display: none;
+    }
+  }
+
+  @media (max-width: 920px) and (orientation: landscape) and (max-height: 500px) {
+    .walking-signal[data-present='true'] .signal-cover {
+      grid-template-columns: minmax(0, 1fr) minmax(11rem, 0.78fr);
+      gap: 0.7rem;
+    }
+
+    .walking-signal[data-present='true'] .signal-cover .cover-copy {
+      gap: 0.3rem;
+      overflow: visible;
+    }
+
+    .walking-signal[data-present='true'] .signal-cover h2 {
+      font-size: clamp(0.98rem, 2.7vw, 1.18rem);
+      line-height: 1.02;
+      margin: 0;
+      padding-bottom: 0.12rem;
+    }
+
+    .walking-signal[data-present='true'] .cover-role {
+      gap: 0.04rem;
+      font-size: 0.64rem;
+      line-height: 1.18;
+    }
+
+    .walking-signal[data-present='true'] .cover-role span + span {
+      border-bottom: 0;
+      font-size: 0.72em;
+      letter-spacing: 0.1em;
+    }
+
+    .walking-signal[data-present='true'] .pitch-module {
+      gap: 0.28rem;
+    }
+
+    .walking-signal[data-present='true'] .pitch-mode button {
+      min-height: 1.5rem;
+      padding: 0 0.48rem;
+      font-size: 0.55rem;
+      letter-spacing: 0.08em;
+    }
+
+    .walking-signal[data-present='true'] .pitch-executive {
+      gap: 0.28rem;
+      padding: 0.42rem 0.52rem;
+    }
+
+    .walking-signal[data-present='true'] .pitch-eyebrow,
+    .walking-signal[data-present='true'] .pitch-story-label,
+    .walking-signal[data-present='true'] .pitch-thesis span {
+      font-size: 0.42rem;
+      letter-spacing: 0.08em;
+    }
+
+    .walking-signal[data-present='true'] .pitch-eyebrow {
+      padding: 0.12rem 0.32rem;
+    }
+
+    .walking-signal[data-present='true'] .pitch-executive h3 {
+      max-width: none;
+      font-size: 0.88rem;
+      line-height: 1.05;
+    }
+
+    .walking-signal[data-present='true'] .pitch-exec-summary {
+      display: none;
+    }
+
+    .walking-signal[data-present='true'] .pitch-story {
+      gap: 0.45rem;
+      padding-top: 0;
+    }
+
+    .walking-signal[data-present='true'] .pitch-story::before {
+      top: 0.62rem;
+    }
+
+    .walking-signal[data-present='true'] .pitch-story-item {
+      gap: 0.18rem;
+      padding: 0;
+    }
+
+    .walking-signal[data-present='true'] .pitch-story-index {
+      width: 1.05rem;
+      height: 1.05rem;
+      font-size: 0.42rem;
+    }
+
+    .walking-signal[data-present='true'] .pitch-story-item strong {
+      font-size: 0.54rem;
+      line-height: 1.08;
+    }
+
+    .walking-signal[data-present='true'] .pitch-story-item p {
+      display: none;
+    }
+
+    .walking-signal[data-present='true'] .pitch-thesis {
+      gap: 0.07rem;
+      margin-top: 0;
+      padding: 0.34rem 0.44rem 0.36rem 0.52rem;
+      border-left-width: 3px;
+    }
+
+    .walking-signal[data-present='true'] .pitch-thesis p,
+    .walking-signal[data-present='true'] .pitch-thesis strong {
+      font-size: 0.54rem;
+      line-height: 1.13;
+    }
+
+    .walking-signal[data-present='true'] .pitch-thesis strong {
+      display: none;
+    }
+
+    .walking-signal[data-present='true'] .cover-photo-caption {
+      padding: 0.8rem 0.65rem 0.5rem;
+    }
+
+    .walking-signal[data-present='true'] .cover-photo-caption strong {
+      font-size: 0.78rem;
+    }
+
+    .walking-signal[data-present='true'] .cover-photo-caption span {
+      font-size: 0.5rem;
+      letter-spacing: 0.1em;
     }
   }
 
