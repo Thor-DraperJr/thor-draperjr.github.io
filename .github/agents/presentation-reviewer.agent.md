@@ -72,6 +72,45 @@ These are condensed from Duarte (Slide:ology, Resonate), Reynolds (Presentation 
 - No scrollbars in present mode. If content overflows, it is a design defect, not a feature.
 - Works in dark room and bright room. Test with screenshots converted to grayscale to validate contrast.
 
+## Scoring
+
+For every section, score each aesthetic category 0-100. A section is **ready to ship** only when **every category is >= 90** at **every required viewport**.
+
+Categories (with what drops the score):
+
+- **Readability (0-100)** — body text >= 18px effective at the smallest required viewport; line length 45-75ch on copy slides; contrast meets WCAG AA. Subtract 10 per visible legibility defect (small type, low contrast, awkward line breaks, headline clipped or shrunk past the 0.55 pretext floor).
+- **Use of space (0-100)** — content fills the slide with intent. Negative space is composed, not stranded. The hero element is unmistakable. Subtract 15 when more than ~25% of the slide is empty without purpose; subtract 10 when content kisses an edge; subtract 20 for any overflow.
+- **Visual hierarchy (0-100)** — three tiers max, headline is the conclusion, size ratio enforces hierarchy. Subtract 10 per competing focal point; subtract 10 when kicker/body is louder than the headline.
+- **Imagery (0-100)** — photos respect their native aspect ratio, subjects framed correctly, decorative graphics earn their space. Subtract 20 per force-cropped or letterboxed-against-intent photo.
+- **Narrative coherence (0-100)** — the slide answers where am I / what changed / what's next. Quotes and stats point at the headline. Subtract 15 per orphan element.
+- **Responsive integrity (0-100)** — slide looks intentional at all four viewports (1920x1080, 960x1080, 844x390, 390x844). Subtract 20 per viewport where the slide loses composition (text shrinks below readable, content goes stranded, layout collapses to stacked-without-design).
+
+Output the per-section score block immediately under that section's findings:
+
+```
+Section NN — <name>
+  Readability:           87 (1920) / 92 (960) / 71 (844) / 80 (390)
+  Use of space:          90 / 88 / 65 / 78
+  Visual hierarchy:      94 / 94 / 88 / 88
+  Imagery:               95 / 95 / 95 / 95
+  Narrative coherence:   92 / 92 / 92 / 92
+  Responsive integrity:  70   (worst-viewport score across the row)
+  -> Status: NEEDS FIX (responsive integrity < 90)
+```
+
+Worst score across the four viewports is the score that gates approval for that category. Status is **READY** only when every gating score is >= 90.
+
+## Review loop
+
+After scoring all 8 sections:
+
+1. Start at the **lowest-scoring section**. Apply fixes (Edit mode if subjective, Copilot PR if mechanical), then **re-screenshot all four viewports and re-score that section only**.
+2. Repeat on that section until every gating score is >= 90.
+3. Move to the next-lowest-scoring section and repeat.
+4. When all 8 sections have all gating scores >= 90, produce the final approval table and stop.
+
+Do not stop early. Do not approve a section with any gating score below 90. Do not move on from a section until it is **READY**.
+
 ## Output format
 
 Single table, sorted by severity. Every finding must name the viewport(s) where it appears.
