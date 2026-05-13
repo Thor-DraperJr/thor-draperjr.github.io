@@ -101,6 +101,16 @@ export const imageSlots: ImageSlot[] = [
         caption: 'Teaching cyber, the night job.',
         tilt: 2.6,
     },
+    {
+        id: 'gym',
+        label: 'Gym ownership',
+        src: `${postImageRoot}/gym-owner.jpg`,
+        alt: 'Thor on the floor of the hometown gym he owned',
+        role: 'Operator',
+        note: 'The gym years - owner, operator, and coach.',
+        caption: 'Hometown gym. Owner, operator, coach.',
+        tilt: 5.2,
+    },
 ];
 
 export const chapters: Chapter[] = [

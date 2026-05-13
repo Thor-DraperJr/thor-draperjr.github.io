@@ -1163,6 +1163,8 @@ const pitchStory = [
     max-height: 100%;
     min-height: 0;
     margin-top: 0;
+    margin-inline: auto;
+    width: min(100%, 1100px);
     padding: clamp(0.6rem, 1.4vh, 1.4rem) clamp(0.7rem, 1.4vw, 1.5rem);
     container-type: size;
     container-name: collage;
@@ -1182,14 +1184,34 @@ const pitchStory = [
     aspect-ratio: var(--card-ar, 3 / 2);
     min-height: 0;
     padding: 0.45rem 0.45rem 1.5rem;
-    transform: rotate(var(--tilt, 0deg));
-    transition: transform 240ms ease, box-shadow 240ms ease, z-index 0s 240ms;
+    transform: rotate(var(--tilt, 0deg)) translate(var(--drift-x, 0px), var(--drift-y, 0px));
+    transition: transform 280ms cubic-bezier(.2,.7,.2,1), box-shadow 240ms ease, z-index 0s 240ms;
+    animation: collage-sway calc(7s + var(--i, 0) * 1.3s) ease-in-out calc(var(--i, 0) * -0.9s) infinite;
+    will-change: transform;
+  }
+
+  @keyframes collage-sway {
+    0%   { --drift-x: 0px;   --drift-y: 0px;   filter: none; }
+    25%  { --drift-x: 3px;   --drift-y: -2px; }
+    50%  { --drift-x: -2px;  --drift-y: 2px; }
+    75%  { --drift-x: 2px;   --drift-y: 3px; }
+    100% { --drift-x: 0px;   --drift-y: 0px; }
+  }
+
+  @property --drift-x { syntax: '<length>'; inherits: false; initial-value: 0px; }
+  @property --drift-y { syntax: '<length>'; inherits: false; initial-value: 0px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .walking-signal[data-present='true'] .photo-collage .collage-card {
+      animation: none;
+    }
   }
 
   .walking-signal[data-present='true'] .photo-collage .collage-card:hover,
   .walking-signal[data-present='true'] .photo-collage .collage-card:focus-within {
-    transform: rotate(0deg) scale(1.04);
-    z-index: 6;
+    transform: rotate(0deg) scale(1.06);
+    z-index: 9;
+    animation-play-state: paused;
   }
 
   .walking-signal[data-present='true'] .photo-collage .collage-card img {
@@ -1199,40 +1221,51 @@ const pitchStory = [
     object-position: var(--photo-pos, center 25%);
   }
 
+  /* Spread on a table: each card claims a region and overlaps its neighbors. */
   .walking-signal[data-present='true'] .photo-collage .collage-card.charlotte {
-    --card-h: 50cqh;
-    --card-ar: 3 / 2;
-    --tilt: -3deg;
-    top: 2cqh;
-    left: 2cqw;
-    z-index: 2;
-  }
-
-  .walking-signal[data-present='true'] .photo-collage .collage-card.banff {
-    --card-h: 48cqh;
-    --card-ar: 3 / 2;
-    --tilt: 2.4deg;
-    top: 4cqh;
-    right: 2cqw;
+    --card-h: 56cqh;
+    --card-ar: 4 / 3;
+    --tilt: -4.5deg;
+    top: 1cqh;
+    left: 4cqw;
     z-index: 3;
   }
 
+  .walking-signal[data-present='true'] .photo-collage .collage-card.banff {
+    --card-h: 54cqh;
+    --card-ar: 3 / 2;
+    --tilt: 3.2deg;
+    top: 2cqh;
+    right: 6cqw;
+    z-index: 4;
+  }
+
+  .walking-signal[data-present='true'] .photo-collage .collage-card.gym {
+    --card-h: 40cqh;
+    --card-ar: 4 / 5;
+    --tilt: 9deg;
+    --photo-pos: center 35%;
+    top: 40cqh;
+    left: 36cqw;
+    z-index: 7;
+  }
+
   .walking-signal[data-present='true'] .photo-collage .collage-card.lloyd {
-    --card-h: 46cqh;
-    --card-ar: 1 / 1;
-    --tilt: -4.2deg;
+    --card-h: 50cqh;
+    --card-ar: 4 / 5;
+    --tilt: -5.5deg;
     bottom: 2cqh;
-    left: 6cqw;
-    z-index: 5;
+    left: 14cqw;
+    z-index: 6;
   }
 
   .walking-signal[data-present='true'] .photo-collage .collage-card.teacher {
     --card-h: 56cqh;
     --card-ar: 3 / 4;
-    --tilt: 3.6deg;
+    --tilt: 4.6deg;
     bottom: 1cqh;
-    right: 10cqw;
-    z-index: 4;
+    right: 14cqw;
+    z-index: 5;
   }
 
   .walking-signal[data-present='true'] .photo-collage .collage-card figcaption {
@@ -1259,18 +1292,61 @@ const pitchStory = [
       transform: translateX(-58%) rotate(-3deg);
     }
     .walking-signal[data-present='true'] .photo-collage .collage-card.banff {
-      top: 27cqh;
+      top: 22cqh;
       transform: translateX(-42%) rotate(2.4deg);
+    }
+    .walking-signal[data-present='true'] .photo-collage .collage-card.gym {
+      width: 44cqw;
+      top: 44cqh;
+      transform: translateX(20%) rotate(6deg);
     }
     .walking-signal[data-present='true'] .photo-collage .collage-card.lloyd {
       width: 52cqw;
-      top: 54cqh;
+      top: 58cqh;
       transform: translateX(-62%) rotate(-4.2deg);
     }
     .walking-signal[data-present='true'] .photo-collage .collage-card.teacher {
       width: 48cqw;
-      top: 56cqh;
+      top: 64cqh;
       transform: translateX(-2%) rotate(3.6deg);
+    }
+  }
+
+  /* Wide + short (e.g. mobile landscape): keep cards horizontal but pull inward so they overlap. */
+  @container collage (min-aspect-ratio: 16 / 9) {
+    .walking-signal[data-present='true'] .photo-collage .collage-card {
+      height: auto;
+      width: var(--card-w, 22cqw);
+    }
+    .walking-signal[data-present='true'] .photo-collage .collage-card.charlotte {
+      --card-w: 22cqw;
+      top: 6cqh;
+      left: 4cqw;
+    }
+    .walking-signal[data-present='true'] .photo-collage .collage-card.banff {
+      --card-w: 24cqw;
+      top: 4cqh;
+      right: 4cqw;
+      left: auto;
+    }
+    .walking-signal[data-present='true'] .photo-collage .collage-card.gym {
+      --card-w: 14cqw;
+      top: 18cqh;
+      left: 44cqw;
+      right: auto;
+      bottom: auto;
+    }
+    .walking-signal[data-present='true'] .photo-collage .collage-card.lloyd {
+      --card-w: 18cqw;
+      bottom: 4cqh;
+      left: 22cqw;
+      top: auto;
+    }
+    .walking-signal[data-present='true'] .photo-collage .collage-card.teacher {
+      --card-w: 17cqw;
+      bottom: 2cqh;
+      right: 22cqw;
+      top: auto;
     }
   }
 
@@ -2048,6 +2124,13 @@ const pitchStory = [
     --card-ar: 3 / 4;
     --tilt: 3.2deg;
   }
+  .collage-card.gym {
+    grid-column: 4 / span 6;
+    grid-row: span 4;
+    --photo-pos: center 35%;
+    --card-ar: 4 / 5;
+    --tilt: 5.4deg;
+  }
 
   .collage-card .slot-placeholder {
     min-height: 12rem;
@@ -2063,7 +2146,8 @@ const pitchStory = [
     .collage-card.charlotte,
     .collage-card.banff,
     .collage-card.lloyd,
-    .collage-card.teacher {
+    .collage-card.teacher,
+    .collage-card.gym {
       grid-column: span 6;
       grid-row: span 4;
     }
@@ -3918,22 +4002,9 @@ const pitchStory = [
     .walking-signal[data-present='true'] .photo-collage {
       height: 100%;
       min-height: 0;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      grid-template-rows: repeat(2, minmax(0, 1fr));
-      grid-auto-rows: unset;
-      gap: 0.55rem;
       margin-top: 0;
-      padding: 0.72rem;
+      padding: 0.5rem 0.6rem;
       overflow: hidden;
-    }
-
-    .walking-signal[data-present='true'] .photo-collage .collage-card.charlotte,
-    .walking-signal[data-present='true'] .photo-collage .collage-card.banff,
-    .walking-signal[data-present='true'] .photo-collage .collage-card.lloyd,
-    .walking-signal[data-present='true'] .photo-collage .collage-card.teacher {
-      grid-column: auto;
-      grid-row: auto;
-      transform: rotate(calc(var(--tilt, 0deg) * 0.14));
     }
 
     .walking-signal[data-present='true'] .photo-collage .collage-card {

@@ -10,16 +10,23 @@ Default target: `/career/walking-deck/`. Other valid targets are any page that e
 
 ## Operating procedure
 
-1. Open the page in the integrated browser. Then sweep **every section across all four required viewports before producing findings**:
-   - **Desktop landscape** — 1920x1080 (primary stage target).
-   - **Half-screen desktop** — 960x1080 (someone snapping the browser to one side).
-   - **Mobile horizontal** — 844x390 (phone in landscape).
-   - **Mobile vertical** — 390x844 (phone in portrait).
-   For each viewport, set the integrated browser to that size with `page.setViewportSize`, reload, then walk the deck.
-2. Click the `Present` button (`.present-toggle`). The HUD should read `Section NN / 08`. Present mode is mandatory at all four viewports — the deck must hold up if the presenter is mirroring a phone or shoulder-surfing on a split screen.
-3. Capture a screenshot of every section, in order, **at every viewport**. For section 05 also click each chapter node so all three readouts are reviewed. Sections that animate (typewriter pitch, ability banner) should be captured both mid-animation and after the `skip` action where applicable.
-4. For every section, also run an overflow probe: iterate the section's descendants and report any element whose `getBoundingClientRect().right` exceeds the section right edge or `.bottom` exceeds the section bottom edge by more than 1px. Any overflow at any viewport is a **Critical** finding regardless of how it looks visually.
+> **Run the headless audit first.** Real viewport measurements come from `npm run audit:deck` in `astro-site/`. The integrated browser is locked to a single effective viewport and cannot truly resize.
+
+1. Make sure the dev server is running (`npm run dev` in `astro-site/`).
+2. From `astro-site/`, run `npm run audit:deck`. It walks every section at all four required viewports and writes:
+   - `astro-site/deck-audit/<viewport>/<section>.png` — one screenshot per section per viewport
+   - `astro-site/deck-audit/<viewport>/report.json` — minFontPx, overflowCount, overflowExamples, fillRatio, scrollOverflow per section
+   The four viewports are:
+   - **Desktop landscape** — 1920x1080 (primary stage target)
+   - **Half-screen desktop** — 960x1080 (someone snapping the browser to one side)
+   - **Mobile horizontal** — 844x390 (phone in landscape)
+   - **Mobile vertical** — 390x844 (phone in portrait)
+   To audit one viewport while iterating, append `-- --viewport=half-screen` (or `desktop`, `mobile-land`, `mobile-port`).
+3. Open the integrated browser only for spot-checks of subjective composition decisions (color, hierarchy, story flow). Do **not** use it to judge responsiveness — read the report.json values instead.
+4. Any element in `overflowExamples` is a **Critical** finding regardless of how it looks. Any `minFontPx < 11` at any viewport (kicker/index labels excepted) is a readability defect.
 5. Score each slide against the rubric below. Then produce a single ranked findings table.
+
+The audit script lives at `astro-site/scripts/deck-audit.mjs`. Update it (don't replace the loop in chat) if you need new metrics or a new viewport.
 
 ### Responsive ground rules
 
