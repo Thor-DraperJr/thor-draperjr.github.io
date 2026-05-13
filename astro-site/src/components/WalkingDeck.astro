@@ -985,6 +985,69 @@ const pitchStory = [
     }
   }
 
+  /* Tight laptops (Edge with tabs+favorites, ThinkPads, MBA 13"): cover-section
+     copy column can hit ~680px tall. Shrink the executive card hard so the
+     thesis always lands inside it. */
+  @media (min-width: 761px) and (max-height: 780px) {
+    .walking-signal[data-present='true'] .signal-cover {
+      padding: 1.1rem 1.25rem 0.8rem;
+      gap: 1rem;
+    }
+
+    .walking-signal[data-present='true'] .signal-cover h2 {
+      font-size: clamp(1.55rem, 2.6vw, 2.2rem);
+    }
+
+    .walking-signal[data-present='true'] .pitch-executive {
+      gap: 0.42rem;
+      padding: 0.6rem 0.7rem;
+    }
+
+    .walking-signal[data-present='true'] .pitch-executive h3 {
+      font-size: clamp(1rem, 1.8vw, 1.3rem);
+      line-height: 1.15;
+    }
+
+    .walking-signal[data-present='true'] .pitch-exec-summary {
+      font-size: 0.7rem;
+      line-height: 1.25;
+    }
+
+    .walking-signal[data-present='true'] .pitch-story {
+      gap: 0.35rem;
+    }
+
+    .walking-signal[data-present='true'] .pitch-story-item {
+      gap: 0.28rem;
+      padding: 0.42rem 0.5rem;
+    }
+
+    .walking-signal[data-present='true'] .pitch-story-item p {
+      font-size: 0.62rem;
+      line-height: 1.2;
+    }
+
+    .walking-signal[data-present='true'] .pitch-story-item strong {
+      font-size: 0.7rem;
+    }
+
+    .walking-signal[data-present='true'] .pitch-thesis {
+      gap: 0.12rem;
+      margin-top: 0;
+      padding: 0.42rem 0.65rem 0.48rem 0.75rem;
+    }
+
+    .walking-signal[data-present='true'] .pitch-thesis p,
+    .walking-signal[data-present='true'] .pitch-thesis strong {
+      font-size: 0.64rem;
+      line-height: 1.2;
+    }
+
+    .walking-signal[data-present='true'] .cover-photo {
+      max-height: min(54vh, 24rem);
+    }
+  }
+
   /* Copy-only sections: center content as a single block. */
   .walking-signal[data-present='true'] .strengths-section,
   .walking-signal[data-present='true'] .essence-section,
