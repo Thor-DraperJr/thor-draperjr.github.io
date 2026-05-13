@@ -17,6 +17,7 @@ const VIEWPORTS = {
     desktop: { width: 1920, height: 1080, deviceScaleFactor: 1 },
     'laptop-large': { width: 1440, height: 900, deviceScaleFactor: 1 },
     laptop: { width: 1366, height: 768, deviceScaleFactor: 1 },
+    'laptop-chrome': { width: 1214, height: 770, deviceScaleFactor: 1 },
     'half-screen': { width: 960, height: 1080, deviceScaleFactor: 1 },
     'half-laptop': { width: 720, height: 900, deviceScaleFactor: 1 },
     'mobile-land': { width: 844, height: 390, deviceScaleFactor: 2, isMobile: true },
@@ -33,7 +34,7 @@ const args = Object.fromEntries(process.argv.slice(2).map(a => {
     return [k, rest.join('=') || true];
 }));
 
-const url = args.url || 'http://localhost:4321/career/walking-deck/?present=1';
+const url = args.url || 'http://localhost:4321/career/walking-deck/present';
 const wanted = args.viewport ? [args.viewport] : Object.keys(VIEWPORTS);
 const unknown = wanted.filter(v => !VIEWPORTS[v]);
 if (unknown.length) {
