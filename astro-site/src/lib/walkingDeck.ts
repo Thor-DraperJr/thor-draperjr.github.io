@@ -168,7 +168,7 @@ export const chapters: Chapter[] = [
         tag: 'Microsoft + Range',
         glyph: 'III',
         headline: 'Built the technical depth on purpose so the next sales seat compounds everything.',
-        thesis: 'Started at Microsoft as a contractor in April 2021 - Azure Networking Support Engineer. Converted to FTE in October 2021, supporting Azure Rapid Response in Azure Networking and then moving into Support Escalations Engineer. Now Senior Security Solution Engineer, with a SANS B.S. in cybersecurity earned on Microsoft tuition assistance. H2 FY26 outcome: exceeded quota across all four revenue buckets - an eight-figure TCV E5 platform displacement, a seven-figure Entra ID Governance displacement, a mid six-figure Defender Experts for Hunting expansion, and a doubled Sentinel data lake commitment on a competitive takeout.',
+        thesis: 'Contractor in April 2021 on Azure Networking Support. FTE that October into Azure Rapid Response and Support Escalations. Now Senior Security Solution Engineer with a SANS B.S. in cybersecurity. Doubled down on technical depth on purpose so the move back to sales lands with credibility, not a learning curve.',
         ability: 'Compounded Range',
         abilityDetail: '+ Sell with deep technical credibility',
         milestones: [
@@ -178,12 +178,12 @@ export const chapters: Chapter[] = [
             'H2 FY26: all four buckets exceeded',
         ],
         highlights: [
-            'Azure Networking Support Engineer (contractor, Apr 2021) -> Azure Rapid Response + Support Escalations (FTE, Oct 2021)',
-            'Senior Security Solution Engineer + SANS B.S. on Microsoft tuition assist',
+            'Azure Networking Support (contractor, Apr 2021) -> Rapid Response + Support Escalations (FTE, Oct 2021)',
+            'Senior Security Solution Engineer + SANS B.S. in cybersecurity',
             'H2 FY26: 8-figure TCV E5, 7-figure Entra ID Governance, mid-6-figure DEX, Sentinel data lake doubled',
         ],
         branches: [
-            { kind: 'education', label: 'SANS B.S.', detail: 'Cybersecurity, on Microsoft tuition assist', cx: 740, cy: 360 },
+            { kind: 'education', label: 'SANS B.S.', detail: 'Cybersecurity', cx: 740, cy: 360 },
             { kind: 'career', label: 'AE-ready', detail: 'Next: Account Executive in the AI era', cx: 940, cy: 360 },
         ],
         cx: 840,
