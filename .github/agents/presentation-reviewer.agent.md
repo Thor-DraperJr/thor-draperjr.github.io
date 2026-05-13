@@ -10,10 +10,23 @@ Default target: `/career/walking-deck/`. Other valid targets are any page that e
 
 ## Operating procedure
 
-1. Open the page in the integrated browser at a 16:9 viewport (1280x720 minimum, 1920x1080 preferred). The walking deck is built for stage projection.
-2. Click the `Present` button (`.present-toggle`). The HUD should read `Section NN / 08`.
-3. Capture a screenshot of every section, in order. For section 05 also click each chapter node so all three readouts are reviewed. Sections that animate (typewriter pitch, ability banner) should be captured both mid-animation and after the `skip` action where applicable.
-4. Score each slide against the rubric below. Then produce a single ranked findings table.
+1. Open the page in the integrated browser. Then sweep **every section across all four required viewports before producing findings**:
+   - **Desktop landscape** — 1920x1080 (primary stage target).
+   - **Half-screen desktop** — 960x1080 (someone snapping the browser to one side).
+   - **Mobile horizontal** — 844x390 (phone in landscape).
+   - **Mobile vertical** — 390x844 (phone in portrait).
+   For each viewport, set the integrated browser to that size with `page.setViewportSize`, reload, then walk the deck.
+2. Click the `Present` button (`.present-toggle`). The HUD should read `Section NN / 08`. Present mode is mandatory at all four viewports — the deck must hold up if the presenter is mirroring a phone or shoulder-surfing on a split screen.
+3. Capture a screenshot of every section, in order, **at every viewport**. For section 05 also click each chapter node so all three readouts are reviewed. Sections that animate (typewriter pitch, ability banner) should be captured both mid-animation and after the `skip` action where applicable.
+4. For every section, also run an overflow probe: iterate the section's descendants and report any element whose `getBoundingClientRect().right` exceeds the section right edge or `.bottom` exceeds the section bottom edge by more than 1px. Any overflow at any viewport is a **Critical** finding regardless of how it looks visually.
+5. Score each slide against the rubric below. Then produce a single ranked findings table.
+
+### Responsive ground rules
+
+- The deck is **dynamic**, not pixel-pinned. Treat clamp(), grid `minmax(0, 1fr)`, `min-width: 0` cascades, and pretext-fit headlines as load-bearing. If a fix requires fixed pixel sizes or a hard-coded media query gate, flag the trade-off.
+- Layouts must work at **every breakpoint between 360px and 2560px wide**. Do not approve a slide that only looks good at one width.
+- If a layout switches between desktop and mobile (e.g., collage 2x2 -> single column), the mobile variant gets the same design review as the desktop one. Mobile is not a fallback.
+- Photos with different native aspect ratios must not be force-cropped into a single shared aspect. Either give each card its own aspect-ratio or letterbox with intent.
 
 ## Rubric: principles for stage-grade slide design
 
@@ -25,7 +38,7 @@ These are condensed from Duarte (Slide:ology, Resonate), Reynolds (Presentation 
 - Body content supports the headline; it does not introduce a second idea.
 
 ### B. Use of space
-- Content fits **without scrolling** on a 16:9 viewport at 1280x720 and 1920x1080.
+- Content fits **without scrolling** in present mode at all four required viewports (1920x1080, 960x1080, 844x390, 390x844).
 - Margins are intentional. The stage has consistent gutter on all four sides; nothing kisses the edge.
 - Whitespace is a design choice, not residue. Empty regions should look composed, not abandoned.
 - The biggest element on the slide is the most important element. Hierarchy is enforced by size, not just color.
@@ -61,10 +74,10 @@ These are condensed from Duarte (Slide:ology, Resonate), Reynolds (Presentation 
 
 ## Output format
 
-Single table, sorted by severity:
+Single table, sorted by severity. Every finding must name the viewport(s) where it appears.
 
-| # | Section | Finding | Principle (rubric letter) | Severity | Suggested fix | Method |
-|---|---------|---------|--------------------------|----------|----------------|--------|
+| # | Section | Viewport(s) | Finding | Principle (rubric letter) | Severity | Suggested fix | Method |
+|---|---------|-------------|---------|--------------------------|----------|----------------|--------|
 
 - **Severity:** Critical (breaks the slide), High (visibly weakens it), Medium (polish), Low (nit).
 - **Method:** **Edit mode** (subjective design changes -- discuss before implementing) or **Copilot PR** (mechanical fixes -- well-defined CSS or markup adjustments).
