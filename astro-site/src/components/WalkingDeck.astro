@@ -1044,15 +1044,23 @@ const pitchStory = [
     gap: 0.4rem;
   }
 
+  .walking-signal[data-present='true'] .recordings-section {
+    min-width: 0;
+  }
+
   .walking-signal[data-present='true'] .recordings {
+    width: 100%;
+    max-width: 100%;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 1rem;
     min-height: 0;
+    min-width: 0;
     align-items: stretch;
   }
 
   .walking-signal[data-present='true'] .recording {
     padding: 1rem 1.1rem 1.1rem;
+    min-width: 0;
     min-height: 0;
     overflow: hidden;
   }
