@@ -746,19 +746,24 @@ const pitchStory = [
     padding: clamp(1.25rem, 3vw, 2.5rem);
   }
 
-  /* Cover: oversize the terminal, right-size the portrait, fill the stage. */
+  /* Cover: oversize the terminal, right-size the portrait, fill the stage.
+     Sizing uses min(vw, vh) clamps so everything scales fluidly with the
+     section's actual rendered height — no fixed max-height breakpoints. */
   .walking-signal[data-present='true'] .signal-cover {
-    grid-template-columns: minmax(0, 1.28fr) minmax(20rem, 0.95fr);
-    gap: clamp(1.5rem, 3.2vw, 3rem);
+    grid-template-columns: minmax(0, 1.28fr) minmax(18rem, 0.95fr);
+    gap: clamp(0.9rem, 2.4vh, 2.6rem);
     align-items: stretch;
     min-height: 0;
-    padding: clamp(1.6rem, 2.8vw, 2.6rem) clamp(1.55rem, 3vw, 2.7rem) clamp(1.2rem, 2vw, 1.85rem);
+    padding:
+      clamp(0.95rem, 2.4vh, 2.4rem)
+      clamp(1.1rem, 2.6vw, 2.6rem)
+      clamp(0.7rem, 1.6vh, 1.7rem);
   }
 
   .walking-signal[data-present='true'] .signal-cover .cover-copy {
     display: flex;
     flex-direction: column;
-    gap: 0.55rem;
+    gap: clamp(0.35rem, 0.9vh, 0.7rem);
     justify-content: flex-start;
     min-height: 0;
     overflow: hidden;
@@ -772,8 +777,9 @@ const pitchStory = [
     position: relative;
     max-width: min(20ch, 100%);
     padding-bottom: 0.28rem;
-    font-size: clamp(2.25rem, 4vw, 4.5rem);
-    line-height: 1.04;
+    font-size: clamp(1.55rem, 4.2vh + 0.8vw, 4.2rem);
+    line-height: 1.02;
+    text-wrap: balance;
   }
 
   .walking-signal[data-present='true'] .signal-kicker {
@@ -793,8 +799,9 @@ const pitchStory = [
 
   .walking-signal[data-present='true'] .cover-role {
     color: rgba(255, 255, 255, 0.86);
-    font-size: clamp(1.4rem, 1.6vw, 2rem);
+    font-size: clamp(0.9rem, 1.7vh + 0.3vw, 1.8rem);
     font-weight: 900;
+    line-height: 1.25;
   }
 
   .walking-signal[data-present='true'] .pitch-module {
@@ -829,7 +836,7 @@ const pitchStory = [
     align-self: center;
     width: 100%;
     max-width: 38rem;
-    max-height: min(86vh, 56rem);
+    max-height: min(78vh, 48rem);
     margin-left: auto;
     aspect-ratio: 4 / 5;
     min-height: 0;
@@ -861,191 +868,38 @@ const pitchStory = [
   }
 
   .walking-signal[data-present='true'] .pitch-executive {
-    gap: 0.62rem;
-    padding: 0.85rem clamp(0.9rem, 1.6vw, 1.15rem);
+    gap: clamp(0.35rem, 0.9vh, 0.7rem);
+    padding: clamp(0.55rem, 1.3vh, 1rem) clamp(0.7rem, 1.4vw, 1.2rem);
   }
 
   .walking-signal[data-present='true'] .pitch-story {
-    gap: 0.62rem;
+    gap: clamp(0.25rem, 0.85vh, 0.7rem);
   }
 
   .walking-signal[data-present='true'] .pitch-story-item {
-    gap: 0.34rem;
+    gap: clamp(0.18rem, 0.6vh, 0.4rem);
+    padding: clamp(0.3rem, 1vh, 0.65rem) clamp(0.4rem, 1vw, 0.75rem);
   }
 
   .walking-signal[data-present='true'] .pitch-story-item p {
-    font-size: clamp(0.72rem, 0.9vw, 0.82rem);
-    line-height: 1.32;
+    font-size: clamp(0.56rem, 1.05vh + 0.15vw, 0.9rem);
+    line-height: 1.22;
   }
 
   .walking-signal[data-present='true'] .pitch-story-item strong {
-    font-size: clamp(0.78rem, 0.95vw, 0.9rem);
+    font-size: clamp(0.62rem, 1.15vh + 0.18vw, 0.95rem);
   }
 
   .walking-signal[data-present='true'] .pitch-thesis {
-    gap: 0.22rem;
-    margin-top: 0.1rem;
-    padding: 0.6rem 0.85rem 0.65rem 0.95rem;
+    gap: clamp(0.08rem, 0.35vh, 0.25rem);
+    margin-top: clamp(0rem, 0.3vh, 0.18rem);
+    padding: clamp(0.32rem, 0.9vh, 0.75rem) clamp(0.55rem, 1.1vw, 1.05rem);
   }
 
   .walking-signal[data-present='true'] .pitch-thesis p,
   .walking-signal[data-present='true'] .pitch-thesis strong {
-    font-size: clamp(0.74rem, 0.9vw, 0.85rem);
-    line-height: 1.32;
-  }
-
-  @media (min-width: 761px) and (max-height: 920px) {
-    .walking-signal[data-present='true'] .signal-cover {
-      padding: clamp(1.55rem, 3vw, 2.15rem) clamp(1.35rem, 2.6vw, 2.2rem) clamp(1rem, 2vw, 1.45rem);
-      gap: clamp(1rem, 2.4vw, 1.75rem);
-    }
-
-    .walking-signal[data-present='true'] .signal-cover .cover-copy {
-      gap: 0.55rem;
-    }
-
-    .walking-signal[data-present='true'] .signal-cover h2 {
-      font-size: clamp(1.7rem, 2.9vw, 2.55rem);
-      line-height: 1;
-      text-wrap: balance;
-    }
-
-    .walking-signal[data-present='true'] .cover-role {
-      font-size: clamp(0.86rem, 1vw, 1rem);
-      line-height: 1.35;
-    }
-
-    .walking-signal[data-present='true'] .pitch-mode button {
-      min-height: 1.85rem;
-      font-size: 0.66rem;
-    }
-
-    .walking-signal[data-present='true'] .pitch-executive {
-      gap: 0.58rem;
-      padding: 0.78rem;
-    }
-
-    .walking-signal[data-present='true'] .pitch-executive h3 {
-      font-size: clamp(1.15rem, 2.1vw, 1.55rem);
-    }
-
-    .walking-signal[data-present='true'] .pitch-exec-summary {
-      font-size: 0.76rem;
-      line-height: 1.32;
-    }
-
-    .walking-signal[data-present='true'] .pitch-story {
-      gap: 0.46rem;
-    }
-
-    .walking-signal[data-present='true'] .pitch-story-item {
-      gap: 0.36rem;
-      padding: 0.55rem;
-    }
-
-    .walking-signal[data-present='true'] .pitch-story-index {
-      width: 1.35rem;
-      height: 1.35rem;
-      font-size: 0.52rem;
-    }
-
-    .walking-signal[data-present='true'] .pitch-story-label,
-    .walking-signal[data-present='true'] .pitch-thesis span {
-      font-size: 0.52rem;
-    }
-
-    .walking-signal[data-present='true'] .pitch-story-item strong {
-      font-size: 0.74rem;
-    }
-
-    .walking-signal[data-present='true'] .pitch-story-item p {
-      font-size: 0.66rem;
-      line-height: 1.25;
-    }
-
-    .walking-signal[data-present='true'] .pitch-thesis {
-      gap: 0.18rem;
-      margin-top: 0.05rem;
-      padding: 0.58rem 0.72rem 0.62rem 0.85rem;
-    }
-
-    .walking-signal[data-present='true'] .pitch-thesis p,
-    .walking-signal[data-present='true'] .pitch-thesis strong {
-      font-size: 0.68rem;
-      line-height: 1.25;
-    }
-
-    .walking-signal[data-present='true'] .cover-photo {
-      max-width: 28rem;
-      max-height: min(58vh, 28rem);
-    }
-
-    .walking-signal[data-present='true'] .cover-photo-caption {
-      padding: 1.1rem 0.85rem 0.75rem;
-    }
-  }
-
-  /* Tight laptops (Edge with tabs+favorites, ThinkPads, MBA 13"): cover-section
-     copy column can hit ~680px tall. Shrink the executive card hard so the
-     thesis always lands inside it. */
-  @media (min-width: 761px) and (max-height: 780px) {
-    .walking-signal[data-present='true'] .signal-cover {
-      padding: 1.1rem 1.25rem 0.8rem;
-      gap: 1rem;
-    }
-
-    .walking-signal[data-present='true'] .signal-cover h2 {
-      font-size: clamp(1.55rem, 2.6vw, 2.2rem);
-    }
-
-    .walking-signal[data-present='true'] .pitch-executive {
-      gap: 0.42rem;
-      padding: 0.6rem 0.7rem;
-    }
-
-    .walking-signal[data-present='true'] .pitch-executive h3 {
-      font-size: clamp(1rem, 1.8vw, 1.3rem);
-      line-height: 1.15;
-    }
-
-    .walking-signal[data-present='true'] .pitch-exec-summary {
-      font-size: 0.7rem;
-      line-height: 1.25;
-    }
-
-    .walking-signal[data-present='true'] .pitch-story {
-      gap: 0.35rem;
-    }
-
-    .walking-signal[data-present='true'] .pitch-story-item {
-      gap: 0.28rem;
-      padding: 0.42rem 0.5rem;
-    }
-
-    .walking-signal[data-present='true'] .pitch-story-item p {
-      font-size: 0.62rem;
-      line-height: 1.2;
-    }
-
-    .walking-signal[data-present='true'] .pitch-story-item strong {
-      font-size: 0.7rem;
-    }
-
-    .walking-signal[data-present='true'] .pitch-thesis {
-      gap: 0.12rem;
-      margin-top: 0;
-      padding: 0.42rem 0.65rem 0.48rem 0.75rem;
-    }
-
-    .walking-signal[data-present='true'] .pitch-thesis p,
-    .walking-signal[data-present='true'] .pitch-thesis strong {
-      font-size: 0.64rem;
-      line-height: 1.2;
-    }
-
-    .walking-signal[data-present='true'] .cover-photo {
-      max-height: min(54vh, 24rem);
-    }
+    font-size: clamp(0.58rem, 1.05vh + 0.15vw, 0.9rem);
+    line-height: 1.24;
   }
 
   /* Copy-only sections: center content as a single block. */
@@ -2560,15 +2414,15 @@ const pitchStory = [
   .pitch-executive h3 {
     max-width: 24ch;
     color: white;
-    font-size: clamp(1.35rem, 2.45vw, 2rem);
-    line-height: 1.1;
+    font-size: clamp(1rem, 2vh + 0.3vw, 1.85rem);
+    line-height: 1.12;
   }
 
   .pitch-exec-summary {
     max-width: 58ch;
     color: rgba(255, 255, 255, 0.78);
-    font-size: 0.86rem;
-    line-height: 1.42;
+    font-size: clamp(0.62rem, 1.2vh + 0.18vw, 0.95rem);
+    line-height: 1.28;
   }
 
   .pitch-story {
