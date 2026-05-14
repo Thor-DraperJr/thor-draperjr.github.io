@@ -985,6 +985,12 @@ const pitchStory = [
     display: grid;
   }
 
+  @media (max-width: 600px) {
+    .walking-signal[data-present='true'] .ask-arc {
+      display: none;
+    }
+  }
+
   .walking-signal[data-present='true'] .strengths-section .section-copy,
   .walking-signal[data-present='true'] .passion-section .section-copy {
     text-align: center;
@@ -1026,8 +1032,8 @@ const pitchStory = [
     margin: 0;
     color: var(--signal-gold);
     font-family: 'Lora', 'Georgia', serif;
-    font-size: clamp(5rem, 11vw, 12rem);
-    line-height: 0.6;
+    font-size: clamp(3.5rem, 9vw, 12rem);
+    line-height: 1;
     text-shadow: 0 0 40px rgba(241, 183, 95, 0.3);
   }
 
@@ -1197,38 +1203,43 @@ const pitchStory = [
     line-height: 1.1;
   }
 
-  /* Mobile vertical / very narrow present: stack as a single tilted column */
+  /* Mobile vertical / very narrow present: 2-column grid that fills the board. */
   @container collage (max-aspect-ratio: 4 / 5) {
+    .walking-signal[data-present='true'] .photo-collage {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-auto-rows: auto;
+      align-content: space-between;
+      justify-items: center;
+      gap: clamp(0.6rem, 2cqh, 1.4rem);
+      padding-block: clamp(0.6rem, 2cqh, 1.4rem);
+    }
     .walking-signal[data-present='true'] .photo-collage .collage-card {
-      width: 70cqw;
-      height: auto;
-      left: 50%;
+      position: relative;
+      left: auto;
       right: auto;
       top: auto;
       bottom: auto;
+      width: min(100%, 16rem);
+      height: auto;
+      animation: none;
     }
     .walking-signal[data-present='true'] .photo-collage .collage-card.charlotte {
-      top: 1cqh;
-      transform: translateX(-58%) rotate(-3deg);
+      transform: rotate(-3deg) translate(var(--drift-x, 0px), var(--drift-y, 0px));
     }
     .walking-signal[data-present='true'] .photo-collage .collage-card.banff {
-      top: 22cqh;
-      transform: translateX(-42%) rotate(2.4deg);
+      transform: rotate(2.4deg) translate(var(--drift-x, 0px), var(--drift-y, 0px));
     }
     .walking-signal[data-present='true'] .photo-collage .collage-card.gym {
-      width: 44cqw;
-      top: 44cqh;
-      transform: translateX(20%) rotate(6deg);
+      transform: rotate(-4deg) translate(var(--drift-x, 0px), var(--drift-y, 0px));
     }
     .walking-signal[data-present='true'] .photo-collage .collage-card.lloyd {
-      width: 52cqw;
-      top: 58cqh;
-      transform: translateX(-62%) rotate(-4.2deg);
+      transform: rotate(4deg) translate(var(--drift-x, 0px), var(--drift-y, 0px));
     }
     .walking-signal[data-present='true'] .photo-collage .collage-card.teacher {
-      width: 48cqw;
-      top: 64cqh;
-      transform: translateX(-2%) rotate(3.6deg);
+      grid-column: 1 / -1;
+      width: min(60%, 12rem);
+      transform: rotate(-2.5deg) translate(var(--drift-x, 0px), var(--drift-y, 0px));
     }
   }
 
@@ -4661,6 +4672,17 @@ const pitchStory = [
       padding: 0.9rem;
     }
 
+    .walking-signal[data-present='true'] [data-signal-section].essence-section,
+    .walking-signal[data-present='true'] [data-signal-section].ask-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: 1rem;
+      padding: 1.25rem;
+    }
+
     .walking-signal[data-present='true'] .signal-cover .cover-copy {
       gap: 0.48rem;
       overflow: visible;
@@ -4792,7 +4814,8 @@ const pitchStory = [
 
     .walking-signal[data-present='true'] [data-signal-section].human-section {
       display: grid;
-      grid-template-rows: auto minmax(0, 1fr);
+      grid-template-rows: auto auto;
+      align-content: start;
       gap: 0.58rem;
       overflow: hidden;
       padding: 0.9rem;
@@ -4817,28 +4840,50 @@ const pitchStory = [
     }
 
     .walking-signal[data-present='true'] .photo-collage {
-      height: 100%;
-      min-height: 0;
+      display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      grid-template-rows: repeat(2, minmax(0, 1fr));
-      grid-auto-rows: unset;
-      gap: 0.46rem;
+      grid-template-rows: auto;
+      grid-auto-rows: auto;
+      grid-auto-flow: row dense;
+      align-content: start;
+      justify-items: center;
+      align-items: start;
+      height: auto;
+      min-height: 0;
+      align-self: start;
+      gap: 0.55rem;
       margin-top: 0;
-      padding: 0.58rem;
+      padding: 0.6rem;
       overflow: hidden;
+      container-type: normal;
     }
 
+    .walking-signal[data-present='true'] .photo-collage .collage-card,
     .walking-signal[data-present='true'] .photo-collage .collage-card.charlotte,
     .walking-signal[data-present='true'] .photo-collage .collage-card.banff,
+    .walking-signal[data-present='true'] .photo-collage .collage-card.gym,
     .walking-signal[data-present='true'] .photo-collage .collage-card.lloyd,
     .walking-signal[data-present='true'] .photo-collage .collage-card.teacher {
+      position: relative;
+      left: auto;
+      right: auto;
+      top: auto;
+      bottom: auto;
+      width: 100%;
+      max-width: 12rem;
+      height: auto;
+      aspect-ratio: 4 / 3;
+      padding: 0.28rem 0.28rem 0.92rem;
+      animation: none;
       grid-column: auto;
       grid-row: auto;
-      transform: rotate(calc(var(--tilt, 0deg) * 0.1));
+      transform: rotate(calc(var(--tilt, 0deg) * 0.5)) translate(var(--drift-x, 0px), var(--drift-y, 0px));
     }
 
-    .walking-signal[data-present='true'] .photo-collage .collage-card {
-      padding: 0.32rem 0.32rem 1.08rem;
+    .walking-signal[data-present='true'] .photo-collage .collage-card.teacher {
+      grid-column: 1 / -1;
+      width: 60%;
+      max-width: 10rem;
     }
 
     .walking-signal[data-present='true'] .photo-collage .collage-card::before {
