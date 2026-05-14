@@ -10,12 +10,11 @@ const { startInPresent = false } = Astro.props;
 const pitchTerminalLines = [
   { prompt: '$', text: 'whoami --short' },
   { out: 'Senior Security Solution Engineer at Microsoft. Career seller before that.' },
-  { prompt: '$', text: 'cat origin.story | head' },
-  { out: 'Prior to my career in tech, I started in sales, military service and entrepreneurship.' },
-  { out: 'Branch Manager at Enterprise, leading a 40-plus team at the largest non-airport location.' },
-  { out: 'Paychex sales, then bought a hometown gym. Studied IT certs while running the business.' },
-  { out: 'Sold the gym just before the pandemic. MSP by day, cyber bootcamp instructor by night.' },
-  { out: 'Microsoft contractor in April 2021. FTE that October. SANS B.P.S in Applied Cybersecurity in 2024 and moved to the Security STU shortly after that.' },
+  { prompt: '$', text: 'cat reinvention.story | head' },
+  { out: 'Sales, service, and entrepreneurship first. Loved the work.' },
+  { out: 'Reinvented: MSP by day, cyber bootcamp instructor by night.' },
+  { out: 'CPCC A.A.S. opened the Microsoft door in 2021. SANS B.P.S. earned while here.' },
+  { out: 'Azure Networking Rapid Response, then Security STU after three years.' },
   { prompt: '$', text: 'echo $THESIS' },
   { out: 'I did not leave sales because I was burnt out. I loved it.' },
   { out: 'I rebuilt on technical depth so the next sales seat compounds everything.' },
@@ -26,19 +25,19 @@ const pitchTerminalLines = [
 
 const pitchStory = [
   {
-    label: 'Sales operator',
-    title: 'Sales, service, and ownership.',
-    detail: 'Enterprise Branch Manager leading 40-plus people; Paychex seller; hometown gym owner.',
+    label: 'Where I started',
+    title: 'Sales, service, and entrepreneurship.',
+    detail: 'A decade of selling, leading, military service, and running my own hometown gym.',
   },
   {
-    label: 'Technical rebuild',
+    label: 'The reinvention',
     title: 'MSP by day, cyber instructor by night.',
-    detail: 'Sold the business and rebuilt deliberately around security depth.',
+    detail: 'Sold the gym before the pandemic and rebuilt deliberately around security depth.',
   },
   {
-    label: 'Microsoft execution',
-    title: 'Contractor to FTE to Security STU.',
-    detail: 'H2 FY26: exceeded quota across all four buckets. 8-figure TCV E5, 7-figure Entra ID Governance, mid-6-figure DEX.',
+    label: 'Microsoft, fueled by curiosity',
+    title: 'A.A.S. at the door. B.P.S. while in the seat.',
+    detail: 'CPCC Cloud and Virtualization opened Azure Networking Rapid Response. A SANS B.P.S. in Applied Cybersecurity, earned on nights and weekends, pulled me into the Security STU.',
   },
 ];
 ---
@@ -83,7 +82,7 @@ const pitchStory = [
           <div class="pitch-exec-head">
             <span class="pitch-eyebrow">Career signal</span>
             <h3 data-pretext-fit data-pretext-lines="2" data-pretext-min-ratio="0.78" data-pretext-width-ratio="0.68">I loved sales enough to rebuild the technical depth around it.</h3>
-            <p class="pitch-exec-summary" data-pretext-fit data-pretext-lines="2" data-pretext-min-ratio="0.86" data-pretext-width-ratio="0.72">Sales instinct, operator accountability, cybersecurity instruction, and Microsoft Security credibility in one motion.</p>
+            <p class="pitch-exec-summary" data-pretext-fit data-pretext-lines="2" data-pretext-min-ratio="0.86" data-pretext-width-ratio="0.72">A deliberate reinvention from sales into security &mdash; earning the associate's and bachelor's while working full time.</p>
           </div>
           <div class="pitch-story" role="list">
             {pitchStory.map((item, index) => (
