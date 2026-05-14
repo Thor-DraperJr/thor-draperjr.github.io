@@ -1075,14 +1075,14 @@ const pitchStory = [
 
   .walking-signal[data-present='true'] .photo-collage {
     position: relative;
-    align-self: stretch;
+    align-self: center;
     display: block;
-    height: 100%;
-    max-height: 100%;
-    min-height: 0;
     margin-top: 0;
     margin-inline: auto;
     width: min(100%, 1180px);
+    aspect-ratio: 16 / 7;
+    max-height: 100%;
+    min-height: 0;
     padding: clamp(0.6rem, 1.4vh, 1.4rem) clamp(0.7rem, 1.4vw, 1.5rem);
     container-type: size;
     container-name: collage;
@@ -1139,50 +1139,52 @@ const pitchStory = [
     object-position: var(--photo-pos, center 25%);
   }
 
-  /* Spread on a table: cards cluster tight in the center with heavy overlap. */
+  /* Polaroids fanned across a table: every caption stays visible because
+     each card overlaps only the upper image area of the next, never its
+     caption band. Cards advance left-to-right with small vertical jitter. */
   .walking-signal[data-present='true'] .photo-collage .collage-card.charlotte {
-    --card-w: 36cqw;
+    --card-w: 26cqw;
     --card-ar: 4 / 3;
-    --tilt: -6deg;
-    top: 2cqh;
-    left: 2cqw;
-    z-index: 3;
+    --tilt: -7deg;
+    top: 18cqh;
+    left: 1cqw;
+    z-index: 1;
   }
 
   .walking-signal[data-present='true'] .photo-collage .collage-card.banff {
-    --card-w: 38cqw;
+    --card-w: 26cqw;
     --card-ar: 3 / 2;
-    --tilt: 4deg;
-    top: 4cqh;
-    right: 2cqw;
-    z-index: 4;
+    --tilt: 5deg;
+    top: 8cqh;
+    left: 23cqw;
+    z-index: 2;
   }
 
   .walking-signal[data-present='true'] .photo-collage .collage-card.gym {
-    --card-w: 22cqw;
+    --card-w: 21cqw;
     --card-ar: 4 / 5;
-    --tilt: 11deg;
     --photo-pos: center 35%;
-    top: 26cqh;
-    left: 41cqw;
-    z-index: 7;
+    --tilt: -4deg;
+    top: 3cqh;
+    left: 44cqw;
+    z-index: 3;
   }
 
   .walking-signal[data-present='true'] .photo-collage .collage-card.lloyd {
-    --card-w: 28cqw;
+    --card-w: 22cqw;
     --card-ar: 4 / 5;
-    --tilt: -7deg;
-    bottom: 1cqh;
-    left: 8cqw;
-    z-index: 6;
+    --tilt: 6deg;
+    top: 14cqh;
+    left: 61cqw;
+    z-index: 4;
   }
 
   .walking-signal[data-present='true'] .photo-collage .collage-card.teacher {
-    --card-w: 26cqw;
+    --card-w: 22cqw;
     --card-ar: 3 / 4;
-    --tilt: 6deg;
-    bottom: 0cqh;
-    right: 8cqw;
+    --tilt: -5deg;
+    top: 6cqh;
+    left: 77cqw;
     z-index: 5;
   }
 

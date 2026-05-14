@@ -108,7 +108,7 @@ export const imageSlots: ImageSlot[] = [
         alt: 'Thor on the floor of the hometown gym he owned',
         role: 'Operator',
         note: 'The gym years - owner, operator, and coach.',
-        caption: 'Hometown gym. Owner, operator, coach.',
+        caption: 'Gym owner. Operator, coach.',
         tilt: 5.2,
     },
 ];
