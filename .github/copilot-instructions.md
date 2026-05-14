@@ -7,6 +7,9 @@ Ground rules:
 - While creating, be mindful to validate your assumptions.
 - Before starting the Astro dev server, check if one is already running (e.g., `curl http://localhost:4321` or check terminal output). Do not spawn a second instance.
 - For visual bugs (color, layout, spacing), use `open_browser_page` or the Site Reviewer agent to visually inspect the page. Do not rely solely on HTML source inspection -- rendered appearance depends on content length, viewport, and stacking context.
+- For the walking deck (`/career/walking-deck/present`), run `npm run audit:deck` from `astro-site/` to sweep all viewports, then **open the actual screenshots** in `astro-site/deck-audit/<viewport>/<section>.png` before declaring a fix done. Audit numbers (overflow, clip, fillRatio) can read clean while the layout still has dead space, covered captions, or other visual defects.
+- Prefer fluid `clamp(min, Xvh + Yvw, max)` sizing over stacked `@media (max-height: ...)` breakpoints. Three height media queries always leave a gap where some browser chrome falls between thresholds and content clips. Fluid clamps have no cliffs.
+- The user's real Edge window is ~1214x770 (laptop-chrome viewport in the audit). Always check this size before declaring laptop bugs fixed; the integrated browser is locked to a single effective size and cannot truly resize.
 
 ## Project Overview
 This is a personal blog for Thor Draper Jr, a Senior Security Solution Engineer at Microsoft and a former cybersecurity instructor. My goals for this are to highlight my experience and interests in multiple facets of technology and leadership to hopefully help advertise me for the next step in my career. The blog should be a reflection of my expertise and personality, while also providing value to readers interested in technology, cybersecurity, and career development.
