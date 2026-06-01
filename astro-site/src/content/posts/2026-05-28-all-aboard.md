@@ -1,0 +1,275 @@
+---
+layout: post
+title: "All Aboard"
+date: 2026-05-28
+categories: [tech]
+tags: [ai, cybersecurity, identity, agents, frontier-firm, healthcare]
+draft: true
+excerpt: "Agents are users. The lifecycle you already trust for humans is the lifecycle that should govern them. A field-tested way to talk about the Frontier Firm without dragging customers, especially providers, into a re-platform."
+---
+
+# All Aboard
+
+> **Agents are users, and the lifecycle you already run for your humans is the lifecycle that should govern them.**
+
+Microsoft's [2026 Work Trend Index](https://news.microsoft.com/annual-work-trend-index-2026/) is titled *Agents move into action*, and that is the only headline that matters. Agents stopped being a pilot conversation this year. They are operating in production, in regulated workflows, in front of customers, and the company that figures out how to manage them at the same altitude it manages its people is the company that gets to scale them.
+
+A CIO interrupted before the title slide. "Before you start, what data are you going to push into our other tools?" The honest answer was, "We don't know yet. We are building the answer as we go, and we'd rather tell you that than guess." The room exhaled. A VP across the table nodded once. Forty-five minutes later the same CIO was sketching her identity diagram on the whiteboard. The deck never opened past slide three. The meeting earned a second meeting because nobody pretended.
+
+That posture is the only one that works right now. You earn the room by naming what you don't know, because the category is months old and nobody, including us, has a finished answer yet. The CISO who can answer *"what agents are running in my environment this week?"* in 2026 is the one whose joiner/mover/leaver program already covered them in 2025. Everything below is how to get there.
+
+## Two workforces, one org chart
+
+Microsoft's [2025](https://www.microsoft.com/en-us/worklab/work-trend-index/2025-the-year-the-frontier-firm-is-born) and [2026](https://news.microsoft.com/annual-work-trend-index-2026/) Work Trend Index reports name the shift. The **Frontier Firm** is a company where agents are part of the workforce. The **human-agent ratio** is the new dial leaders set per role, per function, per project. The **agent boss** is what every human becomes the day they start managing agents instead of just using AI. The 2026 update, *Agents move into action*, puts numbers behind it.
+
+Here is what the report does not solve. The minute every employee becomes an agent boss, the company runs two workforces, and only one of them shows up on the org chart. Hiring, identity, entitlement, supervision, audit, retirement: all the boring work of running a workforce has to scale to cover both.
+
+A CHRO told her CIO at a Tuesday staff meeting that headcount was flat for the quarter. The CIO pulled up a console showing 1,400 agents, copilots, and service principals provisioned against production in the last ninety days. None with a manager of record. None with a review date. The room realized the company had hired a department and nobody had told payroll. Two weeks later the second conversation was about who owned the org chart for the second workforce.
+
+## Four decisions every enterprise is making right now
+
+Every enterprise sits inside roughly six silos: productivity, security, data, identity, operations, devices. Every CIO can name them. Every vendor has a portal pointed at one. In an AI world the enterprise itself is the platform, and agents traverse every silo whether anyone sanctioned them or not. The real question now is *who has the control plane that spans every silo as agents walk across them?* Customers buy this in pillars. Agents actually operate across stations. Both views matter, but the station view is where the work gets done.
+
+The four decisions every enterprise is making right now break out as **productivity** (where work happens: email, files, meetings, tickets), **AI platform** (where the most important agents get built and run: models, tools, orchestration), **agent control plane** (how agents are governed across their lifecycle: identity, entitlement, observability), and **security** (identity protection, data protection, threat protection, now extending to cover agents). The agent control plane is the new pillar, and the one a long list of vendors is trying to own.
+
+Most enterprises are making these four decisions across a dozen vendors with no shared operating picture. The CISO cannot answer *"what agents are running in my environment this week?"* because the answer lives in four pillars owned by four teams.
+
+A CISO walked into a review with four dashboards open on four monitors: one for the AI platform, one for identity, one for data loss, one for the SOC. When she asked which one told her how many agents were running in production, all four gave a different number. She closed three of them. "Pick whichever one is wrong the least," she said, "and the other three teams report into that one by Friday." Even if you did not live the MDR-to-XDR transition, the pattern is familiar: too many tools, too little shared context, no common incident story. The end state has to be one operating picture.
+
+Four dashboards is a budget line you pay every quarter, and nobody puts it on the invoice. A 600-bed regional system ran agent oversight out of those same four teams. In Q2 a scheduling agent's entitlement drifted on a Tuesday. The prior auth agent downstream inherited the wider scope on Wednesday. By the following Monday, roughly two hundred prior auth submissions had run against the wrong payer mapping. Rework took the revenue cycle team three weeks and cost roughly four hundred thousand dollars in delayed reimbursement. The drift had been sitting in a log nobody owned. At the post-mortem the CFO asked which of the four teams owned that log. None of them raised a hand. That is what the four-silo posture costs in one quarter when the silos cannot see each other.
+
+## The agentic Grand Central
+
+A real station works because four things line up. A **passenger** with **one ticket**. **Platforms** where trains depart. A **departure board** everyone reads from. A **station master** who controls which train leaves which platform, when, and who is allowed on it. The agent estate today has the passengers and the platforms. **It has no board and no station master.** That gap is the whole conversation.
+
+The hospital owns the operating model. Outside platforms exist to reduce the burden of being a deep expert in every domain and to bring stronger cross-domain signals, so the hospital's own teams can run that platform with confidence.
+
+A scheduling copilot in a regional system pulled a no-show list on a Tuesday, queued outreach through the patient messaging platform, refilled the slots against the EHR, and posted the recovered revenue to a finance dashboard before lunch. Four systems, four owners, zero approvals. The CIO found out from the CFO, who was thrilled. The CISO found out from me. That is what running without a station master looks like on a good day.
+
+[[ALL_ABOARD]]
+
+## Same lifecycle, two populations
+
+The lifecycle is not new. Every enterprise has been running joiner/mover/leaver for humans for thirty years. Sponsor, role, access policy, review, retire. The flow is muscle memory.
+
+<figure class="lifecycle-lanes" aria-label="Same lifecycle, two populations: humans since 1995 and agents starting now share the same six gates.">
+  <svg viewBox="0 0 720 220" role="img" xmlns="http://www.w3.org/2000/svg">
+    <title>Same lifecycle, two populations</title>
+    <style>
+      .lane-label { font: 600 14px system-ui, sans-serif; fill: #2a2a2a; }
+      .gate-label { font: 500 13px system-ui, sans-serif; fill: #2a2a2a; }
+      .lane-bg-h { fill: #f3f4f6; }
+      .lane-bg-a { fill: #eef2ff; }
+      .gate { fill: #fff; stroke: #2a2a2a; stroke-width: 1.25; }
+      .arrow { stroke: #2a2a2a; stroke-width: 1.25; fill: none; }
+    </style>
+    <rect class="lane-bg-h" x="0" y="40" width="720" height="70" rx="6"/>
+    <rect class="lane-bg-a" x="0" y="125" width="720" height="70" rx="6"/>
+    <text class="lane-label" x="12" y="30">Humans, since 1995</text>
+    <text class="lane-label" x="12" y="215">Agents, starting now</text>
+    <g>
+      <rect class="gate" x="20"  y="58" width="100" height="34" rx="4"/><text class="gate-label" x="70"  y="80" text-anchor="middle">Sponsor</text>
+      <rect class="gate" x="135" y="58" width="100" height="34" rx="4"/><text class="gate-label" x="185" y="80" text-anchor="middle">Provision</text>
+      <rect class="gate" x="250" y="58" width="100" height="34" rx="4"/><text class="gate-label" x="300" y="80" text-anchor="middle">Review</text>
+      <rect class="gate" x="365" y="58" width="100" height="34" rx="4"/><text class="gate-label" x="415" y="80" text-anchor="middle">Reassign</text>
+      <rect class="gate" x="480" y="58" width="100" height="34" rx="4"/><text class="gate-label" x="530" y="80" text-anchor="middle">Retire</text>
+      <rect class="gate" x="595" y="58" width="100" height="34" rx="4"/><text class="gate-label" x="645" y="80" text-anchor="middle">Audit</text>
+    </g>
+    <g>
+      <rect class="gate" x="20"  y="143" width="100" height="34" rx="4"/><text class="gate-label" x="70"  y="165" text-anchor="middle">Sponsor</text>
+      <rect class="gate" x="135" y="143" width="100" height="34" rx="4"/><text class="gate-label" x="185" y="165" text-anchor="middle">Provision</text>
+      <rect class="gate" x="250" y="143" width="100" height="34" rx="4"/><text class="gate-label" x="300" y="165" text-anchor="middle">Review</text>
+      <rect class="gate" x="365" y="143" width="100" height="34" rx="4"/><text class="gate-label" x="415" y="165" text-anchor="middle">Reassign</text>
+      <rect class="gate" x="480" y="143" width="100" height="34" rx="4"/><text class="gate-label" x="530" y="165" text-anchor="middle">Retire</text>
+      <rect class="gate" x="595" y="143" width="100" height="34" rx="4"/><text class="gate-label" x="645" y="165" text-anchor="middle">Audit</text>
+    </g>
+  </svg>
+  <figcaption>Same six gates. Two populations.</figcaption>
+</figure>
+
+Same sponsor, same review cadence, same engine. The only thing that changes is what sits on the receiving end.
+
+**If your hospital can onboard a hospitalist on a Monday, it already owns the engine that governs her agent.** A hospitalist starts Monday. Sponsor is her section chief. Identity flows from HR into Epic; privileges flow in parallel from the medical staff office. Entitlements get scoped to her unit. Her practice gets reviewed at the ninety-day FPPE checkpoint. When she rotates, the access follows her or gets revoked. Her documentation agent, stood up the same Tuesday, went through none of that. Different ticket, different team, different review, or none. The fix was running the agent through the same six gates the hospitalist already walked through, with the same section chief as sponsor. Same engine. The hospital had owned it for a decade.
+
+The hardest gate in practice is reassign. **The agent outlasted its sponsor by six months, and nobody caught it until the auditor did.** A documentation agent went live under the hospital medicine service line chief who sponsored it. Eleven months later he rotated into a quality role. His clinical access transferred cleanly. The agent kept running on the old scope, with his name still listed as governance owner in a registry the incoming chief had never seen. The next FPPE cycle reviewed the new chief's clinicians on schedule. The agent did not get reviewed at all. Internal audit flagged the gap five months later. The technical fix took twenty minutes. The trust hit took two governance committee meetings to walk back. Movers are the gate that breaks first. Same reason in both populations: nobody owns the handoff.
+
+Start with observability. The customer keeps the existing IDP, the existing governance tool, and the existing EHR or ERP. Light up the board where the agents already are, including the ones running on a third-party AI platform, and the silos line up because the telemetry finally has a place to land.
+
+## You don't have to replace your IDP to get a control plane
+
+Most enterprises picked an identity provider a decade ago. It is staying put. The control plane for agents can sit in front of it. Federation, observability, and a clean way to issue agent identities work without unwinding the directory the company already trusts. The control tower does not own the runway. It just needs to see every plane, talk to every pilot, and have the authority to ground one.
+
+An enterprise spent nine months and a seven-figure budget standing up a second identity provider. The pitch was that governing agents required owning the directory. Month ten, the help desk was fielding tickets from clinicians whose SSO had silently moved, and the CMIO was getting paged because two of those clinicians were mid-shift on the floor. The CIO called it off. They went back to the IDP they had trusted for twelve years and put federation and observability in front of it instead. The agents got governed. The clinicians stopped calling. The nine months were the proof the board needed that owning the directory was the wrong fight.
+
+Two products carry most of the weight of that posture. [**Microsoft Entra Agent ID**](https://learn.microsoft.com/en-us/entra/agent-id/whats-new-agent-id) gives agents first-class identity in the directory that already holds humans. [**Agent 365 Registry sync**](https://learn.microsoft.com/microsoft-agent-365/admin/agent-registry) brings agents running on Amazon Bedrock, Google Vertex AI, Salesforce Agentforce, and Databricks Genie into the same inventory without moving them. The directory stays where it is. What changes is what you can see.
+
+The same control plane already sees [agents from outside the directory it sits in front of](https://learn.microsoft.com/microsoft-agent-365/third-party-agents): design, security, support, finance, and workflow partners plugging in without replacing anyone's IDP.
+
+What changes on day one is concrete. With the control plane lit up in front of the existing IDP, the CISO who could not answer the inventory question yesterday can answer four questions by the end of the first week:
+
+- **Who is running.** A single roster of agents, copilots, and service principals across Microsoft, third-party SaaS, and AWS or Google clouds.
+- **Under whose name.** Sponsor of record per agent, with the empty cells visible at a glance.
+- **On what scope.** The resources each agent is authorized to touch, anchored to the same policy engine the humans run on.
+- **With what blast radius.** The downstream systems an over-scoped agent would actually reach, before it does.
+
+None of that requires moving the directory. All of it requires a control plane in front of it.
+
+### The same teams, not a new one
+
+The same logic applies to the people. The most common pushback in the room is "we already have Entra, Defender, Purview, Intune. Are you asking us to stand up a fourth team for agents?" The answer is no, and that is the point of calling it a platform instead of a product list. The identity team, the SOC, and the data protection team you already pay for extend what they already do to cover the second workforce. The same admin who writes a Conditional Access policy for a clinician writes one for an agent. The same SOC analyst who triages a sign-in risk alert for a human triages one for an agent. The same data protection officer who applies a Purview label to PHI applies it to the file an agent just generated. The platform argument is about which teams keep their scope, and their headcount, when the second workforce arrives.
+
+### Why E5 is the floor, and why E7 is the executive conversation
+
+Practically, the security baseline for running agents safely is [Entra ID P2, Entra ID Governance, and Entra Internet Access](https://learn.microsoft.com/microsoft-agent-365/agent-365-security). Most enterprises already buy that as Microsoft 365 E5 (A5 for academic and nonprofit). Below E5, running these controls across the full agent population means stitching together a stack of separate add-on purchases.
+
+A system stood up an ambient documentation rollout on their existing Microsoft 365 tier and assumed the platform's lifecycle workflows would handle sponsor handoff when a clinician moved service lines. Six months in, they were running a SharePoint intake list, a weekly ticket review, and a quarterly access attestation, with two FTEs in IAM holding it together. Annualized, the workaround ran north of what the upgrade to the governance-grade tier would have cost across the affected population, and the compliance officer still would not sign the audit trail. If the platform cannot govern the agent, the org rebuilds the platform in spreadsheets and tickets.
+
+One licensing fact most procurement teams get wrong: **Agent 365 is licensed per user, not per agent.** Every agent managed or owned by a licensed user is covered under that user's Agent 365 or Microsoft 365 E7 license. Agents do not require their own license. Licensing the workforce, not the agent population, is what makes wall-to-wall coverage financially real.
+
+E7 bundles E5, Copilot, Agent 365, and Entra Suite into a single SKU for a human-led, agent-operated enterprise, powered by [Work IQ](https://learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/work-iq) across three layers: **Data** (signals from files, emails, meetings, chats, business systems), **Context** (persistent understanding of how people and teams work), and **Skills + Tools** (models, skills, MCP tools). [Security Copilot is included](https://learn.microsoft.com/en-us/copilot/security/security-copilot-inclusion) with capacity of 400 SCUs per 1,000 users per month, capped at 10,000 SCUs per tenant; when usage exceeds included capacity, tenants [add overage capacity or provision additional SCUs](https://learn.microsoft.com/en-us/copilot/security/security-compute-units-capacity). E7 went generally available May 1, 2026, through standard commercial channels. For most regulated buyers, that turns a procurement argument into an architecture decision. The real call is whether you turn those same human controls on for the second workforce.
+
+<figure class="e7-stack" aria-label="Microsoft 365 E7 stack: E5 baseline, Microsoft 365 Copilot, Microsoft Entra Suite, and Microsoft Agent 365.">
+  <svg viewBox="0 0 720 260" role="img" xmlns="http://www.w3.org/2000/svg">
+    <title>The Microsoft 365 E7 stack</title>
+    <style>
+      .stack-label { font: 600 14px system-ui, sans-serif; fill: #2a2a2a; }
+      .stack-sub { font: 500 12px system-ui, sans-serif; fill: #4b5563; }
+      .layer { stroke: #2a2a2a; stroke-width: 1.25; }
+      .layer-1 { fill: #f3f4f6; }
+      .layer-2 { fill: #e5e7eb; }
+      .layer-3 { fill: #dbeafe; }
+      .layer-4 { fill: #eef2ff; }
+      .layer-5 { fill: #fff7ed; }
+      .ribbon { font: 600 12px system-ui, sans-serif; fill: #6b7280; }
+    </style>
+    <g>
+      <rect class="layer layer-1" x="40" y="200" width="640" height="40" rx="6"/>
+      <text class="stack-label" x="60" y="218">Microsoft 365 E5</text>
+      <text class="stack-sub" x="60" y="234">Productivity, security, compliance baseline</text>
+    </g>
+    <g>
+      <rect class="layer layer-2" x="80" y="155" width="560" height="40" rx="6"/>
+      <text class="stack-label" x="100" y="173">Microsoft 365 Copilot</text>
+      <text class="stack-sub" x="100" y="189">Copilot for every licensed user</text>
+    </g>
+    <g>
+      <rect class="layer layer-3" x="120" y="110" width="480" height="40" rx="6"/>
+      <text class="stack-label" x="140" y="128">Microsoft Entra Suite</text>
+      <text class="stack-sub" x="140" y="144">Identity governance, conditional access, ID protection</text>
+    </g>
+    <g>
+      <rect class="layer layer-4" x="160" y="65" width="400" height="40" rx="6"/>
+      <text class="stack-label" x="180" y="83">Microsoft Agent 365</text>
+      <text class="stack-sub" x="180" y="99">Observe, govern, secure agents</text>
+    </g>
+    <g>
+      <rect class="layer layer-5" x="200" y="20" width="320" height="40" rx="6"/>
+      <text class="stack-label" x="220" y="38">Microsoft 365 E7 (Frontier Suite)</text>
+      <text class="stack-sub" x="220" y="54">Powered by Work IQ</text>
+    </g>
+    <text class="ribbon" x="40" y="14">Stack reads top down. E7 is the bundle of everything beneath.</text>
+  </svg>
+  <figcaption>Four control surfaces. One operating posture. Buy them however you buy them.</figcaption>
+</figure>
+
+The controls that apply depend on how the agent is operating. Microsoft's taxonomy names three modes: agents acting on behalf of a user with delegated access, agents running behind the scenes with their own credentials, and agents participating in team workflows with their own identity. The first two are generally available today. The third is in Microsoft's [Frontier preview program](https://learn.microsoft.com/microsoft-agent-365/frontier). All three land in the same control plane.
+
+<figure class="agent-modes" aria-label="Three operating modes for agents in Agent 365.">
+  <svg viewBox="0 0 720 200" role="img" xmlns="http://www.w3.org/2000/svg">
+    <title>Three operating modes for agents</title>
+    <style>
+      .mode-title { font: 600 14px system-ui, sans-serif; fill: #2a2a2a; }
+      .mode-sub { font: 500 12px system-ui, sans-serif; fill: #4b5563; }
+      .mode-card { fill: #fff; stroke: #2a2a2a; stroke-width: 1.25; }
+      .pill-ga { fill: #d1fae5; }
+      .pill-pp { fill: #fef3c7; }
+      .pill-text { font: 600 11px system-ui, sans-serif; fill: #1f2937; }
+    </style>
+    <g>
+      <rect class="mode-card" x="20" y="30" width="210" height="140" rx="6"/>
+      <text class="mode-title" x="38" y="58">On-behalf-of a user</text>
+      <text class="mode-sub" x="38" y="80">Delegated access</text>
+      <text class="mode-sub" x="38" y="100">Agent acts as the user</text>
+      <text class="mode-sub" x="38" y="120">User's policies apply</text>
+      <rect class="pill-ga" x="38" y="135" width="60" height="20" rx="10"/>
+      <text class="pill-text" x="68" y="149" text-anchor="middle">GA</text>
+    </g>
+    <g>
+      <rect class="mode-card" x="255" y="30" width="210" height="140" rx="6"/>
+      <text class="mode-title" x="273" y="58">Own access, behind scenes</text>
+      <text class="mode-sub" x="273" y="80">Service-style identity</text>
+      <text class="mode-sub" x="273" y="100">Agent has its own scope</text>
+      <text class="mode-sub" x="273" y="120">Agent policies apply</text>
+      <rect class="pill-ga" x="273" y="135" width="60" height="20" rx="10"/>
+      <text class="pill-text" x="303" y="149" text-anchor="middle">GA</text>
+    </g>
+    <g>
+      <rect class="mode-card" x="490" y="30" width="210" height="140" rx="6"/>
+      <text class="mode-title" x="508" y="58">Own access in team flow</text>
+      <text class="mode-sub" x="508" y="80">First-class teammate</text>
+      <text class="mode-sub" x="508" y="100">Joins channels and chats</text>
+      <text class="mode-sub" x="508" y="120">Full agent governance</text>
+      <rect class="pill-pp" x="508" y="135" width="140" height="20" rx="10"/>
+      <text class="pill-text" x="578" y="149" text-anchor="middle">Frontier preview</text>
+    </g>
+  </svg>
+  <figcaption>Three operating modes. One control plane.</figcaption>
+</figure>
+
+If you cannot name the operating mode and the sponsor of record for an agent already running in your environment, that is the gap. Close it before anything else.
+
+## Vocabulary is converging. Operations is where it gets decided.
+
+The disagreement is only about who runs it. The convergence is the news.
+
+## The provider lens: where this gets real
+
+Swap hospital for bank or airline and the operating model still holds; providers just make the consequences easier to see.
+
+Providers are the group the Work Trend Index data describes most painfully. Leaders say productivity has to keep going up. The workforce says they are already running on fumes. That capacity gap is a clinician's actual job description. Documentation burden, after-hours charting, message-basket fatigue. Ambient documentation tools exist for two reasons: give clinicians back their evenings, and close the documentation gaps the CFO and the quality committee are already chasing. The providers furthest along are already past pilot on ambient documentation ([Dragon Copilot's experience now includes a nurse-facing Preview embedded in Epic Rover](https://learn.microsoft.com/en-us/industry/healthcare/dragon-admin-center/nursing/)), prior auth, scheduling, and revenue-cycle agents, and they are trying to pull all of it into one operating picture.
+
+The lifecycle conversation lands hard with providers because they already do this for humans, and they have to. Joiner/mover/leaver is not optional in a hospital. Clinicians rotate. Residents cycle every year. Travel nurses come in for thirteen weeks. Contractors, vendors, and EHR support staff get scoped access to PHI and lose it the day the contract ends. Their internal compliance program audits that flow continuously because HIPAA, the Joint Commission's credentialing standards, and state licensure all depend on it being clean. It is muscle memory.
+
+The agents are about to outnumber the humans on some of those workflows, with a human still in the loop on anything that touches the chart. The version that lands: **your compliance program is going to treat agents like users whether you plan for it or not. The only question is whether you get ahead of it or get audited into it.**
+
+The shape of the right week looks like this. A four-hospital regional system in the Mid-Atlantic ran one identity provider and a separate governance tool the audit team had trusted for the last three Joint Commission cycles. On Monday the CMIO put her name on the charter for the documentation agent already drafting notes in two service lines, and named each section chief as sponsor of record for the agents running under their team. By Friday the CISO had pulled the inventory and counted 340 agents, copilots, and automation accounts across the last twelve months, with 90 of them showing no sponsor. She walked into the governance committee that afternoon with one slide on the gap and one slide on the close plan. The board's Technology Committee ratified the co-existence model the next month: the governance tool kept running the human lifecycle, an agent control plane sat next to it, and both fed one operating picture for the CISO and the CMIO to share.
+
+The payer and life sciences versions read the same way, with the audit surfaces swapped in: producer licensure and CMS Interoperability for payers, GxP and 21 CFR Part 11 for life sciences. Same lifecycle, different evidence.
+
+## Four starting positions
+
+Most providers land in one of four starting positions, set by what they already bought for identity and governance. The destination is the same in every case. The first ninety days are not.
+
+- **Position one. Unified identity and governance stack.** Extend the human lifecycle to cover agents. Same sponsor, same review cadence, same engine. The trap here is using agents as cover to re-platform what already works.
+- **Position two. One IDP, a separate governance tool.** Co-existence. The governance tool keeps doing the human lifecycle. The agent control plane sits next to it and covers the population the governance tool was never designed for. Both feed one operating picture.
+- **Position three. A different identity provider entirely.** Federate, and move on. The company that runs your identity does not have to be the company that runs your agent control plane.
+- **Position four. Agents being built on a third-party AI platform.** Visibility before standardization. Auto-registration first. You do not get to have the standardization conversation credibly until you can answer the inventory question.
+
+## What a CMIO, CIO, CISO, and CNIO do Monday
+
+- **CMIO.** Name a single governance owner for the agents already drafting notes in your environment. Put their name on the pilot charter and the rotation plan. The artifact by Friday: a one-page agent charter with sponsor and rotation owner per service line. If the answer is "we don't have a charter," you have your Monday.
+- **CIO.** Pull the inventory. Service principals, copilots, and third-party agents provisioned against production in the last ninety days. Sort by sponsor of record. The empty cells are the program. The artifact by Friday: the inventory itself, with the unsponsored agents flagged. Then run the coverage map. If agent governance is going wall to wall, every agent has to inherit the same conditional access, ID protection, and governance posture as your humans. Name the gap before you name the purchase order.
+- **CISO.** Pick the dashboard that is wrong the least, route the other three teams into it, and tell the board what you can answer and what you cannot. The artifact by Friday: a one-page dashboard-consolidation memo to the board naming the single source and the gaps it does not yet close. The honest answer earns more credit than the hopeful one.
+- **CNIO.** Put nursing informatics on the agent pilot review board as a standing seat, not an invite, before the first workflow change hits the bedside. Nursing informatics is the most-skipped chair in this conversation; the chief who sits in it is the one who decides whether agents get adopted.
+
+Those four moves set the next twelve months of the program. Three things worth carrying into the next conversation, regardless of which side of the table you sit on.
+
+## Three things to take with you
+
+**Agents are users.** If they can act on your data, they are users: name them, manage them, end them.
+
+A compliance lead asked her team to print the access report she ran every quarter for human users, but to run it for agents this time. The report came back with 2,200 rows and no manager column, because the field did not exist in the agent registry. She filed a ticket to add the column. Six weeks later the same report ran clean for both populations. The auditor in Q3 did not ask why agents had managers. He asked why it had taken until now. That was the cheapest audit finding the team ever closed.
+
+**Demand trust before granting control.** The team that maps what the customer already owns gets the second meeting.
+
+A platform team showed up with a deck full of slides about their own roadmap. The CISO let them finish, then said, "I don't need another control plane. I need someone who will tell me when my current one is wrong." The deck did not get a second meeting. The team that did get the second meeting was the one that had spent the first hour mapping what the CISO already owned and writing down what was missing. They asked for nothing on slide one. They got asked back on slide twelve.
+
+**You don't have to be the IDP to be the control plane.** The board is what the business sees. The bundle underneath is what makes the board honest.
+
+A CIO weighed two paths for governing agents. Replacing the identity platform would have taken eighteen months, high seven figures, and a clinician productivity hit that was the bigger number than the license cost. Keeping the platform and adding a governance layer that saw every agent and every human in one pane took six months, seven figures, and no clinician disruption. She brought both to the Technology Committee, recommended the second, and the full board ratified it the next month. The real win was that she had not asked the board to undo a decision they had made three years earlier.
+
+## The question every CIO should be able to answer this quarter
+
+One question every CIO should be able to answer by the next board meeting: *"Who owns the joiner/mover/leaver flow for our agents?"* If there is no answer, that is the program for the next twelve months. The control plane is the tower. The lifecycle is the muscle memory. The hospital, the bank, and the airline own the engine that runs both.
+
+Measure twice. Cut once.
