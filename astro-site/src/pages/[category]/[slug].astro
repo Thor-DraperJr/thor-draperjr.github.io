@@ -5,6 +5,7 @@ import CareerDevelopmentPlan from '../../components/CareerDevelopmentPlan.astro'
 import CharlotteArtsMap from '../../components/CharlotteArtsMap.astro';
 import WalkingDeck from '../../components/WalkingDeck.astro';
 import Agent365Deck from '../../components/Agent365Deck.astro';
+import AllAboardStation from '../../components/AllAboardStation.astro';
 import ThreeNewYears from '../../components/ThreeNewYears.astro';
 import PerformanceNarrative from '../../components/PerformanceNarrative.astro';
 import { getPosts } from '../../lib/content';
@@ -32,6 +33,7 @@ const careerDevPlanMarker = '[[CAREER_DEV_PLAN]]';
 const charlotteArtsMapMarker = '[[CHARLOTTE_ARTS_MAP]]';
 const walkingDeckMarker = '[[WALKING_DECK]]';
 const agent365DeckMarker = '[[AGENT365_DECK]]';
+const allAboardMarker = '[[ALL_ABOARD]]';
 const threeNewYearsMarker = '[[THREE_NEW_YEARS]]';
 const performanceNarrativeMarker = '[[PERFORMANCE_NARRATIVE]]';
 
@@ -41,6 +43,7 @@ processedHtml = processedHtml.replace(`<p>${careerDevPlanMarker}</p>`, careerDev
 processedHtml = processedHtml.replace(`<p>${charlotteArtsMapMarker}</p>`, charlotteArtsMapMarker);
 processedHtml = processedHtml.replace(`<p>${walkingDeckMarker}</p>`, walkingDeckMarker);
 processedHtml = processedHtml.replace(`<p>${agent365DeckMarker}</p>`, agent365DeckMarker);
+processedHtml = processedHtml.replace(`<p>${allAboardMarker}</p>`, allAboardMarker);
 processedHtml = processedHtml.replace(`<p>${threeNewYearsMarker}</p>`, threeNewYearsMarker);
 processedHtml = processedHtml.replace(`<p>${performanceNarrativeMarker}</p>`, performanceNarrativeMarker);
 
@@ -49,6 +52,7 @@ const hasCareerDevPlan = processedHtml.includes(careerDevPlanMarker);
 const hasCharlotteArtsMap = processedHtml.includes(charlotteArtsMapMarker);
 const hasWalkingDeck = processedHtml.includes(walkingDeckMarker);
 const hasAgent365Deck = processedHtml.includes(agent365DeckMarker);
+const hasAllAboard = processedHtml.includes(allAboardMarker);
 const hasThreeNewYears = processedHtml.includes(threeNewYearsMarker);
 const hasPerformanceNarrative = processedHtml.includes(performanceNarrativeMarker);
 
@@ -57,6 +61,7 @@ const careerParts = hasCareerDevPlan ? processedHtml.split(careerDevPlanMarker) 
 const charlotteArtsMapParts = hasCharlotteArtsMap ? processedHtml.split(charlotteArtsMapMarker) : [];
 const walkingDeckParts = hasWalkingDeck ? processedHtml.split(walkingDeckMarker) : [];
 const agent365DeckParts = hasAgent365Deck ? processedHtml.split(agent365DeckMarker) : [];
+const allAboardParts = hasAllAboard ? processedHtml.split(allAboardMarker) : [];
 const threeNewYearsParts = hasThreeNewYears ? processedHtml.split(threeNewYearsMarker) : [];
 const performanceNarrativeParts = hasPerformanceNarrative ? processedHtml.split(performanceNarrativeMarker) : [];
 ---
@@ -186,6 +191,58 @@ const performanceNarrativeParts = hasPerformanceNarrative ? processedHtml.split(
         <section class="prose panel">
           <Fragment set:html={agent365DeckParts.join('')} />
         </section>
+
+        <nav class="post-pagination">
+          {previous ? (
+            <a href={previous.permalink}>
+              <span>Older</span>
+              {previous.title}
+            </a>
+          ) : <div></div>}
+
+          {next ? (
+            <a href={next.permalink} style="text-align: right;">
+              <span>Newer</span>
+              {next.title}
+            </a>
+          ) : <div></div>}
+        </nav>
+      </article>
+    </>
+  ) : hasAllAboard ? (
+    <>
+      <article class="shell-container">
+        <header class="post-hero">
+          <span class="eyebrow">{post.category}</span>
+          <h1 class="post-heading">{post.title}</h1>
+          <div class="post-meta-row">
+            <span>{post.date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
+            <span>{post.readingTime} min read</span>
+          </div>
+          {post.tags.length > 0 && (
+            <div class="post-tags" style="margin-top: 1rem;">
+              {post.tags.map((tag) => <span class="post-tag">{tag}</span>)}
+            </div>
+          )}
+        </header>
+
+        {allAboardParts.length > 0 && allAboardParts[0].trim() && (
+          <section class="prose panel">
+            <Fragment set:html={allAboardParts[0]} />
+          </section>
+        )}
+      </article>
+
+      <div class="walking-deck-breakout">
+        <AllAboardStation />
+      </div>
+
+      <article class="shell-container">
+        {allAboardParts.length > 1 && (
+          <section class="prose panel">
+            <Fragment set:html={allAboardParts.slice(1).join(allAboardMarker)} />
+          </section>
+        )}
 
         <nav class="post-pagination">
           {previous ? (

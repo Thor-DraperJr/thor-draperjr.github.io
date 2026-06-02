@@ -1,0 +1,200 @@
+{
+  "aa-cover": {
+    "sectionBox": {
+      "w": 1824,
+      "h": 984,
+      "top": 48,
+      "bottom": 1032
+    },
+    "viewport": {
+      "w": 1920,
+      "h": 1080
+    },
+    "scrollHeight": 982,
+    "clientHeight": 982,
+    "minFontPx": 11.2,
+    "smallText": [
+      {
+        "px": 11.52,
+        "tag": "span",
+        "cls": "deck-kicker",
+        "txt": "Six pillars · one control plane"
+      },
+      {
+        "px": 11.2,
+        "tag": "span",
+        "cls": "ticket-label",
+        "txt": "One ticket · six stops"
+      },
+      {
+        "px": 12.48,
+        "tag": "span",
+        "cls": "ticket-stub",
+        "txt": "Build"
+      },
+      {
+        "px": 12.48,
+        "tag": "span",
+        "cls": "ticket-stub",
+        "txt": "Identify"
+      },
+      {
+        "px": 12.48,
+        "tag": "span",
+        "cls": "ticket-stub",
+        "txt": "Entitle"
+      },
+      {
+        "px": 12.48,
+        "tag": "span",
+        "cls": "ticket-stub",
+        "txt": "Run"
+      }
+    ],
+    "overflowCount": 0,
+    "overflowExamples": [],
+    "viewportClipCount": 0,
+    "viewportClipExamples": []
+  },
+  "aa-zone-local": {
+    "sectionBox": {
+      "w": 1824,
+      "h": 984,
+      "top": 55,
+      "bottom": 1039
+    },
+    "viewport": {
+      "w": 1920,
+      "h": 1080
+    },
+    "scrollHeight": 982,
+    "clientHeight": 982,
+    "minFontPx": 9,
+    "smallText": [
+      {
+        "px": 11.52,
+        "tag": "span",
+        "cls": "deck-kicker",
+        "txt": "Route 01 · Six pillars, six vendors, no platform"
+      },
+      {
+        "px": 11.52,
+        "tag": "div",
+        "cls": "pillar-head",
+        "txt": "Build"
+      },
+      {
+        "px": 11.52,
+        "tag": "span",
+        "cls": "vendor-name",
+        "txt": "OpenAI"
+      },
+      {
+        "px": 11.52,
+        "tag": "span",
+        "cls": "vendor-name",
+        "txt": "Anthropic"
+      },
+      {
+        "px": 11.52,
+        "tag": "span",
+        "cls": "vendor-name",
+        "txt": "Vertex AI"
+      },
+      {
+        "px": 11.52,
+        "tag": "span",
+        "cls": "vendor-name",
+        "txt": "Bedrock"
+      }
+    ],
+    "overflowCount": 0,
+    "overflowExamples": [],
+    "viewportClipCount": 0,
+    "viewportClipExamples": []
+  },
+  "aa-zone-bullet": {
+    "sectionBox": {
+      "w": 1824,
+      "h": 984,
+      "top": 55,
+      "bottom": 1039
+    },
+    "viewport": {
+      "w": 1920,
+      "h": 1080
+    },
+    "scrollHeight": 982,
+    "clientHeight": 982,
+    "minFontPx": 9,
+    "smallText": [
+      {
+        "px": 11.52,
+        "tag": "span",
+        "cls": "deck-kicker",
+        "txt": "Route 02 · The unified platform"
+      },
+      {
+        "px": 11.52,
+        "tag": "div",
+        "cls": "pillar-head",
+        "txt": "Build"
+      },
+      {
+        "px": 11.84,
+        "tag": "span",
+        "cls": "msft-name",
+        "txt": "Azure AI Foundry"
+      },
+      {
+        "px": 11.84,
+        "tag": "span",
+        "cls": "msft-name",
+        "txt": "Copilot Studio"
+      },
+      {
+        "px": 11.52,
+        "tag": "div",
+        "cls": "pillar-head",
+        "txt": "Identify"
+      },
+      {
+        "px": 11.84,
+        "tag": "span",
+        "cls": "msft-name",
+        "txt": "Entra Agent ID"
+      }
+    ],
+    "overflowCount": 0,
+    "overflowExamples": [],
+    "viewportClipCount": 0,
+    "viewportClipExamples": []
+  },
+  "aa-close": {
+    "sectionBox": {
+      "w": 1824,
+      "h": 984,
+      "top": 54,
+      "bottom": 1038
+    },
+    "viewport": {
+      "w": 1920,
+      "h": 1080
+    },
+    "scrollHeight": 982,
+    "clientHeight": 982,
+    "minFontPx": 11.5,
+    "smallText": [
+      {
+        "px": 11.52,
+        "tag": "span",
+        "cls": "deck-kicker",
+        "txt": "The line that closes it"
+      }
+    ],
+    "overflowCount": 0,
+    "overflowExamples": [],
+    "viewportClipCount": 0,
+    "viewportClipExamples": []
+  }
+}

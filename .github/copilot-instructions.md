@@ -11,6 +11,13 @@ Ground rules:
 - Prefer fluid `clamp(min, Xvh + Yvw, max)` sizing over stacked `@media (max-height: ...)` breakpoints. Three height media queries always leave a gap where some browser chrome falls between thresholds and content clips. Fluid clamps have no cliffs.
 - The user's real Edge window is ~1214x770 (laptop-chrome viewport in the audit). Always check this size before declaring laptop bugs fixed; the integrated browser is locked to a single effective size and cannot truly resize.
 
+Content & voice rules:
+- All public content must frame Thor as a future leader in the tech/executive space. When in doubt, write for the CIO/CISO/VP audience he is moving toward, not the role he is in today.
+- Avoid framing that reads as sales tactics, internal seller coaching, or competitive plays ("how I sell against X," "the wedge," "what I tell sellers"). Reframe the same insight from the operator/leader perspective: what should the leader do next, what trade-off are they making, what investment are they protecting.
+- Operator voice over vendor voice. Personal POV and lived experience are good; product pitches and SKU-talk are not.
+- Never name customers, deal specifics, internal Microsoft roadmap dates, or unreleased SKUs. Public Microsoft sources (WTI, official product pages, Microsoft Learn) and public competitor material are fair game and should be cited when a claim leans on them.
+- Before publishing anything that could read as internal-sounding, ask: does this position Thor as someone an executive would want in the room, or does it position him as someone running a sales motion? If the answer is the second, rewrite.
+
 ## Project Overview
 This is a personal blog for Thor Draper Jr, a Senior Security Solution Engineer at Microsoft and a former cybersecurity instructor. My goals for this are to highlight my experience and interests in multiple facets of technology and leadership to hopefully help advertise me for the next step in my career. The blog should be a reflection of my expertise and personality, while also providing value to readers interested in technology, cybersecurity, and career development.
 
@@ -28,3 +35,6 @@ This is a personal blog for Thor Draper Jr, a Senior Security Solution Engineer 
 1. Summarize the key points of the chat session, including any decisions made about the blog's content, style, or structure.
 2. Git commit the changes made during the session with a message that reflects the updates (e.g., "Updated blog content and structure based on session discussion").
 3. Push the changes to the remote repository to ensure that all updates are saved and accessible for future reference.
+
+### /all-aboard-pass
+Runs the full nine-agent review pipeline for the All Aboard article and its 60-minute HLS executive keynote derivative. Sequence: E7 Research Analyst → Talk Architect → conductor reconciliation → Anecdote Forge → HLS Provider Reality Check → conditional anecdote rework → Executive Value Auditor → Career Coach → Voice Editor → Copyeditor. Produces one consolidated review report. Applies no edits without explicit sign-off. See `.github/prompts/all-aboard-pass.prompt.md` for the full contract between agents.

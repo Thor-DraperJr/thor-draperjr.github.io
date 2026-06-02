@@ -1,0 +1,286 @@
+{
+  "aa-cover": {
+    "sectionBox": {
+      "w": 1270,
+      "h": 672,
+      "top": 48,
+      "bottom": 720
+    },
+    "viewport": {
+      "w": 1366,
+      "h": 768
+    },
+    "scrollHeight": 670,
+    "clientHeight": 670,
+    "minFontPx": 11.2,
+    "smallText": [
+      {
+        "px": 11.52,
+        "tag": "span",
+        "cls": "deck-kicker",
+        "txt": "Six pillars · one control plane"
+      },
+      {
+        "px": 11.2,
+        "tag": "span",
+        "cls": "ticket-label",
+        "txt": "One ticket · six stops"
+      },
+      {
+        "px": 12.48,
+        "tag": "span",
+        "cls": "ticket-stub",
+        "txt": "Build"
+      },
+      {
+        "px": 12.48,
+        "tag": "span",
+        "cls": "ticket-stub",
+        "txt": "Identify"
+      },
+      {
+        "px": 12.48,
+        "tag": "span",
+        "cls": "ticket-stub",
+        "txt": "Entitle"
+      },
+      {
+        "px": 12.48,
+        "tag": "span",
+        "cls": "ticket-stub",
+        "txt": "Run"
+      }
+    ],
+    "overflowCount": 0,
+    "overflowExamples": [],
+    "viewportClipCount": 0,
+    "viewportClipExamples": []
+  },
+  "aa-zone-local": {
+    "sectionBox": {
+      "w": 1270,
+      "h": 672,
+      "top": 54,
+      "bottom": 726
+    },
+    "viewport": {
+      "w": 1366,
+      "h": 768
+    },
+    "scrollHeight": 833,
+    "clientHeight": 670,
+    "minFontPx": 9,
+    "smallText": [
+      {
+        "px": 11.52,
+        "tag": "span",
+        "cls": "deck-kicker",
+        "txt": "Route 01 · Six pillars, six vendors, no platform"
+      },
+      {
+        "px": 11.52,
+        "tag": "div",
+        "cls": "pillar-head",
+        "txt": "Build"
+      },
+      {
+        "px": 11.52,
+        "tag": "span",
+        "cls": "vendor-name",
+        "txt": "OpenAI"
+      },
+      {
+        "px": 11.52,
+        "tag": "span",
+        "cls": "vendor-name",
+        "txt": "Anthropic"
+      },
+      {
+        "px": 11.52,
+        "tag": "span",
+        "cls": "vendor-name",
+        "txt": "Vertex AI"
+      },
+      {
+        "px": 11.52,
+        "tag": "span",
+        "cls": "vendor-name",
+        "txt": "Bedrock"
+      }
+    ],
+    "overflowCount": 4,
+    "overflowExamples": [
+      {
+        "tag": "div",
+        "cls": "zone-foot",
+        "txt": "Six independent buying cycles. Shadow pa"
+      },
+      {
+        "tag": "p",
+        "cls": "zone-caption",
+        "txt": "Six independent buying cycles. Shadow pa"
+      },
+      {
+        "tag": "p",
+        "cls": "zone-takeaway",
+        "txt": "What it means. It is not a missing tool."
+      },
+      {
+        "tag": "strong",
+        "cls": "",
+        "txt": "What it means."
+      }
+    ],
+    "viewportClipCount": 3,
+    "viewportClipExamples": [
+      {
+        "tag": "div",
+        "cls": "zone-foot",
+        "txt": "Six independent buying cycles. Shadow pa",
+        "bottom": 816,
+        "right": 1287
+      },
+      {
+        "tag": "p",
+        "cls": "zone-takeaway",
+        "txt": "What it means. It is not a missing tool.",
+        "bottom": 802,
+        "right": 1271
+      },
+      {
+        "tag": "strong",
+        "cls": "",
+        "txt": "What it means.",
+        "bottom": 800,
+        "right": 209
+      }
+    ]
+  },
+  "aa-zone-bullet": {
+    "sectionBox": {
+      "w": 1270,
+      "h": 672,
+      "top": 54,
+      "bottom": 726
+    },
+    "viewport": {
+      "w": 1366,
+      "h": 768
+    },
+    "scrollHeight": 832,
+    "clientHeight": 670,
+    "minFontPx": 9,
+    "smallText": [
+      {
+        "px": 11.52,
+        "tag": "span",
+        "cls": "deck-kicker",
+        "txt": "Route 02 · The unified platform"
+      },
+      {
+        "px": 11.52,
+        "tag": "div",
+        "cls": "pillar-head",
+        "txt": "Build"
+      },
+      {
+        "px": 11.84,
+        "tag": "span",
+        "cls": "msft-name",
+        "txt": "Azure AI Foundry"
+      },
+      {
+        "px": 11.84,
+        "tag": "span",
+        "cls": "msft-name",
+        "txt": "Copilot Studio"
+      },
+      {
+        "px": 11.52,
+        "tag": "div",
+        "cls": "pillar-head",
+        "txt": "Identify"
+      },
+      {
+        "px": 11.84,
+        "tag": "span",
+        "cls": "msft-name",
+        "txt": "Entra Agent ID"
+      }
+    ],
+    "overflowCount": 4,
+    "overflowExamples": [
+      {
+        "tag": "div",
+        "cls": "zone-foot",
+        "txt": "Same six decisions every customer is alr"
+      },
+      {
+        "tag": "p",
+        "cls": "zone-caption",
+        "txt": "Same six decisions every customer is alr"
+      },
+      {
+        "tag": "p",
+        "cls": "zone-takeaway",
+        "txt": "What it means. You don't have to be the "
+      },
+      {
+        "tag": "strong",
+        "cls": "",
+        "txt": "What it means."
+      }
+    ],
+    "viewportClipCount": 3,
+    "viewportClipExamples": [
+      {
+        "tag": "div",
+        "cls": "zone-foot",
+        "txt": "Same six decisions every customer is alr",
+        "bottom": 815,
+        "right": 1287
+      },
+      {
+        "tag": "p",
+        "cls": "zone-takeaway",
+        "txt": "What it means. You don't have to be the ",
+        "bottom": 800,
+        "right": 1271
+      },
+      {
+        "tag": "strong",
+        "cls": "",
+        "txt": "What it means.",
+        "bottom": 798,
+        "right": 209
+      }
+    ]
+  },
+  "aa-close": {
+    "sectionBox": {
+      "w": 1270,
+      "h": 672,
+      "top": 54,
+      "bottom": 726
+    },
+    "viewport": {
+      "w": 1366,
+      "h": 768
+    },
+    "scrollHeight": 670,
+    "clientHeight": 670,
+    "minFontPx": 11.5,
+    "smallText": [
+      {
+        "px": 11.52,
+        "tag": "span",
+        "cls": "deck-kicker",
+        "txt": "The line that closes it"
+      }
+    ],
+    "overflowCount": 0,
+    "overflowExamples": [],
+    "viewportClipCount": 0,
+    "viewportClipExamples": []
+  }
+}

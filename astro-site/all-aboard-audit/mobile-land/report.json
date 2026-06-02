@@ -1,0 +1,428 @@
+{
+  "aa-cover": {
+    "sectionBox": {
+      "w": 777,
+      "h": 323,
+      "top": 34,
+      "bottom": 356
+    },
+    "viewport": {
+      "w": 844,
+      "h": 390
+    },
+    "scrollHeight": 605,
+    "clientHeight": 321,
+    "minFontPx": 11.2,
+    "smallText": [
+      {
+        "px": 11.52,
+        "tag": "span",
+        "cls": "deck-kicker",
+        "txt": "Six pillars · one control plane"
+      },
+      {
+        "px": 11.2,
+        "tag": "span",
+        "cls": "ticket-label",
+        "txt": "One ticket · six stops"
+      },
+      {
+        "px": 12.48,
+        "tag": "span",
+        "cls": "ticket-stub",
+        "txt": "Build"
+      },
+      {
+        "px": 12.48,
+        "tag": "span",
+        "cls": "ticket-stub",
+        "txt": "Identify"
+      },
+      {
+        "px": 12.48,
+        "tag": "span",
+        "cls": "ticket-stub",
+        "txt": "Entitle"
+      },
+      {
+        "px": 12.48,
+        "tag": "span",
+        "cls": "ticket-stub",
+        "txt": "Run"
+      }
+    ],
+    "overflowCount": 13,
+    "overflowExamples": [
+      {
+        "tag": "div",
+        "cls": "cover-grid",
+        "txt": "Six pillars · one control plane All Aboa"
+      },
+      {
+        "tag": "div",
+        "cls": "cover-copy",
+        "txt": "Six pillars · one control plane All Aboa"
+      },
+      {
+        "tag": "ul",
+        "cls": "cover-principles",
+        "txt": "Trust before control. Don't win the land"
+      },
+      {
+        "tag": "li",
+        "cls": "",
+        "txt": "Trust before control. Don't win the land"
+      },
+      {
+        "tag": "span",
+        "cls": "",
+        "txt": "Don't win the land grab. There's nothing"
+      },
+      {
+        "tag": "li",
+        "cls": "",
+        "txt": "Control plane, not IDP. You don't have t"
+      }
+    ],
+    "viewportClipCount": 11,
+    "viewportClipExamples": [
+      {
+        "tag": "div",
+        "cls": "cover-grid",
+        "txt": "Six pillars · one control plane All Aboa",
+        "bottom": 567,
+        "right": 787
+      },
+      {
+        "tag": "div",
+        "cls": "cover-copy",
+        "txt": "Six pillars · one control plane All Aboa",
+        "bottom": 567,
+        "right": 480
+      },
+      {
+        "tag": "ul",
+        "cls": "cover-principles",
+        "txt": "Trust before control. Don't win the land",
+        "bottom": 567,
+        "right": 480
+      },
+      {
+        "tag": "li",
+        "cls": "",
+        "txt": "Control plane, not IDP. You don't have t",
+        "bottom": 474,
+        "right": 480
+      },
+      {
+        "tag": "strong",
+        "cls": "",
+        "txt": "Control plane, not IDP.",
+        "bottom": 412,
+        "right": 480
+      },
+      {
+        "tag": "span",
+        "cls": "",
+        "txt": "You don't have to be the IDP to be the c",
+        "bottom": 474,
+        "right": 480
+      }
+    ]
+  },
+  "aa-zone-local": {
+    "sectionBox": {
+      "w": 777,
+      "h": 323,
+      "top": 38,
+      "bottom": 361
+    },
+    "viewport": {
+      "w": 844,
+      "h": 390
+    },
+    "scrollHeight": 824,
+    "clientHeight": 321,
+    "minFontPx": 9,
+    "smallText": [
+      {
+        "px": 11.52,
+        "tag": "span",
+        "cls": "deck-kicker",
+        "txt": "Route 01 · Six pillars, six vendors, no platform"
+      },
+      {
+        "px": 11.52,
+        "tag": "div",
+        "cls": "pillar-head",
+        "txt": "Build"
+      },
+      {
+        "px": 11.52,
+        "tag": "span",
+        "cls": "vendor-name",
+        "txt": "OpenAI"
+      },
+      {
+        "px": 11.52,
+        "tag": "span",
+        "cls": "vendor-name",
+        "txt": "Anthropic"
+      },
+      {
+        "px": 11.52,
+        "tag": "span",
+        "cls": "vendor-name",
+        "txt": "Vertex AI"
+      },
+      {
+        "px": 11.52,
+        "tag": "span",
+        "cls": "vendor-name",
+        "txt": "Bedrock"
+      }
+    ],
+    "overflowCount": 115,
+    "overflowExamples": [
+      {
+        "tag": "div",
+        "cls": "pillars pillars-local",
+        "txt": "Build   OpenAI OpenAI  Anthropic Anthrop"
+      },
+      {
+        "tag": "div",
+        "cls": "pillar pillar-build",
+        "txt": "Build   OpenAI OpenAI  Anthropic Anthrop"
+      },
+      {
+        "tag": "div",
+        "cls": "pillar-body",
+        "txt": "OpenAI OpenAI  Anthropic Anthropic  Goog"
+      },
+      {
+        "tag": "div",
+        "cls": "vendor",
+        "txt": "Anthropic Anthropic"
+      },
+      {
+        "tag": "span",
+        "cls": "vendor-logo",
+        "txt": "Anthropic"
+      },
+      {
+        "tag": "svg",
+        "cls": "[object SVGAnimatedString]",
+        "txt": "Anthropic"
+      }
+    ],
+    "viewportClipCount": 73,
+    "viewportClipExamples": [
+      {
+        "tag": "div",
+        "cls": "pillars pillars-local",
+        "txt": "Build   OpenAI OpenAI  Anthropic Anthrop",
+        "bottom": 513,
+        "right": 787
+      },
+      {
+        "tag": "div",
+        "cls": "pillar pillar-build",
+        "txt": "Build   OpenAI OpenAI  Anthropic Anthrop",
+        "bottom": 499,
+        "right": 180
+      },
+      {
+        "tag": "div",
+        "cls": "pillar-body",
+        "txt": "OpenAI OpenAI  Anthropic Anthropic  Goog",
+        "bottom": 499,
+        "right": 180
+      },
+      {
+        "tag": "div",
+        "cls": "vendor",
+        "txt": "Google Cloud Vertex AI",
+        "bottom": 403,
+        "right": 174
+      },
+      {
+        "tag": "span",
+        "cls": "vendor-logo",
+        "txt": "Google Cloud",
+        "bottom": 398,
+        "right": 103
+      },
+      {
+        "tag": "svg",
+        "cls": "[object SVGAnimatedString]",
+        "txt": "Google Cloud",
+        "bottom": 397,
+        "right": 102
+      }
+    ]
+  },
+  "aa-zone-bullet": {
+    "sectionBox": {
+      "w": 777,
+      "h": 323,
+      "top": 38,
+      "bottom": 361
+    },
+    "viewport": {
+      "w": 844,
+      "h": 390
+    },
+    "scrollHeight": 848,
+    "clientHeight": 321,
+    "minFontPx": 9,
+    "smallText": [
+      {
+        "px": 11.52,
+        "tag": "span",
+        "cls": "deck-kicker",
+        "txt": "Route 02 · The unified platform"
+      },
+      {
+        "px": 11.52,
+        "tag": "div",
+        "cls": "pillar-head",
+        "txt": "Build"
+      },
+      {
+        "px": 11.84,
+        "tag": "span",
+        "cls": "msft-name",
+        "txt": "Azure AI Foundry"
+      },
+      {
+        "px": 11.84,
+        "tag": "span",
+        "cls": "msft-name",
+        "txt": "Copilot Studio"
+      },
+      {
+        "px": 11.52,
+        "tag": "div",
+        "cls": "pillar-head",
+        "txt": "Identify"
+      },
+      {
+        "px": 11.84,
+        "tag": "span",
+        "cls": "msft-name",
+        "txt": "Entra Agent ID"
+      }
+    ],
+    "overflowCount": 89,
+    "overflowExamples": [
+      {
+        "tag": "div",
+        "cls": "pillars pillars-bullet",
+        "txt": "Build           Azure AI Foundry        "
+      },
+      {
+        "tag": "div",
+        "cls": "pillar pillar-build",
+        "txt": "Build           Azure AI Foundry        "
+      },
+      {
+        "tag": "div",
+        "cls": "pillar-body",
+        "txt": "Azure AI Foundry          Copilot Studio"
+      },
+      {
+        "tag": "div",
+        "cls": "msft-component",
+        "txt": "Copilot Studio"
+      },
+      {
+        "tag": "span",
+        "cls": "msft-tile",
+        "txt": ""
+      },
+      {
+        "tag": "svg",
+        "cls": "[object SVGAnimatedString]",
+        "txt": ""
+      }
+    ],
+    "viewportClipCount": 64,
+    "viewportClipExamples": [
+      {
+        "tag": "div",
+        "cls": "pillars pillars-bullet",
+        "txt": "Build           Azure AI Foundry        ",
+        "bottom": 513,
+        "right": 787
+      },
+      {
+        "tag": "div",
+        "cls": "pillar pillar-build",
+        "txt": "Build           Azure AI Foundry        ",
+        "bottom": 499,
+        "right": 180
+      },
+      {
+        "tag": "div",
+        "cls": "pillar-body",
+        "txt": "Azure AI Foundry          Copilot Studio",
+        "bottom": 499,
+        "right": 180
+      },
+      {
+        "tag": "div",
+        "cls": "msft-component",
+        "txt": "Copilot Studio",
+        "bottom": 397,
+        "right": 174
+      },
+      {
+        "tag": "div",
+        "cls": "pillar pillar-identify",
+        "txt": "Identify           Entra Agent ID",
+        "bottom": 499,
+        "right": 299
+      },
+      {
+        "tag": "div",
+        "cls": "pillar-body",
+        "txt": "Entra Agent ID",
+        "bottom": 499,
+        "right": 299
+      }
+    ]
+  },
+  "aa-close": {
+    "sectionBox": {
+      "w": 777,
+      "h": 323,
+      "top": 38,
+      "bottom": 361
+    },
+    "viewport": {
+      "w": 844,
+      "h": 390
+    },
+    "scrollHeight": 399,
+    "clientHeight": 321,
+    "minFontPx": 11.5,
+    "smallText": [
+      {
+        "px": 11.52,
+        "tag": "span",
+        "cls": "deck-kicker",
+        "txt": "The line that closes it"
+      }
+    ],
+    "overflowCount": 1,
+    "overflowExamples": [
+      {
+        "tag": "p",
+        "cls": "close-line",
+        "txt": "Measure twice. Cut once. All aboard the "
+      }
+    ],
+    "viewportClipCount": 0,
+    "viewportClipExamples": []
+  }
+}
