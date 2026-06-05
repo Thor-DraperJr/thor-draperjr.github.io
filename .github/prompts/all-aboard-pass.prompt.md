@@ -83,6 +83,17 @@ For `REVISE` or `WINCE` verdicts on **existing article sections**, do not rewrit
 ### Step 9 -- Voice Editor and Copyeditor (parallel-safe, run in order anyway)
 Voice Editor first (with the thesis block), then Copyeditor (no thesis needed). Both review-only. Capture each agent's recommendations as a list.
 
+### Step 10 -- Graphics and embedded-component QA (conductor, no subagent)
+The article embeds the `[[ALL_ABOARD]]` station component (`AllAboardStation.astro`) plus inline `<svg>` figures. None of the nine content agents render them, so this step is mandatory whenever those graphics are in play.
+**How.**
+1. Make sure the Astro dev server is running (`npm run dev` in `astro-site/`); reuse an existing instance, do not spawn a second.
+2. Open the rendered article in the integrated browser and screenshot the station component (cover, lifecycle, both route zones) and every inline SVG figure. Markdown review never renders these -- you must look at the pixels.
+3. Check each graphic against this checklist:
+   - **Illustration fidelity.** The drawing reads as the thing its caption or intent claims. The named object is recognizable (the express train looks like a bullet train), motion or directional cues point the correct way, and proportions and orientation are right.
+   - **Asset completeness.** Every vendor and Microsoft product shown uses a real logo. **Zero monogram, letter-tile, or placeholder fallbacks in the finished article** -- any live `mono` fallback in `AllAboardStation.astro` is an incomplete asset, not a final state. Flag each one with its product name.
+   - **Caption-to-graphic match.** Pillar labels, stop counts, and annotations inside the graphic match the surrounding copy and the six-step lifecycle.
+**Produce (yourself).** A `PASS` / `FAIL` line per graphic, with a one-line defect note for each `FAIL`.
+
 ## Consolidated report
 
 After step 9, produce a single Markdown report with these top-level sections, in this exact order:
@@ -130,13 +141,17 @@ After step 9, produce a single Markdown report with these top-level sections, in
 - Voice recommendations: <list>
 - Copyedits: <list>
 
-## 8. Recommended action queue
-A numbered list of every concrete change the user could approve. Each item names: file, section, change type (CUT / REVISE / INSERT / RESEARCH), and a one-line description.
+## 8. Graphics and embedded-component QA
+- Graphics checked: NN
+- Fidelity or completeness defects: <PASS / FAIL per graphic with defect notes, or "none">
+
+## 9. Recommended action queue
+A numbered list of every concrete change the user could approve. Each item names: file, section, change type (CUT / REVISE / INSERT / RESEARCH / GRAPHIC), and a one-line description.
 
 ## Sign-off prompt
 End with exactly:
 
-> Ready to apply changes. Reply with the numbered items from section 8 you want me to execute, or `all` to apply everything, or `none` to keep the review for reference only.
+> Ready to apply changes. Reply with the numbered items from section 9 you want me to execute, or `all` to apply everything, or `none` to keep the review for reference only.
 ```
 
 Then stop. Do not edit the article. Wait for the user.
@@ -147,4 +162,4 @@ Then stop. Do not edit the article. Wait for the user.
 - Do not skip steps because you think the article looks fine -- the value of the pass is the discipline.
 - Do not blend agent outputs. Each section of the report cites its source agent. Conflicting verdicts are reported as conflicts, not reconciled silently.
 - Do not run any agent twice except the conditional anecdote rework in step 6.
-- Do not spawn the deck audit or the Site Reviewer / Presentation Reviewer agents -- those are for the rendered site and the walking deck, not the article.
+- Do not spawn the deck audit or the Site Reviewer / Presentation Reviewer agents -- those are for the rendered site and the walking deck, not the article. The step 10 graphics QA is the conductor's own render-and-screenshot pass, not one of those agents.
