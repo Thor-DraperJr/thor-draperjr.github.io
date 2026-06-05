@@ -12,18 +12,16 @@ always displayed next to the icon.
 | `entra-governance.svg` | Azure architecture icons | `10235-icon-service-Identity-Governance.svg` |
 | `conditional-access.svg` | Azure architecture icons | `10233-icon-service-Conditional-Access.svg` |
 | `defender.svg` | Azure architecture icons | `10241-icon-service-Microsoft-Defender-for-Cloud.svg` |
+| `copilot-studio.svg` | Power Platform (scalable) | `CopilotStudio_scalable.svg` |
+| `agent-365.svg` | Power Platform (scalable) | `Agent365_scalable.svg` |
+| `purview.svg` | Azure architecture icons | `02517-icon-service-Azure-Purview-Accounts.svg` |
+| `entra.svg` | Entra architecture icons (Oct 2023) | `Microsoft Entra ID color icon.svg` (base Entra ID mark, used for Entra Agent ID until a dedicated icon ships) |
 
 ## What's still using monogram fallback
 
-These icons live in packs we couldn't auto-download from this machine
-(corporate TLS issue on `download.microsoft.com`). To upgrade:
-
-| Product | Pack | URL |
-|---|---|---|
-| Copilot Studio | Power Platform | https://learn.microsoft.com/power-platform/guidance/icons |
-| Microsoft Agent 365 | Power Platform | https://learn.microsoft.com/power-platform/guidance/icons |
-| Microsoft Purview | Microsoft Purview icons | https://learn.microsoft.com/purview/icons |
-| Entra Agent ID | Entra architecture icons (or Azure, when Microsoft ships it) | https://learn.microsoft.com/entra/architecture/architecture-icons |
+_None._ Every product currently maps to an official icon. Entra Agent ID reuses
+the base Entra ID mark (`entra.svg`); swap it for a dedicated Agent ID icon when
+Microsoft publishes one.
 
 To wire one in: drop the SVG here (e.g. `copilot-studio.svg`), then in
 `../AllAboardStation.astro` add the import + an entry to `msLogos` + set

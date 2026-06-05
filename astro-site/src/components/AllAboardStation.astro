@@ -14,12 +14,20 @@ import foundrySvg from './logos/microsoft/foundry.svg?raw';
 import entraGovernanceSvg from './logos/microsoft/entra-governance.svg?raw';
 import conditionalAccessSvg from './logos/microsoft/conditional-access.svg?raw';
 import defenderSvg from './logos/microsoft/defender.svg?raw';
+import copilotStudioSvg from './logos/microsoft/copilot-studio.svg?raw';
+import agent365Svg from './logos/microsoft/agent-365.svg?raw';
+import purviewSvg from './logos/microsoft/purview.svg?raw';
+import entraSvg from './logos/microsoft/entra.svg?raw';
 
 const msLogos: Record<string, string> = {
   foundry: foundrySvg,
   'entra-governance': entraGovernanceSvg,
   'conditional-access': conditionalAccessSvg,
   defender: defenderSvg,
+  'copilot-studio': copilotStudioSvg,
+  'agent-365': agent365Svg,
+  purview: purviewSvg,
+  entra: entraSvg,
 };
 
 const logos: Record<string, string> = {
@@ -70,7 +78,7 @@ const stations: Station[] = [
     ],
     msft: [
       { name: 'Microsoft Foundry', brand: '#0078d4', mono: 'MF', logo: 'foundry' },
-      { name: 'Copilot Studio', brand: '#7b5cd6', mono: 'CS' },
+      { name: 'Copilot Studio', brand: '#7b5cd6', mono: 'CS', logo: 'copilot-studio' },
     ],
   },
   {
@@ -84,7 +92,7 @@ const stations: Station[] = [
       { name: 'CyberArk', brand: '#ff0000' },
     ],
     msft: [
-      { name: 'Entra Agent ID', brand: '#0099bc', mono: 'EA' },
+      { name: 'Entra Agent ID', brand: '#0099bc', mono: 'EA', logo: 'entra' },
     ],
   },
   {
@@ -111,7 +119,7 @@ const stations: Station[] = [
       { name: 'Custom orchestrators', brand: '#888' },
     ],
     msft: [
-      { name: 'Agent 365', brand: '#d83b01', mono: 'A3' },
+      { name: 'Agent 365', brand: '#d83b01', mono: 'A3', logo: 'agent-365' },
     ],
   },
   {
@@ -125,7 +133,7 @@ const stations: Station[] = [
       { name: 'LangSmith', brand: '#1c3c3c' },
     ],
     msft: [
-      { name: 'Agent 365 Observability', brand: '#d83b01', mono: 'A3' },
+      { name: 'Agent 365 Observability', brand: '#d83b01', mono: 'A3', logo: 'agent-365' },
     ],
   },
   {
@@ -140,7 +148,7 @@ const stations: Station[] = [
     ],
     msft: [
       { name: 'Defender', brand: '#00b294', mono: 'DF', logo: 'defender' },
-      { name: 'Purview', brand: '#7719aa', mono: 'PV' },
+      { name: 'Purview', brand: '#7719aa', mono: 'PV', logo: 'purview' },
     ],
   },
 ];
@@ -404,37 +412,38 @@ const principles = [
             <line x1="0" y1="68" x2="720" y2="68" class="rail-glow-line" />
             <line x1="0" y1="68" x2="720" y2="68" class="rail-line-sharp" />
             <g class="bullet-train" transform="translate(110, 22)">
+              {/* Speed streaks trailing behind the tail (train runs to the left) */}
               <g class="motion">
-                <line x1="-40" y1="14" x2="-8" y2="14" />
-                <line x1="-52" y1="24" x2="-12" y2="24" />
-                <line x1="-44" y1="34" x2="-10" y2="34" />
+                <line x1="500" y1="14" x2="548" y2="14" />
+                <line x1="500" y1="24" x2="564" y2="24" />
+                <line x1="500" y1="34" x2="544" y2="34" />
               </g>
               {/* Body shadow under rail */}
-              <ellipse cx="240" cy="46" rx="220" ry="3" fill="#000" opacity="0.25" />
-              {/* Train silhouette: long tapered nose on the left, sleek body */}
+              <ellipse cx="244" cy="46" rx="232" ry="3" fill="#000" opacity="0.25" />
+              {/* Train silhouette: long aerodynamic nose dropping to a low point at the front */}
               <path
-                d="M 0 24 Q 4 6 100 6 L 470 6 Q 485 6 485 16 L 485 32 Q 485 42 470 42 L 100 42 Q 4 42 0 24 Z"
+                d="M 128 6 L 470 6 Q 485 6 485 16 L 485 32 Q 485 42 470 42 L 16 42 Q -6 42 -8 35 Q -8 27 58 11 Q 92 6 128 6 Z"
                 fill="url(#bullet-body)"
                 stroke="#1f5fb8"
                 stroke-width="1.4"
               />
-              {/* Gold racing stripe */}
-              <rect x="6" y="22.5" width="478" height="3" fill="#f1b75f" />
-              {/* Highlight on top of nose */}
-              <path d="M 8 18 Q 30 10 120 12 L 120 16 Q 30 14 12 22 Z" fill="url(#bullet-nose-shine)" opacity="0.7" />
-              {/* Cockpit window (dark wraparound) */}
-              <path d="M 22 16 Q 28 10 80 11 L 80 19 Q 32 18 24 20 Z" fill="#0c1626" opacity="0.92" />
-              {/* Headlight */}
-              <circle cx="6" cy="24" r="2.4" fill="#ffe9a8" />
-              <circle cx="6" cy="24" r="1.2" fill="#fff" />
+              {/* Gold racing stripe below the windows */}
+              <rect x="20" y="26.5" width="464" height="3" fill="#f1b75f" />
+              {/* Highlight along the top of the nose */}
+              <path d="M 30 13 Q 62 8 128 9 L 128 13 Q 64 12 36 18 Z" fill="url(#bullet-nose-shine)" opacity="0.7" />
+              {/* Cockpit windshield wrapping the sloping nose */}
+              <path d="M 30 17 Q 42 11 78 11 L 84 18 Q 46 18 24 23 Z" fill="#0c1626" opacity="0.92" />
+              {/* Headlight near the low nose tip */}
+              <circle cx="4" cy="33" r="2.4" fill="#ffe9a8" />
+              <circle cx="4" cy="33" r="1.2" fill="#fff" />
               {/* Single row of evenly-spaced passenger windows */}
-              {Array.from({ length: 9 }).map((_, i) => (
-                <rect x={108 + i * 42} y="13" width="28" height="8" rx="1.5" fill="#0c1626" opacity="0.88" />
+              {Array.from({ length: 8 }).map((_, i) => (
+                <rect x={140 + i * 42} y="13" width="28" height="8" rx="1.5" fill="#0c1626" opacity="0.88" />
               ))}
               {/* Door seams */}
-              <line x1="280" y1="6" x2="280" y2="42" stroke="#1f5fb8" stroke-width="0.8" opacity="0.5" />
-              <line x1="420" y1="6" x2="420" y2="42" stroke="#1f5fb8" stroke-width="0.8" opacity="0.5" />
-              <text x="240" y="-8" text-anchor="middle" class="vehicle-label vehicle-label-bullet">ALL-ABOARD EXPRESS · one route · one operator</text>
+              <line x1="218" y1="6" x2="218" y2="42" stroke="#1f5fb8" stroke-width="0.8" opacity="0.5" />
+              <line x1="426" y1="6" x2="426" y2="42" stroke="#1f5fb8" stroke-width="0.8" opacity="0.5" />
+              <text x="244" y="-8" text-anchor="middle" class="vehicle-label vehicle-label-bullet">ALL-ABOARD EXPRESS · one route · one operator</text>
             </g>
           </svg>
           <p class="vehicle-caption vehicle-caption-bullet">Same six pillars. One platform underneath. One ticket end to end.</p>
