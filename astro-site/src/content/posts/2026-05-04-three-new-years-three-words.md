@@ -7,8 +7,6 @@ tags: [mindset, resolutions, growth]
 excerpt: "I gave up on January resolutions and replaced them with three personal new years -- relationship, professional, personal -- each one anchored to a single word."
 ---
 
-# Three New Years, Three Words
-
 A while back I came across the idea of picking one word for the year instead of a list of resolutions. The pitch was simple: a checklist is easy to fail and easy to forget, but a word is something you can carry around. You can hold a decision up against it and ask, "does this move me toward the word or away from it?"
 
 That part stuck with me. The January 1 part never did. The calendar new year has nothing to do with my actual life, so I split it up.

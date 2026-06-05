@@ -8,8 +8,6 @@ draft: false
 excerpt: "The loudest AI predictions keep getting the second move wrong. Radiologists were supposed to be gone by now; instead they are busier and better paid than ever. That same pattern shows up in two places nobody is watching closely enough: what happens to the value of data once a model is trained, and why the rush to put agents in charge of other agents is quietly admitting the limits of what we built."
 ---
 
-# The Canary Got a Raise
-
 In 2016, Geoffrey Hinton, one of the people most responsible for the deep learning era, told a room that we should stop training radiologists. The machine was already better at reading the scan, and within five years it would be better at all of it. Radiology was the obvious first domino. Digital inputs, clear benchmarks, a repeatable task. If any knowledge job was going to fall to a model, it was that one.
 
 It is now a decade later. American radiology residency programs offered a [record 1,208 positions in 2025](https://www.nrmp.org/wp-content/uploads/2025/03/Advance_Data_Tables_2025.pdf), up four percent from the year before, with vacancy rates at all-time highs. Radiology was the [second-highest-paid medical specialty in the country](https://radiologybusiness.com/topics/healthcare-management/radiologist-salary/radiology-rises-no-2-highest-paid-specialty-surpassing-cardiology-and-plastic-surgery-medscape), averaging around $520,000, up almost half from where it sat in 2015. The canary in the coal mine got a raise.

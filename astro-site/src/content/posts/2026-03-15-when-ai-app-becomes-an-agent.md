@@ -7,8 +7,6 @@ tags: [ai, cybersecurity, cloud]
 excerpt: "The current enterprise AI conversation is full of category mistakes. This post starts a series on how to tell the difference between an AI-enhanced app, an assistive agent, an autonomous runtime, and the security controls that should change as authority increases."
 ---
 
-# AI in the Enterprise Is Crossing a Control Boundary
-
 I've noticed a common theme in the current enterprise AI conversation: it is confused in a very specific way.
 
 We keep mixing together very different things:

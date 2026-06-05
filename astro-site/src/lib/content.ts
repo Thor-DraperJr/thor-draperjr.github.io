@@ -107,6 +107,14 @@ function calculateReadingTime(content: string): number {
   return Math.max(1, Math.ceil(wordCount / 220));
 }
 
+// The post layout renders the title as the page <h1>. Markdown bodies that
+// repeat the title with a leading `#` would produce a duplicate <h1>, which is
+// an accessibility and SEO defect. Strip only a leading body <h1> (before any
+// other content); section headings use <h2>+ and are untouched.
+function stripLeadingH1(html: string): string {
+  return html.replace(/^\s*<h1[^>]*>[\s\S]*?<\/h1>\s*/i, '');
+}
+
 function parseMarkdownFile(filePath: string) {
   const raw = fs.readFileSync(filePath, 'utf-8');
   const parsed = matter(raw);
@@ -186,7 +194,7 @@ export function getPosts(): Post[] {
         categories,
         tags,
         excerpt,
-        html,
+        html: stripLeadingH1(html),
         rawContent: content,
         date: new Date(`${dateValue}T12:00:00`),
         permalink: `/${category}/${slug}/`,

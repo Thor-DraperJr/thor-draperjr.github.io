@@ -7,8 +7,6 @@ tags: [career, leadership]
 excerpt: "I decided to make my career development plan public. This is the first edition of a series I will publish every six months -- because the kind of accountability that drives real growth does not happen in a file share."
 ---
 
-# Career Development Plan - H1 FY26 Edition
-
 [[CAREER_DEV_PLAN]]
 
 ## Why Three Paths, Not One

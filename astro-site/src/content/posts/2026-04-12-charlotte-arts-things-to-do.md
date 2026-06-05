@@ -7,8 +7,6 @@ tags: [charlotte, arts, local]
 excerpt: "A running list of Charlotte arts organizations and spots I want to keep handy for nights out, weekend plans, and general reminders that I should leave the house more often."
 ---
 
-# Charlotte Arts Things To Do
-
 This is mostly a personal reference list.
 
 I got tired of re-Googling the same Charlotte arts spots every time I wanted to plan something different, so I put the official links in one place.

@@ -8,8 +8,6 @@ draft: false
 excerpt: "Your environment is the platform now, and the agentic world doesn't ask you to build a second one. The same identity, data protection, and investigation you already trust for your people extend to your agents. A field-tested way to talk about the Frontier Firm without dragging customers, especially providers, into a re-platform."
 ---
 
-# All Aboard
-
 > **Your environment is the platform now. The agentic world doesn't ask you to build a second one. It asks you to extend the one you already trust. Same identity, same data protection, same investigation, now covering your agents.**
 
 Microsoft's [2026 Work Trend Index](https://news.microsoft.com/annual-work-trend-index-2026/) makes the call plainly: agents stopped being a pilot conversation this year. They're operating in production, in regulated workflows, in front of customers. The shift underneath that headline is bigger than any single agent. Every enterprise is being pushed to treat its own environment as a platform, and the ones that win extend the controls they already run for their people to their agents instead of standing up a separate world beside them.
