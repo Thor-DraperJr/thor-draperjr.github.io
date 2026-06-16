@@ -1,0 +1,280 @@
+---
+// Custom slide built in-repo (not a PowerPoint export) for the All Aboard talk.
+// "The gate": how an agent moves from a two-person pilot to a 20,000-person
+// production rollout without losing oversight. Grounded in public Microsoft
+// capabilities -- Entra Agent ID (identity, sponsor, blueprint, Conditional
+// Access) and Agent 365 (registry / control plane).
+import entraSvg from './logos/microsoft/entra.svg?raw';
+import governanceSvg from './logos/microsoft/entra-governance.svg?raw';
+import conditionalAccessSvg from './logos/microsoft/conditional-access.svg?raw';
+import agent365Svg from './logos/microsoft/agent-365.svg?raw';
+
+interface Control {
+  logo: string;
+  label: string;
+  detail: string;
+}
+
+const controls: Control[] = [
+  { logo: entraSvg, label: 'Identity + sponsor', detail: 'Entra Agent ID' },
+  { logo: governanceSvg, label: 'Blueprint policy', detail: 'set once, inherited' },
+  { logo: conditionalAccessSvg, label: 'Conditional Access', detail: 'risk-based' },
+  { logo: agent365Svg, label: 'Registry entry', detail: 'Agent 365' },
+];
+---
+
+<div class="gate-slide" role="img" aria-label="The gate every agent passes through. A pilot of two people on the left, a production rollout of 20,000 on the right, with one governance gate between them: identity and sponsor via Entra Agent ID, a blueprint policy set once and inherited, risk-based Conditional Access, and a registry entry in Agent 365.">
+  <div class="gate-head">
+    <span class="gate-eyebrow">Pilot &rarr; production</span>
+    <h3 class="gate-title">The gate every agent passes through</h3>
+  </div>
+
+  <div class="gate-stage">
+    <div class="gate-rail" aria-hidden="true"></div>
+
+    <div class="gate-platform gate-platform--start">
+      <span class="gate-count">2</span>
+      <span class="gate-platform-label">people</span>
+      <span class="gate-stage-tag">Pilot</span>
+      <div class="gate-dots gate-dots--small" aria-hidden="true">
+        <span></span><span></span>
+      </div>
+    </div>
+
+    <div class="gate-gantry">
+      <span class="gate-gantry-label">One gate. Set once.</span>
+      <ul class="gate-controls" role="list">
+        {controls.map((c) => (
+          <li class="gate-control">
+            <span class="gate-control-icon" aria-hidden="true" set:html={c.logo} />
+            <span class="gate-control-text">
+              <span class="gate-control-label">{c.label}</span>
+              <span class="gate-control-detail">{c.detail}</span>
+            </span>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="gate-platform gate-platform--end">
+      <span class="gate-count">20,000</span>
+      <span class="gate-platform-label">people</span>
+      <span class="gate-stage-tag gate-stage-tag--live">Production</span>
+      <div class="gate-dots gate-dots--swarm" aria-hidden="true">
+        <span></span><span></span><span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span><span></span><span></span>
+      </div>
+    </div>
+  </div>
+
+  <p class="gate-caption">
+    The same gate scales the agent, not the headcount: the blueprint you approve for two people governs all 20,000 that follow.
+  </p>
+</div>
+
+<style>
+  .gate-slide {
+    aspect-ratio: 16 / 9;
+    width: 100%;
+    box-sizing: border-box;
+    padding: clamp(1.1rem, 0.6rem + 2.4vw, 2.8rem);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: clamp(1rem, 0.5rem + 2.6cqw, 2.6rem);
+    background:
+      radial-gradient(130% 95% at 12% -10%, rgba(89, 159, 253, 0.32), transparent 58%),
+      radial-gradient(120% 95% at 92% 115%, rgba(250, 220, 20, 0.16), transparent 55%),
+      linear-gradient(150deg, #0e2a52 0%, #0b2344 55%, #081a36 100%);
+    color: #eaf1fb;
+    font-family: inherit;
+    container-type: inline-size;
+  }
+
+  .gate-head {
+    flex: none;
+  }
+
+  .gate-eyebrow {
+    display: block;
+    font-size: clamp(0.62rem, 0.5rem + 0.5cqw, 0.85rem);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: #599ffd;
+  }
+
+  .gate-title {
+    margin: 0.25rem 0 0;
+    font-size: clamp(1rem, 0.6rem + 2.1cqw, 1.9rem);
+    line-height: 1.1;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  .gate-stage {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr 1fr;
+    align-items: center;
+    gap: clamp(0.5rem, 0.2rem + 1.4cqw, 1.6rem);
+    position: relative;
+  }
+
+  .gate-rail {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    height: 3px;
+    transform: translateY(-50%);
+    background: linear-gradient(90deg, rgba(89, 159, 253, 0.35), rgba(89, 159, 253, 0.9) 38%, rgba(250, 220, 20, 0.95));
+    border-radius: 999px;
+  }
+
+  .gate-platform {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.15rem;
+    text-align: center;
+  }
+
+  .gate-count {
+    font-size: clamp(1.5rem, 0.7rem + 3.4cqw, 3.6rem);
+    font-weight: 800;
+    line-height: 1;
+    color: #fff;
+  }
+
+  .gate-platform--start .gate-count { color: #599ffd; }
+  .gate-platform--end .gate-count { color: #fadc14; }
+
+  .gate-platform-label {
+    font-size: clamp(0.6rem, 0.45rem + 0.6cqw, 0.95rem);
+    letter-spacing: 0.05em;
+    color: #a5b8ee;
+  }
+
+  .gate-stage-tag {
+    margin-top: 0.35rem;
+    font-size: clamp(0.55rem, 0.42rem + 0.5cqw, 0.78rem);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: #a5b8ee;
+    border: 1px solid rgba(165, 184, 238, 0.45);
+    border-radius: 999px;
+    padding: 0.15em 0.7em;
+  }
+
+  .gate-stage-tag--live {
+    color: #fadc14;
+    border-color: rgba(250, 220, 20, 0.5);
+  }
+
+  .gate-dots {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.28rem;
+    margin-top: 0.5rem;
+    max-width: 9rem;
+  }
+
+  .gate-dots span {
+    width: clamp(0.4rem, 0.25rem + 0.5cqw, 0.7rem);
+    height: clamp(0.4rem, 0.25rem + 0.5cqw, 0.7rem);
+    border-radius: 50%;
+  }
+
+  .gate-dots--small span { background: #a5b8ee; }
+  .gate-dots--swarm span { background: #fadc14; box-shadow: 0 0 8px rgba(250, 220, 20, 0.55); }
+
+  .gate-gantry {
+    position: relative;
+    z-index: 1;
+    background: rgba(10, 28, 56, 0.74);
+    border: 1px solid rgba(89, 159, 253, 0.4);
+    border-radius: 14px;
+    padding: clamp(0.7rem, 0.4rem + 1.2cqw, 1.4rem);
+    box-shadow: 0 18px 40px -22px rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(2px);
+  }
+
+  .gate-gantry-label {
+    display: block;
+    text-align: center;
+    font-size: clamp(0.6rem, 0.45rem + 0.55cqw, 0.85rem);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: #fadc14;
+    margin-bottom: clamp(0.4rem, 0.3rem + 0.6cqw, 0.8rem);
+  }
+
+  .gate-controls {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(0.35rem, 0.2rem + 0.7cqw, 0.7rem);
+  }
+
+  .gate-control {
+    display: flex;
+    align-items: center;
+    gap: clamp(0.35rem, 0.2rem + 0.5cqw, 0.6rem);
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    padding: clamp(0.3rem, 0.2rem + 0.5cqw, 0.55rem);
+  }
+
+  .gate-control-icon {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: clamp(1.5rem, 0.9rem + 1.9cqw, 2.5rem);
+    height: clamp(1.5rem, 0.9rem + 1.9cqw, 2.5rem);
+    background: #fff;
+    border-radius: 8px;
+    padding: 0.22em;
+  }
+
+  .gate-control-icon :global(svg) {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .gate-control-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.15;
+    min-width: 0;
+  }
+
+  .gate-control-label {
+    font-size: clamp(0.6rem, 0.42rem + 0.7cqw, 0.95rem);
+    font-weight: 700;
+    color: #fff;
+  }
+
+  .gate-control-detail {
+    font-size: clamp(0.52rem, 0.4rem + 0.5cqw, 0.78rem);
+    color: #a5b8ee;
+  }
+
+  .gate-caption {
+    flex: none;
+    margin: 0;
+    text-align: center;
+    font-size: clamp(0.62rem, 0.45rem + 0.7cqw, 1rem);
+    line-height: 1.4;
+    color: #e2f9d9;
+  }
+</style>

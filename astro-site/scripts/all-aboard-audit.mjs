@@ -14,7 +14,7 @@ const VIEWPORTS = {
     'mobile-land': { width: 844, height: 390, isMobile: true, deviceScaleFactor: 2 },
 };
 
-const SECTIONS = ['aa-cover', 'aa-zone-local', 'aa-zone-bullet', 'aa-close'];
+const SECTIONS = ['aa-lifecycle', 'aa-zone-local', 'aa-zone-bullet'];
 const url = 'http://localhost:4321/tech/all-aboard/';
 const outRoot = path.resolve('all-aboard-audit');
 

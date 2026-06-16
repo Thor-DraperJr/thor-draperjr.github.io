@@ -5,7 +5,11 @@ import CareerDevelopmentPlan from '../../components/CareerDevelopmentPlan.astro'
 import CharlotteArtsMap from '../../components/CharlotteArtsMap.astro';
 import WalkingDeck from '../../components/WalkingDeck.astro';
 import Agent365Deck from '../../components/Agent365Deck.astro';
-import AllAboardStation from '../../components/AllAboardStation.astro';
+import AllAboardSlide from '../../components/AllAboardSlide.astro';
+import LifecycleLanes from '../../components/LifecycleLanes.astro';
+import E7Stack from '../../components/E7Stack.astro';
+import AgentModes from '../../components/AgentModes.astro';
+import FourPositions from '../../components/FourPositions.astro';
 import ThreeNewYears from '../../components/ThreeNewYears.astro';
 import PerformanceNarrative from '../../components/PerformanceNarrative.astro';
 import { getPosts } from '../../lib/content';
@@ -34,6 +38,13 @@ const charlotteArtsMapMarker = '[[CHARLOTTE_ARTS_MAP]]';
 const walkingDeckMarker = '[[WALKING_DECK]]';
 const agent365DeckMarker = '[[AGENT365_DECK]]';
 const allAboardMarker = '[[ALL_ABOARD]]';
+const lifecycleLanesMarker = '[[LIFECYCLE_LANES]]';
+const e7StackMarker = '[[E7_STACK]]';
+const agentModesMarker = '[[AGENT_MODES]]';
+const fourPositionsMarker = '[[FOUR_POSITIONS]]';
+const allAboardSlideMarkers = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10'].map(
+  (n) => `[[SLIDE_${n}]]`,
+);
 const threeNewYearsMarker = '[[THREE_NEW_YEARS]]';
 const performanceNarrativeMarker = '[[PERFORMANCE_NARRATIVE]]';
 
@@ -44,6 +55,13 @@ processedHtml = processedHtml.replace(`<p>${charlotteArtsMapMarker}</p>`, charlo
 processedHtml = processedHtml.replace(`<p>${walkingDeckMarker}</p>`, walkingDeckMarker);
 processedHtml = processedHtml.replace(`<p>${agent365DeckMarker}</p>`, agent365DeckMarker);
 processedHtml = processedHtml.replace(`<p>${allAboardMarker}</p>`, allAboardMarker);
+processedHtml = processedHtml.replace(`<p>${lifecycleLanesMarker}</p>`, lifecycleLanesMarker);
+processedHtml = processedHtml.replace(`<p>${e7StackMarker}</p>`, e7StackMarker);
+processedHtml = processedHtml.replace(`<p>${agentModesMarker}</p>`, agentModesMarker);
+processedHtml = processedHtml.replace(`<p>${fourPositionsMarker}</p>`, fourPositionsMarker);
+for (const slideMarker of allAboardSlideMarkers) {
+  processedHtml = processedHtml.replace(`<p>${slideMarker}</p>`, slideMarker);
+}
 processedHtml = processedHtml.replace(`<p>${threeNewYearsMarker}</p>`, threeNewYearsMarker);
 processedHtml = processedHtml.replace(`<p>${performanceNarrativeMarker}</p>`, performanceNarrativeMarker);
 
@@ -62,6 +80,27 @@ const charlotteArtsMapParts = hasCharlotteArtsMap ? processedHtml.split(charlott
 const walkingDeckParts = hasWalkingDeck ? processedHtml.split(walkingDeckMarker) : [];
 const agent365DeckParts = hasAgent365Deck ? processedHtml.split(agent365DeckMarker) : [];
 const allAboardParts = hasAllAboard ? processedHtml.split(allAboardMarker) : [];
+// Everything after the [[ALL_ABOARD]] gate is prose with embedded figure
+// markers (SLIDE_xx, LIFECYCLE_LANES, E7_STACK, AGENT_MODES). Walk it once and
+// build an ordered list of prose/figure segments so the talk reads top to
+// bottom: speak, show the slide, keep speaking.
+const allAboardBody = hasAllAboard ? allAboardParts.slice(1).join(allAboardMarker) : '';
+const allAboardMarkerRegex = /\[\[(?:SLIDE_\d{2}|LIFECYCLE_LANES|E7_STACK|AGENT_MODES|FOUR_POSITIONS)\]\]/g;
+const allAboardSegments: Array<{ kind: 'html' | 'marker'; value: string }> = [];
+if (hasAllAboard) {
+  let lastIndex = 0;
+  let match: RegExpExecArray | null;
+  while ((match = allAboardMarkerRegex.exec(allAboardBody)) !== null) {
+    if (match.index > lastIndex) {
+      allAboardSegments.push({ kind: 'html', value: allAboardBody.slice(lastIndex, match.index) });
+    }
+    allAboardSegments.push({ kind: 'marker', value: match[0] });
+    lastIndex = match.index + match[0].length;
+  }
+  if (lastIndex < allAboardBody.length) {
+    allAboardSegments.push({ kind: 'html', value: allAboardBody.slice(lastIndex) });
+  }
+}
 const threeNewYearsParts = hasThreeNewYears ? processedHtml.split(threeNewYearsMarker) : [];
 const performanceNarrativeParts = hasPerformanceNarrative ? processedHtml.split(performanceNarrativeMarker) : [];
 ---
@@ -233,17 +272,39 @@ const performanceNarrativeParts = hasPerformanceNarrative ? processedHtml.split(
         )}
       </article>
 
-      <div class="walking-deck-breakout">
-        <AllAboardStation />
-      </div>
+      {allAboardSegments.map((seg) => (
+        seg.kind === 'html' ? (
+          seg.value.trim() && (
+            <article class="shell-container">
+              <section class="prose panel">
+                <Fragment set:html={seg.value} />
+              </section>
+            </article>
+          )
+        ) : seg.value.startsWith('[[SLIDE_') ? (
+          <div class="walking-deck-breakout">
+            <AllAboardSlide n={seg.value.slice(8, 10)} />
+          </div>
+        ) : seg.value === lifecycleLanesMarker ? (
+          <article class="shell-container">
+            <LifecycleLanes />
+          </article>
+        ) : seg.value === e7StackMarker ? (
+          <article class="shell-container">
+            <E7Stack />
+          </article>
+        ) : seg.value === fourPositionsMarker ? (
+          <article class="shell-container">
+            <FourPositions />
+          </article>
+        ) : (
+          <article class="shell-container">
+            <AgentModes />
+          </article>
+        )
+      ))}
 
       <article class="shell-container">
-        {allAboardParts.length > 1 && (
-          <section class="prose panel">
-            <Fragment set:html={allAboardParts.slice(1).join(allAboardMarker)} />
-          </section>
-        )}
-
         <nav class="post-pagination">
           {previous ? (
             <a href={previous.permalink}>

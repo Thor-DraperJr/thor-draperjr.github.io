@@ -1,0 +1,142 @@
+---
+// In-article figure for the All Aboard written deep-dive.
+// "Same lifecycle, two populations": the six joiner/mover/leaver gates humans
+// have run since 1995, now pointed at agents. Column-aligned to make the
+// "same six gates" argument visually, in the deck's blue-yellow palette.
+const gates = ['Sponsor', 'Provision', 'Review', 'Reassign', 'Retire', 'Audit'];
+---
+
+<figure
+  class="ll-fig"
+  role="img"
+  aria-label="Same lifecycle, two populations. Two lanes share the same six gates in the same order: Sponsor, Provision, Review, Reassign, Retire, Audit. The top lane is humans, run since 1995. The bottom lane is agents, starting now."
+>
+  <div class="ll-head">
+    <span class="ll-eyebrow">Joiner &middot; mover &middot; leaver</span>
+    <h3 class="ll-title">Same lifecycle, two populations</h3>
+  </div>
+
+  <div class="ll-grid">
+    <span class="ll-corner" aria-hidden="true"></span>
+    {gates.map((g) => <span class="ll-gate-name">{g}</span>)}
+
+    <span class="ll-lane-label ll-lane-label--human">Humans<small>since 1995</small></span>
+    {gates.map((g) => (
+      <span class="ll-node ll-node--human" aria-hidden="true">&check;</span>
+    ))}
+
+    <span class="ll-lane-label ll-lane-label--agent">Agents<small>starting now</small></span>
+    {gates.map((g) => (
+      <span class="ll-node ll-node--agent" aria-hidden="true">&check;</span>
+    ))}
+  </div>
+
+  <figcaption class="ll-caption">Same six gates. Two populations.</figcaption>
+</figure>
+
+<style>
+  .ll-fig {
+    container-type: inline-size;
+    margin: 0;
+    box-sizing: border-box;
+    width: 100%;
+    padding: clamp(1.2rem, 0.7rem + 2.4cqw, 2.4rem);
+    border-radius: 18px;
+    background:
+      radial-gradient(130% 95% at 12% -10%, rgba(89, 159, 253, 0.3), transparent 58%),
+      radial-gradient(120% 95% at 92% 115%, rgba(250, 220, 20, 0.16), transparent 55%),
+      linear-gradient(150deg, #0e2a52 0%, #0b2344 55%, #081a36 100%);
+    color: #eaf1fb;
+    box-shadow: 0 24px 60px rgba(8, 20, 40, 0.32);
+  }
+
+  .ll-head { margin-bottom: clamp(1rem, 0.6rem + 1.6cqw, 1.8rem); }
+
+  .ll-eyebrow {
+    display: block;
+    font-size: clamp(0.62rem, 0.55rem + 0.3cqw, 0.74rem);
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #599ffd;
+  }
+
+  .ll-title {
+    margin: 0.3rem 0 0;
+    font-size: clamp(1.1rem, 0.85rem + 1.4cqw, 1.7rem);
+    font-weight: 800;
+    line-height: 1.12;
+    color: #fff;
+  }
+
+  .ll-grid {
+    display: grid;
+    grid-template-columns: minmax(72px, auto) repeat(6, 1fr);
+    gap: clamp(0.3rem, 0.15rem + 0.7cqw, 0.6rem);
+    align-items: stretch;
+  }
+
+  .ll-corner { content: ''; }
+
+  .ll-gate-name {
+    text-align: center;
+    align-self: end;
+    padding-bottom: 0.3rem;
+    font-size: clamp(0.58rem, 0.5rem + 0.34cqw, 0.78rem);
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: #a5b8ee;
+  }
+
+  .ll-lane-label {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: clamp(0.66rem, 0.55rem + 0.4cqw, 0.86rem);
+    font-weight: 800;
+    line-height: 1.1;
+  }
+  .ll-lane-label small {
+    font-size: 0.72em;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    opacity: 0.7;
+  }
+  .ll-lane-label--human { color: #cfe0ff; }
+  .ll-lane-label--agent { color: #fadc14; }
+
+  .ll-node {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: clamp(0.45rem, 0.3rem + 0.6cqw, 0.8rem) 0.3rem;
+    border-radius: 9px;
+    font-size: clamp(0.8rem, 0.7rem + 0.4cqw, 1.05rem);
+    font-weight: 800;
+    line-height: 1;
+  }
+  .ll-node--human {
+    background: rgba(89, 159, 253, 0.16);
+    border: 1px solid rgba(89, 159, 253, 0.55);
+    color: #dfeaff;
+  }
+  .ll-node--agent {
+    background: rgba(250, 220, 20, 0.12);
+    border: 1px solid rgba(250, 220, 20, 0.5);
+    color: #fbe98a;
+  }
+
+  .ll-caption {
+    margin: clamp(0.9rem, 0.6rem + 1.2cqw, 1.5rem) 0 0;
+    font-size: clamp(0.78rem, 0.7rem + 0.3cqw, 0.95rem);
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    color: #e2f9d9;
+  }
+
+  @container (max-width: 460px) {
+    .ll-node { font-size: 0.8rem; }
+    .ll-gate-name { font-size: 0.5rem; }
+  }
+</style>

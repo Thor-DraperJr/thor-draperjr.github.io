@@ -1,0 +1,137 @@
+---
+// In-article figure for the All Aboard written deep-dive.
+// The Microsoft 365 E7 stack: E5 baseline up through the Frontier Suite cap.
+// Reads top-down -- E7 is the bundle of everything beneath it. Deck palette.
+interface Layer {
+  name: string;
+  detail: string;
+  width: string;
+  tone: 'cap' | 'mid' | 'base';
+}
+
+// Rendered top (narrow cap) to bottom (wide base).
+const layers: Layer[] = [
+  { name: 'Microsoft 365 E7', detail: 'Frontier Suite \u00b7 powered by Work IQ', width: '50%', tone: 'cap' },
+  { name: 'Microsoft Agent 365', detail: 'Observe, govern, secure agents', width: '64%', tone: 'mid' },
+  { name: 'Microsoft Entra Suite', detail: 'Identity governance, Conditional Access, ID protection', width: '78%', tone: 'mid' },
+  { name: 'Microsoft 365 Copilot', detail: 'Copilot for every licensed user', width: '90%', tone: 'mid' },
+  { name: 'Microsoft 365 E5', detail: 'Productivity, security, compliance baseline', width: '100%', tone: 'base' },
+];
+---
+
+<figure
+  class="e7-fig"
+  role="img"
+  aria-label="The Microsoft 365 E7 stack, read top down. E7, the Frontier Suite powered by Work IQ, is the bundle of everything beneath it: Microsoft Agent 365, Microsoft Entra Suite, Microsoft 365 Copilot, and the Microsoft 365 E5 baseline."
+>
+  <div class="e7-head">
+    <span class="e7-eyebrow">One SKU, four surfaces</span>
+    <h3 class="e7-title">The E7 stack reads top down</h3>
+  </div>
+
+  <div class="e7-stack">
+    {layers.map((layer) => (
+      <div class={`e7-layer e7-layer--${layer.tone}`} style={`width:${layer.width}`}>
+        <span class="e7-layer-name">{layer.name}</span>
+        <span class="e7-layer-detail">{layer.detail}</span>
+      </div>
+    ))}
+  </div>
+
+  <figcaption class="e7-caption">Four control surfaces. One operating posture. Buy them however you buy them.</figcaption>
+</figure>
+
+<style>
+  .e7-fig {
+    container-type: inline-size;
+    margin: 0;
+    box-sizing: border-box;
+    width: 100%;
+    padding: clamp(1.2rem, 0.7rem + 2.4cqw, 2.4rem);
+    border-radius: 18px;
+    background:
+      radial-gradient(130% 95% at 12% -10%, rgba(89, 159, 253, 0.3), transparent 58%),
+      radial-gradient(120% 95% at 92% 115%, rgba(250, 220, 20, 0.16), transparent 55%),
+      linear-gradient(150deg, #0e2a52 0%, #0b2344 55%, #081a36 100%);
+    color: #eaf1fb;
+    box-shadow: 0 24px 60px rgba(8, 20, 40, 0.32);
+  }
+
+  .e7-head { margin-bottom: clamp(1rem, 0.6rem + 1.6cqw, 1.8rem); }
+
+  .e7-eyebrow {
+    display: block;
+    font-size: clamp(0.62rem, 0.55rem + 0.3cqw, 0.74rem);
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #599ffd;
+  }
+
+  .e7-title {
+    margin: 0.3rem 0 0;
+    font-size: clamp(1.1rem, 0.85rem + 1.4cqw, 1.7rem);
+    font-weight: 800;
+    line-height: 1.12;
+    color: #fff;
+  }
+
+  .e7-stack {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(0.4rem, 0.25rem + 0.6cqw, 0.7rem);
+  }
+
+  .e7-layer {
+    box-sizing: border-box;
+    min-width: 0;
+    padding: clamp(0.6rem, 0.4rem + 0.8cqw, 1rem) clamp(0.8rem, 0.5rem + 1cqw, 1.4rem);
+    border-radius: 11px;
+    text-align: center;
+  }
+
+  .e7-layer-name {
+    display: block;
+    font-size: clamp(0.74rem, 0.62rem + 0.5cqw, 1rem);
+    font-weight: 800;
+    line-height: 1.15;
+  }
+  .e7-layer-detail {
+    display: block;
+    margin-top: 0.15rem;
+    font-size: clamp(0.6rem, 0.52rem + 0.32cqw, 0.78rem);
+    font-weight: 600;
+    line-height: 1.25;
+  }
+
+  .e7-layer--cap {
+    background: linear-gradient(135deg, rgba(250, 220, 20, 0.92), rgba(250, 220, 20, 0.78));
+    color: #2a1f02;
+    border: 1px solid rgba(250, 220, 20, 0.9);
+    box-shadow: 0 10px 28px rgba(250, 220, 20, 0.18);
+  }
+  .e7-layer--cap .e7-layer-detail { color: #4a3a06; }
+
+  .e7-layer--mid {
+    background: rgba(89, 159, 253, 0.16);
+    border: 1px solid rgba(89, 159, 253, 0.5);
+    color: #eaf1fb;
+  }
+  .e7-layer--mid .e7-layer-detail { color: #a5b8ee; }
+
+  .e7-layer--base {
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(165, 184, 238, 0.4);
+    color: #eaf1fb;
+  }
+  .e7-layer--base .e7-layer-detail { color: #a5b8ee; }
+
+  .e7-caption {
+    margin: clamp(0.9rem, 0.6rem + 1.2cqw, 1.5rem) 0 0;
+    font-size: clamp(0.78rem, 0.7rem + 0.3cqw, 0.95rem);
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    color: #e2f9d9;
+  }
+</style>
