@@ -7,7 +7,6 @@ import WalkingDeck from '../../components/WalkingDeck.astro';
 import Agent365Deck from '../../components/Agent365Deck.astro';
 import AllAboardSlide from '../../components/AllAboardSlide.astro';
 import LifecycleLanes from '../../components/LifecycleLanes.astro';
-import E7Stack from '../../components/E7Stack.astro';
 import AgentModes from '../../components/AgentModes.astro';
 import FourPositions from '../../components/FourPositions.astro';
 import ThreeNewYears from '../../components/ThreeNewYears.astro';
@@ -39,7 +38,6 @@ const walkingDeckMarker = '[[WALKING_DECK]]';
 const agent365DeckMarker = '[[AGENT365_DECK]]';
 const allAboardMarker = '[[ALL_ABOARD]]';
 const lifecycleLanesMarker = '[[LIFECYCLE_LANES]]';
-const e7StackMarker = '[[E7_STACK]]';
 const agentModesMarker = '[[AGENT_MODES]]';
 const fourPositionsMarker = '[[FOUR_POSITIONS]]';
 const allAboardSlideMarkers = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10'].map(
@@ -56,7 +54,6 @@ processedHtml = processedHtml.replace(`<p>${walkingDeckMarker}</p>`, walkingDeck
 processedHtml = processedHtml.replace(`<p>${agent365DeckMarker}</p>`, agent365DeckMarker);
 processedHtml = processedHtml.replace(`<p>${allAboardMarker}</p>`, allAboardMarker);
 processedHtml = processedHtml.replace(`<p>${lifecycleLanesMarker}</p>`, lifecycleLanesMarker);
-processedHtml = processedHtml.replace(`<p>${e7StackMarker}</p>`, e7StackMarker);
 processedHtml = processedHtml.replace(`<p>${agentModesMarker}</p>`, agentModesMarker);
 processedHtml = processedHtml.replace(`<p>${fourPositionsMarker}</p>`, fourPositionsMarker);
 for (const slideMarker of allAboardSlideMarkers) {
@@ -81,11 +78,11 @@ const walkingDeckParts = hasWalkingDeck ? processedHtml.split(walkingDeckMarker)
 const agent365DeckParts = hasAgent365Deck ? processedHtml.split(agent365DeckMarker) : [];
 const allAboardParts = hasAllAboard ? processedHtml.split(allAboardMarker) : [];
 // Everything after the [[ALL_ABOARD]] gate is prose with embedded figure
-// markers (SLIDE_xx, LIFECYCLE_LANES, E7_STACK, AGENT_MODES). Walk it once and
+// markers (SLIDE_xx, LIFECYCLE_LANES, AGENT_MODES). Walk it once and
 // build an ordered list of prose/figure segments so the talk reads top to
 // bottom: speak, show the slide, keep speaking.
 const allAboardBody = hasAllAboard ? allAboardParts.slice(1).join(allAboardMarker) : '';
-const allAboardMarkerRegex = /\[\[(?:SLIDE_\d{2}|LIFECYCLE_LANES|E7_STACK|AGENT_MODES|FOUR_POSITIONS)\]\]/g;
+const allAboardMarkerRegex = /\[\[(?:SLIDE_\d{2}|LIFECYCLE_LANES|AGENT_MODES|FOUR_POSITIONS)\]\]/g;
 const allAboardSegments: Array<{ kind: 'html' | 'marker'; value: string }> = [];
 if (hasAllAboard) {
   let lastIndex = 0;
@@ -288,10 +285,6 @@ const performanceNarrativeParts = hasPerformanceNarrative ? processedHtml.split(
         ) : seg.value === lifecycleLanesMarker ? (
           <article class="shell-container">
             <LifecycleLanes />
-          </article>
-        ) : seg.value === e7StackMarker ? (
-          <article class="shell-container">
-            <E7Stack />
           </article>
         ) : seg.value === fourPositionsMarker ? (
           <article class="shell-container">
