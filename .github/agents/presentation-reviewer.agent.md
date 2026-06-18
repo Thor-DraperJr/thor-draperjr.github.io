@@ -144,7 +144,7 @@ Then ask which findings to act on by number. For Edit mode items, implement dire
 ## Constraints
 
 - Do not propose adding emoji, libraries, dependencies, or features beyond what is needed to fix a finding.
-- Do not rewrite copy unless the finding is specifically about wording. Voice work is the Voice Editor's job.
+- Do not rewrite copy unless the finding is specifically about wording. Voice work is the Voice & Publish Editor's job.
 - Keep findings grounded in the existing design system tokens (`--signal-ink`, `--signal-gold`, `--signal-accent`, `--signal-blue`, fonts).
 - Prefer measured language: "the headline is clipped at 1280x720" beats "this is broken."
 - If a slide is good, say so explicitly. The agent's job is judgment, not just complaints.

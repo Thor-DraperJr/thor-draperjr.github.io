@@ -1,165 +1,132 @@
 ---
-description: "Run the full nine-step All Aboard talk pass: research, structure, anecdotes, reality-check, value audit, voice, career, copyedit. Produces a consolidated review report; applies no edits without sign-off."
+description: "Run the All Aboard specialization of Thor's blog flow: transcript/deck/render evidence first, optional public research, narrative strategy, provider reality when needed, and deck-to-web visual fidelity QA."
 mode: "agent"
 ---
 
 # /all-aboard-pass
 
-You are the conductor. The user will give you one input: the path to the article being prepared (default: `astro-site/src/content/posts/2026-05-28-all-aboard.md`).
+You are the conductor for Thor Draper Jr's All Aboard article and talk artifact. The default input is `astro-site/src/content/posts/2026-05-28-all-aboard.md`.
 
-This workflow exists to take the All Aboard article -- which functions as both a blog post and the spine of a 60-minute executive keynote for Microsoft HLS Account Technology Strategists (Austin Walsh and Kate Huey's orgs) -- through a nine-agent pass and return one consolidated review report.
+This is a specialization of `/article-pass`, not a separate nine-agent pipeline. Start with evidence from what Thor said, what the PowerPoint shows, and what the Astro page renders. Then call only the durable agents whose judgment is needed.
 
-## The thesis every agent must hold
+## North Star
 
-Every content agent in this pass measures the draft against one north star. Paste this thesis block verbatim into each content subagent's input (Talk Architect, Anecdote Forge, HLS Provider Reality Check, Executive Value Auditor, Career Coach, Voice Editor). The E7 Research Analyst and Copyeditor do not need it.
+The article should read like something Thor could deliver aloud. Spoken evidence carries more weight than a polished draft when the two disagree.
 
-> **Your environment is the platform now.** The agentic world does not ask the enterprise to build a second one -- it asks them to extend the one they already trust. Same identity, same data protection, same investigation, now covering agents. The supporting moves all serve this:
-> - **Continuity over novelty.** An agent identity should feel like a user identity; a Purview label on PHI is the same label on an agent's output; the SOC triages an agent's risk the same console way. The win is sameness, not a new stack.
-> - **Team sport, not a new hire.** Just as security became a team sport the moment detection crossed every silo, agents are governed by the teams already paid for -- nobody hires an AI operations group beside them. Everybody travels the same direction.
-> - **MDR -> XDR is the template.** The old security silos (endpoint, email, identity) collapsed into one cross-silo picture so teams could react at the speed of signal. The new agent silos (IT, developers, security, the business, the endpoints) make the same jump.
-> - **Customer zero and a north star.** Microsoft governs its own agent workforce on the same platform it asks customers to use, and offers a map for where industries are heading -- not a finished answer.
-> - **JML is a proof point, not the thesis.** Joiner/mover/leaver is the identity dimension of the same-controls promise, the first place it gets tested. It supports the platform frame; it is not the headline.
+The thesis is: **the customer's environment is already the platform.** Agents do not require a second platform. They require one thread of identity, data protection, investigation, lifecycle governance, and context across every domain they touch.
 
-A finding that pulls the draft back toward "agents are just a new lifecycle to manage" and away from "your environment is the platform you extend" is a regression. Flag it as `OFF-THESIS` in that agent's section of the consolidated report.
+For visuals, PowerPoint fidelity is the gate. A native Astro component must preserve the slide's content, hierarchy, and visual intent before adding web-only richness or animation. Do not remove a PNG until the native component has been compared side by side with the deck export and judged a close match.
 
-## Hard rules for the conductor (you)
+## Default Workflow
 
-1. **Review-only by default.** You apply no edits to the article during this pass. You collect findings, present them, and ask for sign-off. Only after the user approves do you make changes in a separate follow-up turn.
-2. **One agent at a time, in the order below.** Do not parallelize. Each step's output is the next step's input.
-3. **Pass only what the next agent needs.** Do not paste the entire article into every subagent. The contracts below specify what each agent receives.
-4. **If a subagent returns `UNVERIFIED`, `WINCE`, or `LINE FAILED BAR`, capture it verbatim.** Do not paper over a weak result with your own judgment.
-5. **Track progress with `manage_todo_list`** so the user can see which step is running.
-6. **At the end, produce one consolidated report**, then stop and ask for sign-off before applying any changes.
+### 1. Evidence Map, Conductor Only
 
-## The pipeline
+Gather artifacts before judging the draft:
 
-### Step 1 -- E7 Research Analyst
-**Input.** The full article body, plus the current date.
-**Ask for.** Verified citation table for every claim in the draft, plus a `Gaps and stale citations` section.
-**Use.** `runSubagent` with `agentName: "E7 Research Analyst"`.
+- Current article markdown.
+- Latest PowerPoint order and slide content.
+- Transcript or speaker notes, when available.
+- Rendered Astro page, including screenshots for every custom visual.
 
-### Step 1b -- WorkIQ gap fill (conductor, no subagent)
-**Trigger.** Any item in the Research Analyst's `Gaps and stale citations` section.
-**How.** For each gap, issue one focused `mcp_workiq_ask_work_iq` query naming the missing fact and the public-vs-internal distinction. Capture: (1) the returned answer verbatim, (2) every source URL WorkIQ cites, (3) whether each source is public (Microsoft Learn, Partner Center, Microsoft Security blog, public product pages, public Tech Community) or internal (Seismic, SharePoint, Azure DevOps wiki, internal Outlook items).
-**Pass forward.** Only the public-sourced findings move into the verified-claims table for downstream agents. Internal-only findings stay in a separate `INTERNAL ONLY -- talk track or NDA only` appendix that does not get used by Anecdote Forge, Reality Check, or any other agent that touches publishable content.
-**Hard rule.** WorkIQ findings must include a re-anchorable public URL before they can be added to the article. No exceptions. If WorkIQ only returns internal sources for a fact, that fact stays in the appendix and out of the article body.
+Produce a compact evidence map:
 
-### Step 2 -- Talk Architect
-**Input.** The full article body, plus the thesis block. Do **not** pass the research table -- the architect works from structure first.
-**Ask for.** Annotated outline (60-min target), gaps list, cuts-and-reshapes list, and any `OFF-THESIS` beats where structure drifts from the platform frame.
-**Use.** `runSubagent` with `agentName: "Talk Architect"`.
+| Beat | Source of truth | Keep | Move | Cut | Visual status |
+|---|---|---|---|---|---|
 
-### Step 3 -- Conductor reconciliation (you, no subagent)
-Read the Research Analyst's `Gaps` section and the Talk Architect's `Gaps` list. Produce a single merged gap list, tagged by owner:
-- `RESEARCH GAP` -- a claim or topic needing verified citation (handled in step 1 already, surface to user).
-- `ARCHITECTURE GAP` -- a beat slot the article does not currently fill (will be addressed manually or by a future drafting pass).
-- `ANECDOTE GAP` -- a beat slot that is structurally present but lacks a portable artifact (goes to step 4).
+Rules:
 
-### Step 4 -- Anecdote Forge
-**Input.** Only the `ANECDOTE GAP` items from step 3, plus the existing section headings from the article, plus the thesis block. Do not pass the full article body. For each gap, give the agent: the section heading, the takeaway the audience needs to remember (one sentence, you compose it, anchored to the platform thesis), and the beat slot it lives in.
-**Ask for.** One line, one image, one anecdote per requested section.
-**Use.** `runSubagent` with `agentName: "Anecdote Forge"`.
+- If Thor said it live, give it extra weight.
+- Ignore meeting host intros unless Thor asks otherwise.
+- Anonymize internal participants and customer-specific field observations.
+- Remove Q&A tail material unless it clearly belongs in the public article.
 
-### Step 5 -- HLS Provider Reality Check
-**Input.** Every anecdote returned by step 4, plus every section of the existing article that touches providers, hospitals, CMIOs, CIOs, CISOs, Epic, or healthcare workflow, plus the thesis block. Do not pass non-provider sections (the deck mechanics, the four-decisions framework, etc.) -- the reality-check agent's domain is providers.
-**Ask for.** NOD / REVISE / WINCE / INSUFFICIENT verdict per section or anecdote.
-**Use.** `runSubagent` with `agentName: "HLS Provider Reality Check"`.
+### 2. Public Claims Gate, Conditional
 
-### Step 6 -- Anecdote rework loop (conductor, no subagent, conditional)
-If step 5 returned any `REVISE` or `WINCE` verdicts on **anecdotes from step 4**, re-invoke `Anecdote Forge` once with the original gap plus the reality-check verdict, and ask for a single revised anecdote. Do not loop more than once -- if the second attempt still fails, surface to the user as `ANECDOTE NEEDS HUMAN JUDGMENT`.
+Call **Public Claims Researcher** only when the draft adds or changes public factual claims, citations, competitive references, Microsoft product statements, analyst numbers, or healthcare regulatory claims.
 
-For `REVISE` or `WINCE` verdicts on **existing article sections**, do not rewrite. Capture verbatim for the consolidated report and let the user decide.
+Do not call research for pure structure, voice, transcript matching, or visual fidelity.
 
-### Step 7 -- Executive Value Auditor
-**Input.** The full article body, plus the thesis block, plus any revised anecdotes from step 6 inserted into the appropriate sections in your head (do not write to the file yet). Note total estimated spoken length.
-**Ask for.** Green / yellow / red per-paragraph table and the three-line Bottom Line.
-**Use.** `runSubagent` with `agentName: "Executive Value Auditor"`.
+### 3. Narrative Strategy, Default Agent
 
-### Step 8 -- Career Coach
-**Input.** The article body, plus the thesis block, plus a one-paragraph context note from you describing the talk venue (60-min HLS ATS audience, Austin Walsh and Kate Huey present).
-**Ask for.** Standard executive-lens review.
-**Use.** `runSubagent` with `agentName: "Career Coach"`.
+Call **Narrative Strategist** once for the full draft when the article or talk structure changes. This agent owns the combined lenses that used to be split across micro-agents:
 
-### Step 9 -- Voice Editor and Copyeditor (parallel-safe, run in order anyway)
-Voice Editor first (with the thesis block), then Copyeditor (no thesis needed). Both review-only. Capture each agent's recommendations as a list.
+- Structure: does the sequence work as an article and as something Thor could deliver aloud?
+- Frame: is each beat in the strongest operator/executive frame for the audience?
+- Value: does every major section help a leader decide, act, or ask a better question?
+- Delivery: will the listener remember and retell the point?
+- Career signal: does the piece position Thor as future executive talent without becoming self-conscious?
 
-### Step 10 -- Graphics and embedded-component QA (conductor, no subagent)
-The article embeds the `[[ALL_ABOARD]]` station component (`AllAboardStation.astro`) plus inline `<svg>` figures. None of the nine content agents render them, so this step is mandatory whenever those graphics are in play.
-**How.**
-1. Make sure the Astro dev server is running (`npm run dev` in `astro-site/`); reuse an existing instance, do not spawn a second.
-2. Open the rendered article in the integrated browser and screenshot the station component (cover, lifecycle, both route zones) and every inline SVG figure. Markdown review never renders these -- you must look at the pixels.
-3. Check each graphic against this checklist:
-   - **Illustration fidelity.** The drawing reads as the thing its caption or intent claims. The named object is recognizable (the express train looks like a bullet train), motion or directional cues point the correct way, and proportions and orientation are right.
-   - **Asset completeness.** Every vendor and Microsoft product shown uses a real logo. **Zero monogram, letter-tile, or placeholder fallbacks in the finished article** -- any live `mono` fallback in `AllAboardStation.astro` is an incomplete asset, not a final state. Flag each one with its product name.
-   - **Caption-to-graphic match.** Pillar labels, stop counts, and annotations inside the graphic match the surrounding copy and the six-step lifecycle.
-**Produce (yourself).** A `PASS` / `FAIL` line per graphic, with a one-line defect note for each `FAIL`.
+Ask for only the top findings and an action queue. Do not ask for a minute-by-minute table unless the user specifically wants a timed keynote.
 
-## Consolidated report
+### 4. HLS Provider Lens, Conditional Specialist
 
-After step 9, produce a single Markdown report with these top-level sections, in this exact order:
+Call **HLS Provider Reality Check** when the draft includes hospitals, clinicians, CMIO/CNIO/CIO/CISO dynamics, Epic/MyChart/Oracle Health, Dragon Copilot, PHI, HIPAA, Joint Commission, patient care workflow, or provider operating anecdotes.
 
-```
-# All Aboard pass -- consolidated review
+This agent answers one question: would a provider leader nod or wince?
 
-## 0. Thesis adherence
-- `OFF-THESIS` findings flagged by any agent, verbatim, with the section each names. If none, state "No thesis regressions flagged."
+### 5. Voice And Publish Check, Late And Optional
 
-## 1. Research
-- Verified claim count: NN
-- Unverified or stale claims requiring action: NN
-- Table: <Research Analyst's verified-claims table>
-- Gaps: <Research Analyst's gaps section>
-- WorkIQ gap fill (public-sourced only): <list of facts with public URL>
-- WorkIQ internal-only appendix (talk track / NDA only, never article body): <list>
+Call **Voice & Publish Editor** only after the structure is stable, when Thor specifically asks for voice, or when the article is being prepared to publish.
 
-## 2. Structure
-- Current spoken length: NN min against 60-min target.
-- Outline: <Talk Architect's annotated outline>
-- Architecture gaps: <list>
-- Cuts and reshapes: <list>
+The voice goal is oral-presentable Thor: conversational, concrete, field-tested, and not over-polished. The publish goal is clean mechanics, no raw markers, no placeholder language, and no suspicious links or stale draft notes.
 
-## 3. Anecdote work
-- Anecdotes generated: NN
-- Anecdotes that passed reality-check on first attempt: NN
-- Anecdotes requiring human judgment: <list with section names>
-- For each generated anecdote: <line / image / anecdote block>
+### 6. Visual Fidelity QA, Conductor Only
 
-## 4. Provider reality check
-- NOD count, REVISE count, WINCE count.
-- Per-section verdicts on existing article content: <list of REVISE / WINCE only>
+For every embedded slide or component:
 
-## 5. Executive value audit
-- Green / yellow / red counts.
-- Cuts recommended (RED + yellow-to-red): <list>
-- Bottom Line: <three lines from the auditor>
+1. Build the site or confirm a recent successful build.
+2. Render the page.
+3. Screenshot the visual.
+4. Compare against the PowerPoint export when one exists.
+5. Mark status:
+   - `PNG SOURCE` means the PowerPoint image remains authoritative.
+   - `NATIVE MATCH` means the component is close enough to replace the PNG.
+   - `NATIVE DRAFT` means it may be useful, but cannot replace the PNG yet.
+   - `REWORK` means it drifted from the slide and should be reverted or rebuilt.
 
-## 6. Career Coach verdict
-- <Career Coach's numbered findings>
-- Bottom Line: <verbatim>
+Never delete a PowerPoint export until the status is `NATIVE MATCH`.
 
-## 7. Voice and copyedit
-- Voice recommendations: <list>
-- Copyedits: <list>
+## Agent Budget
 
-## 8. Graphics and embedded-component QA
-- Graphics checked: NN
-- Fidelity or completeness defects: <PASS / FAIL per graphic with defect notes, or "none">
+Default maximum: two subagents per pass.
 
-## 9. Recommended action queue
-A numbered list of every concrete change the user could approve. Each item names: file, section, change type (CUT / REVISE / INSERT / RESEARCH / GRAPHIC), and a one-line description.
+Usually that means:
 
-## Sign-off prompt
-End with exactly:
+1. **Narrative Strategist** for structure/frame/value/delivery.
+2. **Public Claims Researcher** if factual claims changed, **HLS Provider Reality Check** if provider content is load-bearing, or **Voice & Publish Editor** if the article is publish-ready.
 
-> Ready to apply changes. Reply with the numbered items from section 9 you want me to execute, or `all` to apply everything, or `none` to keep the review for reference only.
+A third agent is allowed only for a clear reason: major new factual claims, provider realism is central to the argument, publish-ready polish, or a specific user request.
+
+## Output
+
+Return one report:
+
+```markdown
+# All Aboard pass
+
+## Evidence Map
+<table>
+
+## Agent Calls Used
+- Agent: why it was needed
+
+## Findings
+Prioritized list. Each item names the section, issue, source of evidence, and recommended action.
+
+## Research And Public Safety
+Verified claims, stale citations, unverified claims, or "Skipped: <reason>."
+
+## Voice And Publish Readiness
+Voice fit, mechanical blockers, raw markers/placeholders, and publish verdict, or "Skipped: <reason>."
+
+## Visual Fidelity
+Table of each slide/component: PNG SOURCE / NATIVE MATCH / NATIVE DRAFT / REWORK.
+
+## Action Queue
+Numbered changes the user can approve. Each item names file, section, action type, and short description.
+
+## Sign-off
+Ready to apply changes. Reply with item numbers, `all`, or `none`.
 ```
 
-Then stop. Do not edit the article. Wait for the user.
-
-## What you must not do
-
-- Do not apply edits during the pass.
-- Do not skip steps because you think the article looks fine -- the value of the pass is the discipline.
-- Do not blend agent outputs. Each section of the report cites its source agent. Conflicting verdicts are reported as conflicts, not reconciled silently.
-- Do not run any agent twice except the conditional anecdote rework in step 6.
-- Do not spawn the deck audit or the Site Reviewer / Presentation Reviewer agents -- those are for the rendered site and the walking deck, not the article. The step 10 graphics QA is the conductor's own render-and-screenshot pass, not one of those agents.
+Stop after the report. Do not edit files during the review pass unless the user explicitly says to apply the action queue.

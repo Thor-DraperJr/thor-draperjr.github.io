@@ -1,0 +1,650 @@
+---
+import agent365Svg from './logos/microsoft/agent-365.svg?raw';
+import conditionalAccessSvg from './logos/microsoft/conditional-access.svg?raw';
+import copilotStudioSvg from './logos/microsoft/copilot-studio.svg?raw';
+import defenderSvg from './logos/microsoft/defender.svg?raw';
+import entraGovernanceSvg from './logos/microsoft/entra-governance.svg?raw';
+import entraSvg from './logos/microsoft/entra.svg?raw';
+import foundrySvg from './logos/microsoft/foundry.svg?raw';
+import purviewSvg from './logos/microsoft/purview.svg?raw';
+import openaiSvg from './logos/openai.svg?raw';
+import anthropicSvg from './logos/anthropic.svg?raw';
+import awsSvg from './logos/amazonwebservices.svg?raw';
+import gcpSvg from './logos/googlecloud.svg?raw';
+import oktaSvg from './logos/okta.svg?raw';
+import auth0Svg from './logos/auth0.svg?raw';
+import salesforceSvg from './logos/salesforce.svg?raw';
+import datadogSvg from './logos/datadog.svg?raw';
+import langchainSvg from './logos/langchain.svg?raw';
+import splunkSvg from './logos/splunk.svg?raw';
+import servicenowSvg from './logos/servicenow.svg?raw';
+
+interface Props { n: string; }
+const { n } = Astro.props;
+
+const msLogos = {
+  agent365: agent365Svg,
+  conditionalAccess: conditionalAccessSvg,
+  copilotStudio: copilotStudioSvg,
+  defender: defenderSvg,
+  entraGovernance: entraGovernanceSvg,
+  entra: entraSvg,
+  foundry: foundrySvg,
+  purview: purviewSvg,
+};
+
+const vendorLogos = {
+  openai: openaiSvg,
+  anthropic: anthropicSvg,
+  aws: awsSvg,
+  gcp: gcpSvg,
+  okta: oktaSvg,
+  auth0: auth0Svg,
+  salesforce: salesforceSvg,
+  datadog: datadogSvg,
+  langchain: langchainSvg,
+  splunk: splunkSvg,
+  servicenow: servicenowSvg,
+};
+
+const lifecycle = [
+  { num: '01', label: 'Build', ms: ['Microsoft Foundry', 'Copilot Studio'], logos: ['foundry', 'copilotStudio'], accent: '#5c6b7d' },
+  { num: '02', label: 'Identify', ms: ['Entra Agent ID'], logos: ['entra'], accent: '#1f5fb8' },
+  { num: '03', label: 'Entitle', ms: ['Entra ID Governance', 'Conditional Access'], logos: ['entraGovernance', 'conditionalAccess'], accent: '#1f7a47' },
+  { num: '04', label: 'Run', ms: ['Agent 365'], logos: ['agent365'], accent: '#6a3ba0' },
+  { num: '05', label: 'Observe', ms: ['Agent 365 Observability'], logos: ['agent365'], accent: '#a87a1a' },
+  { num: '06', label: 'Govern', ms: ['Defender', 'Purview'], logos: ['defender', 'purview'], accent: '#a13b3b' },
+];
+
+const lifecycleDetails = [
+  {
+    num: '01', label: 'Build', products: ['Microsoft Foundry', 'Copilot Studio'], logos: ['foundry', 'copilotStudio'],
+    accent: '#5c6b7d',
+    body: 'Someone in the business decides they want an agent. They pick a model, drop it into a workflow, and ship it. Usually before security or IT hears about it.',
+    good: 'The agent shows up in a registry on day one, not after the incident.',
+  },
+  {
+    num: '02', label: 'Identify', products: ['Entra Agent ID'], logos: ['entra'],
+    accent: '#1f5fb8',
+    body: 'The agent needs a name and a credential. It has to prove it is the agent your IT bought, not a script someone wrote on a Saturday.',
+    good: 'Every agent has its own identity. The same directory humans live in.',
+  },
+  {
+    num: '03', label: 'Entitle', products: ['Entra ID Governance', 'Conditional Access'], logos: ['entraGovernance', 'conditionalAccess'],
+    accent: '#1f7a47',
+    body: 'It gets the keys to do its job. Read this mailbox. Write to that ticket queue. Stay out of these folders.',
+    good: 'Least privilege, scoped to the task. Reviewed on a cadence like any other account.',
+  },
+  {
+    num: '04', label: 'Run', products: ['Agent 365'], logos: ['agent365'],
+    accent: '#6a3ba0',
+    body: 'It does the work. Calls APIs. Hands off to other agents. Maybe runs for days. Maybe spawns helpers you did not plan for.',
+    good: 'Every action is traceable back to one agent, one prompt, one decision.',
+  },
+  {
+    num: '05', label: 'Observe', products: ['Agent 365 Observability'], logos: ['agent365'],
+    accent: '#a87a1a',
+    body: 'Someone has to know what it did, what it tried to do, what it cost, and when it started behaving differently.',
+    good: 'One signal graph. Drift, cost, and risk on the same screen.',
+  },
+  {
+    num: '06', label: 'Govern', products: ['Defender', 'Purview'], logos: ['defender', 'purview'],
+    accent: '#a13b3b',
+    body: 'When the project ends, the team rotates, or the model gets retired, the agent has to be turned off and evidenced.',
+    good: 'Leaver process for agents looks like the leaver process for humans. Auditable.',
+  },
+];
+
+const localStops = [
+  { label: 'Build', accent: '#5c6b7d', tools: [{ name: 'OpenAI', logo: 'openai' }, { name: 'Anthropic', logo: 'anthropic' }, { name: 'Vertex AI', logo: 'gcp' }, { name: 'Bedrock', logo: 'aws' }, { name: 'LangChain', logo: 'langchain' }] },
+  { label: 'Identify', accent: '#1f5fb8', tools: [{ name: 'Okta', logo: 'okta' }, { name: 'Auth0', logo: 'auth0' }, { name: 'Ping' }, { name: 'CyberArk' }] },
+  { label: 'Entitle', accent: '#1f7a47', tools: [{ name: 'SailPoint' }, { name: 'Saviynt' }, { name: 'ServiceNow', logo: 'servicenow' }] },
+  { label: 'Run', accent: '#6a3ba0', tools: [{ name: 'ServiceNow AICT', logo: 'servicenow' }, { name: 'Agentforce', logo: 'salesforce' }, { name: 'Custom orchestrators' }] },
+  { label: 'Observe', accent: '#a87a1a', tools: [{ name: 'Datadog', logo: 'datadog' }, { name: 'Splunk', logo: 'splunk' }, { name: 'Arize' }, { name: 'LangSmith' }] },
+  { label: 'Govern', accent: '#a13b3b', tools: [{ name: 'OneTrust' }, { name: 'BigID' }, { name: 'Credo AI' }, { name: 'Zenity' }] },
+];
+
+const gartnerCards = [
+  { title: 'Access Management', image: '/assets/images/posts/all-aboard/gartner/mq-01.png' },
+  { title: 'Endpoint Protection Platforms', image: '/assets/images/posts/all-aboard/gartner/mq-02.png' },
+  { title: 'Security Information and Event Management', image: '/assets/images/posts/all-aboard/gartner/mq-03.png' },
+  { title: 'Email Security', image: '/assets/images/posts/all-aboard/gartner/mq-04.png' },
+  { title: 'Endpoint Management Tools', image: '/assets/images/posts/all-aboard/gartner/mq-05.png' },
+];
+
+const productIcons = {
+  m365Copilot: '/assets/images/posts/all-aboard/native-assets/m365-copilot.png',
+  dragonCopilot: '/assets/images/posts/all-aboard/native-assets/dragon-copilot.png',
+  copilotStudio: '/assets/images/posts/all-aboard/native-assets/copilot-studio.png',
+  githubCopilot: '/assets/images/posts/all-aboard/native-assets/github-copilot.png',
+  fabric: '/assets/images/posts/all-aboard/native-assets/microsoft-fabric.png',
+  foundry: '/assets/images/posts/all-aboard/native-assets/microsoft-foundry.png',
+  azure: '/assets/images/posts/all-aboard/native-assets/microsoft-azure.png',
+  agent365: '/assets/images/posts/all-aboard/native-assets/agent-365.png',
+  securityCopilot: '/assets/images/posts/all-aboard/native-assets/security-copilot.png',
+};
+
+const iqTiles = [
+  { name: 'Microsoft 365\nCopilot', icon: productIcons.m365Copilot, area: 'm365' },
+  { name: 'Copilot Studio', icon: productIcons.copilotStudio, area: 'studio' },
+  { name: 'GitHub Copilot', icon: productIcons.githubCopilot, area: 'github' },
+  { name: 'Dragon Copilot', icon: productIcons.dragonCopilot, area: 'dragon' },
+  { name: 'Microsoft Fabric', icon: productIcons.fabric, area: 'fabric' },
+  { name: 'Microsoft Foundry', icon: productIcons.foundry, area: 'foundry' },
+  { name: 'Agent 365', icon: productIcons.agent365, area: 'agent' },
+  { name: 'Microsoft Azure', icon: productIcons.azure, area: 'azure' },
+];
+
+const agentPanels = [
+  { persona: 'IT Admin', quote: 'Control, govern & monitor agents across the org', product: 'Microsoft 365 Admin Center', image: '/assets/images/posts/all-aboard/native-assets/agent365-it-admin.png' },
+  { persona: 'Business Leaders', quote: 'Deliver measurable outcomes and ROI', product: 'Agent Dashboard', image: '/assets/images/posts/all-aboard/native-assets/agent365-business.png' },
+  { persona: 'SecOps Analyst', quote: 'Detect threats & secure agent activity in real time', product: 'Microsoft Defender', image: '/assets/images/posts/all-aboard/native-assets/agent365-secops.png' },
+  { persona: 'Data Security Admin', quote: 'Protect data & enforce compliance policies', product: 'Microsoft Purview', image: '/assets/images/posts/all-aboard/native-assets/agent365-purview.png' },
+  { persona: 'Identity & Access Admin', quote: 'Manage identities & access for agents and users', product: 'Microsoft Entra', image: '/assets/images/posts/all-aboard/native-assets/agent365-entra.png' },
+];
+
+const foundations = [
+  { label: 'Identities', icon: 'lock' },
+  { label: 'Endpoints', icon: 'laptop' },
+  { label: 'Cloud', icon: 'cloud' },
+  { label: 'Data', icon: 'data' },
+  { label: 'Apps', icon: 'gear' },
+];
+
+const foundationProducts = [
+  { label: 'Microsoft Entra', image: '/assets/images/posts/all-aboard/native-assets/ms-entra.png' },
+  { label: 'Microsoft Intune', image: '/assets/images/posts/all-aboard/native-assets/ms-intune.png' },
+  { label: 'Microsoft Defender', image: '/assets/images/posts/all-aboard/native-assets/ms-defender.png' },
+  { label: 'Microsoft Purview', image: '/assets/images/posts/all-aboard/native-assets/ms-purview.png' },
+  { label: 'Microsoft Sentinel', image: '/assets/images/posts/all-aboard/native-assets/ms-sentinel.png' },
+];
+
+const securityNodes = [
+  { type: 'lock', x: 9, y: 26 }, { type: 'lock', x: 15, y: 44 }, { type: 'lock', x: 23, y: 26 }, { type: 'lock', x: 31, y: 46 },
+  { type: 'cloud', x: 39, y: 59 }, { type: 'data', x: 52, y: 14 }, { type: 'cloud', x: 52, y: 55 }, { type: 'data', x: 61, y: 27 },
+  { type: 'data', x: 68, y: 14 }, { type: 'gear', x: 73, y: 34 }, { type: 'gear', x: 78, y: 62 }, { type: 'gear', x: 82, y: 49 },
+  { type: 'laptop', x: 93, y: 28 }, { type: 'laptop', x: 93, y: 55 }, { type: 'laptop', x: 99, y: 42 },
+];
+
+const securityEdges = [
+  [0, 5], [0, 4], [1, 3], [2, 5], [2, 9], [3, 4], [4, 5], [5, 6], [6, 10], [7, 9], [8, 12], [9, 12], [10, 11], [11, 12], [12, 14], [13, 14],
+];
+
+function slideLabel(id: string) {
+  return `PowerPoint slide ${id}`;
+}
+---
+
+<section class={`aas aas-${n}`} data-deck-slide={n} aria-label={slideLabel(n)}>
+  {n === '03' && (
+    <>
+      <header class="aas-title center">
+        <h3>Microsoft 365 E7</h3>
+        <p>The Frontier Suite</p>
+      </header>
+      <div class="ga-pill">Generally Available</div>
+      <div class="suite-frame">
+        <div class="suite-card">
+          <span class="brand-text microsoft-mark">Microsoft 365</span>
+          <strong>Microsoft 365 E5<br /><small>+<br />Entra Suite</small></strong>
+          <hr />
+          <span>Secure productive work</span>
+        </div>
+        <span class="suite-plus">+</span>
+        <div class="suite-card">
+          <img class="product-image" src={productIcons.m365Copilot} alt="Microsoft 365 Copilot" loading="eager" />
+          <strong>Microsoft 365<br />Copilot</strong>
+          <hr />
+          <span>AI built for work</span>
+        </div>
+        <span class="suite-plus">+</span>
+        <div class="suite-card">
+          <span class="product-logo" set:html={msLogos.agent365}></span>
+          <strong>Microsoft<br />Agent 365</strong>
+          <hr />
+          <span>Control plane for agents</span>
+        </div>
+        <div class="workiq-bar">Work IQ</div>
+      </div>
+      <p class="slide-foot">Available with or without Teams</p>
+    </>
+  )}
+
+  {n === '04' && (
+    <>
+      <header class="aas-title left">
+        <h3>AI adoption is accelerating and<br />agents are at the forefront</h3>
+      </header>
+      <div class="stats-row">
+        <article class="stat-card hero-stat"><strong>1.3B</strong><span>AI agents</span><em>by 2028</em><b>IDC</b></article>
+        <article class="stat-card"><strong>82%</strong><span>of organizations intend to integrate them within 1-3 years</span><b>Capgemini</b></article>
+        <article class="stat-card"><strong>40%</strong><span>of enterprise apps will be integrated with task-specific AI agents by 2026</span><b>Gartner</b></article>
+      </div>
+    </>
+  )}
+
+  {n === '05' && (
+    <>
+      <header class="aas-title center iq-heading"><h3>Microsoft IQ Platform</h3></header>
+      <div class="iq-trust-line"><span></span><strong>Intelligence + Trust</strong><span></span></div>
+      <div class="iq-frame">
+        {iqTiles.map((tile) => (
+          <article class={`iq-tile iq-${tile.area}`}>
+            <img src={tile.icon} alt="" loading="eager" />
+            <strong set:html={tile.name.replace('\n', '<br />')}></strong>
+          </article>
+        ))}
+        <div class="iq-orb"><strong>Microsoft IQ</strong><span>Work IQ<br />Fabric IQ<br />Foundry IQ</span></div>
+      </div>
+      <div class="iq-foundation-products">
+        {foundationProducts.map((item) => <span><img src={item.image} alt="" loading="eager" />{item.label}</span>)}
+      </div>
+    </>
+  )}
+
+  {n === '06' && (
+    <>
+      <header class="aas-title left"><h3>Same lifecycle, two populations</h3></header>
+      <div class="lane-label">Humans, since 1992</div>
+      <div class="life-lane muted">{['Sponsor', 'Provision', 'Review', 'Reassign', 'Retire', 'Audit'].map((label) => <span>{label}</span>)}</div>
+      <div class="life-lane agent">{['Sponsor', 'Provision', 'Review', 'Reassign', 'Retire', 'Audit'].map((label) => <span>{label}</span>)}</div>
+      <div class="lane-label bottom">Agents, starting now</div>
+    </>
+  )}
+
+  {n === '07' && (
+    <div class="trust-slide">
+      <h3>To unlock the potential of agentic AI, we need to start with trust.</h3>
+      <p>And trust starts with <span>security</span></p>
+    </div>
+  )}
+
+  {n === '08' && (
+    <>
+      <header class="aas-title center"><h3>Recognized as a leader across the threat surface</h3></header>
+      <div class="mq-grid">
+        {gartnerCards.map((mq) => (
+          <article><img src={mq.image} alt={`Gartner Magic Quadrant for ${mq.title}`} loading="eager" /><span>Gartner® Magic Quadrant™ for</span><strong>{mq.title}</strong></article>
+        ))}
+      </div>
+      <p class="gartner-note">Gartner and Magic Quadrant are trademarks of Gartner, Inc. and/or its affiliates. Gartner does not endorse any company, vendor, product or service depicted in its publications.</p>
+    </>
+  )}
+
+  {n === '09' && (
+    <>
+      <header class="aas-title center"><h3>Microsoft Agent 365</h3><p>The control plane for agents</p></header>
+      <div class="agent-dashboard-strip">
+        {agentPanels.map((panel) => (
+          <article>
+            <img src={panel.image} alt="" loading="eager" />
+            <div><strong>{panel.persona}</strong><small>“{panel.quote}“</small></div>
+            <b>{panel.product}</b>
+          </article>
+        ))}
+      </div>
+      <div class="shared-foundation">
+        {['Registry & Identity', 'Access Control & Policies', 'Observability', 'Tools Gateway', 'Run-time Protection', 'Security'].map((item) => <span>{item}</span>)}
+      </div>
+    </>
+  )}
+
+  {n === '10' && (
+    <>
+      <header class="aas-title center"><h3>All Aboard</h3><p>Six Pillars - One Control Plane</p></header>
+      <div class="ticket-layout">
+        <div class="ticket-copy">
+          <p>Every agent you bring into the enterprise makes the same six-step trip - Build, Identify, Entitle, Run, Observe, Govern.</p>
+          <ul>
+            <li><strong>Trust before control.</strong> There is nothing to secure if the customer does not trust you in the room.</li>
+            <li><strong>Control plane, not IDP.</strong> The control plane can bridge.</li>
+            <li><strong>Agents are users.</strong> Measure twice, cut once.</li>
+          </ul>
+        </div>
+        <div class="ticket-stops">
+          <strong>One Ticket - Six Stops</strong>
+          {['Build', 'Identify', 'Entitle', 'Run', 'Observe', 'Govern'].map((stop, index) => <span><b>{String(index + 1).padStart(2, '0')}</b>{stop}</span>)}
+        </div>
+      </div>
+    </>
+  )}
+
+  {n === '11' && (
+    <>
+      <header class="aas-title left"><h3>Six steps. Every agent. From the whiteboard to the day it gets turned off.</h3></header>
+      <div class="step-grid detailed">
+        {lifecycleDetails.map((step) => (
+          <article class="step-card" style={`--accent:${step.accent}`}>
+            <header><span>{step.num}</span><strong>{step.label}</strong></header>
+            <div class="mini-products">{step.products.map((name, i) => <span><i set:html={msLogos[step.logos[i]]}></i>{name}</span>)}</div>
+            <p>{step.body}</p>
+            <b>What good looks like</b>
+            <small>{step.good}</small>
+          </article>
+        ))}
+      </div>
+      <div class="step-explainer"><strong>Same six steps every time.</strong><span>The differences between vendors and platforms only become visible once you draw the trip end to end.</span><strong>Why this matters.</strong><span>Most agent conversations skip straight to a tool in one of these steps. Executives need to see the whole trip before they can pick where to spend.</span></div>
+    </>
+  )}
+
+  {n === '12' && (
+    <>
+      <header class="aas-title left"><h3>The Agentic Enterprise Today</h3></header>
+      <div class="step-grid local-grid">
+        {localStops.map((stop, index) => (
+          <article class="step-card local-card" style={`--accent:${stop.accent}`}>
+            <header><span>{String(index + 1).padStart(2, '0')}</span><strong>{stop.label}</strong></header>
+            <div class="mini-products">{stop.tools.map((tool) => <span>{tool.logo && <i set:html={vendorLogos[tool.logo]}></i>}{tool.name}</span>)}</div>
+          </article>
+        ))}
+      </div>
+      <div class="route-band local-route">
+        <strong>LOCAL · stops 1 of 6</strong>
+        <div class="local-car" aria-hidden="true"><i></i><i></i><i></i><i></i><b></b><b></b><b></b></div>
+        <div class="rail-line" aria-hidden="true">{Array.from({ length: 24 }).map(() => <span></span>)}</div>
+        <p>Six stops. Six budget owners. Six different operators on one trip.</p>
+      </div>
+    </>
+  )}
+
+  {n === '13' && (
+    <>
+      <header class="aas-title left"><h3>Six steps. Every agent. From the whiteboard to the day it gets turned off.</h3></header>
+      <div class="step-grid express-grid">
+        {lifecycle.map((step) => (
+          <article class="step-card express-card" style="--accent:#0784d8">
+            <header><span>{step.num}</span><strong>{step.label}</strong></header>
+            <div class="mini-products">{step.ms.map((name, i) => <span><i set:html={msLogos[step.logos[i]]}></i>{name}</span>)}</div>
+          </article>
+        ))}
+      </div>
+      <div class="route-band express-route">
+        <strong>ALL-ABOARD EXPRESS · one route · one operator</strong>
+        <div class="speed-lines" aria-hidden="true"><span></span><span></span><span></span></div>
+        <div class="bullet-train" aria-hidden="true">{Array.from({ length: 8 }).map(() => <i></i>)}<b></b></div>
+        <div class="glow-rail" aria-hidden="true"></div>
+        <p>Same six pillars. One platform underneath. One ticket end to end.</p>
+      </div>
+    </>
+  )}
+
+  {n === '14' && (
+    <>
+      <header class="aas-title center"><h3>Secure foundations</h3></header>
+      <div class="security-frame">
+        <div class="security-copilot"><img src={productIcons.securityCopilot} alt="" loading="eager" /><strong>Microsoft<br />Security Copilot</strong></div>
+        <div class="network-map">
+          <svg class="security-lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+            {securityEdges.map(([from, to]) => {
+              const start = securityNodes[from];
+              const end = securityNodes[to];
+              return <line x1={start.x} y1={start.y} x2={end.x} y2={end.y} />;
+            })}
+          </svg>
+          {securityNodes.map((node) => <span class={`network-node node-${node.type}`} style={`--x:${node.x};--y:${node.y}`}></span>)}
+        </div>
+        <div class="foundation-nodes">{foundations.map((item) => <div><span class={`domain-icon icon-${item.icon}`}></span><strong>{item.label}</strong></div>)}</div>
+        <div class="foundation-product-row">{foundationProducts.map((item) => <span><img src={item.image} alt="" loading="eager" />{item.label}</span>)}</div>
+      </div>
+      <div class="shared-foundation bottom-foundation">{['Registry & Identity', 'Access Control & Policies', 'Observability', 'Tools Gateway', 'Run-time Protection', 'Security'].map((item) => <span>{item}</span>)}</div>
+    </>
+  )}
+</section>
+
+<style>
+  .aas {
+    aspect-ratio: 16 / 9;
+    width: 100%;
+    box-sizing: border-box;
+    position: relative;
+    overflow: hidden;
+    padding: clamp(1.5em, 1em + 2.1cqw, 3.6em);
+    background:
+      radial-gradient(130% 95% at 12% -10%, rgba(89,159,253,0.32), transparent 54%),
+      radial-gradient(120% 95% at 92% 115%, rgba(250,220,20,0.16), transparent 58%),
+      linear-gradient(150deg, #0e2a52 0%, #0b2344 55%, #081a36 100%);
+    color: #fff;
+    font-family: inherit;
+    font-size: clamp(6px, 1.2cqw, 15px);
+    container-type: inline-size;
+  }
+
+  .aas-title h3 { margin: 0; font-size: clamp(1.8em, 1.1em + 3cqw, 3em); line-height: 1.12; font-weight: 800; }
+  .aas-title p { margin: 0.25em 0 0; color: #b9d9f7; font-size: clamp(1em, 0.7em + 1.35cqw, 1.75em); font-weight: 700; }
+  .center { text-align: center; }
+  .left { text-align: left; }
+
+  .ga-pill { position: absolute; top: 26.2%; left: 50%; transform: translateX(-50%); z-index: 3; padding: 0.45em 4.8em; border-radius: 11px; background: #d9edf8; color: #000; font-size: clamp(0.9em, 0.7em + 0.8cqw, 1.25em); font-weight: 800; }
+  .suite-frame { position: absolute; left: 4.7%; right: 4.7%; top: 29%; bottom: 13%; display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; gap: 1.1em; align-items: start; padding: 2.6em 1.8em 4.8em; border: 2px solid #0088e8; border-radius: 38px; }
+  .suite-card { height: calc(100% - 3.6em); min-height: 0; border-radius: 27px; background: #f7f7f7; color: #000; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; gap: 0.62em; padding: 0.9em 1em; box-sizing: border-box; }
+  .suite-card strong { font-size: clamp(1.2em, 0.9em + 1.25cqw, 1.8em); line-height: 1.2; }
+  .suite-card small { font-size: 0.78em; line-height: 0.95; }
+  .suite-card hr { width: 45%; border: 0; border-top: 1px solid #ddd; }
+  .microsoft-mark { color: #777; font-size: clamp(0.9em, 0.7em + 0.75cqw, 1.25em); font-weight: 800; }
+  .suite-plus { color: #fff; font-size: 2.2em; font-weight: 900; }
+  .workiq-bar { position: absolute; left: 2.4%; right: 2.4%; bottom: 1.45em; padding: 0.3em; border-radius: 999px; background: #f7f7f7; color: #000; text-align: center; font-size: clamp(1.15em, 0.85em + 1.2cqw, 1.75em); font-weight: 800; box-shadow: 0 0 0 1px rgba(0,0,0,0.04); }
+  .slide-foot { position: absolute; bottom: 6.5%; left: 0; right: 0; text-align: center; font-size: 0.72em; font-style: italic; }
+
+  .product-logo, .product-glyph { width: clamp(2em, 1.3em + 2.4cqw, 3.4em); height: clamp(2em, 1.3em + 2.4cqw, 3.4em); display: inline-grid; place-items: center; border-radius: 10px; background: #fff; padding: 0.25em; box-sizing: border-box; }
+  .product-logo :global(svg), .mini-products i :global(svg) { width: 100%; height: 100%; display: block; }
+  .product-image { width: clamp(2.4em, 1.6em + 2.5cqw, 4em); height: clamp(2.4em, 1.6em + 2.5cqw, 4em); object-fit: contain; display: block; }
+  .large { width: 5em; height: 5em; }
+  .copilot-glyph { background: conic-gradient(from 210deg, #01a6f0, #7c5cff, #ff7fb3, #f5cc37, #01a6f0); border-radius: 18px; }
+
+  .stats-row { position: absolute; left: 5%; right: 5%; top: 31%; bottom: 10%; display: grid; grid-template-columns: 1.05fr 1fr; grid-template-rows: 1fr 1fr; gap: 1em; align-items: stretch; }
+  .stat-card { position: relative; border-radius: 8px; background: #fff; color: #06183a; border: 1px solid rgba(255,255,255,0.18); padding: 1.2em; text-align: left; display: flex; flex-direction: column; justify-content: center; }
+  .hero-stat { grid-row: 1 / span 2; }
+  .stat-card strong { color: #0078d4; font-size: clamp(3.2em, 2.2em + 4cqw, 5.4em); line-height: 0.9; }
+  .stat-card span { margin-top: 0.35em; max-width: 18em; font-size: clamp(0.92em, 0.72em + 0.9cqw, 1.4em); font-weight: 700; color: #06183a; }
+  .stat-card em { margin-top: auto; font-size: 1.85em; color: #111; font-style: normal; }
+  .stat-card b { position: absolute; right: 1.2em; bottom: 1em; color: #111; font-size: 1em; }
+
+  .iq-heading { margin-top: 0.65em; }
+  .iq-trust-line { position: absolute; left: 13%; right: 13%; top: 18.2%; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 1.2em; color: #fff; font-size: 1.15em; font-weight: 800; }
+  .iq-trust-line span { height: 1px; background: rgba(255,255,255,0.72); position: relative; }
+  .iq-trust-line span:first-child::before, .iq-trust-line span:last-child::after { content: ''; position: absolute; top: 50%; width: 0; height: 0; border-top: 0.35em solid transparent; border-bottom: 0.35em solid transparent; transform: translateY(-50%); }
+  .iq-trust-line span:first-child::before { left: -0.5em; border-right: 0.62em solid rgba(255,255,255,0.72); }
+  .iq-trust-line span:last-child::after { right: -0.5em; border-left: 0.62em solid rgba(255,255,255,0.72); }
+  .iq-frame { position: absolute; left: 12%; right: 12%; top: 23%; bottom: 8.7%; display: grid; grid-template-columns: 1.05fr 1.35fr 1.35fr 1.05fr; grid-template-rows: 1fr 1fr 0.68fr; gap: 0.75em; padding: 1em 1.35em 3.7em; border: 1px solid #0f8fff; border-radius: 0.9em; background: rgba(7,33,45,0.45); }
+  .iq-tile { background: #fff; color: #06183a; border-radius: 0.8em; display: grid; place-items: center; align-content: center; gap: 0.55em; text-align: center; font-weight: 900; line-height: 1.12; padding: 0.7em; }
+  .iq-tile img { width: 3em; height: 3em; object-fit: contain; }
+  .iq-studio, .iq-github { align-content: start; padding-top: 1.45em; }
+  .iq-fabric, .iq-foundry { align-content: end; padding-bottom: 1.45em; }
+  .iq-m365 { grid-column: 1; grid-row: 1; }
+  .iq-dragon { grid-column: 1; grid-row: 2; }
+  .iq-studio { grid-column: 2; grid-row: 1; }
+  .iq-github { grid-column: 3; grid-row: 1; }
+  .iq-fabric { grid-column: 2; grid-row: 2; }
+  .iq-foundry { grid-column: 3; grid-row: 2; }
+  .iq-agent { grid-column: 4; grid-row: 1 / span 2; }
+  .iq-azure { grid-column: 1 / -1; grid-row: 3; }
+  .iq-orb { position: absolute; left: 50%; top: 44%; width: 9.25em; aspect-ratio: 1; transform: translate(-50%, -50%); border-radius: 50%; background: linear-gradient(135deg, #e8f6ff 0%, #f8edf8 100%); border: 1px solid #b9c3d0; color: #06183a; display: grid; place-content: center; text-align: center; gap: 0.42em; box-shadow: 0 0.2em 1.2em rgba(0,0,0,0.12); }
+  .iq-orb strong { font-size: 1.2em; }
+  .iq-orb span { font-size: 0.78em; line-height: 1.35; }
+  .iq-foundation-products { position: absolute; left: 17.6%; right: 17.6%; bottom: 1.15%; display: grid; grid-template-columns: repeat(5, 1fr); gap: 0; padding: 0.65em 1.2em; border: 0.16em solid #0088e8; border-radius: 999px; background: #fff; color: #111; text-align: center; }
+  .iq-foundation-products span { min-width: 0; display: grid; place-items: center; gap: 0.25em; border-right: 1px dashed #0088e8; font-size: 0.72em; font-weight: 800; }
+  .iq-foundation-products span:last-child { border-right: 0; }
+  .iq-foundation-products img { width: 2em; height: 2em; object-fit: contain; }
+
+  .lane-label { margin-top: 7.8%; font-size: clamp(1em, 0.75em + 1.1cqw, 1.65em); }
+  .lane-label.bottom { margin-top: 0.3em; }
+  .life-lane { margin-top: 0.5em; padding: 1.7em 2.6em; border-radius: 7px; display: grid; grid-template-columns: repeat(6, 1fr); gap: 1.4em; background: #40515b; }
+  .life-lane.agent { margin-top: 1.8em; background: #254d60; }
+  .life-lane span { background: #fff; color: #000; border-radius: 8px; text-align: center; padding: 0.8em 0.45em; font-size: clamp(0.86em, 0.65em + 1cqw, 1.55em); }
+
+  .trust-slide { height: 100%; display: grid; place-content: center; text-align: center; gap: 1.2em; }
+  .trust-slide h3 { margin: 0; font-size: clamp(1.7em, 1.1em + 2.1cqw, 2.55em); line-height: 1.2; max-width: 31em; font-weight: 500; }
+  .trust-slide p { margin: 0; font-size: clamp(1.45em, 0.9em + 1.7cqw, 2.4em); color: #fff; font-weight: 400; }
+  .trust-slide p span { display: inline-block; padding: 0.08em 0.35em 0.13em; border-radius: 6px; background: #e6edf2; color: #06183a; }
+
+  .aas-08 .aas-title h3 { font-size: clamp(1.7em, 1em + 2.3cqw, 2.35em); }
+  .mq-grid { margin-top: 5.2%; display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.75em; }
+  .mq-grid article { min-height: 18.6em; display: flex; flex-direction: column; justify-content: space-between; gap: 0.6em; padding: 0.68em; border-radius: 7px; background: linear-gradient(180deg, #ffffff 0%, #f7f4ff 100%); color: #06183a; text-align: center; border: 1px solid rgba(165,184,238,0.9); box-shadow: 0 0 0 1px rgba(255,255,255,0.24), 0 12px 24px rgba(0,0,0,0.18); }
+  .mq-grid article img { width: 100%; aspect-ratio: 1.02; object-fit: cover; display: block; border-radius: 3px; border: 1px solid #e6ebf2; background: #fff; }
+  .mq-grid article span { font-size: 0.58em; color: #263c50; font-weight: 800; text-transform: uppercase; }
+  .mq-grid article strong { font-size: clamp(0.78em, 0.58em + 0.52cqw, 0.98em); line-height: 1.12; }
+  .gartner-note { position: absolute; left: 6%; right: 6%; bottom: 4%; font-size: 0.45em; line-height: 1.25; color: rgba(255,255,255,0.66); }
+
+  .aas-09 .aas-title { position: relative; z-index: 3; width: max-content; max-width: 62%; margin: 0 auto; padding: 0.65em 2.4em; border-radius: 999px; background: #087bdc; }
+  .aas-09 .aas-title::before { content: ''; position: absolute; left: 2em; top: 50%; width: 3em; height: 3em; transform: translateY(-50%); border-radius: 50%; background: #fff url('/assets/images/posts/all-aboard/native-assets/agent-365.png') center / 72% no-repeat; box-shadow: 0 0 0 1px rgba(0,0,0,0.12); }
+  .aas-09 .aas-title h3, .aas-09 .aas-title p { margin-left: 2.3em; }
+  .aas-09 .aas-title p { color: #eaf5ff; }
+  .agent-dashboard-strip { position: absolute; left: 4.5%; right: 4.5%; top: 25%; bottom: 17.8%; display: grid; grid-template-columns: repeat(5, 1fr); gap: 1em; padding: 4.6em 1.25em 8.6em; border-radius: 0.9em; background: linear-gradient(180deg, #dfe5e9 0%, #cfd6db 100%); color: #06183a; }
+  .agent-dashboard-strip::before { content: ''; position: absolute; left: 9%; right: 9%; top: 3.55em; height: 1px; background: #0b84d8; }
+  .agent-dashboard-strip::after { content: ''; position: absolute; left: 2%; right: 2%; bottom: 1.15em; height: 5.55em; border-radius: 0.55em; background: #c9d8f8; border: 1px solid #fff; }
+  .agent-dashboard-strip article { position: relative; z-index: 1; display: grid; grid-template-rows: 1fr auto auto; gap: 0.55em; min-width: 0; }
+  .agent-dashboard-strip article::before { content: ''; position: absolute; top: -1.72em; left: 50%; width: 1px; height: 1.4em; background: #0b84d8; }
+  .agent-dashboard-strip article::after { content: ''; position: absolute; top: -1.9em; left: 50%; width: 0.55em; height: 0.55em; border-left: 1px solid #0b84d8; border-bottom: 1px solid #0b84d8; transform: translateX(-50%) rotate(-45deg); }
+  .agent-dashboard-strip article img { width: 100%; aspect-ratio: 1.86; object-fit: cover; display: block; border-radius: 0.25em; border: 1px solid #fff; background: #fff; box-shadow: 0 0.35em 1em rgba(0,0,0,0.08); }
+  .agent-dashboard-strip article div { min-height: 4.5em; border-radius: 0.35em; background: #dbe7ff; border: 1px solid #fff; padding: 0.55em; text-align: center; display: grid; align-content: center; gap: 0.2em; }
+  .agent-dashboard-strip article strong { font-size: 0.78em; line-height: 1.05; }
+  .agent-dashboard-strip article small { font-size: 0.55em; line-height: 1.18; }
+  .agent-dashboard-strip article b { min-height: 2.35em; display: grid; place-items: center; border: 1px solid #5b84df; border-radius: 0.25em; background: #fff; color: #0b3fb3; font-size: 0.66em; text-align: center; padding: 0.3em; }
+  .stakeholders { display: grid; gap: 0.8em; }
+  .stakeholders span { padding: 0.7em; border-radius: 12px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.18); text-align: center; font-weight: 800; }
+  .agent-center { border-radius: 24px; background: #fff; color: #06183a; min-height: 14em; display: grid; place-items: center; text-align: center; padding: 1em; }
+  .agent-center strong { font-size: 1.65em; }
+  .shared-foundation { position: absolute; left: 7%; right: 7%; bottom: 10%; display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.5em; }
+  .aas-09 .shared-foundation { left: 7.1%; right: 7.1%; bottom: 20.2%; grid-template-columns: repeat(6, 1fr); gap: 0.9em; background: transparent; padding: 2.05em 1.15em 0.75em; border: 0; border-radius: 0.55em; z-index: 2; }
+  .aas-09 .shared-foundation::before { content: 'Shared Foundation'; position: absolute; left: 0; right: 0; top: 0.28em; color: #0b68ff; text-align: center; font-weight: 900; font-size: 0.95em; }
+  .shared-foundation span { background: #fff; color: #06183a; border-radius: 7px; padding: 0.55em; text-align: center; font-weight: 800; font-size: 0.7em; }
+  .bottom-foundation { grid-template-columns: repeat(6, 1fr); bottom: 3%; }
+  .platform-row { position: absolute; left: 12%; right: 12%; bottom: 3%; }
+  .aas-09 .platform-row { left: 8%; right: 8%; bottom: 4%; }
+
+  .ticket-layout { margin-top: 2.5em; display: grid; grid-template-columns: 1fr 0.82fr; gap: 2em; }
+  .ticket-copy { border-radius: 22px; background: rgba(255,255,255,0.08); padding: 1.4em; font-size: clamp(0.8em, 0.64em + 0.65cqw, 1em); }
+  .ticket-copy ul { margin: 1em 0 0; padding-left: 1.1em; }
+  .ticket-stops { border-radius: 22px; background: #fff; color: #06183a; padding: 1.4em; display: grid; gap: 0.48em; }
+  .ticket-stops strong { text-align: center; font-size: 1.3em; }
+  .ticket-stops span { display: grid; grid-template-columns: auto 1fr; gap: 0.8em; align-items: center; padding: 0.42em 0.7em; border-radius: 999px; background: #eaf5ff; font-weight: 850; }
+
+  .step-grid { margin-top: 4em; display: grid; grid-template-columns: repeat(6, 1fr); gap: 0.7em; }
+  .step-card { background: #fff; color: #06183a; border-radius: 10px; overflow: hidden; min-height: 13em; }
+  .step-card header { display: flex; align-items: center; gap: 0.55em; background: var(--accent, #0784d8); color: #fff; padding: 0.45em 0.65em; text-transform: uppercase; }
+  .step-card header span { font-size: 0.7em; background: rgba(255,255,255,0.16); padding: 0.1em 0.35em; border-radius: 999px; }
+  .step-card header strong { font-size: clamp(0.72em, 0.55em + 0.6cqw, 1em); }
+  .detailed { margin-top: 2.6em; }
+  .detailed .step-card { min-height: 20.8em; display: flex; flex-direction: column; }
+  .detailed .step-card header { background: var(--accent); }
+  .detailed .step-card p { margin: 0; padding: 0.55em 0.7em; font-size: clamp(0.54em, 0.45em + 0.24cqw, 0.69em); line-height: 1.25; }
+  .detailed .step-card b { padding: 0.35em 0.7em 0; font-size: 0.64em; }
+  .detailed .step-card small { padding: 0.25em 0.7em 0.55em; font-size: 0.58em; line-height: 1.2; }
+  .mini-products { padding: 0.75em 0.7em; display: grid; gap: 0.45em; }
+  .mini-products span { display: flex; align-items: center; gap: 0.45em; padding: 0.35em; background: #f7f9fb; border-radius: 5px; font-size: clamp(0.52em, 0.45em + 0.24cqw, 0.72em); font-weight: 800; }
+  .mini-products i { width: 1.25em; height: 1.25em; display: inline-flex; flex: none; }
+  .step-explainer { position: absolute; left: 1%; right: 1%; bottom: 2.4%; display: grid; grid-template-columns: auto 1fr; gap: 0.3em 0.75em; padding: 0.8em 1em; border-radius: 2px; background: #cfe2ed; color: #06183a; font-size: 0.9em; line-height: 1.25; }
+  .step-explainer strong { color: #254d60; }
+
+  .local-grid, .express-grid { margin-top: 4em; }
+  .local-card header { background: var(--accent); }
+  .local-card .mini-products span { border-left: 0.28em solid var(--accent); }
+  .express-card header { background: #0784d8; }
+  .express-card .mini-products span { border-left: 0.28em solid #20a4ff; }
+  .route-band { position: absolute; left: 4.8%; right: 4.8%; bottom: 9%; height: 21.5%; overflow: hidden; }
+  .route-band strong { position: absolute; top: 14%; left: 16%; z-index: 2; letter-spacing: 0.18em; text-transform: uppercase; font-size: 0.7em; }
+  .route-band p { position: absolute; left: 0; right: 0; bottom: 8%; margin: 0; text-align: center; color: #405168; font-style: italic; font-weight: 800; font-size: 0.74em; }
+  .local-route { background: linear-gradient(180deg, #eee4ca 0%, #dfd0aa 100%); color: #2f2319; }
+  .rail-line { position: absolute; left: 12%; right: 12%; top: 57%; height: 0.16em; background: rgba(47,35,25,0.7); display: flex; justify-content: space-between; align-items: flex-end; }
+  .rail-line span { width: 0.09em; height: 0.95em; background: rgba(47,35,25,0.34); transform: translateY(0.42em); }
+  .local-car { position: absolute; left: 16%; top: 38%; width: 11.2em; height: 4em; border-radius: 0.4em 0.9em 0.8em 0.4em; background: linear-gradient(180deg, #b16a3d 0%, #7c3f20 100%); border: 0.22em solid #5b2f1b; box-shadow: 0 0.25em 0 rgba(0,0,0,0.18); }
+  .local-car::after { content: ''; position: absolute; right: -0.78em; top: 0.55em; border-left: 0.95em solid #7c3f20; border-top: 1.55em solid transparent; border-bottom: 1.55em solid transparent; }
+  .local-car i { position: relative; z-index: 1; display: inline-block; width: 1.55em; height: 1.15em; margin: 0.7em 0 0 0.55em; background: #f2dcc5; border: 0.12em solid rgba(91,47,27,0.7); }
+  .local-car b { position: absolute; bottom: -0.85em; width: 1.15em; height: 1.15em; border-radius: 50%; background: #111; box-shadow: inset 0 0 0 0.18em #000; }
+  .local-car b:nth-of-type(1) { left: 1.15em; }
+  .local-car b:nth-of-type(2) { left: 4.75em; }
+  .local-car b:nth-of-type(3) { left: 8.45em; }
+  .express-route { left: 0; right: 0; bottom: 0; height: 29%; background: linear-gradient(180deg, #1f4a91 0%, #0a1d3d 100%); color: #FADC14; }
+  .express-route strong { left: 0; right: 0; top: 14%; text-align: center; letter-spacing: 0.16em; }
+  .express-route p { bottom: 8%; color: rgba(255,255,255,0.35); letter-spacing: 0.16em; text-transform: uppercase; font-style: normal; }
+  .glow-rail { position: absolute; left: 12%; right: 11%; bottom: 33%; height: 0.26em; border-radius: 999px; background: #FADC14; box-shadow: 0 0 1em rgba(250,220,20,0.9); }
+  .speed-lines { position: absolute; left: 23%; top: 42%; display: grid; gap: 0.55em; }
+  .speed-lines span { display: block; height: 0.16em; border-radius: 999px; background: #FADC14; box-shadow: 0 0 0.55em rgba(250,220,20,0.6); }
+  .speed-lines span:nth-child(1) { width: 5.5em; }
+  .speed-lines span:nth-child(2) { width: 7.2em; transform: translateX(-1.7em); }
+  .speed-lines span:nth-child(3) { width: 4.8em; transform: translateX(0.7em); }
+  .bullet-train { position: absolute; left: 31%; right: 16%; top: 41%; height: 3.4em; border-radius: 1.4em 55% 55% 1.4em; background: linear-gradient(180deg, #f3f8ff 0%, #cfe6ff 48%, #599FFD 100%); border: 0.16em solid #2d68c4; box-shadow: 0 0.45em 1.3em rgba(89,159,253,0.5); display: flex; align-items: flex-start; gap: 1em; padding-left: 2.4em; }
+  .bullet-train::before { content: ''; position: absolute; left: 0; right: 6%; top: 61%; height: 0.18em; background: #FADC14; box-shadow: 0 0 0.45em rgba(250,220,20,0.8); }
+  .bullet-train::after { content: ''; position: absolute; right: 4%; top: 18%; width: 6.4em; height: 0.8em; transform: skewX(-20deg); background: #132542; border-radius: 0.1em 1em 0 0; }
+  .bullet-train i { width: 3.2em; height: 0.75em; margin-top: 0.65em; border-radius: 0.12em; background: #17233b; }
+  .bullet-train b { position: absolute; right: 1.15em; top: 2.1em; width: 0.45em; height: 0.45em; border-radius: 50%; background: #FADC14; box-shadow: 0 0 0.8em rgba(250,220,20,0.9); }
+
+  .security-frame { position: absolute; left: 9.5%; right: 4.8%; top: 21%; bottom: 15%; border: 2px solid #0088e8; border-radius: 0.65em; background: #fff; color: #06183a; }
+  .security-copilot { position: absolute; left: -5.2%; top: 47%; transform: translateY(-50%); width: 8em; aspect-ratio: 1; border-radius: 50%; background: #fff; border: 2px solid #06183a; display: grid; place-items: center; text-align: center; font-size: 0.68em; z-index: 3; box-shadow: 0 0.25em 0.8em rgba(0,0,0,0.12); }
+  .security-copilot img { width: 4.6em; height: 3.55em; object-fit: contain; margin-top: 0.35em; }
+  .security-copilot strong { line-height: 1.05; margin-top: -0.25em; }
+  .network-map { position: absolute; inset: 6% 5.5% 32% 10%; }
+  .security-lines { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+  .security-lines line { stroke: #9f98b4; stroke-width: 0.34; vector-effect: non-scaling-stroke; }
+  .network-node { position: absolute; left: calc(var(--x) * 1%); top: calc(var(--y) * 1%); width: 2.45em; height: 2.45em; transform: translate(-50%, -50%); border-radius: 0.45em; background: #f8fbff; border: 1px solid #dce9ff; box-shadow: 0 0 0 1px rgba(89,159,253,0.14), 0 0.25em 0.7em rgba(50,70,110,0.12); }
+  .network-node::before, .network-node::after, .domain-icon::before, .domain-icon::after { content: ''; position: absolute; box-sizing: border-box; }
+  .node-lock::before, .icon-lock::before { left: 32%; top: 18%; width: 36%; height: 32%; border: 0.22em solid #5a5bd8; border-bottom: 0; border-radius: 0.6em 0.6em 0 0; }
+  .node-lock::after, .icon-lock::after { left: 25%; top: 42%; width: 50%; height: 42%; border-radius: 0.2em; background: linear-gradient(135deg, #6e50d4, #3f66e5); }
+  .node-data::before, .icon-data::before { left: 24%; top: 20%; width: 52%; height: 56%; border-radius: 50% / 18%; background: linear-gradient(180deg, #6250d7, #4f78df); }
+  .node-data::after, .icon-data::after { left: 28%; top: 22%; width: 44%; height: 15%; border-radius: 50%; background: rgba(255,255,255,0.55); }
+  .node-laptop::before, .icon-laptop::before { left: 22%; top: 26%; width: 56%; height: 42%; border-radius: 0.18em; background: linear-gradient(180deg, #6250d7, #3f66e5); }
+  .node-laptop::after, .icon-laptop::after { left: 14%; top: 72%; width: 72%; height: 0.28em; border-radius: 999px; background: #5f6fd9; }
+  .node-cloud::before, .icon-cloud::before { left: 18%; top: 42%; width: 64%; height: 34%; border-radius: 999px; background: linear-gradient(135deg, #5170e8, #5ac2ef); }
+  .node-cloud::after, .icon-cloud::after { left: 33%; top: 27%; width: 34%; height: 34%; border-radius: 50%; background: #5170e8; box-shadow: 0.9em 0.45em 0 -0.14em #5ac2ef; }
+  .node-gear::before, .icon-gear::before { left: 25%; top: 25%; width: 50%; height: 50%; border-radius: 28%; background: linear-gradient(135deg, #4d64df, #6e50d4); transform: rotate(45deg); }
+  .node-gear::after, .icon-gear::after { left: 39%; top: 39%; width: 22%; height: 22%; border-radius: 50%; background: #fff; }
+  .foundation-nodes { position: absolute; left: 8.8%; right: 4.8%; bottom: 16.5%; display: grid; grid-template-columns: repeat(5, 1fr); gap: 2.1em; }
+  .foundation-nodes div { display: flex; align-items: center; gap: 0.55em; background: #0784d8; color: #fff; border-radius: 0.42em; padding: 0.45em; font-weight: 850; }
+  .domain-icon { position: relative; flex: none; width: 2.5em; height: 2.5em; border-radius: 0.35em; background: #eaf5ff; }
+  .foundation-product-row { position: absolute; left: 2%; right: 2%; bottom: -7.2%; background: #fff; border: 2px solid #0784d8; border-radius: 999px; padding: 0.75em 1em; display: grid; grid-template-columns: repeat(5, 1fr); gap: 0; text-align: center; font-size: 1em; z-index: 2; }
+  .foundation-product-row span { display: grid; place-items: center; gap: 0.25em; border-right: 1px dashed #0784d8; }
+  .foundation-product-row span:last-child { border-right: 0; }
+  .foundation-product-row img { width: 2.15em; height: 2.15em; object-fit: contain; }
+  .bottom-foundation { left: 20%; right: 15%; bottom: 1.7%; background: #0784d8; padding: 1.6em 0.75em 0.6em; border-radius: 0.35em; grid-template-columns: repeat(6, 1fr); gap: 0.65em; }
+  .bottom-foundation::before { content: 'Shared Foundation'; position: absolute; left: 0; right: 0; top: 0.18em; text-align: center; color: #fff; font-weight: 900; font-size: 0.95em; }
+
+  @keyframes local-chug {
+    0%, 100% { transform: translateX(-0.4em) translateY(0); }
+    24% { transform: translateX(0.8em) translateY(-0.05em); }
+    52% { transform: translateX(2.1em) translateY(0.06em); }
+    76% { transform: translateX(3em) translateY(-0.04em); }
+  }
+
+  @keyframes bullet-pass {
+    0% { transform: translateX(-19%); opacity: 0.08; }
+    16% { opacity: 1; }
+    48% { transform: translateX(8%); opacity: 1; }
+    58% { transform: translateX(18%); opacity: 0.12; }
+    100% { transform: translateX(18%); opacity: 0.12; }
+  }
+
+  @keyframes speed-pulse {
+    0%, 100% { transform: translateX(0); opacity: 0.3; }
+    28% { transform: translateX(-1.2em); opacity: 1; }
+    56% { transform: translateX(1.4em); opacity: 0.55; }
+  }
+
+  @keyframes signal-flow {
+    from { stroke-dashoffset: 0; }
+    to { stroke-dashoffset: -18; }
+  }
+
+  @keyframes node-float {
+    0%, 100% { transform: translate(-50%, -50%) translateY(0); }
+    50% { transform: translate(-50%, -50%) translateY(-0.36em); }
+  }
+
+  .local-car { animation: local-chug 8s ease-in-out infinite; }
+  .bullet-train { animation: bullet-pass 4.6s cubic-bezier(0.2, 0.8, 0.24, 1) infinite; }
+  .speed-lines span { animation: speed-pulse 1.7s ease-in-out infinite; }
+  .speed-lines span:nth-child(2) { animation-delay: 0.2s; }
+  .speed-lines span:nth-child(3) { animation-delay: 0.38s; }
+  .security-lines line { stroke-dasharray: 3 6; animation: signal-flow 5.5s linear infinite; }
+  .network-node { animation: node-float 7.2s ease-in-out infinite; }
+  .network-node:nth-of-type(3n) { animation-delay: -1.4s; }
+  .network-node:nth-of-type(4n) { animation-delay: -2.6s; }
+  .network-node:nth-of-type(5n) { animation-delay: -3.4s; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .local-car,
+    .bullet-train,
+    .speed-lines span,
+    .security-lines line,
+    .network-node { animation: none; }
+  }
+</style>

@@ -1,134 +1,148 @@
 ---
-description: "Run a general blog-post review pass on a draft article: optional research, optional anecdotes, executive-value audit, career-lens check, voice tuning, copyedit. Produces one consolidated review report and applies no edits without sign-off."
+description: "Run Thor's flexible blog creation flow on a draft, transcript, outline, or article: evidence first, optional public research, one narrative strategy pass, late voice/publish polish, and visual QA when needed."
 mode: "agent"
 ---
 
 # /article-pass
 
-You are the conductor. The user gives you one input: the path to the draft article being prepared. If they do not give one, ask for it before starting.
+You are the conductor for Thor Draper Jr's general blog creation flow. The input may be a draft article path, transcript, outline, deck summary, rough idea, or existing post. If the input is missing, ask for it before starting.
 
-This workflow takes a standard blog post (not a keynote, not the All Aboard talk) through a focused agent pass and returns one consolidated review report. For the All Aboard keynote specifically, use `/all-aboard-pass` instead. This pass is for everything else.
+This is not a micro-agent conveyor belt. It is an evidence-first workflow with a small default agent budget. Use durable judgment roles, then consolidate their findings into one action queue.
 
-## The core argument every agent must hold
+## Default Roles
 
-Before running the pass, get one thing from the user (or extract it from the draft and confirm it): the **core argument** of the post in one or two sentences. This is the north star every content agent measures the draft against, the same way `/all-aboard-pass` uses its thesis block.
+The default loop uses at most three durable roles:
 
-Paste the core argument verbatim into each content subagent's input (Anecdote Forge, Executive Value Auditor, Career Coach, Voice Editor). The E7 Research Analyst and Copyeditor do not need it.
+1. **Public Claims Researcher** for checkable factual claims, citations, product names, Microsoft/public docs, competitor references, healthcare/regulatory claims, and public-safety cuts.
+2. **Narrative Strategist** for structure, strategic frame, executive value, speakability, audience memory, career signal, and missing memorable moments.
+3. **Voice & Publish Editor** for late-stage Thor voice, transcript fidelity, copyediting, consistency, links, markers, and publish-readiness.
 
-A finding that pulls the draft away from its core argument is a regression. Flag it as `OFF-ARGUMENT` in that agent's section of the report.
+Optional specialists stay optional:
 
-## Hard rules for the conductor (you)
+- **HLS Provider Reality Check** only when provider realism is load-bearing.
+- **Site Reviewer** or **Presentation Reviewer** only when the rendered site, page UX, or presentation surface is the deliverable.
 
-1. **Review-only by default.** You apply no edits during this pass. You collect findings, present them, and ask for sign-off. Only after the user approves do you make changes in a separate follow-up turn.
-2. **One agent at a time, in the order below.** Do not parallelize. Each step's output is the next step's input.
-3. **Pass only what the next agent needs.** Do not paste the entire article into every subagent. The contracts below specify what each agent receives.
-4. **If a subagent returns an `UNVERIFIED`, `RED`, or `LINE FAILED BAR` style result, capture it verbatim.** Do not paper over a weak result with your own judgment.
-5. **Track progress with `manage_todo_list`** so the user can see which step is running.
-6. **At the end, produce one consolidated report**, then stop and ask for sign-off before applying any changes.
+## Intake
 
-## The pipeline
+Before running agents, identify:
 
-Steps 1 and 2 are conditional. Decide up front, and tell the user which steps you are running and why.
+- Source: draft, transcript, deck, outline, idea, or existing post.
+- Audience: public blog, customer executive, Microsoft field, healthcare provider leader, career/leadership reader, or other.
+- Core argument: one or two sentences. Extract it yourself when obvious; ask only if it is unclear.
+- Desired mode: `review-only`, `apply edits`, or `create draft`. Default to `review-only` unless the user asked for writing or edits.
+- Evidence available: transcript, speaker notes, deck, source links, prior posts, screenshots, or rendered page.
 
-### Step 1 -- E7 Research Analyst (conditional)
-**Run when.** The draft makes factual claims, cites figures, names products, or leans on external sources that a reader could check.
-**Skip when.** The post is pure opinion, personal story, or reflection with no checkable claims.
-**Input.** The full article body, plus the current date.
-**Ask for.** A verified citation table for every checkable claim, plus a `Gaps and stale citations` section. For claims that lean on public sources (official product pages, Microsoft Learn, public competitor material, reputable reporting), require a re-anchorable public URL before a claim is treated as verified.
-**Use.** `runSubagent` with `agentName: "E7 Research Analyst"`.
+When transcript or live-delivery evidence exists, give it extra weight. The draft can be cleaner than speech, but it should not erase the phrasing that made the idea sound like Thor.
 
-### Step 2 -- Anecdote Forge (conditional)
-**Run when.** A section states a takeaway but has no portable line, image, or short story to make it stick, and the post would benefit from one.
-**Skip when.** The draft already carries its own examples, or the piece is deliberately spare.
-**Input.** Only the section headings that need an artifact, plus the core argument. For each, give the agent the section heading, the one-sentence takeaway (you compose it, anchored to the core argument), and where it sits in the post. Do not pass the full article body.
-**Ask for.** One line, one image, one anecdote per requested section.
-**Use.** `runSubagent` with `agentName: "Anecdote Forge"`.
+## Workflow
 
-### Step 3 -- Executive Value Auditor
-**Input.** The full article body, plus the core argument, plus any anecdotes from step 2 mentally inserted (do not write to the file yet).
-**Ask for.** A green / yellow / red per-paragraph (or per-section) table and a short Bottom Line. Strip fluff; every paragraph should give the reader something to think about, decide on, or act on.
-**Use.** `runSubagent` with `agentName: "Executive Value Auditor"`.
+### 1. Evidence Map, Conductor Only
 
-### Step 4 -- Career Coach
-**Input.** The article body, plus the core argument, plus a one-paragraph context note from you describing the intended audience and where the post will live (the public blog, aimed at a CIO/CISO/VP reader).
-**Ask for.** Standard executive-lens review: does this position Thor as a future leader an executive would want in the room, and does it avoid reading as internal seller coaching or a sales motion (per the content rules in `.github/copilot-instructions.md`).
-**Use.** `runSubagent` with `agentName: "Career Coach"`.
+Read the source material and produce a compact map before judging:
 
-### Step 5 -- Voice Editor
-**Input.** The full article body, plus the core argument. Review-only on this pass.
-**Ask for.** A list of voice mismatches against Thor's established voice, with suggested rewrites. Hold the core argument intact while tuning tone; voice work sharpens how Thor says it, never what the post claims. Watch for the usual tells: generic AI phrasing, corporate-speak, em-dashes, and negative clarifications ("it's not X, it's Y").
-**Use.** `runSubagent` with `agentName: "Voice Editor"`.
+| Beat | Source of truth | Keep | Move | Cut | Evidence gap |
+|---|---|---|---|---|---|
 
-### Step 6 -- Copyeditor
-**Input.** The full article body. No core argument needed.
-**Ask for.** Typos, grammar, punctuation, and consistency fixes as a list. Review-only.
-**Use.** `runSubagent` with `agentName: "Copyeditor"`.
+Rules:
 
-### Step 7 -- Graphics and embedded-component QA (conditional, conductor, no subagent)
-**Run when.** The article embeds a custom component (a `[[TOKEN]]` placeholder, an `.astro` component, an inline `<svg>`, or a `<figure>` with a hand-built illustration).
-**Skip when.** The post is prose only, with no custom graphic or embedded component.
-**How.**
-1. Make sure the Astro dev server is running (`npm run dev` in `astro-site/`); reuse an existing instance, do not spawn a second.
-2. Open the rendered post in the integrated browser and screenshot every `<figure>`, inline SVG, and embedded component. Markdown review never renders these -- you must look at the pixels.
-3. Check each graphic against this checklist:
-   - **Illustration fidelity.** The drawing reads as the thing its caption or intent claims. The named object is recognizable (a "bullet train" looks like a bullet train), motion or directional cues point the correct way, and proportions and orientation are right.
-   - **Asset completeness.** Every brand, product, or logo shown uses a real logo. **Zero monogram, letter-tile, or placeholder fallbacks in a finished article.** A live fallback is an incomplete asset, not a final state -- flag each one.
-   - **Caption-to-graphic match.** Labels, counts, and annotations inside the graphic match the surrounding copy.
-**Produce (yourself).** A `PASS` / `FAIL` line per graphic, with a one-line defect note for each `FAIL`.
+- Public operator voice beats internal seller voice.
+- Anonymize customers, deal details, field participants, and internal-only signal.
+- Cut Q&A residue, meeting logistics, and internal notes unless the user explicitly wants them.
+- If a visual marker or component exists, capture what the visual is supposed to prove.
 
-## Consolidated report
+### 2. Public Claims Gate, Conditional
 
-After step 6, produce a single Markdown report with these top-level sections, in this exact order:
+Run **Public Claims Researcher** when the draft makes checkable factual claims, names products, cites numbers, references public reports, compares vendors, describes healthcare/regulatory obligations, or could accidentally reveal internal-only signal.
 
+Skip when the piece is pure personal reflection or career writing with no checkable public claims.
+
+Ask for public-safe sources, confidence, stale citations, and cuts. Do not ask the researcher to write article prose.
+
+### 3. Narrative Strategy, Default
+
+Run **Narrative Strategist** on any draft, outline, transcript-derived post, or article revision unless the task is purely mechanical.
+
+Give it the source type, audience, core argument, draft path or excerpt, and any research gaps. Ask for the highest-leverage findings and an action queue, not a full rewrite.
+
+### 4. Provider Reality, Conditional Specialist
+
+Run **HLS Provider Reality Check** only when the piece relies on hospital/provider details, clinical operations, Epic/MyChart/Oracle Health, CMIO/CNIO/CIO/CISO dynamics, HIPAA/ONC/CMS/Joint Commission, patient safety, clinician workflow, or provider AI governance.
+
+This agent answers one question: would a provider leader nod or wince?
+
+### 5. Voice And Publish, Late
+
+Run **Voice & Publish Editor** only after the argument and section order are stable, or when the user asks to publish.
+
+For review-only, ask for voice mismatches, mechanical fixes, and a publish verdict. For edit mode, let it apply surgical voice and copy edits but not structural rewrites.
+
+### 6. Visual QA, Conductor Only
+
+Run this step when the article embeds a custom component, marker, inline SVG, figure, deck-derived slide, or hand-built visual.
+
+1. Build the site or confirm a recent successful build.
+2. Render the page in the browser.
+3. Screenshot each custom visual or use existing verified screenshots when this session already produced them.
+4. Check for raw markers, overflow, placeholder logos, broken assets, caption mismatch, and visual fidelity.
+5. When a PowerPoint reference exists, compare rendered screenshots against the source slide before replacing a PNG.
+
+Do not use source inspection as a substitute for rendered visual proof.
+
+## Agent Budget
+
+Default maximum: two subagents per review pass.
+
+Typical review:
+
+1. Narrative Strategist.
+2. Public Claims Researcher if claims changed, or Voice & Publish Editor if the piece is already publish-ready.
+
+A third agent is allowed only for a clear reason: provider realism is load-bearing, the user asked to publish, or the draft introduced major new factual claims.
+
+## Consolidated Output
+
+Return one report:
+
+```markdown
+# Article pass
+
+## Intake
+- Source:
+- Audience:
+- Core argument:
+- Mode:
+
+## Evidence Map
+<compact table>
+
+## Agent Calls Used
+- Agent: why it was needed
+
+## Findings
+Prioritized list. Each item names the section, issue, source of evidence, and recommended action.
+
+## Research And Public Safety
+Verified claims, stale citations, unverified claims, or "Skipped: <reason>."
+
+## Voice And Publish Readiness
+Voice fit, mechanical blockers, raw markers/placeholders, and publish verdict, or "Skipped: <reason>."
+
+## Visual QA
+PASS/FAIL per custom visual or "Skipped: <reason>."
+
+## Action Queue
+Numbered changes the user can approve. Each item names file, section, action type, and one-line description.
+
+## Sign-off
+Ready to apply changes. Reply with item numbers, `all`, or `none`.
 ```
-# Article pass -- consolidated review
 
-## 0. Argument adherence
-- `OFF-ARGUMENT` findings flagged by any agent, verbatim, with the section each names. If none, state "No argument regressions flagged."
+If the user asked to create or edit rather than review, apply approved or requested edits after the report, then validate with build/render checks when relevant.
 
-## 1. Research (if run)
-- Verified claim count: NN
-- Unverified or stale claims requiring action: NN
-- Table: <Research Analyst's verified-claims table>
-- Gaps: <Research Analyst's gaps section>
-- If skipped, state "Skipped: <reason>."
+## What You Must Not Do
 
-## 2. Anecdote work (if run)
-- For each generated anecdote: <line / image / anecdote block>
-- If skipped, state "Skipped: <reason>."
-
-## 3. Executive value audit
-- Green / yellow / red counts.
-- Cuts recommended (RED + yellow-to-red): <list>
-- Bottom Line: <from the auditor>
-
-## 4. Career Coach verdict
-- <Career Coach's numbered findings>
-- Bottom Line: <verbatim>
-
-## 5. Voice and copyedit
-- Voice recommendations: <list>
-- Copyedits: <list>
-
-## 6. Graphics and embedded-component QA (if run)
-- Graphics checked: NN
-- Fidelity or completeness defects: <PASS / FAIL per graphic with defect notes, or "none">
-- If skipped, state "Skipped: <reason>."
-
-## 7. Recommended action queue
-A numbered list of every concrete change the user could approve. Each item names: file, section, change type (CUT / REVISE / INSERT / RESEARCH / GRAPHIC), and a one-line description.
-```
-
-End with exactly:
-
-> Ready to apply changes. Reply with the numbered items from section 7 you want me to execute, or `all` to apply everything, or `none` to keep the review for reference only.
-
-Then stop. Do not edit the article. Wait for the user.
-
-## What you must not do
-
-- Do not apply edits during the pass.
-- Do not skip the core-argument step. The whole pass is measured against it.
-- Do not blend agent outputs. Each section of the report cites its source agent. Conflicting verdicts are reported as conflicts, not reconciled silently.
-- Do not run the Talk Architect or HLS Provider Reality Check agents here. Those are for the All Aboard keynote and provider content, not a general blog post. If a post is talk-shaped or healthcare-heavy, tell the user and point them at `/all-aboard-pass`.
-- Do not spawn the deck audit, Site Reviewer, or Presentation Reviewer agents. Those are for the rendered site and the walking deck. The lightweight graphics QA in step 7 is the only visual check this pass runs, and it is the conductor's own render-and-screenshot pass, not one of those agents.
+- Do not recreate the old micro-agent conveyor belt. Use the durable roles named in this prompt.
+- Do not run every possible specialist to look thorough.
+- Do not let agents silently disagree. Consolidate conflicts and make a conductor recommendation.
+- Do not edit in review-only mode.
+- Do not publish, commit, or push unless the user explicitly asks.

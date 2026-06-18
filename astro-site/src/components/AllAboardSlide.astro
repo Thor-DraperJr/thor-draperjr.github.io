@@ -1,102 +1,32 @@
 ---
 // A single All Aboard slide figure, placed inline between prose in the article.
 // The spoken narration lives in the markdown; this renders only the visual.
-import AgentGateSlide from './AgentGateSlide.astro';
-import AllAboardStation from './AllAboardStation.astro';
+import AllAboardRichSlide from './AllAboardRichSlide.astro';
 
-interface SlideDef {
-  img?: string;
-  slide?: 'gate' | 'station';
-  stationAct?: 'lifecycle' | 'local' | 'express';
-  alt: string;
-}
-
-const slides: Record<string, SlideDef> = {
-  '01': {
-    img: '/assets/images/posts/all-aboard/slide-3.png',
-    alt: 'Microsoft 365 E7, the Frontier Suite: E5 plus Entra Suite, Microsoft 365 Copilot, and Agent 365, powered by Work IQ.',
-  },
-  '02': {
-    img: '/assets/images/posts/all-aboard/slide-4.png',
-    alt: 'AI adoption is accelerating: 1.3B AI agents by 2028 (IDC), 82% intend to integrate within 1-3 years (Capgemini), 40% of enterprise apps integrated with task-specific agents by 2026 (Gartner).',
-  },
-  '03': {
-    img: '/assets/images/posts/all-aboard/slide-5.png',
-    alt: 'Microsoft IQ Platform: Microsoft 365 Copilot, Copilot Studio, GitHub Copilot, Dragon Copilot, Fabric, Foundry, Agent 365, on Azure, with Entra, Intune, Defender, Purview, and Sentinel underneath.',
-  },
-  '04': {
-    img: '/assets/images/posts/all-aboard/slide-6.png',
-    alt: 'To unlock the potential of agentic AI, we need to start with trust. And trust starts with security.',
-  },
-  '05': {
-    img: '/assets/images/posts/all-aboard/slide-7.png',
-    alt: 'Recognized as a leader across the threat surface: Gartner Magic Quadrant leader callouts for Access Management, Endpoint Protection, SIEM, Email Security, and Endpoint Management Tools.',
-  },
-  '06': {
-    slide: 'station',
-    stationAct: 'lifecycle',
-    alt: 'The agent lifecycle as a station: six color-coded steps — Build, Identify, Entitle, Run, Observe, Govern — each with what good looks like underneath.',
-  },
-  '07': {
-    slide: 'station',
-    stationAct: 'local',
-    alt: 'Route 01: the same six lifecycle steps, with a different vendor logo stacked under each one — model vendors at Build, identity vendors at Identify, and so on. A brown local train labeled "stops 1 of 6" runs along the bottom.',
-  },
-  '08': {
-    slide: 'station',
-    stationAct: 'express',
-    alt: 'Route 02: the same six lifecycle steps, now with one Microsoft product stack under each — Foundry and Copilot Studio at Build, Entra Agent ID at Identify, and so on. A sleek blue bullet train labeled "All-Aboard Express, one route, one operator" runs along the bottom.',
-  },
-  '09': {
-    slide: 'gate',
-    alt: 'A custom slide: an agent moving from a two-person pilot through one governance gate to a 20,000-person production rollout. The gate combines identity and sponsor via Entra Agent ID, a blueprint policy set once and inherited, risk-based Conditional Access, and a registry entry in Agent 365.',
-  },
-  '10': {
-    img: '/assets/images/posts/all-aboard/slide-12.png',
-    alt: 'Secure foundations: identities, endpoints, cloud, data, and apps as one signal graph, on Microsoft Entra, Intune, Defender, Purview, and Sentinel, with a shared foundation of registry, access control, observability, tools gateway, run-time protection, and security.',
-  },
-};
+const slideNumbers = new Set(['03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14']);
 
 interface Props {
   n: string;
 }
 
 const { n } = Astro.props;
-const slide = slides[n];
+const hasSlide = slideNumbers.has(n);
 ---
 
-{slide && (
-  <figure class={slide.slide === 'station' ? 'aa-slide aa-slide-station' : 'aa-slide'}>
-    {slide.slide === 'gate' ? (
-      <AgentGateSlide />
-    ) : slide.slide === 'station' ? (
-      <AllAboardStation act={slide.stationAct} />
-    ) : (
-      <img src={slide.img} alt={slide.alt} loading="lazy" decoding="async" width="1280" height="720" />
-    )}
+{hasSlide && (
+  <figure class="aa-slide">
+    <AllAboardRichSlide n={n} />
   </figure>
 )}
 
 <style>
   .aa-slide {
-    margin: 0;
+    width: min(100%, 1280px);
+    margin: 0 auto;
     border-radius: 14px;
     overflow: hidden;
     box-shadow: 0 18px 50px -24px rgba(8, 22, 48, 0.55), 0 0 0 1px rgba(15, 36, 72, 0.12);
     background: #0a1b34;
   }
 
-  /* Station acts carry their own surfaces; let them show through. */
-  .aa-slide-station {
-    background: transparent;
-    border-radius: 0;
-    overflow: visible;
-    box-shadow: none;
-  }
-
-  .aa-slide img {
-    display: block;
-    width: 100%;
-    height: auto;
-  }
 </style>
