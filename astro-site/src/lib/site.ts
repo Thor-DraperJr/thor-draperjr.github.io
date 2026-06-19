@@ -14,7 +14,7 @@ export const siteConfig: SiteConfig = {
 		{ title: 'Resume', url: '/resume/' },
 	],
 	social: {
-		linkedin: 'https://www.linkedin.com/in/thor-draper-jr/',
+		linkedin: 'https://www.linkedin.com/in/thor-draperjr/',
 		github: 'https://github.com/Thor-DraperJr',
 		email: 'thordraper2@outlook.com',
 	},

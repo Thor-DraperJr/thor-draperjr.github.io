@@ -42,4 +42,4 @@ Every morning I journal under my word for the year—**Velocity**—to sharpen f
 
 I love swapping war stories about cloud security, sharing journaling hacks, or recommending off-the-map cafés. Drop me a line:
 
-<a class="button-ghost" href="https://www.linkedin.com/in/thor-draper-jr/" target="_blank">Connect on LinkedIn</a>
+<a class="button-ghost" href="https://www.linkedin.com/in/thor-draperjr/" target="_blank">Connect on LinkedIn</a>

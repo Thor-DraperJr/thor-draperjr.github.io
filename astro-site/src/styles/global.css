@@ -78,7 +78,8 @@ a {
   outline-offset: 4px;
 }
 
-.feature-card-dark :focus-visible {
+.feature-card-dark :focus-visible,
+.chart-figure-quote :focus-visible {
   outline-color: white;
 }
 

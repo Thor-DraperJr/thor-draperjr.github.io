@@ -36,7 +36,7 @@ export const summary = {
     sub: "Every chapter of my career sharpened the same skill: translating complexity into action for the people who need it most. Now I am focused on where healthcare security intersects with AI, building the enablement programs and security architectures that let organizations move faster without increasing risk.",
     contact: {
         email: "thordraper2@outlook.com",
-        linkedin: "https://www.linkedin.com/in/thor-draper-jr/",
+        linkedin: "https://www.linkedin.com/in/thor-draperjr/",
     },
 };
 

@@ -14,6 +14,7 @@ This repo is the Astro version of `thor-draperjr.github.io`. I've gone through a
 - [astro-site/src/content/posts](astro-site/src/content/posts) is where blog posts go.
 - [astro-site/public/assets/images](astro-site/public/assets/images) is where post images go.
 - [astro-site/src/content/post-template.md](astro-site/src/content/post-template.md) is the starter template.
+- [docs/repo-structure-policy.md](docs/repo-structure-policy.md) defines where source, reusable code, generated artifacts, and durable review evidence belong.
 
 ## Publishing reminder
 

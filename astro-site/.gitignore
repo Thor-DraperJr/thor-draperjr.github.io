@@ -16,8 +16,7 @@ pnpm-debug.log*
 # local review artifacts
 .artifacts/
 deck-audit/
-all-aboard-audit/compare/
-all-aboard-audit/rendered/
+all-aboard-audit/
 
 # environment variables
 .env

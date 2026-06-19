@@ -10,8 +10,8 @@ layout: page
     <a href="mailto:thordraper2@outlook.com" class="contact-item">
       thordraper2@outlook.com
     </a>
-    <a href="https://www.linkedin.com/in/thor-draper-jr/" target="_blank" class="contact-item">
-      linkedin.com/in/thor-draper-jr/
+    <a href="https://www.linkedin.com/in/thor-draperjr/" target="_blank" class="contact-item">
+      linkedin.com/in/thor-draperjr/
     </a>
   </div>
 </div>
@@ -218,7 +218,7 @@ I deployed DShield sensors and web application honeypots to monitor internet-fac
 <div class="resume-footer">
   <p class="download-note">
     <strong>Looking for a PDF version?</strong> Feel free to reach out via 
-    <a href="https://www.linkedin.com/in/thor-draper-jr/" target="_blank">LinkedIn</a> 
+    <a href="https://www.linkedin.com/in/thor-draperjr/" target="_blank">LinkedIn</a> 
     for additional formats or to discuss opportunities.
   </p>
 </div>

@@ -16,7 +16,7 @@ const VIEWPORTS = {
 
 const SECTIONS = ['aa-lifecycle', 'aa-zone-local', 'aa-zone-bullet'];
 const url = 'http://localhost:4321/tech/all-aboard/';
-const outRoot = path.resolve('all-aboard-audit');
+const outRoot = path.resolve('.artifacts/all-aboard-audit');
 
 async function measure(page, sid) {
     return page.evaluate((sid) => {
