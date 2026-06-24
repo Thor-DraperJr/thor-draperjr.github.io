@@ -44,6 +44,16 @@ Use the repo's existing infographic language as the starting point:
 
 Do not add decorative motion or abstract background effects that do not teach the point.
 
+## Slide-Compatible Article Figures
+
+When a blog visual is also meant to become a fast PowerPoint-style draft or presentation aid, build it as a slide-compatible article figure from the beginning:
+
+- Place article-breakout visuals in the existing `.walking-deck-breakout` path instead of letting a component span the viewport by accident.
+- Keep desktop/laptop figures presentation-shaped: cap the stage around `72rem`, center it, and use a 16:9 minimum stage rather than a hard 16:9 crop so dense visuals can grow without clipping.
+- Let mobile figures use content height and stacked layouts; do not force 16:9 on phone layouts when it would crush text or cards.
+- Contain decorative or instructional animation inside the figure (`overflow: hidden` on the visual surface when needed) and verify repeated `scrollWidth === clientWidth` samples while animation runs.
+- Check the `laptop-chrome` viewport, mobile portrait, and desktop screenshots for proportions, clipping, and whether the result reads like a polished slide rather than a full-width banner.
+
 ## Workflow
 
 ### 1. Intake
