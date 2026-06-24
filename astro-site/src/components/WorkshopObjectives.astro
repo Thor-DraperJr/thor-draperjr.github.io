@@ -1,0 +1,165 @@
+---
+// In-article infographic for "GitHub Without the Tour".
+// Two paired columns: what people should walk out able to do, and the
+// observable signals that prove the workshop worked. The success column is
+// framed as quiet, checkable outcomes, not "they watched me." Deck palette.
+const objectives = [
+  'Explain what GitHub is for: a team changing shared work on purpose, with a record.',
+  'Name the reason behind each step — branch, commit, pull request, merge.',
+  'State an intent precisely enough that an agent does what you meant.',
+  'Read a diff and approve a change instead of taking it on faith.',
+];
+
+const success = [
+  'You have a merged pull request with your name on it.',
+  'You can explain, in your own words, why we branched before editing.',
+  'You wrote a narrow prompt and got the outcome you expected.',
+  'You read the diff before approving, so the judgment stayed yours.',
+];
+---
+
+<figure
+  class="wob-fig"
+  role="img"
+  aria-label="Objectives versus what success looks like. Objectives: explain what GitHub is for; name the reason behind each step; state intent precisely; read a diff and approve. Success signals: you have a merged pull request; you can explain why we branched; you got the outcome you expected from a narrow prompt; you read the diff before approving."
+>
+  <div class="wob-head">
+    <span class="wob-eyebrow">Your finish line</span>
+    <h3 class="wob-title">What you leave able to do, and how you'll know</h3>
+  </div>
+
+  <div class="wob-cols">
+    <div class="wob-col wob-col--obj">
+      <span class="wob-col-head">Objectives</span>
+      <ul class="wob-list">
+        {objectives.map((o) => (
+          <li class="wob-item">
+            <span class="wob-mark wob-mark--obj" aria-hidden="true">&rsaquo;</span>
+            <span>{o}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="wob-col wob-col--win">
+      <span class="wob-col-head">What success looks like</span>
+      <ul class="wob-list">
+        {success.map((s) => (
+          <li class="wob-item">
+            <span class="wob-mark wob-mark--win" aria-hidden="true">&check;</span>
+            <span>{s}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+
+  <figcaption class="wob-caption">The quietest signal: a merged PR with your name on it, and you can say why each step happened.</figcaption>
+</figure>
+
+<style>
+  .wob-fig {
+    container-type: inline-size;
+    margin: 0;
+    box-sizing: border-box;
+    width: 100%;
+    padding: clamp(1.2rem, 0.7rem + 2.4cqw, 2.4rem);
+    border-radius: 18px;
+    background:
+      radial-gradient(130% 95% at 12% -10%, rgba(89, 159, 253, 0.3), transparent 58%),
+      radial-gradient(120% 95% at 92% 115%, rgba(250, 220, 20, 0.16), transparent 55%),
+      linear-gradient(150deg, #0e2a52 0%, #0b2344 55%, #081a36 100%);
+    color: #eaf1fb;
+    box-shadow: 0 24px 60px rgba(8, 20, 40, 0.32);
+  }
+
+  .wob-head { margin-bottom: clamp(1rem, 0.6rem + 1.6cqw, 1.8rem); }
+  .wob-eyebrow {
+    display: block;
+    font-size: clamp(0.62rem, 0.55rem + 0.3cqw, 0.74rem);
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #599ffd;
+  }
+  .wob-title {
+    margin: 0.3rem 0 0;
+    font-size: clamp(1.1rem, 0.85rem + 1.4cqw, 1.7rem);
+    font-weight: 800;
+    line-height: 1.12;
+    color: #fff;
+  }
+
+  .wob-cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(0.8rem, 0.4rem + 1.4cqw, 1.6rem);
+  }
+  .wob-col {
+    padding: clamp(0.8rem, 0.55rem + 0.8cqw, 1.2rem);
+    border-radius: 14px;
+    border: 1px solid rgba(89, 159, 253, 0.3);
+    background: rgba(89, 159, 253, 0.08);
+  }
+  .wob-col--win {
+    border-color: rgba(250, 220, 20, 0.45);
+    background: rgba(250, 220, 20, 0.07);
+  }
+  .wob-col-head {
+    display: block;
+    margin-bottom: 0.7rem;
+    font-size: clamp(0.66rem, 0.58rem + 0.3cqw, 0.8rem);
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #a5b8ee;
+  }
+  .wob-col--win .wob-col-head { color: #fadc14; }
+
+  .wob-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(0.5rem, 0.35rem + 0.5cqw, 0.8rem);
+  }
+  .wob-item {
+    display: flex;
+    gap: 0.6rem;
+    font-size: clamp(0.76rem, 0.68rem + 0.3cqw, 0.92rem);
+    line-height: 1.32;
+    color: #eaf1fb;
+  }
+  .wob-mark {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.4rem;
+    height: 1.4rem;
+    border-radius: 50%;
+    font-size: 0.86rem;
+    font-weight: 800;
+    line-height: 1;
+  }
+  .wob-mark--obj {
+    color: #081a36;
+    background: #599ffd;
+  }
+  .wob-mark--win {
+    color: #081a36;
+    background: #fadc14;
+  }
+
+  .wob-caption {
+    margin: clamp(0.9rem, 0.6rem + 1.2cqw, 1.5rem) 0 0;
+    font-size: clamp(0.78rem, 0.7rem + 0.3cqw, 0.95rem);
+    font-weight: 700;
+    color: #e2f9d9;
+  }
+
+  @container (max-width: 560px) {
+    .wob-cols { grid-template-columns: 1fr; }
+  }
+</style>

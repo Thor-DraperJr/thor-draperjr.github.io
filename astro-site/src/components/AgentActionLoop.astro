@@ -1,0 +1,219 @@
+---
+// In-article infographic for "GitHub Without the Tour".
+// Left: the agentic loop the learner stays inside — state intent, the agent
+// plans, acts, and shows its work, the human reviews and approves. A glow
+// cycles the five stages on a loop. Right: narrow example prompts, each with
+// one predictable outcome, so a fast literal system does what was meant.
+const stages = [
+  { k: 'You', label: 'State the intent', detail: 'Plain language. What you want, not which command.' },
+  { k: 'Agent', label: 'Plans the steps', detail: 'Branch, edit, commit, push, open a PR.' },
+  { k: 'Agent', label: 'Does the work', detail: 'Runs the mechanics so you do not memorize them.' },
+  { k: 'Agent', label: 'Shows its work', detail: 'The diff and each move, labeled as it goes.' },
+  { k: 'You', label: 'Review & approve', detail: 'You keep the judgment. Nothing ships unseen.' },
+];
+
+const prompts = [
+  {
+    say: 'In the practice repo, add my name, Thor Draper, to Contributors.md in alphabetical order on a new branch called add-thor-draper, commit it with a clear message, and open a pull request.',
+    get: 'A branch, one edited line, a labeled commit, and an open PR.',
+  },
+  {
+    say: 'Show me the diff of what you just changed before we push anything.',
+    get: 'The exact before-and-after, so nothing ships unseen.',
+  },
+  {
+    say: 'Explain in plain language what a branch is and why we made one before editing.',
+    get: 'The concept, tied to the action you just watched.',
+  },
+];
+---
+
+<figure
+  class="agl-fig"
+  role="img"
+  aria-label="The agentic loop. You state the intent in plain language. The agent plans the steps, does the work, and shows its work as a labeled diff. You review and approve. Alongside it, three narrow example prompts, each with one predictable outcome."
+>
+  <div class="agl-head">
+    <span class="agl-eyebrow">Intent in, work out</span>
+    <h3 class="agl-title">You keep the intent. The agent runs the mechanics.</h3>
+  </div>
+
+  <div class="agl-body">
+    <ol class="agl-loop">
+      {stages.map((s, i) => (
+        <li class={`agl-stage agl-stage--${s.k === 'You' ? 'you' : 'agent'}`} style={`--i:${i}`}>
+          <span class="agl-who">{s.k}</span>
+          <span class="agl-stage-label">{s.label}</span>
+          <span class="agl-stage-detail">{s.detail}</span>
+        </li>
+      ))}
+    </ol>
+
+    <div class="agl-prompts">
+      <span class="agl-prompts-head">Narrow prompts, predictable outcomes</span>
+      {prompts.map((p) => (
+        <div class="agl-prompt">
+          <p class="agl-say"><span class="agl-tag">Say</span>{p.say}</p>
+          <p class="agl-get"><span class="agl-tag agl-tag--get">Get</span>{p.get}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <figcaption class="agl-caption">The skill is expressing intent precisely enough that a fast, literal system does what you meant.</figcaption>
+</figure>
+
+<style>
+  .agl-fig {
+    container-type: inline-size;
+    margin: 0;
+    box-sizing: border-box;
+    width: 100%;
+    padding: clamp(1.2rem, 0.7rem + 2.4cqw, 2.4rem);
+    border-radius: 18px;
+    background:
+      radial-gradient(130% 95% at 12% -10%, rgba(89, 159, 253, 0.3), transparent 58%),
+      radial-gradient(120% 95% at 92% 115%, rgba(250, 220, 20, 0.16), transparent 55%),
+      linear-gradient(150deg, #0e2a52 0%, #0b2344 55%, #081a36 100%);
+    color: #eaf1fb;
+    box-shadow: 0 24px 60px rgba(8, 20, 40, 0.32);
+  }
+
+  .agl-head { margin-bottom: clamp(1rem, 0.6rem + 1.6cqw, 1.8rem); }
+  .agl-eyebrow {
+    display: block;
+    font-size: clamp(0.62rem, 0.55rem + 0.3cqw, 0.74rem);
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #599ffd;
+  }
+  .agl-title {
+    margin: 0.3rem 0 0;
+    font-size: clamp(1.1rem, 0.85rem + 1.4cqw, 1.7rem);
+    font-weight: 800;
+    line-height: 1.12;
+    color: #fff;
+  }
+
+  .agl-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(0.8rem, 0.4rem + 1.4cqw, 1.6rem);
+    align-items: start;
+  }
+
+  .agl-loop {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(0.45rem, 0.3rem + 0.5cqw, 0.7rem);
+  }
+  .agl-stage {
+    position: relative;
+    padding: clamp(0.6rem, 0.45rem + 0.6cqw, 0.9rem) clamp(0.7rem, 0.5rem + 0.6cqw, 1rem);
+    border-radius: 12px;
+    border: 1px solid rgba(89, 159, 253, 0.32);
+    background: rgba(89, 159, 253, 0.08);
+    animation: agl-cycle 10s ease-in-out infinite;
+    animation-delay: calc(var(--i) * 2s);
+  }
+  .agl-stage--you {
+    border-color: rgba(250, 220, 20, 0.5);
+    background: rgba(250, 220, 20, 0.08);
+  }
+  .agl-who {
+    display: inline-block;
+    font-size: 0.6rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #599ffd;
+  }
+  .agl-stage--you .agl-who { color: #fadc14; }
+  .agl-stage-label {
+    display: block;
+    margin-top: 0.15rem;
+    font-size: clamp(0.84rem, 0.74rem + 0.4cqw, 1.02rem);
+    font-weight: 800;
+    color: #fff;
+    line-height: 1.12;
+  }
+  .agl-stage-detail {
+    display: block;
+    margin-top: 0.2rem;
+    font-size: clamp(0.7rem, 0.64rem + 0.26cqw, 0.84rem);
+    line-height: 1.3;
+    color: #cfe0ff;
+  }
+
+  .agl-prompts {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(0.45rem, 0.3rem + 0.5cqw, 0.7rem);
+  }
+  .agl-prompts-head {
+    font-size: clamp(0.66rem, 0.58rem + 0.3cqw, 0.78rem);
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #e2f9d9;
+  }
+  .agl-prompt {
+    padding: clamp(0.6rem, 0.45rem + 0.6cqw, 0.9rem);
+    border-radius: 12px;
+    background: rgba(6, 16, 34, 0.55);
+    border: 1px solid rgba(165, 184, 238, 0.22);
+  }
+  .agl-say, .agl-get {
+    margin: 0;
+    font-size: clamp(0.72rem, 0.64rem + 0.28cqw, 0.86rem);
+    line-height: 1.35;
+  }
+  .agl-say { color: #eaf1fb; }
+  .agl-get { margin-top: 0.4rem; color: #a5b8ee; }
+  .agl-tag {
+    display: inline-block;
+    margin-right: 0.45rem;
+    padding: 0.05rem 0.4rem;
+    border-radius: 5px;
+    font-size: 0.58rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #081a36;
+    background: #599ffd;
+    vertical-align: 0.08em;
+  }
+  .agl-tag--get { background: #fadc14; }
+
+  .agl-caption {
+    margin: clamp(0.9rem, 0.6rem + 1.2cqw, 1.5rem) 0 0;
+    font-size: clamp(0.78rem, 0.7rem + 0.3cqw, 0.95rem);
+    font-weight: 700;
+    color: #e2f9d9;
+  }
+
+  @keyframes agl-cycle {
+    0%, 14%, 100% {
+      border-color: rgba(89, 159, 253, 0.32);
+      box-shadow: none;
+      transform: none;
+    }
+    4%, 10% {
+      border-color: rgba(250, 220, 20, 0.85);
+      box-shadow: 0 0 0 1px rgba(250, 220, 20, 0.5), 0 10px 26px rgba(8, 20, 40, 0.4);
+      transform: translateX(4px);
+    }
+  }
+
+  @container (max-width: 640px) {
+    .agl-body { grid-template-columns: 1fr; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .agl-stage { animation: none; }
+  }
+</style>

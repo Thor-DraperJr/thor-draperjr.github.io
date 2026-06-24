@@ -9,6 +9,13 @@ import AllAboardSlide from '../../components/AllAboardSlide.astro';
 import LifecycleLanes from '../../components/LifecycleLanes.astro';
 import ThreeNewYears from '../../components/ThreeNewYears.astro';
 import PerformanceNarrative from '../../components/PerformanceNarrative.astro';
+import GitHubFlowModernized from '../../components/GitHubFlowModernized.astro';
+import AgentActionLoop from '../../components/AgentActionLoop.astro';
+import WorkshopObjectives from '../../components/WorkshopObjectives.astro';
+import SessionRunOfShow from '../../components/SessionRunOfShow.astro';
+import WhatIsGitHub from '../../components/WhatIsGitHub.astro';
+import WorkshopTools from '../../components/WorkshopTools.astro';
+import DiffPreview from '../../components/DiffPreview.astro';
 import { getPosts } from '../../lib/content';
 
 export function getStaticPaths() {
@@ -41,6 +48,8 @@ const allAboardSlideMarkers = ['03', '04', '05', '06', '07', '08', '09', '10', '
 );
 const threeNewYearsMarker = '[[THREE_NEW_YEARS]]';
 const performanceNarrativeMarker = '[[PERFORMANCE_NARRATIVE]]';
+const ghWorkshopMarker = '[[GH_WORKSHOP]]';
+const ghWorkshopFigureMarkers = ['WHAT_IS_GITHUB', 'GITHUB_FLOW', 'YOUR_TOOLS', 'AGENT_LOOP', 'DIFF_PREVIEW', 'WORKSHOP_OBJECTIVES', 'SESSION_PLAN'].map((n) => `[[${n}]]`);
 
 let processedHtml = post.html;
 processedHtml = processedHtml.replace(`<p>${runtimeChartMarker}</p>`, runtimeChartMarker);
@@ -55,6 +64,10 @@ for (const slideMarker of allAboardSlideMarkers) {
 }
 processedHtml = processedHtml.replace(`<p>${threeNewYearsMarker}</p>`, threeNewYearsMarker);
 processedHtml = processedHtml.replace(`<p>${performanceNarrativeMarker}</p>`, performanceNarrativeMarker);
+processedHtml = processedHtml.replace(`<p>${ghWorkshopMarker}</p>`, ghWorkshopMarker);
+for (const figureMarker of ghWorkshopFigureMarkers) {
+  processedHtml = processedHtml.replace(`<p>${figureMarker}</p>`, figureMarker);
+}
 
 const hasRuntimeChart = processedHtml.includes(runtimeChartMarker);
 const hasCareerDevPlan = processedHtml.includes(careerDevPlanMarker);
@@ -94,10 +107,114 @@ if (hasAllAboard) {
 }
 const threeNewYearsParts = hasThreeNewYears ? processedHtml.split(threeNewYearsMarker) : [];
 const performanceNarrativeParts = hasPerformanceNarrative ? processedHtml.split(performanceNarrativeMarker) : [];
+
+const hasGhWorkshop = processedHtml.includes(ghWorkshopMarker);
+const ghWorkshopParts = hasGhWorkshop ? processedHtml.split(ghWorkshopMarker) : [];
+const ghWorkshopBody = hasGhWorkshop ? ghWorkshopParts.slice(1).join(ghWorkshopMarker) : '';
+const ghWorkshopMarkerRegex = /\[\[(?:WHAT_IS_GITHUB|GITHUB_FLOW|YOUR_TOOLS|AGENT_LOOP|DIFF_PREVIEW|WORKSHOP_OBJECTIVES|SESSION_PLAN)\]\]/g;
+const ghWorkshopSegments: Array<{ kind: 'html' | 'marker'; value: string }> = [];
+if (hasGhWorkshop) {
+  let lastIndex = 0;
+  let match: RegExpExecArray | null;
+  while ((match = ghWorkshopMarkerRegex.exec(ghWorkshopBody)) !== null) {
+    if (match.index > lastIndex) {
+      ghWorkshopSegments.push({ kind: 'html', value: ghWorkshopBody.slice(lastIndex, match.index) });
+    }
+    ghWorkshopSegments.push({ kind: 'marker', value: match[0] });
+    lastIndex = match.index + match[0].length;
+  }
+  if (lastIndex < ghWorkshopBody.length) {
+    ghWorkshopSegments.push({ kind: 'html', value: ghWorkshopBody.slice(lastIndex) });
+  }
+}
 ---
 
 <Layout pageTitle={post.title} pageDescription={post.excerpt}>
-  {hasPerformanceNarrative ? (
+  {hasGhWorkshop ? (
+    <>
+      <article class="shell-container">
+        <header class="post-hero">
+          <span class="eyebrow">{post.category}</span>
+          <h1 class="post-heading">{post.title}</h1>
+          <div class="post-meta-row">
+            <span>{post.date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
+            <span>{post.readingTime} min read</span>
+          </div>
+          {post.tags.length > 0 && (
+            <div class="post-tags" style="margin-top: 1rem;">
+              {post.tags.map((tag) => <span class="post-tag">{tag}</span>)}
+            </div>
+          )}
+        </header>
+
+        {ghWorkshopParts.length > 0 && ghWorkshopParts[0].trim() && (
+          <section class="prose panel">
+            <Fragment set:html={ghWorkshopParts[0]} />
+          </section>
+        )}
+      </article>
+
+      {ghWorkshopSegments.map((seg) => (
+        seg.kind === 'html' ? (
+          seg.value.trim() && (
+            <article class="shell-container">
+              <section class="prose panel">
+                <Fragment set:html={seg.value} />
+              </section>
+            </article>
+          )
+        ) : seg.value === '[[WHAT_IS_GITHUB]]' ? (
+          <div class="walking-deck-breakout">
+            <WhatIsGitHub />
+          </div>
+        ) : seg.value === '[[GITHUB_FLOW]]' ? (
+          <div class="walking-deck-breakout">
+            <GitHubFlowModernized />
+          </div>
+        ) : seg.value === '[[YOUR_TOOLS]]' ? (
+          <div class="walking-deck-breakout">
+            <WorkshopTools />
+          </div>
+        ) : seg.value === '[[AGENT_LOOP]]' ? (
+          <div class="walking-deck-breakout">
+            <AgentActionLoop />
+          </div>
+        ) : seg.value === '[[DIFF_PREVIEW]]' ? (
+          <div class="walking-deck-breakout">
+            <DiffPreview />
+          </div>
+        ) : seg.value === '[[WORKSHOP_OBJECTIVES]]' ? (
+          <div class="walking-deck-breakout">
+            <WorkshopObjectives />
+          </div>
+        ) : seg.value === '[[SESSION_PLAN]]' ? (
+          <div class="walking-deck-breakout">
+            <SessionRunOfShow />
+          </div>
+        ) : (
+          null
+        )
+      ))}
+
+      <article class="shell-container">
+        <nav class="post-pagination">
+          {previous ? (
+            <a href={previous.permalink}>
+              <span>Older</span>
+              {previous.title}
+            </a>
+          ) : <div></div>}
+
+          {next ? (
+            <a href={next.permalink} style="text-align: right;">
+              <span>Newer</span>
+              {next.title}
+            </a>
+          ) : <div></div>}
+        </nav>
+      </article>
+    </>
+  ) : hasPerformanceNarrative ? (
     <>
       <article class="shell-container">
         <header class="post-hero">

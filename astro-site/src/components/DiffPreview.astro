@@ -1,0 +1,135 @@
+---
+// In-article figure for "Your First Pull Request, No Commands Required".
+// What a diff actually looks like, so "read the diff before you approve" is a
+// thing the reader has seen, not just heard. One added line in alphabetical
+// order, green, the way GitHub shows it. Deck navy frame, code-surface panel.
+const lines = [
+  { sign: ' ', name: 'Alex Rivera' },
+  { sign: ' ', name: 'Maria Chen' },
+  { sign: '+', name: 'Thor Draper' },
+  { sign: ' ', name: 'Uma Patel' },
+  { sign: ' ', name: 'Wei Zhang' },
+];
+---
+
+<figure
+  class="dif-fig"
+  role="img"
+  aria-label="A diff for the file Contributors dot md. Four existing names are unchanged: Alex Rivera, Maria Chen, Uma Patel, Wei Zhang. One line is added in green, Thor Draper, placed in alphabetical order between Maria Chen and Uma Patel. The change is plus one line, nothing removed."
+>
+  <div class="dif-head">
+    <span class="dif-eyebrow">Read before you approve</span>
+    <h3 class="dif-title">What a diff looks like</h3>
+  </div>
+
+  <div class="dif-panel">
+    <div class="dif-bar">
+      <span class="dif-file">Contributors.md</span>
+      <span class="dif-stat"><span class="dif-plus">+1</span><span class="dif-minus">&minus;0</span></span>
+    </div>
+    <pre class="dif-code">{lines.map((l) => (
+      <span class={`dif-line ${l.sign === '+' ? 'dif-line--add' : ''}`}><span class="dif-gutter">{l.sign}</span><span class="dif-text">- {l.name}</span></span>
+    ))}</pre>
+  </div>
+
+  <figcaption class="dif-caption">Green means added. One line, exactly where you asked for it. This is the whole thing you check before you click approve.</figcaption>
+</figure>
+
+<style>
+  .dif-fig {
+    container-type: inline-size;
+    margin: 0;
+    box-sizing: border-box;
+    width: 100%;
+    padding: clamp(1.2rem, 0.7rem + 2.4cqw, 2.4rem);
+    border-radius: 18px;
+    background:
+      radial-gradient(130% 95% at 12% -10%, rgba(89, 159, 253, 0.3), transparent 58%),
+      radial-gradient(120% 95% at 92% 115%, rgba(250, 220, 20, 0.16), transparent 55%),
+      linear-gradient(150deg, #0e2a52 0%, #0b2344 55%, #081a36 100%);
+    color: #eaf1fb;
+    box-shadow: 0 24px 60px rgba(8, 20, 40, 0.32);
+  }
+
+  .dif-head { margin-bottom: clamp(0.9rem, 0.6rem + 1.4cqw, 1.5rem); }
+  .dif-eyebrow {
+    display: block;
+    font-size: clamp(0.62rem, 0.55rem + 0.3cqw, 0.74rem);
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #599ffd;
+  }
+  .dif-title {
+    margin: 0.3rem 0 0;
+    font-size: clamp(1.1rem, 0.85rem + 1.4cqw, 1.7rem);
+    font-weight: 800;
+    line-height: 1.12;
+    color: #fff;
+  }
+
+  .dif-panel {
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(165, 184, 238, 0.22);
+    background: #07142b;
+  }
+  .dif-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 0.8rem;
+    background: rgba(89, 159, 253, 0.12);
+    border-bottom: 1px solid rgba(165, 184, 238, 0.2);
+  }
+  .dif-file {
+    font-family: ui-monospace, "SF Mono", "Cascadia Code", monospace;
+    font-size: clamp(0.7rem, 0.62rem + 0.3cqw, 0.84rem);
+    font-weight: 700;
+    color: #cfe0ff;
+  }
+  .dif-stat {
+    display: inline-flex;
+    gap: 0.5rem;
+    font-family: ui-monospace, "SF Mono", "Cascadia Code", monospace;
+    font-size: 0.72rem;
+    font-weight: 800;
+  }
+  .dif-plus { color: #7ee2a8; }
+  .dif-minus { color: #8aa0bf; }
+
+  .dif-code {
+    margin: 0;
+    padding: 0.5rem 0;
+    font-family: ui-monospace, "SF Mono", "Cascadia Code", monospace;
+    font-size: clamp(0.74rem, 0.66rem + 0.34cqw, 0.92rem);
+    line-height: 1.7;
+    overflow-x: auto;
+  }
+  .dif-line {
+    display: flex;
+    gap: 0.4rem;
+    padding: 0 0.8rem;
+    color: #aebfd8;
+  }
+  .dif-line--add {
+    background: rgba(80, 200, 120, 0.16);
+    color: #d9f7e4;
+  }
+  .dif-gutter {
+    width: 1ch;
+    flex: 0 0 auto;
+    text-align: center;
+    color: #5e7798;
+    font-weight: 800;
+  }
+  .dif-line--add .dif-gutter { color: #57d98a; }
+  .dif-text { white-space: pre; }
+
+  .dif-caption {
+    margin: clamp(0.9rem, 0.6rem + 1.2cqw, 1.5rem) 0 0;
+    font-size: clamp(0.78rem, 0.7rem + 0.3cqw, 0.95rem);
+    font-weight: 700;
+    color: #e2f9d9;
+  }
+</style>

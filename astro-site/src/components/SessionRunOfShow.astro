@@ -1,0 +1,181 @@
+---
+// In-article infographic for "GitHub Without the Tour".
+// Session one as an ordered list of objectives, each tagged with who is
+// driving and what proves it worked. The rhythm under it is concept -> proof
+// -> their hands, repeated. Deck blue-yellow palette.
+const segments = [
+  { label: 'Setup and the one picture', who: 'Together', detail: 'Accounts in, Copilot on, same repo. What GitHub is actually for.' },
+  { label: 'The contract', who: 'Facilitator', detail: 'Walk the flow once. The reason behind each step, not the keystrokes.' },
+  { label: 'We do one together', who: 'Together', detail: 'One contribution, agent narrating. Main stays untouched on screen.' },
+  { label: 'Your first contribution', who: 'Everyone', detail: 'Narrow prompts, one predictable outcome each. Facilitator walks the room.' },
+  { label: 'Read the diff, merge it', who: 'Everyone', detail: 'Review the change, approve, merge, delete the branch.' },
+  { label: 'Say it back, what is next', who: 'Together', detail: 'Three people explain a branch in their words. Tee up session two.' },
+];
+---
+
+<figure
+  class="ros-fig"
+  role="img"
+  aria-label="Session one objectives, in order. One, setup and the one picture, together. Two, the contract, facilitator. Three, we do one together. Four, your first contribution, everyone. Five, read the diff and merge it, everyone. Six, say it back and what is next, together."
+>
+  <div class="ros-head">
+    <span class="ros-eyebrow">Session one</span>
+    <h3 class="ros-title">Everything you just did, in order</h3>
+    <p class="ros-sub">Concept, then proof, then your own hands. In that order, every time.</p>
+  </div>
+
+  <ol class="ros-list">
+    {segments.map((s, i) => (
+      <li class={`ros-seg ros-seg--${s.who === 'Everyone' ? 'you' : s.who === 'Together' ? 'both' : 'lead'}`} style={`--i:${i}`}>
+        <span class="ros-num" aria-hidden="true">{i + 1}</span>
+        <div class="ros-body">
+          <div class="ros-row">
+            <span class="ros-label">{s.label}</span>
+            <span class="ros-who">{s.who}</span>
+          </div>
+          <span class="ros-detail">{s.detail}</span>
+        </div>
+      </li>
+    ))}
+  </ol>
+
+  <figcaption class="ros-caption">You never heard a thing explained that you didn't then watch, and never watched a thing you didn't then do.</figcaption>
+</figure>
+
+<style>
+  .ros-fig {
+    container-type: inline-size;
+    margin: 0;
+    box-sizing: border-box;
+    width: 100%;
+    padding: clamp(1.2rem, 0.7rem + 2.4cqw, 2.4rem);
+    border-radius: 18px;
+    background:
+      radial-gradient(130% 95% at 12% -10%, rgba(89, 159, 253, 0.3), transparent 58%),
+      radial-gradient(120% 95% at 92% 115%, rgba(250, 220, 20, 0.16), transparent 55%),
+      linear-gradient(150deg, #0e2a52 0%, #0b2344 55%, #081a36 100%);
+    color: #eaf1fb;
+    box-shadow: 0 24px 60px rgba(8, 20, 40, 0.32);
+  }
+
+  .ros-head { margin-bottom: clamp(1rem, 0.6rem + 1.6cqw, 1.8rem); }
+  .ros-eyebrow {
+    display: block;
+    font-size: clamp(0.62rem, 0.55rem + 0.3cqw, 0.74rem);
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #599ffd;
+  }
+  .ros-title {
+    margin: 0.3rem 0 0;
+    font-size: clamp(1.1rem, 0.85rem + 1.4cqw, 1.7rem);
+    font-weight: 800;
+    line-height: 1.12;
+    color: #fff;
+  }
+  .ros-sub {
+    margin: 0.5rem 0 0;
+    font-size: clamp(0.78rem, 0.7rem + 0.3cqw, 0.95rem);
+    color: #a5b8ee;
+    max-width: 50ch;
+  }
+
+  .ros-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(0.4rem, 0.25rem + 0.5cqw, 0.65rem);
+  }
+  .ros-seg {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: clamp(0.6rem, 0.4rem + 0.7cqw, 1rem);
+    align-items: center;
+    padding: clamp(0.6rem, 0.45rem + 0.6cqw, 0.9rem);
+    border-radius: 12px;
+    border: 1px solid rgba(89, 159, 253, 0.28);
+    background: rgba(89, 159, 253, 0.07);
+    border-left-width: 3px;
+    animation: ros-fade 0.5s ease both;
+    animation-delay: calc(var(--i) * 0.07s);
+  }
+  .ros-seg--both { border-left-color: #599ffd; }
+  .ros-seg--lead { border-left-color: #a5b8ee; }
+  .ros-seg--you {
+    border-left-color: #fadc14;
+    background: rgba(250, 220, 20, 0.08);
+  }
+
+  .ros-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.7rem;
+    height: 1.7rem;
+    border-radius: 50%;
+    font-size: 0.82rem;
+    font-weight: 800;
+    line-height: 1;
+    color: #081a36;
+    background: #599ffd;
+  }
+  .ros-seg--you .ros-num { background: #fadc14; }
+
+  .ros-body { display: flex; flex-direction: column; gap: 0.25rem; }
+  .ros-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+  }
+  .ros-label {
+    font-size: clamp(0.86rem, 0.76rem + 0.4cqw, 1.04rem);
+    font-weight: 800;
+    color: #fff;
+    line-height: 1.12;
+  }
+  .ros-who {
+    flex: 0 0 auto;
+    font-size: 0.58rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.12rem 0.45rem;
+    border-radius: 6px;
+    color: #cfe0ff;
+    background: rgba(89, 159, 253, 0.18);
+  }
+  .ros-seg--you .ros-who {
+    color: #fbe98a;
+    background: rgba(250, 220, 20, 0.16);
+  }
+  .ros-detail {
+    font-size: clamp(0.72rem, 0.65rem + 0.28cqw, 0.86rem);
+    line-height: 1.32;
+    color: #cfe0ff;
+  }
+
+  .ros-caption {
+    margin: clamp(0.9rem, 0.6rem + 1.2cqw, 1.5rem) 0 0;
+    font-size: clamp(0.78rem, 0.7rem + 0.3cqw, 0.95rem);
+    font-weight: 700;
+    color: #e2f9d9;
+  }
+
+  @keyframes ros-fade {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @container (max-width: 420px) {
+    .ros-row { gap: 0.4rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ros-seg { animation: none; }
+  }
+</style>

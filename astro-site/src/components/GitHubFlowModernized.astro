@@ -1,0 +1,183 @@
+---
+// In-article infographic for "GitHub Without the Tour".
+// The classic first-contributions flow, laid out as a single readable rail:
+// each step shows the move, the command, and the plain-language reason it
+// exists. A pulse travels the rail on a loop so it reads as one continuous
+// workflow and doubles as a looping slide aid. Deck blue-yellow palette.
+const steps = [
+  { move: 'Fork', cmd: 'fork', why: 'Take your own copy to work in.' },
+  { move: 'Clone', cmd: 'git clone', why: 'Pull that copy down to your machine.' },
+  { move: 'Branch', cmd: 'git switch -c', why: 'Isolate your idea from everyone else.' },
+  { move: 'Edit', cmd: 'change a file', why: 'Make the actual change.' },
+  { move: 'Commit', cmd: 'git commit -m', why: 'Save it with a message that explains why.' },
+  { move: 'Push', cmd: 'git push', why: 'Send your branch back up to GitHub.' },
+  { move: 'Pull request', cmd: 'open PR', why: 'Put the change up for review.' },
+  { move: 'Merge', cmd: 'merge', why: 'The team agrees, and it ships.' },
+];
+---
+
+<figure
+  class="ghf-fig"
+  role="img"
+  aria-label="The classic GitHub contribution flow as eight steps: Fork, take your own copy; Clone, pull it to your machine; Branch, isolate your idea; Edit, make the change; Commit, save it with a message; Push, send it back to GitHub; Pull request, put it up for review; Merge, the team agrees and it ships."
+>
+  <div class="ghf-head">
+    <span class="ghf-eyebrow">Where your change is headed</span>
+    <h3 class="ghf-title">From your idea to the team's yes</h3>
+    <p class="ghf-sub">Each stop is a safety check for the team, not a test for you.</p>
+  </div>
+
+  <ol class="ghf-rail">
+    {steps.map((s, i) => (
+      <li class="ghf-step" style={`--i:${i}`}>
+        <span class="ghf-num" aria-hidden="true">{i + 1}</span>
+        <span class="ghf-move">{s.move}</span>
+        <code class="ghf-cmd">{s.cmd}</code>
+        <span class="ghf-why">{s.why}</span>
+      </li>
+    ))}
+    <span class="ghf-pulse" aria-hidden="true"></span>
+  </ol>
+
+  <figcaption class="ghf-caption">Eight stops from your idea to the team's agreed version. The reason behind each one is the part to keep.</figcaption>
+</figure>
+
+<style>
+  .ghf-fig {
+    container-type: inline-size;
+    margin: 0;
+    box-sizing: border-box;
+    width: 100%;
+    padding: clamp(1.2rem, 0.7rem + 2.4cqw, 2.4rem);
+    border-radius: 18px;
+    background:
+      radial-gradient(130% 95% at 12% -10%, rgba(89, 159, 253, 0.3), transparent 58%),
+      radial-gradient(120% 95% at 92% 115%, rgba(250, 220, 20, 0.16), transparent 55%),
+      linear-gradient(150deg, #0e2a52 0%, #0b2344 55%, #081a36 100%);
+    color: #eaf1fb;
+    box-shadow: 0 24px 60px rgba(8, 20, 40, 0.32);
+  }
+
+  .ghf-head { margin-bottom: clamp(1rem, 0.6rem + 1.6cqw, 1.8rem); }
+  .ghf-eyebrow {
+    display: block;
+    font-size: clamp(0.62rem, 0.55rem + 0.3cqw, 0.74rem);
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #599ffd;
+  }
+  .ghf-title {
+    margin: 0.3rem 0 0;
+    font-size: clamp(1.1rem, 0.85rem + 1.4cqw, 1.7rem);
+    font-weight: 800;
+    line-height: 1.12;
+    color: #fff;
+  }
+  .ghf-sub {
+    margin: 0.5rem 0 0;
+    font-size: clamp(0.78rem, 0.7rem + 0.3cqw, 0.95rem);
+    color: #a5b8ee;
+    max-width: 46ch;
+  }
+
+  .ghf-rail {
+    position: relative;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: clamp(0.5rem, 0.3rem + 0.9cqw, 0.95rem);
+  }
+
+  .ghf-step {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    padding: clamp(0.7rem, 0.5rem + 0.7cqw, 1rem);
+    border-radius: 13px;
+    background: rgba(89, 159, 253, 0.1);
+    border: 1px solid rgba(89, 159, 253, 0.32);
+    animation: ghf-fade 0.5s ease both;
+    animation-delay: calc(var(--i) * 0.08s);
+  }
+  .ghf-step:nth-child(8) {
+    background: rgba(250, 220, 20, 0.12);
+    border-color: rgba(250, 220, 20, 0.5);
+  }
+
+  .ghf-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.55rem;
+    height: 1.55rem;
+    border-radius: 50%;
+    font-size: 0.8rem;
+    font-weight: 800;
+    color: #081a36;
+    background: #599ffd;
+  }
+  .ghf-step:nth-child(8) .ghf-num { background: #fadc14; }
+
+  .ghf-move {
+    font-size: clamp(0.84rem, 0.74rem + 0.4cqw, 1.02rem);
+    font-weight: 800;
+    color: #fff;
+    line-height: 1.1;
+  }
+  .ghf-cmd {
+    font-family: ui-monospace, "SF Mono", "Cascadia Code", monospace;
+    font-size: clamp(0.64rem, 0.58rem + 0.24cqw, 0.76rem);
+    color: #fadc14;
+    letter-spacing: 0.01em;
+  }
+  .ghf-step:nth-child(8) .ghf-cmd { color: #fff4b0; }
+  .ghf-why {
+    font-size: clamp(0.7rem, 0.64rem + 0.26cqw, 0.84rem);
+    line-height: 1.3;
+    color: #cfe0ff;
+  }
+
+  .ghf-pulse {
+    position: absolute;
+    top: -4px;
+    left: 0;
+    width: 36%;
+    height: 3px;
+    border-radius: 3px;
+    background: linear-gradient(90deg, transparent, #fadc14, transparent);
+    animation: ghf-travel 5.5s linear infinite;
+    opacity: 0.85;
+  }
+
+  .ghf-caption {
+    margin: clamp(0.9rem, 0.6rem + 1.2cqw, 1.5rem) 0 0;
+    font-size: clamp(0.78rem, 0.7rem + 0.3cqw, 0.95rem);
+    font-weight: 700;
+    color: #e2f9d9;
+  }
+
+  @keyframes ghf-fade {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes ghf-travel {
+    from { left: -36%; }
+    to { left: 100%; }
+  }
+
+  @container (max-width: 720px) {
+    .ghf-rail { grid-template-columns: repeat(2, 1fr); }
+  }
+  @container (max-width: 420px) {
+    .ghf-rail { grid-template-columns: 1fr; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ghf-step { animation: none; }
+    .ghf-pulse { display: none; }
+  }
+</style>
