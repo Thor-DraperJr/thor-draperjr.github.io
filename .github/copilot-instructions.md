@@ -6,6 +6,19 @@
 - Prune dead code.
 - While creating, be mindful to validate your assumptions.
 
+## Agentic work harness
+- Thor should not have to remember prompt names, skill names, or which subagents belong to a task. Treat a plain-language request as the task spec, infer the right workflow, and deploy the right agents/tools yourself.
+- First classify the work: article/content, visual storytelling, issue-start planning, voice/publish polish, public claims research, rendered page QA, presentation review, document/spreadsheet/deck work, or repo/code work.
+- Use the durable harness automatically:
+	- Article creation or revision: run the `/article-pass` conductor and bring in Public Claims Researcher, Narrative Strategist, and Voice & Publish Editor only as needed.
+	- Embedded article visuals or infographic work: use `/visual-storytelling` or the content deliverable loop, then validate with build, browser render, and screenshots.
+	- GitHub issues as starting input: use `/issue-planning` before editing.
+	- Rendered page, site, or presentation surface review: use Site Reviewer or Presentation Reviewer when visual judgment needs another set of eyes.
+	- PowerPoint, Word, Excel, HTML artifact, expense, Loop, social, or RFI work: load and follow the matching skill without requiring Thor to name it.
+- Keep the agent budget small by default. One or two subagents is usually enough; add a third only for a clear reason such as publish polish, major public claims, provider realism, or rendered visual review.
+- If a named prompt, skill, or agent would help, use it and summarize what was used. Do not hand the orchestration burden back to Thor unless the request is genuinely ambiguous.
+- Human gates still apply: ask before committing, pushing, publishing, submitting, spending money, or taking destructive actions.
+
 ## Development and validation
 - Before starting the Astro dev server, check if one is already running (e.g., `curl http://localhost:4321` or check terminal output). Do not spawn a second instance.
 - For visual bugs, layout work, embedded graphics, inline SVG, hand-built figures, custom components, and presentation surfaces, inspect the rendered page with browser tools or the Site Reviewer/Presentation Reviewer agent. Source inspection alone is not enough.
@@ -28,6 +41,11 @@
 - Before publishing anything that could read as internal-sounding, ask: does this position Thor as someone an executive would want in the room, or does it position him as someone running a sales motion? If the answer is the second, rewrite.
 - For post creation or revision, prefer the general `/article-pass` workflow over one-off post-specific prompt commands. Use durable agents as needed: Public Claims Researcher for public claims, Narrative Strategist for structure and executive framing, Voice & Publish Editor for late-stage voice and mechanics, and conditional specialists only when their domain is load-bearing.
 - For article graphics, prefer the `/visual-storytelling` workflow. The default style is informative, polished infographic storytelling that educates and entertains, uses native Astro/HTML/CSS/JS where useful, and makes images, diagrams, and concepts feel alive on both mobile and desktop.
+- For marker-based article visuals, the markdown must still make sense if read aloud or before the graphic renders. Prose should set up why the visual exists, name the one or two things worth noticing, and pay off the takeaway afterward; do not drain the slide by repeating every label, step, or caption in paragraph form.
+- For talk-derived or visual-heavy posts, treat the markdown as potential speaker notes: it should sound natural when read aloud, carry the narrative between visuals, and avoid abrupt definitional jumps that would feel awkward in a live delivery.
+- After editing a talk-derived or visual-heavy post, run a full transition pass across every boundary: section to section, prose to visual marker, visual marker to payoff, and payoff to next heading. A single fixed transition does not prove the piece is speakable.
+- In that transition pass, do not accept bridge sentences that only point at the next slide. Each handoff should either teach table-stakes context, explain what the learner is about to do, or name the value of the visual without draining it. If a paragraph introduces questions, answer them in the nearby prose instead of asking the reader to "hold onto" unresolved setup.
+- Treat visual-heavy markdown like a teleprompter transcript. The prose should address what is on the slide enough that a listener or transcript reader still learns if the visual is missing, while letting the slide carry extra reference detail, labels, and spatial relationships.
 
 ## Project Overview
 This is a personal blog for Thor Draper Jr, a Senior Security Solution Engineer at Microsoft and a former cybersecurity instructor. My goals for this are to highlight my experience and interests in multiple facets of technology and leadership to hopefully help advertise me for the next step in my career. The blog should be a reflection of my expertise and personality, while also providing value to readers interested in technology, cybersecurity, and career development.

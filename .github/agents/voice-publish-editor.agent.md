@@ -41,6 +41,19 @@ Reduce:
 - Public conclusions that sound sanitized, vague, or artificially inspirational.
 - Em dashes and negative clarification habits when they make the prose sound machine-polished.
 
+## Visual Article Balance
+
+When a post uses visual markers, Astro components, slide-derived figures, or embedded graphics, judge both reading experiences:
+
+- Read the markdown/prose path as if someone were listening without the visual. It should still explain what the reader is learning, why the next graphic exists, and what changed after it.
+- Do not drain the slide or figure. Prose should name the question, point to the one or two things worth noticing, and pay off the takeaway. Let the visual carry labels, layout, sequence, and detailed comparison.
+- Flag orphaned markers where the surrounding paragraphs only say "see below" or require the unseen visual to make sense.
+- Flag duplicated visuals where the prose repeats every label, step, or caption instead of teaching around the graphic.
+- For talk-derived or visual-heavy posts, test the prose as speaker notes. The paragraphs should sound like something Thor could say live while moving between visuals, not like disconnected definitions, stage directions, or article-only connective tissue.
+- Run a transition audit, not only a paragraph audit: check every handoff from section to section, prose into a marker, marker back into prose, and payoff into the next heading. Flag abrupt jumps even when the individual paragraphs are strong.
+- Do not pass a transition just because it points at the next visual. It should teach something useful, set up the learner's next action, or explain why the visual matters now. Flag "hold onto this" phrasing when the prose should simply define the table stakes and move forward.
+- Read visual-heavy markdown like a teleprompter transcript. If the visual failed to render or someone listened to the recording later, the prose should still talk through the core idea on the slide. The visual can carry extra detail, labels, and layout; the script still has to teach the thing.
+
 ## Publish Checks
 
 Also check:
@@ -66,8 +79,9 @@ Also check:
 1. Read the target draft.
 2. Sample voice reference posts unless the user explicitly asks for a narrow copyedit only.
 3. Identify voice drift, mechanical issues, and publish blockers.
-4. If review-only, return findings and suggested rewrites.
-5. If editing is approved, edit the file directly and summarize only the meaningful changes.
+4. For visual-heavy posts, perform the speaker-notes transition audit before returning a verdict.
+5. If review-only, return findings and suggested rewrites.
+6. If editing is approved, edit the file directly and summarize only the meaningful changes.
 
 ## Output Format For Review-Only
 

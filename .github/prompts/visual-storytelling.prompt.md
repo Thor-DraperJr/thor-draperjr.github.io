@@ -41,6 +41,8 @@ Use the repo's existing infographic language as the starting point:
 - Strong contrast, readable typography, and real product or brand assets when brands are shown.
 - Motion that teaches: reveal sequence, signal flow, lifecycle progression, comparison shift, train movement, changing states, or focus transitions.
 - Prose and visual working together: the article sets up the concept, the graphic lands it, and the next paragraph pays it off.
+- Markdown and visual stay balanced: the article should still make narrative sense when read without the rendered figure, but the prose should not drain the slide by repeating every label, step, or caption the graphic already carries.
+- Talk-derived visuals need a speaker-notes pass: the surrounding markdown should sound natural out loud, explain why the visual is on screen, and hand the reader back to the article after the graphic.
 
 Do not add decorative motion or abstract background effects that do not teach the point.
 
@@ -116,6 +118,11 @@ Rendered proof is required before calling the visual done:
 3. Screenshot the visual on desktop, mobile, and the `laptop-chrome` viewport when layout is complex.
 4. Inspect the screenshots for readability, proportions, overflow, clipping, placeholder assets, caption mismatch, and whether the visual teaches the intended point.
 5. If a source slide or image exists, compare the native result to the source and state what was preserved, improved, or intentionally changed.
+6. Read the markdown around the visual without relying on the rendered figure. Confirm the prose explains why the visual exists and what the reader should carry forward without duplicating every detail.
+7. For talk-derived or slide-compatible visuals, read the surrounding markdown as speaker notes and fix abrupt transitions that would sound awkward in delivery.
+8. Check the visual's neighboring transitions in both directions: what line hands into the graphic, what line hands out of it, and whether the next heading arrives naturally.
+9. Reject empty bridge prose. A transition should teach table-stakes context, orient the learner's next action, or name the value of the visual. "Hold onto this" is usually a sign the prose should define the thing directly.
+10. Apply the teleprompter/transcript test: surrounding prose should talk through the slide's core idea enough that a listener still learns if the visual is missing, while the visual carries extra reference detail and spatial structure.
 
 ## Output
 

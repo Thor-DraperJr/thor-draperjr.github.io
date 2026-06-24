@@ -49,7 +49,7 @@ Rules:
 - Public operator voice beats internal seller voice.
 - Anonymize customers, deal details, field participants, and internal-only signal.
 - Cut Q&A residue, meeting logistics, and internal notes unless the user explicitly wants them.
-- If a visual marker or component exists, capture what the visual is supposed to prove.
+- If a visual marker or component exists, capture what the visual is supposed to prove and whether the surrounding markdown still makes sense without seeing it. For talk-derived or visual-heavy posts, also judge whether the prose could work as speaker notes between visuals.
 
 ### 2. Public Claims Gate, Conditional
 
@@ -86,6 +86,11 @@ Run this step when the article embeds a custom component, marker, inline SVG, fi
 3. Screenshot each custom visual or use existing verified screenshots when this session already produced them.
 4. Check for raw markers, overflow, placeholder logos, broken assets, caption mismatch, and visual fidelity.
 5. When a PowerPoint reference exists, compare rendered screenshots against the source slide before replacing a PNG.
+6. Do a markdown-only read around each marker: the article should still carry the narrative if read aloud, while avoiding paragraph prose that drains every label, step, or caption from the visual.
+7. For talk-derived or visual-heavy posts, do a speaker-notes read: transitions should sound natural out loud and explain why the next visual exists.
+8. Run the speaker-notes transition pass across every boundary: section to section, prose to visual marker, visual marker to payoff, and payoff to the next heading.
+9. Reject empty bridge prose. A handoff should teach table-stakes context, orient the learner's next action, or name what the visual proves; it should not ask the reader to wait for value that could be delivered now.
+10. Run the teleprompter/transcript test: if the visual failed to render or the post became speaker notes, the prose should still address the core idea on the slide clearly enough to teach it.
 
 Do not use source inspection as a substitute for rendered visual proof.
 
@@ -129,7 +134,7 @@ Verified claims, stale citations, unverified claims, or "Skipped: <reason>."
 Voice fit, mechanical blockers, raw markers/placeholders, and publish verdict, or "Skipped: <reason>."
 
 ## Visual QA
-PASS/FAIL per custom visual or "Skipped: <reason>."
+PASS/FAIL per custom visual, including markdown-only narrative balance, or "Skipped: <reason>."
 
 ## Action Queue
 Numbered changes the user can approve. Each item names file, section, action type, and one-line description.

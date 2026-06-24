@@ -1,32 +1,31 @@
 ---
-// In-article infographic for "GitHub Without the Tour".
-// Session one as an ordered list of objectives, each tagged with who is
-// driving and what proves it worked. The rhythm under it is concept -> proof
-// -> their hands, repeated. Deck blue-yellow palette.
+// In-article infographic for the first pull request walkthrough.
+// The walkthrough as an ordered list of objectives, each tagged with who is
+// driving and what proves it worked. Deck blue-yellow palette.
 const segments = [
-  { label: 'Setup and the one picture', who: 'Together', detail: 'Accounts in, Copilot on, same repo. What GitHub is actually for.' },
-  { label: 'The contract', who: 'Facilitator', detail: 'Walk the flow once. The reason behind each step, not the keystrokes.' },
-  { label: 'We do one together', who: 'Together', detail: 'One contribution, agent narrating. Main stays untouched on screen.' },
-  { label: 'Your first contribution', who: 'Everyone', detail: 'Narrow prompts, one predictable outcome each. Facilitator walks the room.' },
-  { label: 'Read the diff, merge it', who: 'Everyone', detail: 'Review the change, approve, merge, delete the branch.' },
-  { label: 'Say it back, what is next', who: 'Together', detail: 'Three people explain a branch in their words. Tee up session two.' },
+  { label: 'Get your bearings', who: 'We', detail: 'Accounts in, Copilot on, same repo. Name what GitHub is for.' },
+  { label: 'The safety rule', who: 'We', detail: 'Nothing ships unseen. Name the workflow before using it.' },
+  { label: 'One shared example', who: 'We', detail: 'One contribution, agent narrating. Main stays untouched on screen.' },
+  { label: 'Your first contribution', who: 'You', detail: 'Narrow prompt, predictable outcome. Ask, inspect, adjust.' },
+  { label: 'Read the diff, merge it', who: 'You', detail: 'Review the change, approve, merge, delete the branch.' },
+  { label: 'Say it back', who: 'You', detail: 'Explain a branch in your own words before the next challenge gets heavier.' },
 ];
 ---
 
 <figure
   class="ros-fig"
   role="img"
-  aria-label="Session one objectives, in order. One, setup and the one picture, together. Two, the contract, facilitator. Three, we do one together. Four, your first contribution, everyone. Five, read the diff and merge it, everyone. Six, say it back and what is next, together."
+  aria-label="First pull request walkthrough, in order. One, get your bearings. Two, the safety rule. Three, one shared example. Four, your first contribution. Five, read the diff and merge it. Six, say it back in your own words."
 >
   <div class="ros-head">
-    <span class="ros-eyebrow">Session one</span>
+    <span class="ros-eyebrow">First pull request</span>
     <h3 class="ros-title">Everything you just did, in order</h3>
-    <p class="ros-sub">Concept, then proof, then your own hands. In that order, every time.</p>
+    <p class="ros-sub">Each step ties the idea to something you can see, then something you do.</p>
   </div>
 
   <ol class="ros-list">
     {segments.map((s, i) => (
-      <li class={`ros-seg ros-seg--${s.who === 'Everyone' ? 'you' : s.who === 'Together' ? 'both' : 'lead'}`} style={`--i:${i}`}>
+      <li class={`ros-seg ros-seg--${s.who === 'You' ? 'you' : 'both'}`} style={`--i:${i}`}>
         <span class="ros-num" aria-hidden="true">{i + 1}</span>
         <div class="ros-body">
           <div class="ros-row">
@@ -39,7 +38,7 @@ const segments = [
     ))}
   </ol>
 
-  <figcaption class="ros-caption">You never heard a thing explained that you didn't then watch, and never watched a thing you didn't then do.</figcaption>
+  <figcaption class="ros-caption">By the end, branch, diff, pull request, and merge are not vocabulary words anymore. They are steps you have used.</figcaption>
 </figure>
 
 <style>
@@ -103,7 +102,6 @@ const segments = [
     animation-delay: calc(var(--i) * 0.07s);
   }
   .ros-seg--both { border-left-color: #599ffd; }
-  .ros-seg--lead { border-left-color: #a5b8ee; }
   .ros-seg--you {
     border-left-color: #fadc14;
     background: rgba(250, 220, 20, 0.08);
