@@ -43,14 +43,16 @@ Current Pages check: Settings > Pages is configured for GitHub Actions publishin
 
 `.github/copilot-instructions.md` should hold broad rules that apply to most work in this repo: no code bloat, rendered visual inspection, placeholder discipline, owner-confirmed facts, and the issue-to-plan workflow.
 
-Narrow workflows should live elsewhere:
+Reusable workflows should live elsewhere:
 
-- Article-specific review flows belong in `.github/prompts/`.
+- Issue-start planning belongs in `.github/prompts/issue-planning.prompt.md`.
+- General article review and creation belongs in `.github/prompts/article-pass.prompt.md`.
+- Informative article graphics and animated infographic workflows belong in `.github/prompts/visual-storytelling.prompt.md`.
 - Role-specific review behavior belongs in `.github/agents/`.
 - Generated review outputs belong in `.github/reviews/` only when they are durable written summaries.
 - Temporary harness notes, one-off audit commands, and article-specific cleanup notes should not accumulate as permanent global instructions.
 
-Current review result: the broad visual QA and issue-to-plan rules should stay global. The All Aboard pass already has a narrower prompt contract, so future All Aboard-specific process changes should go there rather than expanding global instructions.
+Current review result: the broad visual QA and issue-to-plan rules should stay global. The durable visual workflow is about article graphics and visual storytelling across posts; single-post workflows should not become durable prompt commands unless the same process has proven useful across multiple posts or decks.
 
 ## Cleanup Checklist
 

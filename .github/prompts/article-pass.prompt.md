@@ -17,10 +17,11 @@ The default loop uses at most three durable roles:
 2. **Narrative Strategist** for structure, strategic frame, executive value, speakability, audience memory, career signal, and missing memorable moments.
 3. **Voice & Publish Editor** for late-stage Thor voice, transcript fidelity, copyediting, consistency, links, markers, and publish-readiness.
 
-Optional specialists stay optional:
+Optional specialists and workflows stay optional:
 
 - **HLS Provider Reality Check** only when provider realism is load-bearing.
 - **Site Reviewer** or **Presentation Reviewer** only when the rendered site, page UX, or presentation surface is the deliverable.
+- Use `/visual-storytelling` when the article needs a new or substantially revised infographic, animated visual, deck-derived graphic, or concept diagram.
 
 ## Intake
 
@@ -78,7 +79,7 @@ For review-only, ask for voice mismatches, mechanical fixes, and a publish verdi
 
 ### 6. Visual QA, Conductor Only
 
-Run this step when the article embeds a custom component, marker, inline SVG, figure, deck-derived slide, or hand-built visual.
+Run this step when the article embeds a custom component, marker, inline SVG, figure, deck-derived slide, or hand-built visual. If the article needs a new visual rather than only QA for an existing one, switch to `/visual-storytelling` for the visual build loop.
 
 1. Build the site or confirm a recent successful build.
 2. Render the page in the browser.
