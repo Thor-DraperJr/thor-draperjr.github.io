@@ -10,7 +10,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "audit:deck": "node scripts/deck-audit.mjs"
+    "audit:deck": "node scripts/deck-audit.mjs",
+    "audit:first-pr": "node scripts/deck-audit.mjs --deck=first-pr"
   },
   "dependencies": {
     "@chenglou/pretext": "^0.0.7",

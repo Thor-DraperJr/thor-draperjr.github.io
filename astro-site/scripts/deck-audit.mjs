@@ -5,6 +5,7 @@
  * Usage:
  *   node scripts/deck-audit.mjs                    # all viewports
  *   node scripts/deck-audit.mjs --viewport=mobile  # one viewport
+ *   node scripts/deck-audit.mjs --deck=first-pr    # first PR deck
  *   node scripts/deck-audit.mjs --url=...          # override URL
  *
  * Writes screenshots + report.json to ./deck-audit/<viewport>/
@@ -24,17 +25,45 @@ const VIEWPORTS = {
     'mobile-port': { width: 390, height: 844, deviceScaleFactor: 2, isMobile: true },
 };
 
-const SECTIONS = [
-    'signal-cover', 'signal-human', 'signal-strengths', 'signal-essence',
-    'signal-impact', 'signal-voices', 'signal-passion', 'signal-ask',
-];
+const DECKS = {
+    walking: {
+        label: 'Walking Deck',
+        url: 'http://localhost:4321/career/walking-deck/present',
+        outRoot: 'deck-audit',
+        presentSelector: '.walking-signal[data-present="true"]',
+        sectionSelector: '[data-signal-section]',
+        sections: [
+            'signal-cover', 'signal-human', 'signal-strengths', 'signal-essence',
+            'signal-impact', 'signal-voices', 'signal-passion', 'signal-ask',
+        ],
+    },
+    'first-pr': {
+        label: 'First Pull Request Deck',
+        url: 'http://localhost:4321/tech/first-pull-request/present/',
+        outRoot: 'first-pr-audit',
+        presentSelector: '.fpr-deck[data-present="true"]',
+        sectionSelector: '[data-presentation-section]',
+        sections: [
+            'fpr-cover', 'fpr-safety', 'fpr-github', 'fpr-path', 'fpr-tools',
+            'fpr-loop', 'fpr-diff', 'fpr-correction', 'fpr-recap', 'fpr-finish',
+        ],
+    },
+};
 
 const args = Object.fromEntries(process.argv.slice(2).map(a => {
     const [k, ...rest] = a.replace(/^--/, '').split('=');
     return [k, rest.join('=') || true];
 }));
 
-const url = args.url || 'http://localhost:4321/career/walking-deck/present';
+const deckName = args.deck || 'walking';
+const deckProfile = DECKS[deckName];
+if (!deckProfile) {
+    console.error(`Unknown deck: ${deckName}`);
+    console.error(`Available: ${Object.keys(DECKS).join(', ')}`);
+    process.exit(1);
+}
+
+const url = args.url || deckProfile.url;
 const wanted = args.viewport ? [args.viewport] : Object.keys(VIEWPORTS);
 const unknown = wanted.filter(v => !VIEWPORTS[v]);
 if (unknown.length) {
@@ -42,7 +71,7 @@ if (unknown.length) {
     console.error(`Available: ${Object.keys(VIEWPORTS).join(', ')}`);
     process.exit(1);
 }
-const outRoot = path.resolve('deck-audit');
+const outRoot = path.resolve(deckProfile.outRoot);
 
 async function measureSection(page, sectionId) {
     return page.evaluate((sid) => {
@@ -125,15 +154,33 @@ async function measureSection(page, sectionId) {
 }
 
 async function activateSection(page, sectionId) {
-    await page.evaluate((sid) => {
-        const sections = document.querySelectorAll('[data-signal-section]');
+    await page.evaluate(({ sid, selector }) => {
+        const sections = document.querySelectorAll(selector);
+        const activeIndex = [...sections].findIndex(s => s.id === sid);
+        const active = sections[activeIndex];
         sections.forEach(s => {
             s.classList.toggle('is-current', s.id === sid);
             s.classList.remove('is-leaving');
             s.setAttribute('data-signal-state', s.id === sid ? 'active' : 'inactive');
+            s.setAttribute('data-presentation-state', s.id === sid ? 'active' : 'inactive');
         });
-    }, sectionId);
-    await page.waitForTimeout(450);
+        const counter = document.querySelector('[data-present-counter]');
+        const title = document.querySelector('[data-present-title]');
+        const note = document.querySelector('[data-presentation-note-display]');
+        if (counter && activeIndex >= 0) {
+            counter.textContent = `Section ${String(activeIndex + 1).padStart(2, '0')} / ${String(sections.length).padStart(2, '0')}`;
+        }
+        if (title && active) {
+            title.textContent = active.dataset.presentationTitle
+                || document.querySelector(`[href="#${sid}"]`)?.textContent?.trim()
+                || active.querySelector('h2')?.textContent?.trim()
+                || sid;
+        }
+        if (note && active) {
+            note.textContent = active.dataset.presentationNote || '';
+        }
+    }, { sid: sectionId, selector: deckProfile.sectionSelector });
+    await page.waitForTimeout(700);
 }
 
 async function runViewport(browser, name) {
@@ -151,11 +198,11 @@ async function runViewport(browser, name) {
     });
     const page = await ctx.newPage();
     await page.goto(url, { waitUntil: 'networkidle' });
-    await page.waitForSelector('.walking-signal[data-present="true"]', { timeout: 5000 }).catch(() => { });
+    await page.waitForSelector(deckProfile.presentSelector, { timeout: 5000 }).catch(() => { });
     await page.waitForTimeout(500);
 
     const results = {};
-    for (const sid of SECTIONS) {
+    for (const sid of deckProfile.sections) {
         await activateSection(page, sid);
         const m = await measureSection(page, sid);
         results[sid] = m;
@@ -163,13 +210,13 @@ async function runViewport(browser, name) {
     }
 
     await writeFile(path.join(outDir, 'report.json'),
-        JSON.stringify({ viewport: name, vp, url, results }, null, 2));
+        JSON.stringify({ deck: deckName, deckLabel: deckProfile.label, viewport: name, vp, url, results }, null, 2));
     await ctx.close();
 
     // console summary
     console.log(`\n[${name}] ${vp.width}x${vp.height}`);
     let anyBad = false;
-    for (const sid of SECTIONS) {
+    for (const sid of deckProfile.sections) {
         const r = results[sid];
         const bad = r.overflowCount > 0 || r.viewportClipCount > 0 || r.minFontPx < 11;
         if (bad) anyBad = true;
@@ -177,7 +224,7 @@ async function runViewport(browser, name) {
         console.log(`${flag} ${sid.padEnd(18)} font=${String(r.minFontPx).padStart(5)}px  overflow=${r.overflowCount}  clip=${r.viewportClipCount}  fill=${r.fillRatio}`);
     }
     if (anyBad) {
-        for (const sid of SECTIONS) {
+        for (const sid of deckProfile.sections) {
             const r = results[sid];
             if (r.viewportClipCount > 0) {
                 console.log(`    ${sid} clipped off viewport:`, r.viewportClipExamples.map(e => `${e.tag}.${e.cls.split(' ')[0]}="${e.txt}"`).join(' | '));
@@ -189,6 +236,7 @@ async function runViewport(browser, name) {
 
 const browser = await chromium.launch();
 try {
+    console.log(`Auditing ${deckProfile.label}: ${url}`);
     for (const name of wanted) {
         await runViewport(browser, name);
     }

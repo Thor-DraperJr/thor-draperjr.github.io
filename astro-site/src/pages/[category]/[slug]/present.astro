@@ -1,0 +1,63 @@
+---
+import '../../../styles/global.css';
+import FirstPullRequestDeck from '../../../components/FirstPullRequestDeck.astro';
+import { getPosts, getSiteConfig } from '../../../lib/content';
+
+export function getStaticPaths() {
+  return getPosts()
+    .filter((post) => post.presentation === 'first-pull-request')
+    .map((post) => ({
+      params: {
+        category: post.category,
+        slug: post.slug,
+      },
+      props: { post },
+    }));
+}
+
+const { post } = Astro.props;
+const site = getSiteConfig();
+const documentTitle = `${post.title} | Present | ${site.title}`;
+const description = `Presentation view for ${post.title}.`;
+---
+
+<!doctype html>
+<html lang={site.lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="dark" />
+    <script is:inline>document.documentElement.classList.add('js', 'presentation-presenting');</script>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#081a36" />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=Lora:wght@600;700&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet" />
+    <title>{documentTitle}</title>
+  </head>
+  <body class="presentation-presenting presentation-present-page">
+    <main id="main-content">
+      {post.presentation === 'first-pull-request' && <FirstPullRequestDeck startInPresent={true} />}
+    </main>
+
+    <style is:global>
+      html.presentation-presenting,
+      body.presentation-present-page {
+        margin: 0;
+        padding: 0;
+        background: #081a36;
+        color: white;
+        min-height: 100vh;
+        min-height: 100dvh;
+      }
+
+      body.presentation-present-page #main-content {
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </body>
+</html>

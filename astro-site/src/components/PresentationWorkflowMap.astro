@@ -1,0 +1,254 @@
+---
+const lanes = [
+  {
+    label: 'Brief',
+    owner: 'Write the job',
+    detail: 'Audience, artifact, promise, optional present view, and what proof will count.',
+  },
+  {
+    label: 'Markdown',
+    owner: 'Create the shell',
+    detail: 'Frontmatter, prose, visual marker, payoff, and the copyable agent instructions.',
+  },
+  {
+    label: 'Visuals',
+    owner: 'Tune in HTML/CSS',
+    detail: 'Build the graphic as a component, inspect the screenshot, then tune shape, labels, motion, and fit.',
+  },
+  {
+    label: 'Agents',
+    owner: 'Use lanes',
+    detail: 'Explore finds the surface. Narrative shapes it. Presentation reviews pixels. Voice polishes late.',
+  },
+  {
+    label: 'Proof',
+    owner: 'Render truth',
+    detail: 'Build, screenshot, inspect real viewports, then revise the smallest visible problem.',
+  },
+];
+
+const gates = [
+  'Optional presentation frontmatter',
+  'Marker resolves',
+  'Visual loop is explicit',
+  'Agent prompts are copyable',
+  'Screenshots inspected',
+  'Human gate before publish',
+];
+---
+
+<figure
+  class="pwm-fig"
+  role="img"
+  aria-label="Presentation workflow map. Brief, markdown, visuals, agents, and proof. Write the job, create the shell, tune the HTML and CSS visual, use agent lanes, and render the truth. Gates include optional presentation frontmatter, marker resolves, visual loop is explicit, agent prompts are copyable, screenshots inspected, and human gate before publishing."
+>
+  <div class="pwm-head">
+    <span class="pwm-eyebrow">Copy the loop</span>
+    <h3 class="pwm-title">Start in markdown. Tune the visual in the browser.</h3>
+    <p class="pwm-sub">The recipe is brief, shell, HTML/CSS visual loop, agent lanes, and browser proof. Present mode stays optional.</p>
+  </div>
+
+  <ol class="pwm-lanes" role="list">
+    {lanes.map((lane, index) => (
+      <li class="pwm-lane" style={`--i:${index}`}>
+        <span class="pwm-num">{String(index + 1).padStart(2, '0')}</span>
+        <div>
+          <span class="pwm-label">{lane.label}</span>
+          <strong>{lane.owner}</strong>
+          <p>{lane.detail}</p>
+        </div>
+      </li>
+    ))}
+  </ol>
+
+  <div class="pwm-gates" aria-label="Validation gates">
+    {gates.map((gate, index) => <span style={`--i:${index}`}>{gate}</span>)}
+  </div>
+
+  <figcaption class="pwm-caption">The reusable part is the markdown contract: what you are making, who it is for, which agents judge what, and how the browser proves it.</figcaption>
+</figure>
+
+<style>
+  .pwm-fig {
+    container-type: inline-size;
+    margin: 1.5rem 0;
+    box-sizing: border-box;
+    width: 100%;
+    overflow: hidden;
+    padding: clamp(1.2rem, 0.7rem + 2.4cqw, 2.4rem);
+    border-radius: 18px;
+    background:
+      radial-gradient(130% 95% at 12% -10%, rgba(89, 159, 253, 0.3), transparent 58%),
+      radial-gradient(120% 95% at 92% 115%, rgba(250, 220, 20, 0.16), transparent 55%),
+      linear-gradient(150deg, #0e2a52 0%, #0b2344 55%, #081a36 100%);
+    color: #eaf1fb;
+    box-shadow: 0 24px 60px rgba(8, 20, 40, 0.28);
+  }
+
+  .pwm-head {
+    margin-bottom: clamp(1rem, 0.6rem + 1.6cqw, 1.8rem);
+  }
+
+  .pwm-eyebrow {
+    display: block;
+    color: #599ffd;
+    font-size: clamp(0.62rem, 0.55rem + 0.3cqw, 0.74rem);
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .pwm-title {
+    margin: 0.3rem 0 0;
+    color: #fff;
+    font-size: clamp(1.2rem, 0.9rem + 1.6cqw, 2rem);
+    font-weight: 850;
+    line-height: 1.08;
+  }
+
+  .pwm-sub {
+    margin: 0.55rem 0 0;
+    max-width: 56ch;
+    color: #a5b8ee;
+    font-size: clamp(0.8rem, 0.72rem + 0.3cqw, 0.98rem);
+  }
+
+  .pwm-lanes {
+    position: relative;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: clamp(0.55rem, 0.35rem + 0.8cqw, 0.95rem);
+  }
+
+  .pwm-lanes::before {
+    content: '';
+    position: absolute;
+    left: 2rem;
+    right: 2rem;
+    top: 1.25rem;
+    height: 3px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #599ffd, #fadc14, #e2f9d9);
+    opacity: 0.55;
+  }
+
+  .pwm-lane {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    min-height: 13rem;
+    padding: clamp(0.75rem, 0.55rem + 0.8cqw, 1rem);
+    border: 1px solid rgba(89, 159, 253, 0.28);
+    border-radius: 14px;
+    background: rgba(6, 16, 34, 0.56);
+    animation: pwm-rise 0.52s ease both;
+    animation-delay: calc(var(--i) * 0.08s);
+  }
+
+  .pwm-lane:nth-child(even) {
+    margin-top: clamp(0.6rem, 1.2cqw, 1.1rem);
+    border-color: rgba(250, 220, 20, 0.32);
+    background: rgba(250, 220, 20, 0.07);
+  }
+
+  .pwm-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.2rem;
+    height: 2.2rem;
+    border-radius: 50%;
+    color: #081a36;
+    background: #fadc14;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.82rem;
+    font-weight: 900;
+  }
+
+  .pwm-label {
+    display: block;
+    color: #599ffd;
+    font-size: 0.68rem;
+    font-weight: 850;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .pwm-lane strong {
+    display: block;
+    margin-top: 0.2rem;
+    color: #fff;
+    font-size: clamp(0.94rem, 0.82rem + 0.48cqw, 1.15rem);
+    line-height: 1.12;
+  }
+
+  .pwm-lane p {
+    margin: 0.45rem 0 0;
+    color: #cfe0ff;
+    font-size: clamp(0.72rem, 0.65rem + 0.28cqw, 0.86rem);
+    line-height: 1.35;
+  }
+
+  .pwm-gates {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin-top: clamp(1rem, 0.7rem + 1.4cqw, 1.6rem);
+  }
+
+  .pwm-gates span {
+    border: 1px solid rgba(226, 249, 217, 0.28);
+    border-radius: 999px;
+    padding: 0.32rem 0.62rem;
+    color: #e2f9d9;
+    background: rgba(226, 249, 217, 0.08);
+    font-size: clamp(0.68rem, 0.62rem + 0.26cqw, 0.8rem);
+    font-weight: 800;
+    animation: pwm-glow 3.8s ease-in-out infinite;
+    animation-delay: calc(var(--i) * 0.25s);
+  }
+
+  .pwm-caption {
+    margin: clamp(0.9rem, 0.6rem + 1.2cqw, 1.5rem) 0 0;
+    color: #e2f9d9;
+    font-size: clamp(0.78rem, 0.7rem + 0.3cqw, 0.95rem);
+    font-weight: 750;
+  }
+
+  @keyframes pwm-rise {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes pwm-glow {
+    0%, 100% { box-shadow: none; }
+    50% { box-shadow: 0 0 0 1px rgba(226, 249, 217, 0.22), 0 8px 24px rgba(8, 20, 40, 0.28); }
+  }
+
+  @container (max-width: 860px) {
+    .pwm-lanes {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .pwm-lanes::before { display: none; }
+    .pwm-lane:nth-child(even) { margin-top: 0; }
+  }
+
+  @container (max-width: 460px) {
+    .pwm-lanes {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pwm-lane,
+    .pwm-gates span {
+      animation: none;
+    }
+  }
+</style>

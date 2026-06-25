@@ -1,0 +1,921 @@
+---
+import AgentActionLoop from './AgentActionLoop.astro';
+import DiffPreview from './DiffPreview.astro';
+import GitHubFlowModernized from './GitHubFlowModernized.astro';
+import SessionRunOfShow from './SessionRunOfShow.astro';
+import WhatIsGitHub from './WhatIsGitHub.astro';
+import WorkshopObjectives from './WorkshopObjectives.astro';
+import WorkshopTools from './WorkshopTools.astro';
+
+interface Props {
+  startInPresent?: boolean;
+}
+
+const { startInPresent = false } = Astro.props;
+const articleHref = '/tech/first-pull-request/';
+
+const slides = [
+  { id: 'fpr-cover', title: 'Cover', note: 'Open by lowering the room temperature. This is not a Git class. It is a one-hour loop where people keep judgment while the agent handles mechanics.' },
+  { id: 'fpr-safety', title: 'Safety Rule', note: 'Anchor the trust rule before anything moves: the agent proposes, the learner reviews, and nothing becomes final unseen.' },
+  { id: 'fpr-github', title: 'What GitHub Is', note: 'Make GitHub plain: shared work, proposed changes, and a record of agreement. The vocabulary matters only because it names jobs.' },
+  { id: 'fpr-path', title: 'Contribution Path', note: 'Show the whole route before the learner drives it. Every stop exists to protect the shared version and make review possible.' },
+  { id: 'fpr-tools', title: 'Two Tools', note: 'Keep the tool story small. VS Code is the room. Copilot does the mechanics. The learner still decides.' },
+  { id: 'fpr-loop', title: 'Agent Loop', note: 'This is the new muscle: state intent, watch the work, read the result, approve only what matches.' },
+  { id: 'fpr-diff', title: 'Read The Diff', note: 'The diff is where confidence comes from. One green line is easy to inspect, and that habit scales.' },
+  { id: 'fpr-correction', title: 'Correction Loop', note: 'Practice the miss on purpose. A wrong line placement is not a failure. It is a chance to sharpen intent while stakes are low.' },
+  { id: 'fpr-recap', title: 'Run Of Show', note: 'Replay the sequence out loud so the session becomes a mental model, not a memory of buttons.' },
+  { id: 'fpr-finish', title: 'Finish Line', note: 'Close with the branch question. If they can explain why the branch existed, the hour worked.' },
+];
+---
+
+<section
+  class="fpr-deck"
+  data-presentation-deck
+  data-present={startInPresent ? 'true' : undefined}
+  data-exit-href={startInPresent ? articleHref : undefined}
+  aria-label="Your First Pull Request presentation"
+>
+  <nav class="fpr-rail" aria-label="First pull request presentation sections">
+    {slides.map((slide) => <a href={`#${slide.id}`} data-presentation-link>{slide.title}</a>)}
+    <button type="button" class="fpr-present-toggle" data-present-toggle aria-label="Enter presentation mode">Present</button>
+  </nav>
+
+  <div class="fpr-hud" data-present-hud aria-hidden={startInPresent ? 'false' : 'true'}>
+    <span class="fpr-counter" data-present-counter>Section 01 / {String(slides.length).padStart(2, '0')}</span>
+    <span class="fpr-title" data-present-title>{slides[0].title}</span>
+    <div class="fpr-controls">
+      <button type="button" class="fpr-btn" data-present-prev aria-label="Previous section">&lsaquo;</button>
+      <button type="button" class="fpr-btn" data-present-next aria-label="Next section">&rsaquo;</button>
+      <button type="button" class="fpr-btn" data-present-cues aria-label="Toggle speaker cues" aria-pressed="false">Cues</button>
+      <button type="button" class="fpr-btn fpr-btn-exit" data-present-exit aria-label="Exit presentation">Exit</button>
+    </div>
+    <p class="fpr-cue" data-presentation-note-display>{slides[0].note}</p>
+  </div>
+
+  <section class:list={['fpr-slide', 'fpr-cover', startInPresent && 'is-current']} id={slides[0].id} data-presentation-section data-presentation-title={slides[0].title} data-presentation-note={slides[0].note} aria-labelledby="fpr-cover-title">
+    <div class="fpr-slide-inner fpr-cover-grid">
+      <div class="fpr-copy fpr-cover-copy">
+        <span class="fpr-kicker">Workshop deck</span>
+        <h2 id="fpr-cover-title">Your first pull request, no commands required.</h2>
+        <p>One small contribution. One real pull request. The learner keeps judgment while the agent handles the Git mechanics in the open.</p>
+        <div class="fpr-chip-row" aria-label="Workshop loop">
+          <span>Say intent</span>
+          <span>Watch the work</span>
+          <span>Read the diff</span>
+          <span>Approve</span>
+        </div>
+      </div>
+      <div class="branch-lab" role="img" aria-label="Branch workflow: main stays clean, your branch carries the edit and diff, and main changes only after review.">
+        <svg viewBox="0 0 560 340" role="presentation">
+          <defs>
+            <linearGradient id="fpr-branch-grad" x1="0" x2="1" y1="0" y2="0">
+              <stop offset="0" stop-color="#599FFD" />
+              <stop offset="1" stop-color="#FADC14" />
+            </linearGradient>
+            <filter id="fpr-orb-glow" x="-80%" y="-80%" width="260%" height="260%">
+              <feGaussianBlur stdDeviation="5" result="blur" />
+              <feMerge>
+                <feMergeNode in="blur" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+          </defs>
+          <path class="branch-main" d="M44 246 H516" />
+          <path class="branch-work branch-work-glow" d="M150 246 C190 246 188 114 260 114 H346 C422 114 416 246 470 246" />
+          <path class="branch-work" d="M150 246 C190 246 188 114 260 114 H346 C422 114 416 246 470 246" />
+          <circle class="main-orb" r="8" opacity="0" filter="url(#fpr-orb-glow)">
+            <animateMotion dur="3.8s" repeatCount="indefinite" path="M44 246 H516" />
+            <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.12;0.82;1" dur="3.8s" repeatCount="indefinite" />
+          </circle>
+          <circle class="branch-orb orb-one" r="7" opacity="0" filter="url(#fpr-orb-glow)">
+            <animateMotion dur="6.2s" repeatCount="indefinite" path="M150 246 C190 246 188 114 260 114 H346 C422 114 416 246 470 246" calcMode="linear" keyPoints="0;0;1;1" keyTimes="0;0.24;0.84;1" />
+            <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.23;0.28;0.8;0.86;1" dur="6.2s" repeatCount="indefinite" />
+          </circle>
+          <circle class="branch-orb orb-two" r="5" opacity="0" filter="url(#fpr-orb-glow)">
+            <animateMotion dur="6.2s" repeatCount="indefinite" path="M150 246 C190 246 188 114 260 114 H346 C422 114 416 246 470 246" calcMode="linear" keyPoints="0;0;1;1" keyTimes="0;0.42;0.94;1" />
+            <animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.41;0.46;0.9;1" dur="6.2s" repeatCount="indefinite" />
+          </circle>
+          <text class="branch-text" x="92" y="278" text-anchor="middle">main</text>
+          <text class="branch-text branch-text--work" x="320" y="86" text-anchor="middle">change travels off main</text>
+          <text class="branch-text" x="470" y="278" text-anchor="middle">approved merge</text>
+        </svg>
+        <ol class="branch-legend" role="list">
+          <li><span>01</span><strong>Branch</strong><em>Main stays clean.</em></li>
+          <li><span>02</span><strong>Edit + diff</strong><em>Review happens here.</em></li>
+          <li><span>03</span><strong>Merge</strong><em>Main changes after approval.</em></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="fpr-slide fpr-safety" id={slides[1].id} data-presentation-section data-presentation-title={slides[1].title} data-presentation-note={slides[1].note} aria-labelledby="fpr-safety-title">
+    <div class="fpr-slide-inner fpr-two-col">
+      <div class="fpr-copy">
+        <span class="fpr-kicker">Rule before motion</span>
+        <h2 id="fpr-safety-title">Nothing the agent does is final until you look at it.</h2>
+        <p>This is the trust contract for the room. The agent can move quickly because the learner has a review point before anything ships.</p>
+      </div>
+      <ol class="approval-gate" role="list" aria-label="Approval gate sequence">
+        <li><span>01</span><strong>Intent</strong><em>You say what should change.</em></li>
+        <li><span>02</span><strong>Proposal</strong><em>The agent edits on a branch and shows its work.</em></li>
+        <li><span>03</span><strong>Review</strong><em>You read the diff before approval.</em></li>
+        <li><span>04</span><strong>Merge</strong><em>Main changes only after the yes.</em></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="fpr-slide fpr-visual-slide" id={slides[2].id} data-presentation-section data-presentation-title={slides[2].title} data-presentation-note={slides[2].note} aria-labelledby="fpr-github-title">
+    <div class="fpr-slide-inner fpr-visual-grid">
+      <div class="fpr-copy compact">
+        <span class="fpr-kicker">Before any buttons</span>
+        <h2 id="fpr-github-title">GitHub is shared work, proposed changes, and a record.</h2>
+        <p>The nouns are less scary when each one has a job.</p>
+      </div>
+      <div class="fpr-visual"><WhatIsGitHub /></div>
+    </div>
+  </section>
+
+  <section class="fpr-slide fpr-visual-slide" id={slides[3].id} data-presentation-section data-presentation-title={slides[3].title} data-presentation-note={slides[3].note} aria-labelledby="fpr-path-title">
+    <div class="fpr-slide-inner fpr-visual-grid wide-visual">
+      <div class="fpr-copy compact">
+        <span class="fpr-kicker">The route</span>
+        <h2 id="fpr-path-title">Your idea travels through safety checks.</h2>
+        <p>Fork, branch, commit, push, PR, merge. Each stop protects the shared version until the change is reviewed.</p>
+      </div>
+      <div class="fpr-visual"><GitHubFlowModernized /></div>
+    </div>
+  </section>
+
+  <section class="fpr-slide fpr-visual-slide" id={slides[4].id} data-presentation-section data-presentation-title={slides[4].title} data-presentation-note={slides[4].note} aria-labelledby="fpr-tools-title">
+    <div class="fpr-slide-inner fpr-visual-grid">
+      <div class="fpr-copy compact">
+        <span class="fpr-kicker">Keep the stack small</span>
+        <h2 id="fpr-tools-title">One room. One assistant. Your judgment.</h2>
+        <p>VS Code keeps the file, request, diff, and pull request close enough that the learner can keep their bearings.</p>
+      </div>
+      <div class="fpr-visual"><WorkshopTools /></div>
+    </div>
+  </section>
+
+  <section class="fpr-slide fpr-visual-slide" id={slides[5].id} data-presentation-section data-presentation-title={slides[5].title} data-presentation-note={slides[5].note} aria-labelledby="fpr-loop-title">
+    <div class="fpr-slide-inner fpr-visual-grid">
+      <div class="fpr-copy compact">
+        <span class="fpr-kicker">Intent in, work out</span>
+        <h2 id="fpr-loop-title">The workflow is a conversation with checkpoints.</h2>
+        <p>The agent handles Git. The learner keeps the decision. That division of labor is the whole point.</p>
+      </div>
+      <div class="fpr-visual"><AgentActionLoop /></div>
+    </div>
+  </section>
+
+  <section class="fpr-slide fpr-visual-slide" id={slides[6].id} data-presentation-section data-presentation-title={slides[6].title} data-presentation-note={slides[6].note} aria-labelledby="fpr-diff-title">
+    <div class="fpr-slide-inner fpr-visual-grid diff-grid">
+      <div class="fpr-copy compact">
+        <span class="fpr-kicker">The habit worth keeping</span>
+        <h2 id="fpr-diff-title">Read the diff before you approve.</h2>
+        <p>A plus sign and one green line are enough evidence to decide whether the work matches the request.</p>
+      </div>
+      <div class="fpr-visual spotlight"><DiffPreview /></div>
+    </div>
+  </section>
+
+  <section class="fpr-slide fpr-correction" id={slides[7].id} data-presentation-section data-presentation-title={slides[7].title} data-presentation-note={slides[7].note} aria-labelledby="fpr-correction-title">
+    <div class="fpr-slide-inner fpr-two-col">
+      <div class="fpr-copy">
+        <span class="fpr-kicker">Practice the miss</span>
+        <h2 id="fpr-correction-title">When the agent is wrong, narrow the request.</h2>
+        <p>A small mistake is useful here. It proves the learner can correct the outcome without grabbing for commands.</p>
+      </div>
+      <div class="repair-stage" role="img" aria-label="A misplaced contributor line moves from the top of the list to the correct alphabetical position after a clearer prompt.">
+        <div class="repair-card is-before">
+          <span>Before review</span>
+          <code class="wrong-line">+ Thor Draper</code>
+          <code>  Alex Rivera</code>
+          <code>  Maria Chen</code>
+          <code>  Uma Patel</code>
+        </div>
+        <div class="repair-arrow" aria-hidden="true">&darr;</div>
+        <div class="repair-card is-after">
+          <span>After a sharper ask</span>
+          <code>  Alex Rivera</code>
+          <code>  Maria Chen</code>
+          <code class="right-line">+ Thor Draper</code>
+          <code>  Uma Patel</code>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="fpr-slide fpr-visual-slide" id={slides[8].id} data-presentation-section data-presentation-title={slides[8].title} data-presentation-note={slides[8].note} aria-labelledby="fpr-recap-title">
+    <div class="fpr-slide-inner fpr-visual-grid wide-visual">
+      <div class="fpr-copy compact">
+        <span class="fpr-kicker">Say the loop back</span>
+        <h2 id="fpr-recap-title">The sequence matters because it becomes reusable.</h2>
+        <p>Once the learner can name the stops without help, Git has stopped being a wall.</p>
+      </div>
+      <div class="fpr-visual"><SessionRunOfShow /></div>
+    </div>
+  </section>
+
+  <section class="fpr-slide fpr-visual-slide fpr-finish" id={slides[9].id} data-presentation-section data-presentation-title={slides[9].title} data-presentation-note={slides[9].note} aria-labelledby="fpr-finish-title">
+    <div class="fpr-slide-inner fpr-visual-grid">
+      <div class="fpr-copy compact">
+        <span class="fpr-kicker">Close the hour</span>
+        <h2 id="fpr-finish-title">What's a branch, and why did we make one?</h2>
+        <p>If they can answer that without jargon, the session worked.</p>
+      </div>
+      <div class="fpr-visual"><WorkshopObjectives /></div>
+    </div>
+  </section>
+</section>
+
+<script>
+  import { initPresentationDeck } from '../scripts/presentationDeck.client';
+
+  initPresentationDeck();
+  document.addEventListener('astro:page-load', () => initPresentationDeck());
+</script>
+
+<style>
+  .fpr-deck {
+    --fpr-bg: #081a36;
+    --fpr-bg-2: #0e2a52;
+    --fpr-blue: #599FFD;
+    --fpr-yellow: #FADC14;
+    --fpr-peri: #A5B8EE;
+    --fpr-mint: #E2F9D9;
+    --fpr-ink: #eaf1fb;
+    --fpr-muted: #cfe0ff;
+    --fpr-glass: rgba(7, 20, 43, 0.72);
+    width: min(calc(100vw - 2rem), 76rem);
+    margin: 2rem auto;
+    color: var(--fpr-ink);
+  }
+
+  .fpr-deck h2,
+  .fpr-deck h3,
+  .fpr-deck p {
+    margin: 0;
+    letter-spacing: 0;
+  }
+
+  .fpr-deck h2 {
+    color: #fff;
+    font-size: clamp(2rem, 3.6vw, 4.3rem);
+    line-height: 0.98;
+  }
+
+  .fpr-deck p {
+    color: var(--fpr-muted);
+    font-size: clamp(0.95rem, 1vw, 1.12rem);
+    line-height: 1.52;
+  }
+
+  .fpr-kicker {
+    display: block;
+    color: var(--fpr-yellow);
+    font-size: clamp(0.72rem, 0.75vw, 0.84rem);
+    font-weight: 850;
+    letter-spacing: 0;
+    text-transform: uppercase;
+  }
+
+  .fpr-rail {
+    position: sticky;
+    top: 5.25rem;
+    z-index: 5;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.35rem;
+    margin-bottom: 1rem;
+    padding: 0.55rem;
+    border: 1px solid rgba(89, 159, 253, 0.24);
+    border-radius: 10px;
+    background: rgba(8, 26, 54, 0.9);
+    box-shadow: 0 18px 42px rgba(8, 20, 40, 0.18);
+    backdrop-filter: blur(12px);
+  }
+
+  .fpr-rail a,
+  .fpr-present-toggle {
+    min-height: 2.2rem;
+    border-radius: 999px;
+    border: 1px solid transparent;
+    padding: 0.4rem 0.7rem;
+    color: var(--fpr-muted);
+    background: transparent;
+    font: inherit;
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0;
+    text-decoration: none;
+  }
+
+  .fpr-rail a:hover,
+  .fpr-rail a.is-active {
+    color: #fff;
+    border-color: rgba(89, 159, 253, 0.42);
+    background: rgba(89, 159, 253, 0.16);
+  }
+
+  .fpr-present-toggle {
+    margin-left: auto;
+    color: #081a36;
+    background: var(--fpr-yellow);
+    border-color: var(--fpr-yellow);
+    cursor: pointer;
+  }
+
+  .fpr-slide {
+    position: relative;
+    min-height: min(42rem, calc((100vw - 2rem) * 9 / 16));
+    margin-top: 1rem;
+    overflow: hidden;
+    border: 1px solid rgba(89, 159, 253, 0.22);
+    border-radius: 18px;
+    background:
+      radial-gradient(130% 95% at 12% -10%, rgba(89, 159, 253, 0.32), transparent 58%),
+      radial-gradient(120% 95% at 92% 115%, rgba(250, 220, 20, 0.16), transparent 55%),
+      linear-gradient(150deg, #0e2a52 0%, #0b2344 55%, #081a36 100%);
+    box-shadow: 0 24px 64px rgba(8, 20, 40, 0.28);
+  }
+
+  .fpr-slide::before {
+    content: '';
+    position: absolute;
+    inset: -20%;
+    pointer-events: none;
+    background:
+      radial-gradient(circle at 20% 20%, rgba(250, 220, 20, 0.16), transparent 24%),
+      radial-gradient(circle at 78% 64%, rgba(89, 159, 253, 0.18), transparent 28%);
+    filter: blur(6px);
+    animation: fpr-ambient 18s ease-in-out infinite;
+  }
+
+  .fpr-slide-inner {
+    position: relative;
+    z-index: 1;
+    min-height: inherit;
+    padding: clamp(1rem, 2.5vw, 2.25rem);
+  }
+
+  .fpr-copy {
+    display: grid;
+    align-content: center;
+    gap: clamp(0.7rem, 1.3vw, 1.1rem);
+  }
+
+  .fpr-copy.compact h2 {
+    font-size: clamp(1.55rem, 2.4vw, 3rem);
+    line-height: 1.02;
+  }
+
+  .fpr-two-col,
+  .fpr-cover-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.88fr) minmax(18rem, 1.12fr);
+    gap: clamp(1rem, 2.4vw, 2.2rem);
+    align-items: center;
+  }
+
+  .fpr-visual-grid {
+    display: grid;
+    grid-template-columns: minmax(16rem, 0.42fr) minmax(0, 1fr);
+    gap: clamp(0.8rem, 1.8vw, 1.6rem);
+    align-items: stretch;
+  }
+
+  .fpr-visual-grid.wide-visual {
+    grid-template-columns: minmax(14rem, 0.34fr) minmax(0, 1fr);
+  }
+
+  .fpr-visual {
+    min-width: 0;
+    display: grid;
+    align-items: center;
+  }
+
+  .fpr-visual :global(figure) {
+    max-width: 100%;
+    box-shadow: none;
+  }
+
+  .fpr-chip-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .fpr-chip-row span {
+    border: 1px solid rgba(250, 220, 20, 0.4);
+    border-radius: 999px;
+    padding: 0.38rem 0.68rem;
+    color: #fff7bc;
+    background: rgba(250, 220, 20, 0.1);
+    font-size: 0.84rem;
+    font-weight: 800;
+  }
+
+  .branch-lab {
+    position: relative;
+    display: grid;
+    grid-template-rows: minmax(0, 1fr) auto;
+    gap: 0.75rem;
+    min-height: 21rem;
+    padding: clamp(0.8rem, 1.4vw, 1rem);
+    border: 1px solid rgba(165, 184, 238, 0.22);
+    border-radius: 18px;
+    background: rgba(6, 16, 34, 0.5);
+    overflow: hidden;
+  }
+
+  .branch-lab svg {
+    width: 100%;
+    height: auto;
+    min-height: 0;
+  }
+
+  .branch-main,
+  .branch-work {
+    fill: none;
+    stroke-linecap: round;
+    stroke-width: 7;
+  }
+
+  .branch-main {
+    stroke: rgba(89, 159, 253, 0.78);
+    filter: drop-shadow(0 0 10px rgba(89, 159, 253, 0.28));
+  }
+
+  .branch-work {
+    stroke: url(#fpr-branch-grad);
+    stroke-dasharray: 540;
+    stroke-dashoffset: 540;
+    animation: fpr-branch-appear 6.2s ease-in-out infinite;
+  }
+
+  .branch-work-glow {
+    stroke: rgba(250, 220, 20, 0.32);
+    stroke-width: 14;
+    opacity: 0;
+    filter: blur(6px);
+    animation: fpr-branch-glow 6.2s ease-in-out infinite;
+  }
+
+  .main-orb { fill: var(--fpr-blue); }
+  .branch-orb { fill: var(--fpr-yellow); }
+
+  .node-review { fill: var(--fpr-yellow); }
+
+  .branch-text {
+    fill: #cfe0ff;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 16px;
+    font-weight: 800;
+  }
+
+  .branch-text--work,
+  .branch-text--review { fill: #fff7bc; }
+
+  .branch-legend {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.5rem;
+  }
+
+  .branch-legend li {
+    display: grid;
+    gap: 0.18rem;
+    min-width: 0;
+    padding: 0.62rem;
+    border: 1px solid rgba(89, 159, 253, 0.28);
+    border-radius: 12px;
+    background: rgba(89, 159, 253, 0.09);
+  }
+
+  .branch-legend li:nth-child(2) {
+    border-color: rgba(250, 220, 20, 0.4);
+    background: rgba(250, 220, 20, 0.08);
+  }
+
+  .branch-legend span {
+    color: var(--fpr-yellow);
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.75rem;
+    font-weight: 900;
+  }
+
+  .branch-legend strong {
+    color: #fff;
+    font-size: 0.9rem;
+    line-height: 1.1;
+  }
+
+  .branch-legend em {
+    color: var(--fpr-muted);
+    font-size: 0.72rem;
+    font-style: normal;
+    line-height: 1.24;
+  }
+
+  .approval-gate {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(0.65rem, 1.2vw, 1rem);
+  }
+
+  .approval-gate li {
+    position: relative;
+    display: grid;
+    gap: 0.35rem;
+    min-height: 8rem;
+    padding: 1rem;
+    border-radius: 16px;
+    border: 1px solid rgba(89, 159, 253, 0.28);
+    background: rgba(89, 159, 253, 0.09);
+    animation: fpr-card-rise 0.6s ease both;
+  }
+
+  .approval-gate li:nth-child(2) { animation-delay: 0.12s; }
+  .approval-gate li:nth-child(3) { animation-delay: 0.24s; border-color: rgba(250, 220, 20, 0.5); background: rgba(250, 220, 20, 0.08); }
+  .approval-gate li:nth-child(4) { animation-delay: 0.36s; }
+
+  .approval-gate span {
+    color: var(--fpr-yellow);
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.78rem;
+    font-weight: 800;
+  }
+
+  .approval-gate strong { color: #fff; font-size: 1.2rem; }
+  .approval-gate em { color: var(--fpr-muted); font-style: normal; line-height: 1.35; }
+
+  .spotlight {
+    position: relative;
+  }
+
+  .spotlight::after {
+    content: '';
+    position: absolute;
+    inset: 10% -20%;
+    pointer-events: none;
+    background: linear-gradient(90deg, transparent, rgba(250, 220, 20, 0.18), transparent);
+    transform: translateX(-80%);
+    animation: fpr-spotlight 4.2s ease-in-out infinite;
+  }
+
+  .repair-stage {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 0.7rem;
+    align-items: center;
+  }
+
+  .repair-card {
+    display: grid;
+    gap: 0.32rem;
+    padding: clamp(0.85rem, 1.4vw, 1.2rem);
+    border: 1px solid rgba(165, 184, 238, 0.24);
+    border-radius: 16px;
+    background: rgba(6, 16, 34, 0.58);
+  }
+
+  .repair-card span {
+    color: var(--fpr-peri);
+    font-size: 0.8rem;
+    font-weight: 800;
+  }
+
+  .repair-card code {
+    display: block;
+    padding: 0.28rem 0.45rem;
+    border-radius: 7px;
+    color: #cfe0ff;
+    background: rgba(255, 255, 255, 0.04);
+    font-family: "JetBrains Mono", monospace;
+    font-size: clamp(0.72rem, 1vw, 0.9rem);
+  }
+
+  .wrong-line {
+    color: #ffd7d7 !important;
+    background: rgba(255, 110, 110, 0.16) !important;
+    animation: fpr-wrong-line 2.6s ease-in-out infinite;
+  }
+
+  .right-line {
+    color: #dffbe8 !important;
+    background: rgba(80, 200, 120, 0.2) !important;
+    animation: fpr-right-line 2.6s ease-in-out infinite 0.45s;
+  }
+
+  .repair-arrow {
+    color: var(--fpr-yellow);
+    font-size: 2rem;
+    font-weight: 900;
+    animation: fpr-arrow-drop 1.6s ease-in-out infinite;
+  }
+
+  .fpr-hud {
+    position: fixed;
+    top: max(0.7rem, env(safe-area-inset-top));
+    left: 50%;
+    z-index: 1100;
+    display: none;
+    width: min(calc(100vw - 1rem), 56rem);
+    transform: translateX(-50%);
+    grid-template-columns: auto 1fr auto;
+    gap: 0.55rem 0.75rem;
+    align-items: center;
+    padding: 0.5rem 0.65rem;
+    border: 1px solid rgba(165, 184, 238, 0.24);
+    border-radius: 12px;
+    background: rgba(3, 10, 22, 0.82);
+    box-shadow: 0 18px 42px rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(14px);
+  }
+
+  .fpr-counter,
+  .fpr-title {
+    color: var(--fpr-muted);
+    font-size: 0.78rem;
+    font-weight: 800;
+  }
+
+  .fpr-title { color: #fff; }
+
+  .fpr-controls {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  .fpr-btn {
+    min-width: 2.25rem;
+    min-height: 2.1rem;
+    padding: 0.35rem 0.62rem;
+    border: 1px solid rgba(89, 159, 253, 0.3);
+    border-radius: 9px;
+    background: rgba(89, 159, 253, 0.12);
+    color: #fff;
+    font: inherit;
+    font-size: 0.8rem;
+    font-weight: 800;
+    cursor: pointer;
+  }
+
+  .fpr-btn:hover,
+  .fpr-btn[aria-pressed='true'] {
+    background: rgba(250, 220, 20, 0.16);
+    border-color: rgba(250, 220, 20, 0.5);
+  }
+
+  .fpr-btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.42;
+  }
+
+  .fpr-cue {
+    display: none;
+    grid-column: 1 / -1;
+    padding-top: 0.45rem;
+    border-top: 1px solid rgba(165, 184, 238, 0.16);
+    color: var(--fpr-mint) !important;
+    font-size: 0.78rem !important;
+    line-height: 1.35 !important;
+  }
+
+  .fpr-deck[data-cues='true'] .fpr-cue { display: block; }
+
+  .fpr-deck[data-present='true'] {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+    margin: 0;
+    overflow: hidden;
+    background:
+      radial-gradient(85% 65% at 16% 6%, rgba(89, 159, 253, 0.32), transparent 62%),
+      radial-gradient(80% 70% at 86% 95%, rgba(250, 220, 20, 0.16), transparent 60%),
+      linear-gradient(150deg, #061226 0%, #081a36 58%, #0b2344 100%);
+  }
+
+  .fpr-deck[data-present='true'] .fpr-rail { display: none; }
+  .fpr-deck[data-present='true'] .fpr-hud { display: grid; }
+
+  .fpr-deck[data-present='true'] .fpr-slide {
+    position: absolute;
+    inset: clamp(4.2rem, 8vh, 5.2rem) clamp(0.75rem, 2.5vw, 2rem) clamp(0.7rem, 2vh, 1.35rem);
+    min-height: 0;
+    margin: 0;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(5vw) scale(0.985);
+    transition: opacity 0.42s ease, transform 0.52s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  .fpr-deck[data-present-dir='back'] .fpr-slide { transform: translateX(-5vw) scale(0.985); }
+
+  .fpr-deck[data-present='true'] .fpr-slide.is-current {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(0) scale(1);
+  }
+
+  .fpr-deck[data-present='true'] .fpr-slide.is-leaving {
+    opacity: 0;
+    transform: translateX(-4vw) scale(0.985);
+  }
+
+  .fpr-deck[data-present-dir='back'][data-present='true'] .fpr-slide.is-leaving { transform: translateX(4vw) scale(0.985); }
+
+  .fpr-deck[data-present='true'] .fpr-slide-inner {
+    height: 100%;
+    min-height: 0;
+  }
+
+  .fpr-deck[data-present='true'] .fpr-visual :global(figure) {
+    max-height: 100%;
+    overflow: hidden;
+    padding: clamp(0.75rem, 1.4vw, 1.2rem);
+  }
+
+  .fpr-deck[data-present='true'] .fpr-visual :global(figcaption) { display: none; }
+
+  .fpr-deck[data-present='true'] .fpr-visual :global(.wig-label),
+  .fpr-deck[data-present='true'] .fpr-visual :global([class$='-eyebrow']),
+  .fpr-deck[data-present='true'] .fpr-visual :global(.wtl-role),
+  .fpr-deck[data-present='true'] .fpr-visual :global(.wtl-chip),
+  .fpr-deck[data-present='true'] .fpr-visual :global(.wtl-arrow),
+  .fpr-deck[data-present='true'] .fpr-visual :global(.ghf-num),
+  .fpr-deck[data-present='true'] .fpr-visual :global(.ghf-cmd),
+  .fpr-deck[data-present='true'] .fpr-visual :global(.agl-who),
+  .fpr-deck[data-present='true'] .fpr-visual :global(.agl-tag),
+  .fpr-deck[data-present='true'] .fpr-visual :global(.ros-who),
+  .fpr-deck[data-present='true'] .fpr-visual :global(.wob-mark),
+  .fpr-deck[data-present='true'] .fpr-visual :global(.dif-stat) {
+    font-size: 0.78rem;
+  }
+
+  .fpr-deck[data-present='true'] .fpr-visual :global(.ghf-pulse) {
+    display: none;
+  }
+
+  @keyframes fpr-ambient {
+    0%, 100% { transform: translate3d(-1%, -1%, 0) rotate(0deg); opacity: 0.72; }
+    50% { transform: translate3d(1.5%, 1%, 0) rotate(4deg); opacity: 1; }
+  }
+
+  @keyframes fpr-branch-appear {
+    0%, 8% { stroke-dashoffset: 540; opacity: 0; }
+    20%, 94% { stroke-dashoffset: 0; opacity: 1; }
+    100% { stroke-dashoffset: 0; opacity: 0.5; }
+  }
+
+  @keyframes fpr-branch-glow {
+    0%, 8%, 100% { opacity: 0; }
+    20%, 90% { opacity: 0.75; }
+  }
+
+  @keyframes fpr-card-rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes fpr-spotlight { 0%, 28% { transform: translateX(-80%); } 62%, 100% { transform: translateX(80%); } }
+  @keyframes fpr-wrong-line { 50% { box-shadow: 0 0 0 2px rgba(255, 110, 110, 0.32); } }
+  @keyframes fpr-right-line { 50% { box-shadow: 0 0 0 2px rgba(80, 200, 120, 0.34); } }
+  @keyframes fpr-arrow-drop { 50% { transform: translateY(8px); } }
+
+  @media (max-width: 58rem) {
+    .fpr-two-col,
+    .fpr-cover-grid,
+    .fpr-visual-grid,
+    .fpr-visual-grid.wide-visual {
+      grid-template-columns: 1fr;
+    }
+
+    .branch-lab { min-height: 16rem; }
+    .branch-lab svg { min-height: 15rem; }
+    .repair-stage { grid-template-columns: 1fr; }
+    .repair-arrow { transform: rotate(0deg); justify-self: center; }
+  }
+
+  @media (max-width: 48rem) {
+    .fpr-deck[data-present='true'] .fpr-two-col,
+    .fpr-deck[data-present='true'] .fpr-cover-grid,
+    .fpr-deck[data-present='true'] .fpr-visual-grid,
+    .fpr-deck[data-present='true'] .fpr-visual-grid.wide-visual {
+      grid-template-columns: 1fr;
+      align-content: center;
+    }
+
+    .fpr-deck[data-present='true'] .fpr-copy {
+      max-width: min(42rem, 100%);
+    }
+
+    .fpr-deck[data-present='true'] .fpr-visual,
+    .fpr-deck[data-present='true'] .branch-lab,
+    .fpr-deck[data-present='true'] .approval-gate,
+    .fpr-deck[data-present='true'] .repair-stage {
+      display: none;
+    }
+  }
+
+  @media (max-height: 620px) and (orientation: landscape) {
+    .fpr-deck[data-present='true'] .fpr-hud {
+      top: 0.35rem;
+      padding: 0.3rem 0.4rem;
+      border-radius: 10px;
+    }
+
+    .fpr-deck[data-present='true'] .fpr-counter,
+    .fpr-deck[data-present='true'] .fpr-title {
+      font-size: 0.7rem;
+    }
+
+    .fpr-deck[data-present='true'] .fpr-btn {
+      min-width: 1.9rem;
+      min-height: 1.8rem;
+      padding: 0.25rem 0.45rem;
+      border-radius: 8px;
+      font-size: 0.72rem;
+    }
+
+    .fpr-deck[data-present='true'] .fpr-slide {
+      inset: 3.05rem 0.45rem 0.4rem;
+    }
+
+    .fpr-deck[data-present='true'] .fpr-slide-inner {
+      padding: 0.7rem;
+    }
+
+    .fpr-deck[data-present='true'] .fpr-two-col,
+    .fpr-deck[data-present='true'] .fpr-cover-grid,
+    .fpr-deck[data-present='true'] .fpr-visual-grid,
+    .fpr-deck[data-present='true'] .fpr-visual-grid.wide-visual {
+      grid-template-columns: 1fr;
+      align-content: center;
+    }
+
+    .fpr-deck[data-present='true'] .fpr-visual,
+    .fpr-deck[data-present='true'] .branch-lab,
+    .fpr-deck[data-present='true'] .approval-gate,
+    .fpr-deck[data-present='true'] .repair-stage {
+      display: none;
+    }
+
+    .fpr-deck[data-present='true'] h2,
+    .fpr-deck[data-present='true'] .fpr-copy.compact h2 {
+      font-size: clamp(1.25rem, 7vh, 1.95rem);
+      line-height: 1.02;
+    }
+
+    .fpr-deck[data-present='true'] .fpr-copy p {
+      font-size: clamp(0.78rem, 3.4vh, 0.94rem);
+      line-height: 1.32;
+    }
+
+    .fpr-deck[data-present='true'] .fpr-chip-row span {
+      padding: 0.26rem 0.48rem;
+      font-size: 0.7rem;
+    }
+
+    .fpr-deck[data-present='true'] .fpr-copy.compact p,
+    .fpr-deck[data-present='true'] .fpr-visual :global(figcaption) {
+      display: none;
+    }
+
+    .fpr-deck[data-present='true'] .fpr-copy.compact h2 {
+      font-size: clamp(1.25rem, 3vw, 1.9rem);
+    }
+  }
+
+  @media (max-width: 44rem) {
+    .approval-gate { grid-template-columns: 1fr; }
+    .fpr-hud { width: min(calc(100vw - 0.6rem), 35rem); grid-template-columns: 1fr auto; }
+    .fpr-counter { display: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fpr-slide::before,
+    .branch-work,
+    .branch-work-glow,
+    .approval-gate li,
+    .spotlight::after,
+    .wrong-line,
+    .right-line,
+    .repair-arrow {
+      animation: none;
+    }
+
+    .branch-work { stroke-dashoffset: 0; }
+    .branch-work-glow { opacity: 0.5; }
+    .main-orb,
+    .branch-orb { display: none; }
+  }
+</style>

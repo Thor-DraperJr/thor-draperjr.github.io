@@ -16,6 +16,7 @@ import SessionRunOfShow from '../../components/SessionRunOfShow.astro';
 import WhatIsGitHub from '../../components/WhatIsGitHub.astro';
 import WorkshopTools from '../../components/WorkshopTools.astro';
 import DiffPreview from '../../components/DiffPreview.astro';
+import PresentationWorkflowMap from '../../components/PresentationWorkflowMap.astro';
 import { getPosts } from '../../lib/content';
 
 export function getStaticPaths() {
@@ -50,6 +51,7 @@ const threeNewYearsMarker = '[[THREE_NEW_YEARS]]';
 const performanceNarrativeMarker = '[[PERFORMANCE_NARRATIVE]]';
 const ghWorkshopMarker = '[[GH_WORKSHOP]]';
 const ghWorkshopFigureMarkers = ['WHAT_IS_GITHUB', 'GITHUB_FLOW', 'YOUR_TOOLS', 'AGENT_LOOP', 'DIFF_PREVIEW', 'WORKSHOP_OBJECTIVES', 'SESSION_PLAN'].map((n) => `[[${n}]]`);
+const presentationWorkflowMarker = '[[PRESENTATION_WORKFLOW]]';
 
 let processedHtml = post.html;
 processedHtml = processedHtml.replace(`<p>${runtimeChartMarker}</p>`, runtimeChartMarker);
@@ -68,6 +70,7 @@ processedHtml = processedHtml.replace(`<p>${ghWorkshopMarker}</p>`, ghWorkshopMa
 for (const figureMarker of ghWorkshopFigureMarkers) {
   processedHtml = processedHtml.replace(`<p>${figureMarker}</p>`, figureMarker);
 }
+processedHtml = processedHtml.replace(`<p>${presentationWorkflowMarker}</p>`, presentationWorkflowMarker);
 
 const hasRuntimeChart = processedHtml.includes(runtimeChartMarker);
 const hasCareerDevPlan = processedHtml.includes(careerDevPlanMarker);
@@ -77,6 +80,7 @@ const hasAgent365Deck = processedHtml.includes(agent365DeckMarker);
 const hasAllAboard = processedHtml.includes(allAboardMarker);
 const hasThreeNewYears = processedHtml.includes(threeNewYearsMarker);
 const hasPerformanceNarrative = processedHtml.includes(performanceNarrativeMarker);
+const hasPresentationWorkflow = processedHtml.includes(presentationWorkflowMarker);
 
 const runtimeParts = hasRuntimeChart ? processedHtml.split(runtimeChartMarker) : [];
 const careerParts = hasCareerDevPlan ? processedHtml.split(careerDevPlanMarker) : [];
@@ -107,6 +111,7 @@ if (hasAllAboard) {
 }
 const threeNewYearsParts = hasThreeNewYears ? processedHtml.split(threeNewYearsMarker) : [];
 const performanceNarrativeParts = hasPerformanceNarrative ? processedHtml.split(performanceNarrativeMarker) : [];
+const presentationWorkflowParts = hasPresentationWorkflow ? processedHtml.split(presentationWorkflowMarker) : [];
 
 const hasGhWorkshop = processedHtml.includes(ghWorkshopMarker);
 const ghWorkshopParts = hasGhWorkshop ? processedHtml.split(ghWorkshopMarker) : [];
@@ -143,6 +148,11 @@ if (hasGhWorkshop) {
           {post.tags.length > 0 && (
             <div class="post-tags" style="margin-top: 1rem;">
               {post.tags.map((tag) => <span class="post-tag">{tag}</span>)}
+            </div>
+          )}
+          {post.presentHref && (
+            <div class="post-hero-actions">
+              <a class="post-hero-action" href={post.presentHref}>Present</a>
             </div>
           )}
         </header>
@@ -504,6 +514,12 @@ if (hasGhWorkshop) {
             <Fragment set:html={walkingDeckParts[0]} />
             <WalkingDeck />
             <Fragment set:html={walkingDeckParts.slice(1).join(walkingDeckMarker)} />
+          </>
+        ) : hasPresentationWorkflow ? (
+          <>
+            <Fragment set:html={presentationWorkflowParts[0]} />
+            <PresentationWorkflowMap />
+            <Fragment set:html={presentationWorkflowParts.slice(1).join(presentationWorkflowMarker)} />
           </>
         ) : (
           <Fragment set:html={processedHtml} />

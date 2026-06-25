@@ -37,6 +37,8 @@ export interface Post {
   rawContent: string;
   date: Date;
   permalink: string;
+  presentation?: string;
+  presentHref?: string;
   readingTime: number;
   draft: boolean;
 }
@@ -186,6 +188,8 @@ export function getPosts(): Post[] {
         : String(data.date ?? dateFromFileName);
       const excerpt = deriveExcerpt(content, String(data.excerpt ?? ''));
       const draft = data.draft === true;
+      const presentation = typeof data.presentation === 'string' ? normalizeSegment(data.presentation) : undefined;
+      const permalink = `/${category}/${slug}/`;
 
       return {
         title: String(data.title ?? slug.replace(/-/g, ' ')),
@@ -197,7 +201,9 @@ export function getPosts(): Post[] {
         html: stripLeadingH1(html),
         rawContent: content,
         date: new Date(`${dateValue}T12:00:00`),
-        permalink: `/${category}/${slug}/`,
+        permalink,
+        presentation,
+        presentHref: presentation ? `${permalink}present/` : undefined,
         readingTime: calculateReadingTime(content),
         draft,
       } satisfies Post;
