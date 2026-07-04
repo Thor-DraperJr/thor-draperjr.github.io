@@ -1,0 +1,280 @@
+---
+// In-article infographic for "Let the Session Write the Post".
+// The in-session loop: the work session feeds a draft, the model writes
+// variants, the server runs the deterministic steps (lint, score, price),
+// the human approves the exact text, and one post publishes. A glow travels
+// the six stages to show the sequence. Below, three always-on guardrail rails
+// name the checks that make it safe to run mid-session.
+const stages = [
+  { who: 'Model', tone: 'model', label: 'Draft variants', detail: 'Four postures in your voice from the work you just shipped.' },
+  { who: 'Server', tone: 'server', label: 'Lint the copy', detail: 'Reject em-dashes, emoji, and banned filler in code.' },
+  { who: 'Server', tone: 'server', label: 'Score and rank', detail: 'Rate voice, standalone clarity, and reply pull.' },
+  { who: 'Server', tone: 'server', label: 'Price the post', detail: 'Show the cost before a single dollar moves.' },
+  { who: 'You', tone: 'you', label: 'Approve the text', detail: 'You sign off on the exact words. Nothing ships unseen.' },
+  { who: 'Server', tone: 'server', label: 'Publish one', detail: 'One approved post goes out, on your word.' },
+];
+
+const rails = [
+  { label: 'Voice lint is code', detail: 'The same deterministic check runs on every draft, not on the model remembering.' },
+  { label: 'Cost at the decision', detail: 'Text-only about $0.015, a link about $0.20. Drafting is always free.' },
+  { label: 'Keys stay out of chat', detail: 'Prototype storage is local. The hardening path is the OS keychain.' },
+];
+---
+
+<figure
+  class="slp-fig"
+  role="img"
+  aria-label="The in-session social loop. The model drafts four variants in your voice. The server lints the copy, scores and ranks the drafts, and prices the post. You approve the exact text. The server publishes one post. Three guardrails run underneath: the voice lint is code, the cost is shown at the decision, and keys stay out of chat while prototype local storage can later move to the operating system keychain."
+>
+  <div class="slp-head">
+    <span class="slp-eyebrow">One session, one post</span>
+    <h3 class="slp-title">The draft is a byproduct. The risky steps are gated.</h3>
+    <p class="slp-legend">
+      <span class="slp-key slp-key--model">Model drafts</span>
+      <span class="slp-key slp-key--server">Server enforces</span>
+      <span class="slp-key slp-key--you">You decide</span>
+    </p>
+  </div>
+
+  <ol class="slp-flow">
+    {stages.map((s, i) => (
+      <li class={`slp-stage slp-stage--${s.tone}`} style={`--i:${i}`}>
+        <span class="slp-order">{i + 1}</span>
+        <span class="slp-who">{s.who}</span>
+        <span class="slp-stage-label">{s.label}</span>
+        <span class="slp-stage-detail">{s.detail}</span>
+      </li>
+    ))}
+  </ol>
+
+  <div class="slp-rails">
+    <span class="slp-rails-head">Guardrails that run the whole time</span>
+    <div class="slp-rail-grid">
+      {rails.map((r) => (
+        <div class="slp-rail">
+          <span class="slp-rail-dot" aria-hidden="true"></span>
+          <span class="slp-rail-label">{r.label}</span>
+          <span class="slp-rail-detail">{r.detail}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <figcaption class="slp-caption">The model owns the words. The server owns discovery, rules, cost, and the publish gate. You own the call.</figcaption>
+</figure>
+
+<style>
+  .slp-fig {
+    container-type: inline-size;
+    margin: 0;
+    box-sizing: border-box;
+    width: 100%;
+    padding: clamp(1.2rem, 0.7rem + 2.4cqw, 2.4rem);
+    border-radius: 18px;
+    background:
+      radial-gradient(130% 95% at 12% -10%, rgba(0, 143, 211, 0.32), transparent 58%),
+      radial-gradient(120% 95% at 92% 115%, rgba(244, 196, 48, 0.16), transparent 55%),
+      linear-gradient(150deg, #0e2a52 0%, #0b2344 55%, #081a36 100%);
+    color: #eaf1fb;
+    box-shadow: 0 24px 60px rgba(8, 20, 40, 0.32);
+  }
+
+  .slp-head { margin-bottom: clamp(1rem, 0.6rem + 1.6cqw, 1.8rem); }
+  .slp-eyebrow {
+    display: block;
+    font-size: clamp(0.62rem, 0.55rem + 0.3cqw, 0.74rem);
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #34baff;
+  }
+  .slp-title {
+    margin: 0.3rem 0 0;
+    font-size: clamp(1.1rem, 0.85rem + 1.4cqw, 1.7rem);
+    font-weight: 800;
+    line-height: 1.12;
+    color: #fff;
+  }
+  .slp-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.1rem;
+    margin: clamp(0.7rem, 0.5rem + 0.6cqw, 1rem) 0 0;
+  }
+  .slp-key {
+    position: relative;
+    padding-left: 1.05rem;
+    font-size: clamp(0.66rem, 0.6rem + 0.26cqw, 0.78rem);
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .slp-key::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0.62rem;
+    height: 0.62rem;
+    border-radius: 3px;
+  }
+  .slp-key--model { color: #34baff; }
+  .slp-key--model::before { background: #34baff; }
+  .slp-key--server { color: #008fd3; }
+  .slp-key--server::before { background: #008fd3; }
+  .slp-key--you { color: #f4c430; }
+  .slp-key--you::before { background: #f4c430; }
+
+  .slp-flow {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: clamp(0.5rem, 0.3rem + 0.7cqw, 0.85rem);
+  }
+  .slp-stage {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: clamp(0.7rem, 0.5rem + 0.7cqw, 1.05rem) clamp(0.6rem, 0.45rem + 0.5cqw, 0.85rem);
+    border-radius: 13px;
+    border: 1px solid rgba(0, 143, 211, 0.32);
+    background: rgba(0, 143, 211, 0.08);
+    animation: slp-cycle 12s ease-in-out infinite;
+    animation-delay: calc(var(--i) * 2s);
+  }
+  .slp-stage--model {
+    border-color: rgba(52, 186, 255, 0.4);
+    background: rgba(52, 186, 255, 0.1);
+  }
+  .slp-stage--you {
+    border-color: rgba(244, 196, 48, 0.5);
+    background: rgba(244, 196, 48, 0.09);
+  }
+  .slp-order {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.35rem;
+    height: 1.35rem;
+    border-radius: 50%;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: #081a36;
+    background: #34baff;
+  }
+  .slp-stage--server .slp-order { background: #008fd3; color: #eaf1fb; }
+  .slp-stage--you .slp-order { background: #f4c430; }
+  .slp-who {
+    margin-top: 0.5rem;
+    font-size: 0.58rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #34baff;
+  }
+  .slp-stage--server .slp-who { color: #67c4f2; }
+  .slp-stage--you .slp-who { color: #f4c430; }
+  .slp-stage-label {
+    margin-top: 0.1rem;
+    font-size: clamp(0.8rem, 0.7rem + 0.4cqw, 0.98rem);
+    font-weight: 800;
+    color: #fff;
+    line-height: 1.14;
+  }
+  .slp-stage-detail {
+    margin-top: 0.3rem;
+    font-size: clamp(0.68rem, 0.62rem + 0.26cqw, 0.82rem);
+    line-height: 1.32;
+    color: #cfe0ff;
+  }
+
+  .slp-rails { margin-top: clamp(1rem, 0.6rem + 1.6cqw, 1.8rem); }
+  .slp-rails-head {
+    display: block;
+    margin-bottom: 0.6rem;
+    font-size: clamp(0.66rem, 0.58rem + 0.3cqw, 0.78rem);
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #e2f9d9;
+  }
+  .slp-rail-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(0.5rem, 0.3rem + 0.7cqw, 0.85rem);
+  }
+  .slp-rail {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: clamp(0.65rem, 0.5rem + 0.6cqw, 0.95rem);
+    border-radius: 12px;
+    background: rgba(6, 16, 34, 0.55);
+    border: 1px solid rgba(165, 184, 238, 0.24);
+  }
+  .slp-rail-dot {
+    width: 0.55rem;
+    height: 0.55rem;
+    border-radius: 50%;
+    background: #34baff;
+    box-shadow: 0 0 0 0 rgba(52, 186, 255, 0.55);
+    animation: slp-pulse 3.2s ease-in-out infinite;
+  }
+  .slp-rail-label {
+    margin-top: 0.5rem;
+    font-size: clamp(0.76rem, 0.68rem + 0.3cqw, 0.92rem);
+    font-weight: 800;
+    color: #fff;
+    line-height: 1.16;
+  }
+  .slp-rail-detail {
+    margin-top: 0.3rem;
+    font-size: clamp(0.68rem, 0.62rem + 0.26cqw, 0.82rem);
+    line-height: 1.32;
+    color: #a5b8ee;
+  }
+
+  .slp-caption {
+    margin: clamp(0.9rem, 0.6rem + 1.2cqw, 1.5rem) 0 0;
+    font-size: clamp(0.78rem, 0.7rem + 0.3cqw, 0.95rem);
+    font-weight: 700;
+    color: #e2f9d9;
+  }
+
+  @keyframes slp-cycle {
+    0%, 12%, 100% {
+      border-color: rgba(0, 143, 211, 0.32);
+      box-shadow: none;
+      transform: none;
+    }
+    3%, 9% {
+      border-color: rgba(52, 186, 255, 0.85);
+      box-shadow: 0 0 0 1px rgba(52, 186, 255, 0.45), 0 10px 26px rgba(8, 20, 40, 0.4);
+      transform: translateY(-4px);
+    }
+  }
+
+  @keyframes slp-pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(52, 186, 255, 0.5); }
+    50% { box-shadow: 0 0 0 5px rgba(52, 186, 255, 0); }
+  }
+
+  @container (max-width: 860px) {
+    .slp-flow { grid-template-columns: repeat(3, 1fr); }
+  }
+  @container (max-width: 560px) {
+    .slp-flow { grid-template-columns: repeat(2, 1fr); }
+    .slp-rail-grid { grid-template-columns: 1fr; }
+  }
+  @container (max-width: 380px) {
+    .slp-flow { grid-template-columns: 1fr; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .slp-stage,
+    .slp-rail-dot { animation: none; }
+  }
+</style>
