@@ -7,7 +7,7 @@ mode: "agent"
 
 Use this when Thor wants to create or revise a blog graphic, infographic, animated diagram, visual explainer, slide-inspired figure, or image that should make an article more educational and more entertaining.
 
-Before making visual direction decisions, load `.github/instructions/blog-visual-system.instructions.md` and use that as the reusable palette/composition template for this repo. It captures the Walking Deck section 05 influence and the process-blue signal system.
+Before making visual direction decisions, load `.github/instructions/visual-system.instructions.md` and use that as the reusable palette/composition template for this repo. It captures the Walking Deck section 05 influence and the process-blue signal system.
 
 The goal is not to decorate a post. The goal is to help readers understand and remember the idea. The default style is polished infographic storytelling: structured, visual, energetic, and clear enough to scan on mobile without losing sophistication on desktop.
 
@@ -118,7 +118,7 @@ Rendered proof is required before calling the visual done:
 1. Build the site or confirm the existing dev server/build state is appropriate.
 2. Render the target article or page.
 3. Screenshot the visual on desktop, mobile, and the `laptop-chrome` viewport when layout is complex.
-4. Inspect the screenshots for readability, proportions, overflow, clipping, placeholder assets, caption mismatch, and whether the visual teaches the intended point.
+4. Inspect the screenshots for readability, proportions, overflow, clipping, placeholder assets, caption mismatch, section handoffs, hover/focus states for visible controls, and whether the visual teaches the intended point.
 5. If a source slide or image exists, compare the native result to the source and state what was preserved, improved, or intentionally changed.
 6. Read the markdown around the visual without relying on the rendered figure. Confirm the prose explains why the visual exists and what the reader should carry forward without duplicating every detail.
 7. For talk-derived or slide-compatible visuals, read the surrounding markdown as speaker notes and fix abrupt transitions that would sound awkward in delivery.
@@ -154,4 +154,5 @@ Return concise progress in this shape:
 - Do not turn every graphic into a slide deck. Some visuals should be compact figures inside prose.
 - Do not make a landing page when the task is an article graphic.
 - Do not use source inspection as a substitute for rendered screenshots.
+- Do not approve a graphic or page section when hover/focus shadows, glows, section boundaries, or screenshots feel visually corrupted. Fix the rendered state, then re-screenshot.
 - Do not over-agent the work. Use Site Reviewer or Presentation Reviewer only when the rendered surface needs external review.

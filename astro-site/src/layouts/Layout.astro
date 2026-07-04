@@ -30,6 +30,7 @@ const documentTitle = pageTitle ? `${pageTitle} | ${site.title}` : site.title;
 		<link rel="icon" href="/favicon.ico" sizes="32x32" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+		<link rel="alternate" type="application/rss+xml" title={`${site.title} RSS`} href="/rss.xml" />
 		<meta name="generator" content={Astro.generator} />
 		<meta name="description" content={pageDescription} />
 		<meta name="theme-color" content="#14212f" />
@@ -39,7 +40,6 @@ const documentTitle = pageTitle ? `${pageTitle} | ${site.title}` : site.title;
 		<title>{documentTitle}</title>
 	</head>
 	<body>
-		<a class="skip-link" href="#main-content">Skip to content</a>
 		<div class="site-shell">
 			<header class="site-header">
 				<div class="shell-container shell-container-wide site-header-inner">
@@ -69,18 +69,17 @@ const documentTitle = pageTitle ? `${pageTitle} | ${site.title}` : site.title;
 			</main>
 
 			<footer class="site-footer">
+				<div class="site-footer-energy" aria-hidden="true"></div>
 				<div class="shell-container shell-container-wide site-footer-inner">
-					<div>
-						<p class="footer-title">{site.title}</p>
-						<p class="footer-copy">{site.description}</p>
-					</div>
+					<a class="footer-wordmark" href="/" aria-label={`${site.title} home`}>{site.title}</a>
 
-					<div class="footer-links">
+					<nav class="footer-links" aria-label="Footer utility links">
+						<a href="/rss.xml">RSS</a>
 						{site.social.linkedin && <a href={site.social.linkedin}>LinkedIn</a>}
 						{site.social.github && <a href={site.social.github}>GitHub</a>}
 						{site.social.twitter && <a href={site.social.twitter}>X</a>}
 						{site.social.email && <a href={`mailto:${site.social.email}`}>Email</a>}
-					</div>
+					</nav>
 				</div>
 			</footer>
 		</div>

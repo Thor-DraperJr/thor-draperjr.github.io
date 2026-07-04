@@ -4,21 +4,25 @@ import { getPosts } from '../lib/content';
 
 const posts = getPosts();
 const latest = posts[0];
-const recentPosts = posts.slice(1, 9);
+const leadPost = posts[1];
+const supportingPosts = posts.slice(2, 5);
+const recentPosts = posts.slice(5, 11);
 ---
 
 <Layout pageTitle="Home" currentPath="/" wide>
-	<section class="shell-container shell-container-wide">
-		<div class="home-grid" data-reveal>
+	<section class="home-stage" aria-labelledby="home-title">
+		<div class="home-stage-energy" aria-hidden="true"></div>
+		<div class="shell-container shell-container-wide">
+		<div class="home-grid home-signal-grid">
 			<div>
-				<span class="eyebrow">Operator's notebook</span>
-				<h1 class="home-headline">What holds up after the meeting.</h1>
-				<p class="home-copy">
+				<span class="eyebrow" data-reveal>Operator's notebook</span>
+				<h1 id="home-title" class="home-headline" data-reveal data-reveal-delay="1">What holds up after the meeting.</h1>
+				<p class="home-copy" data-reveal data-reveal-delay="2">
 					I use this site to think in public, make sense of what I am learning, and keep a record of the ideas I want to come back to.
 					It is a working library built from the work itself: security, cloud, AI, leadership, and the long game of execution.
 				</p>
 
-				<div class="button-row">
+				<div class="button-row" data-reveal data-reveal-delay="3">
 					<a class="button" href="/archive/">Browse the archive</a>
 					{latest && <a class="button-ghost" href={latest.permalink}>Read the latest piece</a>}
 				</div>
@@ -26,7 +30,7 @@ const recentPosts = posts.slice(1, 9);
 
 			<div class="home-rail">
 				{latest && (
-					<article class="feature-panel" data-reveal data-reveal-delay="1">
+					<article class="feature-panel home-latest-card" data-reveal data-reveal-delay="4">
 						<span class="eyebrow">Latest dispatch</span>
 						<h2 class="feature-panel-title"><a href={latest.permalink}>{latest.title}</a></h2>
 						<p class="card-copy">{latest.excerpt}</p>
@@ -38,27 +42,64 @@ const recentPosts = posts.slice(1, 9);
 				)}
 			</div>
 		</div>
+		</div>
+		<div class="home-stage-threshold" aria-hidden="true"></div>
+	</section>
 
-		<section class="section-block" data-reveal>
+	<section class="home-body" aria-label="Homepage body">
+		<div class="home-body-field" aria-hidden="true"></div>
+		<section class="shell-container shell-container-wide section-block home-writing-section" data-reveal>
 			<div class="section-header">
 				<div>
 					<span class="eyebrow">Recent writing</span>
-					<h2 class="section-title">What I'm working through now.</h2>
+					<h2 class="section-title">The current signal.</h2>
 				</div>
-				<p class="section-copy">The latest posts I'm testing, sharpening, or trying to make more useful.</p>
+				<p class="section-copy">A more deliberate trail through the latest posts: one idea in focus, a few nearby threads, and the rest of the queue close enough to keep moving.</p>
 			</div>
 
-			<div class="stream-list">
-				{recentPosts.map((post) => (
-					<article class="stream-item" data-reveal>
-						<div class="stream-date">{post.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</div>
-						<div>
+			<div class="home-writing-grid">
+				<div class="home-writing-focus">
+					{leadPost && (
+						<article class="home-lead-post" data-reveal data-reveal-delay="1">
+							<div class="home-lead-post-signal" aria-hidden="true"></div>
+							<div class="card-topline">
+								<span class="eyebrow">Field note</span>
+								<span class="card-index">{leadPost.readingTime} min read</span>
+							</div>
+							<h3 class="home-lead-title"><a href={leadPost.permalink}>{leadPost.title}</a></h3>
+							<p class="home-lead-copy">{leadPost.excerpt}</p>
+							<div class="meta-row">
+								<span>{leadPost.date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
+								{leadPost.categories.slice(0, 2).map((category) => <span>{category}</span>)}
+							</div>
+						</article>
+					)}
+
+					{recentPosts.length > 0 && (
+						<div class="home-archive-strip" data-reveal data-reveal-delay="2">
+							<span class="home-archive-strip-label">Queue</span>
+							<div class="home-archive-strip-list">
+								{recentPosts.map((post) => (
+									<a href={post.permalink}>{post.title}</a>
+								))}
+							</div>
+						</div>
+					)}
+				</div>
+
+				<div class="home-post-stack">
+					{supportingPosts.map((post, index) => (
+						<article class="home-post-tile" data-reveal data-reveal-delay={String(Math.min(index + 2, 4))}>
+							<div class="card-topline">
+								<span class="card-index">0{index + 1}</span>
+								<span class="stream-date">{post.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</span>
+							</div>
 							<h3 class="stream-title"><a href={post.permalink}>{post.title}</a></h3>
 							<p class="stream-excerpt">{post.excerpt}</p>
-						</div>
-						<div class="stream-meta">{post.readingTime} min read</div>
-					</article>
-				))}
+							<div class="stream-meta">{post.readingTime} min read</div>
+						</article>
+					))}
+				</div>
 			</div>
 
 			<div class="button-row" style="margin-top: 1.5rem;">
@@ -66,7 +107,8 @@ const recentPosts = posts.slice(1, 9);
 			</div>
 		</section>
 
-		<section class="section-block" data-reveal>
+		<section class="home-about-band" data-reveal>
+			<div class="shell-container shell-container-wide home-about-inner">
 			<div class="section-header">
 				<div>
 					<span class="eyebrow">About Thor</span>
@@ -75,18 +117,18 @@ const recentPosts = posts.slice(1, 9);
 				<p class="section-copy">Trust, translation, and a longer view than the room usually wants to take.</p>
 			</div>
 
-			<article class="panel" data-reveal data-reveal-delay="1">
+			<article class="home-about-panel" data-reveal data-reveal-delay="1">
 				<p class="section-copy">The roles changed over time, but the pattern did not. I keep getting pulled toward work that rewards clarity, trust, and the ability to make complicated things usable for someone else.</p>
 				<div class="note-grid" style="margin-top: 1.25rem;">
-					<div>
+					<div class="home-about-note">
 						<h3>Technology without theater</h3>
 						<p class="section-copy">Architecture, platforms, and new tools explained in ways people can actually use.</p>
 					</div>
-					<div>
+					<div class="home-about-note">
 						<h3>Career advice without fluff</h3>
 						<p class="section-copy">Momentum, feedback, habits, and positioning without pretending a title solves the problem.</p>
 					</div>
-					<div>
+					<div class="home-about-note">
 						<h3>Experiments worth keeping</h3>
 						<p class="section-copy">Drafts, operating principles, and technology experiments captured before they disappear into a notes app.</p>
 					</div>
@@ -96,6 +138,7 @@ const recentPosts = posts.slice(1, 9);
 					<a class="button-ghost" href="/resume/">View the resume</a>
 				</div>
 			</article>
+			</div>
 		</section>
 	</section>
 </Layout>
