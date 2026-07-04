@@ -3,8 +3,8 @@ import Layout from '../layouts/Layout.astro';
 import { getPosts } from '../lib/content';
 
 const posts = getPosts();
-const recentPosts = posts.slice(0, 8);
 const latest = posts[0];
+const recentPosts = posts.slice(1, 9);
 ---
 
 <Layout pageTitle="Home" currentPath="/" wide>

@@ -22,6 +22,7 @@
 ## Development and validation
 - Before starting the Astro dev server, check if one is already running (e.g., `curl http://localhost:4321` or check terminal output). Do not spawn a second instance.
 - For visual bugs, layout work, embedded graphics, inline SVG, hand-built figures, custom components, and presentation surfaces, inspect the rendered page with browser tools or the Site Reviewer/Presentation Reviewer agent. Source inspection alone is not enough.
+- For sitewide visual design, palette, favicon, Astro component styling, article graphics, and presentation surfaces, load `.github/instructions/blog-visual-system.instructions.md` and use Walking Deck section 05 as the aesthetic north star.
 - For custom visuals, screenshot the rendered result and check the picture: accurate subject, orientation, proportions, labels, real logos/assets, captions, overflow, clipping, and placeholder states.
 - Placeholder ledger: any active monogram, letter-tile, or icon fallback in a component is a tracked TODO, never a silent default. A component or article shipping with live fallbacks is incomplete by definition.
 - For the walking deck (`/career/walking-deck/present`), run `npm run audit:deck` from `astro-site/`, then open the actual screenshots in `astro-site/deck-audit/<viewport>/<section>.png` before declaring a fix done.

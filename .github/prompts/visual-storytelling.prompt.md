@@ -7,6 +7,8 @@ mode: "agent"
 
 Use this when Thor wants to create or revise a blog graphic, infographic, animated diagram, visual explainer, slide-inspired figure, or image that should make an article more educational and more entertaining.
 
+Before making visual direction decisions, load `.github/instructions/blog-visual-system.instructions.md` and use that as the reusable palette/composition template for this repo. It captures the Walking Deck section 05 influence and the process-blue signal system.
+
 The goal is not to decorate a post. The goal is to help readers understand and remember the idea. The default style is polished infographic storytelling: structured, visual, energetic, and clear enough to scan on mobile without losing sophistication on desktop.
 
 ## Input Modes

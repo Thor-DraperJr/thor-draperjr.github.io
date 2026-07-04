@@ -6,8 +6,14 @@
   --ink-soft: #4f6070;
   --ink-muted: #5e6f80;
   --line: rgba(19, 34, 53, 0.1);
-  --accent: #0e6a61;
-  --accent-soft: rgba(14, 106, 97, 0.12);
+  --accent: #008fd3;
+  --accent-soft: rgba(0, 143, 211, 0.13);
+  --accent-strong: #006da3;
+  --accent-bright: #2bb8ff;
+  --signal-gold: #fadc14;
+  --signal-periwinkle: #a5b8ee;
+  --signal-mint: #e2f9d9;
+  --blue-black: #091f2c;
   --shadow: 0 24px 70px rgba(12, 24, 38, 0.06);
   --radius-xl: 32px;
   --radius-lg: 24px;
@@ -32,8 +38,8 @@ body {
   font-family: 'Manrope', sans-serif;
   color: var(--ink);
   background:
-    radial-gradient(circle at top left, rgba(14, 106, 97, 0.12), transparent 28%),
-    radial-gradient(circle at 85% 0%, rgba(25, 92, 166, 0.1), transparent 24%),
+    radial-gradient(circle at top left, rgba(0, 143, 211, 0.13), transparent 28%),
+    radial-gradient(circle at 85% 0%, rgba(165, 184, 238, 0.16), transparent 24%),
     linear-gradient(180deg, #fbfaf6 0%, #f4f2ea 100%);
 }
 
