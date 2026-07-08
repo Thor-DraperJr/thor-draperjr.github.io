@@ -17,6 +17,7 @@
 	- PowerPoint, Word, Excel, HTML artifact, expense, Loop, social, or RFI work: load and follow the matching skill without requiring Thor to name it.
 - Keep the agent budget small by default. One or two subagents is usually enough; add a third only for a clear reason such as publish polish, major public claims, provider realism, or rendered visual review.
 - If a named prompt, skill, or agent would help, use it and summarize what was used. Do not hand the orchestration burden back to Thor unless the request is genuinely ambiguous.
+- Treat agent outputs as feedback on the process, not only on the artifact. When an agent or review catches a repeatable miss, fold that lesson back into durable instructions, memory, or the next prompt loop, and prune any agent step that did not add clear value.
 - Human gates still apply: ask before committing, pushing, publishing, submitting, spending money, or taking destructive actions.
 
 ## Development and validation
@@ -41,6 +42,7 @@
 - All public content must frame Thor as a future leader in the tech/executive space. When in doubt, write for the CIO/CISO/VP audience he is moving toward, not the role he is in today.
 - Avoid framing that reads as sales tactics, internal seller coaching, or competitive plays ("how I sell against X," "the wedge," "what I tell sellers"). Reframe the same insight from the operator/leader perspective: what should the leader do next, what trade-off are they making, what investment are they protecting.
 - Operator voice over vendor voice. Personal POV and lived experience are good; product pitches and SKU-talk are not.
+- Prefer affirmative framing over negative declaration. Avoid constructions like "this is not X, it is Y" or "not separate debates, but tests" unless the contrast is genuinely necessary; usually state the point directly.
 - Never name customers, deal specifics, internal Microsoft roadmap dates, or unreleased SKUs. Public Microsoft sources (WTI, official product pages, Microsoft Learn) and public competitor material are fair game and should be cited when a claim leans on them.
 - Before publishing anything that could read as internal-sounding, ask: does this position Thor as someone an executive would want in the room, or does it position him as someone running a sales motion? If the answer is the second, rewrite.
 - For post creation or revision, prefer the general `/article-pass` workflow over one-off post-specific prompt commands. Use durable agents as needed: Public Claims Researcher for public claims, Narrative Strategist for structure and executive framing, Voice & Publish Editor for late-stage voice and mechanics, and conditional specialists only when their domain is load-bearing.
