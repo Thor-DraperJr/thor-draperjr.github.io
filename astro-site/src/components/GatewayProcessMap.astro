@@ -1,0 +1,327 @@
+---
+const stages = [
+  {
+    stage: 'Vision',
+    status: 'Decades old',
+    known: 'Gateway has been part of Charlotte rail planning since the 1990s.',
+    friction: 'The idea keeps expanding as the district vision grows around it.',
+    next: 'Name the minimum useful station separately from the full district.'
+  },
+  {
+    stage: 'Land',
+    status: 'Split control',
+    known: 'Public reporting points to City and NCDOT land interests around the site.',
+    friction: 'Transfers and authority changes can add another handoff.',
+    next: 'Publish who controls each parcel and what must move.'
+  },
+  {
+    stage: 'Rail work',
+    status: 'Mostly built',
+    known: 'Track, structures, and signal work were completed in 2022.',
+    friction: 'Trains can reach the site before riders can use it.',
+    next: 'Protect passenger access as its own delivery milestone.'
+  },
+  {
+    stage: 'Station',
+    status: 'Unopened',
+    known: 'Waiting, ticketing, platform access, and the passenger experience remain unresolved.',
+    friction: 'Temporary station, permanent station, and full development are competing paths.',
+    next: 'Choose the fastest credible opening path in public.'
+  },
+  {
+    stage: 'District',
+    status: 'Long game',
+    known: 'The larger vision includes buses, streetcar, future rail, private development, and public space.',
+    friction: 'Market conditions and scope can slow the basic station if they stay bundled.',
+    next: 'Sequence the big vision after passengers can board downtown.'
+  },
+];
+---
+
+<figure
+  class="gpm-figure"
+  role="img"
+  aria-label="Gateway Station process map showing five stages: vision, land, rail work, station, and district. Each stage names what is known, what friction may be slowing the work, and the next decision the public should be able to see."
+>
+  <div class="gpm-topline">
+    <span class="gpm-kicker">Process map</span>
+    <h3>Where Gateway Slows Down</h3>
+    <p>The useful question: which handoff owns the next move?</p>
+  </div>
+
+  <div class="gpm-board" aria-hidden="true">
+    <div class="gpm-board-head">
+      <span>Stage</span>
+      <span>What we know</span>
+      <span>Friction to test</span>
+      <span>Next visible decision</span>
+    </div>
+
+    <ol class="gpm-rows" role="list">
+      {stages.map((item, index) => (
+        <li class="gpm-row" style={`--i:${index}`}>
+          <div class="gpm-stage-cell">
+            <span class="gpm-index">{String(index + 1).padStart(2, '0')}</span>
+            <div>
+              <strong>{item.stage}</strong>
+              <span>{item.status}</span>
+            </div>
+          </div>
+          <p>{item.known}</p>
+          <p>{item.friction}</p>
+          <p>{item.next}</p>
+        </li>
+      ))}
+    </ol>
+  </div>
+
+  <div class="gpm-mobile-list">
+    {stages.map((item, index) => (
+      <section class="gpm-mobile-card" style={`--i:${index}`}>
+        <span class="gpm-index">{String(index + 1).padStart(2, '0')}</span>
+        <h4>{item.stage}</h4>
+        <p><strong>Status:</strong> {item.status}</p>
+        <p><strong>Friction:</strong> {item.friction}</p>
+        <p><strong>Next:</strong> {item.next}</p>
+      </section>
+    ))}
+  </div>
+
+  <figcaption>
+    This is the map I wish existed in public: what is done, what is unclear, and which decision moves passengers closer to an Uptown station.
+  </figcaption>
+</figure>
+
+<style>
+  .gpm-figure {
+    container-type: inline-size;
+    position: relative;
+    margin: 1.5rem 0;
+    overflow: hidden;
+    border: 1px solid rgba(0, 143, 211, 0.22);
+    border-radius: 18px;
+    padding: clamp(1rem, 0.65rem + 2cqw, 2rem);
+    background:
+      linear-gradient(90deg, rgba(0, 143, 211, 0.08) 1px, transparent 1px) 0 0 / 28px 28px,
+      linear-gradient(0deg, rgba(0, 143, 211, 0.06) 1px, transparent 1px) 0 0 / 28px 28px,
+      radial-gradient(95% 70% at 8% 0%, rgba(52, 186, 255, 0.22), transparent 58%),
+      linear-gradient(145deg, #06171f 0%, #0a2130 48%, #132235 100%);
+    color: #fbfaf6;
+    box-shadow: 0 24px 60px rgba(6, 23, 31, 0.28);
+  }
+
+  .gpm-figure::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(115deg, transparent 0%, rgba(52, 186, 255, 0.1) 46%, transparent 58%);
+    transform: translateX(-72%);
+    animation: gpm-scan 7s ease-in-out infinite;
+  }
+
+  .gpm-topline {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    gap: 0.4rem;
+    max-width: 58rem;
+    margin-bottom: clamp(1rem, 0.75rem + 1.2cqw, 1.6rem);
+  }
+
+  .gpm-kicker {
+    color: #34baff;
+    font-size: clamp(0.68rem, 0.6rem + 0.28cqw, 0.78rem);
+    font-weight: 850;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .gpm-topline h3 {
+    margin: 0;
+    color: #fff;
+    font-size: clamp(1.25rem, 0.95rem + 1.5cqw, 2rem);
+    line-height: 1.08;
+  }
+
+  .gpm-topline p {
+    margin: 0;
+    color: #d7e8f3;
+    font-size: clamp(0.88rem, 0.78rem + 0.35cqw, 1rem);
+  }
+
+  .gpm-board {
+    position: relative;
+    z-index: 1;
+    border: 1px solid rgba(251, 250, 246, 0.16);
+    border-radius: 14px;
+    background: rgba(251, 250, 246, 0.06);
+    overflow: hidden;
+  }
+
+  .gpm-board-head,
+  .gpm-row {
+    display: grid;
+    grid-template-columns: minmax(8rem, 0.85fr) repeat(3, minmax(0, 1fr));
+  }
+
+  .gpm-board-head {
+    background: rgba(251, 250, 246, 0.1);
+    color: #a5b8ee;
+    font-size: clamp(0.62rem, 0.58rem + 0.2cqw, 0.74rem);
+    font-weight: 850;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .gpm-board-head span,
+  .gpm-row > * {
+    padding: clamp(0.65rem, 0.5rem + 0.7cqw, 0.95rem);
+    border-right: 1px solid rgba(251, 250, 246, 0.12);
+  }
+
+  .gpm-board-head span:last-child,
+  .gpm-row > *:last-child {
+    border-right: 0;
+  }
+
+  .gpm-rows {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .gpm-row {
+    border-top: 1px solid rgba(251, 250, 246, 0.12);
+    animation: gpm-row-in 0.48s ease both;
+    animation-delay: calc(var(--i) * 0.08s);
+  }
+
+  .gpm-row:nth-child(3) {
+    background: rgba(244, 196, 48, 0.1);
+  }
+
+  .gpm-row:nth-child(4) {
+    background: rgba(52, 186, 255, 0.08);
+  }
+
+  .gpm-stage-cell {
+    display: flex;
+    gap: 0.62rem;
+    align-items: flex-start;
+  }
+
+  .gpm-index {
+    display: inline-grid;
+    place-items: center;
+    flex: 0 0 auto;
+    width: 1.8rem;
+    height: 1.8rem;
+    border-radius: 50%;
+    color: #06171f;
+    background: #f4c430;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.72rem;
+    font-weight: 900;
+  }
+
+  .gpm-stage-cell strong {
+    display: block;
+    color: #fff;
+    font-size: clamp(0.88rem, 0.78rem + 0.35cqw, 1rem);
+    line-height: 1.12;
+  }
+
+  .gpm-stage-cell span:not(.gpm-index) {
+    display: block;
+    margin-top: 0.18rem;
+    color: #34baff;
+    font-size: clamp(0.68rem, 0.62rem + 0.24cqw, 0.78rem);
+    font-weight: 800;
+  }
+
+  .gpm-row p {
+    margin: 0;
+    color: #e9f3f8;
+    font-size: clamp(0.72rem, 0.66rem + 0.24cqw, 0.85rem);
+    line-height: 1.36;
+  }
+
+  .gpm-mobile-list {
+    display: none;
+  }
+
+  .gpm-mobile-card {
+    position: relative;
+    z-index: 1;
+    border: 1px solid rgba(251, 250, 246, 0.14);
+    border-radius: 14px;
+    padding: 0.82rem;
+    background: rgba(251, 250, 246, 0.07);
+    animation: gpm-row-in 0.48s ease both;
+    animation-delay: calc(var(--i) * 0.08s);
+  }
+
+  .gpm-mobile-card h4 {
+    margin: 0.38rem 0 0.42rem;
+    color: #fff;
+    font-size: 1rem;
+  }
+
+  .gpm-mobile-card p {
+    margin: 0.32rem 0 0;
+    color: #e9f3f8;
+    font-size: 0.8rem;
+    line-height: 1.34;
+  }
+
+  .gpm-mobile-card strong {
+    color: #a5b8ee;
+  }
+
+  .gpm-figure figcaption {
+    position: relative;
+    z-index: 1;
+    margin: clamp(0.85rem, 0.65rem + 0.8cqw, 1.2rem) 0 0;
+    color: #e2f9d9;
+    font-size: clamp(0.78rem, 0.7rem + 0.3cqw, 0.92rem);
+    font-weight: 750;
+  }
+
+  @keyframes gpm-scan {
+    0%, 18% { transform: translateX(-72%); opacity: 0; }
+    36%, 68% { opacity: 1; }
+    82%, 100% { transform: translateX(72%); opacity: 0; }
+  }
+
+  @keyframes gpm-row-in {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @container (max-width: 760px) {
+    .gpm-board {
+      display: none;
+    }
+
+    .gpm-mobile-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.75rem;
+    }
+  }
+
+  @container (max-width: 520px) {
+    .gpm-mobile-list {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .gpm-figure::after,
+    .gpm-row,
+    .gpm-mobile-card {
+      animation: none;
+    }
+  }
+</style>

@@ -18,6 +18,7 @@ import WorkshopTools from '../../components/WorkshopTools.astro';
 import DiffPreview from '../../components/DiffPreview.astro';
 import PresentationWorkflowMap from '../../components/PresentationWorkflowMap.astro';
 import AgenticSocialLoop from '../../components/AgenticSocialLoop.astro';
+import GatewayProcessMap from '../../components/GatewayProcessMap.astro';
 import { getPosts } from '../../lib/content';
 
 export function getStaticPaths() {
@@ -54,6 +55,7 @@ const ghWorkshopMarker = '[[GH_WORKSHOP]]';
 const ghWorkshopFigureMarkers = ['WHAT_IS_GITHUB', 'GITHUB_FLOW', 'YOUR_TOOLS', 'AGENT_LOOP', 'DIFF_PREVIEW', 'WORKSHOP_OBJECTIVES', 'SESSION_PLAN'].map((n) => `[[${n}]]`);
 const presentationWorkflowMarker = '[[PRESENTATION_WORKFLOW]]';
 const socialLoopMarker = '[[SOCIAL_LOOP]]';
+const gatewayProcessMapMarker = '[[GATEWAY_PROCESS_MAP]]';
 
 let processedHtml = post.html;
 processedHtml = processedHtml.replace(`<p>${runtimeChartMarker}</p>`, runtimeChartMarker);
@@ -74,6 +76,7 @@ for (const figureMarker of ghWorkshopFigureMarkers) {
 }
 processedHtml = processedHtml.replace(`<p>${presentationWorkflowMarker}</p>`, presentationWorkflowMarker);
 processedHtml = processedHtml.replace(`<p>${socialLoopMarker}</p>`, socialLoopMarker);
+processedHtml = processedHtml.replace(`<p>${gatewayProcessMapMarker}</p>`, gatewayProcessMapMarker);
 
 const hasRuntimeChart = processedHtml.includes(runtimeChartMarker);
 const hasCareerDevPlan = processedHtml.includes(careerDevPlanMarker);
@@ -85,6 +88,7 @@ const hasThreeNewYears = processedHtml.includes(threeNewYearsMarker);
 const hasPerformanceNarrative = processedHtml.includes(performanceNarrativeMarker);
 const hasPresentationWorkflow = processedHtml.includes(presentationWorkflowMarker);
 const hasSocialLoop = processedHtml.includes(socialLoopMarker);
+const hasGatewayProcessMap = processedHtml.includes(gatewayProcessMapMarker);
 
 const runtimeParts = hasRuntimeChart ? processedHtml.split(runtimeChartMarker) : [];
 const careerParts = hasCareerDevPlan ? processedHtml.split(careerDevPlanMarker) : [];
@@ -117,6 +121,7 @@ const threeNewYearsParts = hasThreeNewYears ? processedHtml.split(threeNewYearsM
 const performanceNarrativeParts = hasPerformanceNarrative ? processedHtml.split(performanceNarrativeMarker) : [];
 const presentationWorkflowParts = hasPresentationWorkflow ? processedHtml.split(presentationWorkflowMarker) : [];
 const socialLoopParts = hasSocialLoop ? processedHtml.split(socialLoopMarker) : [];
+const gatewayProcessMapParts = hasGatewayProcessMap ? processedHtml.split(gatewayProcessMapMarker) : [];
 
 const hasGhWorkshop = processedHtml.includes(ghWorkshopMarker);
 const ghWorkshopParts = hasGhWorkshop ? processedHtml.split(ghWorkshopMarker) : [];
@@ -172,6 +177,58 @@ if (hasGhWorkshop) {
         {socialLoopParts.length > 1 && (
           <section class="prose panel">
             <Fragment set:html={socialLoopParts.slice(1).join(socialLoopMarker)} />
+          </section>
+        )}
+
+        <nav class="post-pagination">
+          {previous ? (
+            <a href={previous.permalink}>
+              <span>Older</span>
+              {previous.title}
+            </a>
+          ) : <div></div>}
+
+          {next ? (
+            <a href={next.permalink} style="text-align: right;">
+              <span>Newer</span>
+              {next.title}
+            </a>
+          ) : <div></div>}
+        </nav>
+      </article>
+    </>
+  ) : hasGatewayProcessMap ? (
+    <>
+      <article class="shell-container">
+        <header class="post-hero">
+          <span class="eyebrow">{post.category}</span>
+          <h1 class="post-heading">{post.title}</h1>
+          <div class="post-meta-row">
+            <span>{post.date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
+            <span>{post.readingTime} min read</span>
+          </div>
+          {post.tags.length > 0 && (
+            <div class="post-tags" style="margin-top: 1rem;">
+              {post.tags.map((tag) => <span class="post-tag">{tag}</span>)}
+            </div>
+          )}
+        </header>
+
+        {gatewayProcessMapParts.length > 0 && gatewayProcessMapParts[0].trim() && (
+          <section class="prose panel">
+            <Fragment set:html={gatewayProcessMapParts[0]} />
+          </section>
+        )}
+      </article>
+
+      <div class="walking-deck-breakout">
+        <GatewayProcessMap />
+      </div>
+
+      <article class="shell-container">
+        {gatewayProcessMapParts.length > 1 && (
+          <section class="prose panel">
+            <Fragment set:html={gatewayProcessMapParts.slice(1).join(gatewayProcessMapMarker)} />
           </section>
         )}
 

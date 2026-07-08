@@ -60,6 +60,8 @@ The cleanest public claim is not a precise delay count. It is that Gateway has b
 
 What I wish we could see more clearly is the process map. Where exactly does an idea like this slow down? Who has the next decision? Which approval, funding step, design question, ownership issue, or partnership dependency is actually holding the schedule?
 
+[[GATEWAY_PROCESS_MAP]]
+
 I get that things have become more expensive. Construction costs, financing, office demand, and public budgets are real constraints. But if a project can move from idea to land purchase to partial rail infrastructure and still leave riders waiting decades later, the process needs more agility from idea to groundbreaking.
 
 The project is trying to be a train station, a bus facility, a streetcar and future rail connector, a private development anchor, and a district-making real estate play at the same time. That may be the right long-term vision. It also makes me wonder whether the basic station opening should have been protected from the larger real estate vision earlier.
