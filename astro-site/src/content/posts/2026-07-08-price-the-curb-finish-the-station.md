@@ -8,6 +8,8 @@ draft: false
 excerpt: "A draft thought on two Charlotte transportation fixes I keep coming back to: parking incentives that use lots and decks first, and a faster path from transit idea to groundbreaking."
 ---
 
+<!-- Last posted on X: 2026-07-09T00:16:30.000Z https://x.com/i/status/2075011173171282257 -->
+
 I was really just thinking about a couple of ways transportation around Charlotte could work better.
 
 One is parking. Not the abstract argument about whether people should drive downtown, because people are going to drive. I was thinking about where the city should want those cars to sit once they arrive.
