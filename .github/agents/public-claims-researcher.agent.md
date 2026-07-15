@@ -66,3 +66,15 @@ Recommended use is one of: `KEEP`, `SOFTEN`, `REFRESH`, `CUT`, or `NEW SUPPORTIN
 - Claims older than 12 months that should be refreshed.
 - Places where public evidence supports a narrower or different claim than the draft currently makes.
 - Recent public movement worth considering, if it strengthens the existing argument without hijacking the post.
+
+<!-- Managed by loop-improver-mcp: agent loop -->
+
+## Improvement Loop
+
+Last refreshed: 2026-07-15T00:23:11.746Z
+
+1. Read the shared repository mission in `.github/objectives.md` and the current `.github/insights/public-claims-researcher.md` before starting.
+2. Apply this agent's existing mission to one concrete file, artifact, or rendered surface in service of the repository mission.
+3. State the evidence used, how the finding or change advances the repository mission, and the nearest relevant validation.
+4. Return a ready-to-write current insight record for `.github/insights/public-claims-researcher.md` so the conductor can overwrite it.
+5. Feed reusable learning and any needed agent or canonical-file improvement back to the conductor.

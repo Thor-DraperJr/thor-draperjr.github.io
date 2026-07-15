@@ -1,3 +1,5 @@
+<!-- Last modified: 2026-07-15T00:23:11.746Z -->
+
 # Copilot Instructions - Thor Draper Jr's Blog
 
 ## Ground rules:
@@ -58,15 +60,40 @@
 ## Project Overview
 This is a personal blog for Thor Draper Jr, a Senior Security Solution Engineer at Microsoft and a former cybersecurity instructor. My goals for this are to highlight my experience and interests in multiple facets of technology and leadership to hopefully help advertise me for the next step in my career. The blog should be a reflection of my expertise and personality, while also providing value to readers interested in technology, cybersecurity, and career development.
 
-## Reusable prompt commands
+<!-- Managed by loop-improver-mcp -->
 
-### /issue-planning
-Pull relevant GitHub issues, compare them against current repo state and owner-confirmed facts, classify each item, then present a firm plan before editing. Use this when issues are the starting point for a session.
+## Loop Architecture Contract
 
-### /visual-storytelling
-Create or revise informative blog graphics from PowerPoint slides, screenshots/images, source notes, article sections, or raw ideas. Use this for animated infographic-style visuals that need to teach, look good, and work across mobile and desktop.
+Last refreshed: 2026-07-15T00:23:11.746Z
 
-### /end-session
-1. Summarize the key points of the chat session, including any decisions made about the blog's content, style, or structure.
-2. Git commit the changes made during the session with a message that reflects the updates (e.g., "Updated blog content and structure based on session discussion").
-3. Push the changes to the remote repository to ensure that all updates are saved and accessible for future reference.
+Canonical files have separate jobs:
+
+- README.md explains the repo's brand, capability, and human reason to care.
+- .github/copilot-instructions.md holds durable agent ground rules, validation, and hygiene rules.
+- .github/objectives.md names the shared repository mission, outcomes, and evidence model.
+- .github/agents/ contains specialists that contribute their distinct evidence and insight to the shared repository mission.
+- .github/insights/ records the current learning for each loop surface and what should improve next.
+
+### Ground Rules
+
+- Start with README and Copilot hygiene before adding new agents.
+- Use the opening exchange to establish a concise session title, direction, and agreed endpoint before starting a loop.
+- Identify the shared repository mission from the repo's actual files, tests, docs, and recurring work.
+- Let this MCP server own loop architecture; deploy repo agents only for recurring domain work.
+- Let each specialist serve the shared repository mission through its existing lens rather than assigning it a separate objective.
+- Consolidate reusable command summaries into canonical prompt files when equivalent prompts already exist.
+- Prioritize readable code: names and structure should make behavior clear. Use focused comments for non-obvious behavior, invariants, and rationale; documentation must not substitute for code that explains itself.
+- Each agent must end passes by recording insights and applying obvious agent/doc improvements directly.
+- Each agent must keep the insights loop current by overwriting its current insight after focused passes.
+- Completed loops record durable notes, review the final diff and status, commit verified changes, and push when authorized.
+- Blocked loops leave an explicit handoff instead of claiming completion.
+- Prefer pruning, moving, or merging stale code and docs over adding parallel surfaces.
+- When files are moved or removed, delete empty directories and check for stale references.
+
+### Definition Of Done
+
+- README remains human-facing and concise.
+- Copilot instructions remain durable ground rules, not a primary prompt warehouse.
+- Objectives define one shared mission, evidence model, and verification methods; active loops contribute specialized evidence and insight to it.
+- Agent passes produce insights that improve future passes.
+- Completed loop changes are committed and pushed, or an explicit Git handoff records why they are not.
