@@ -5,7 +5,7 @@ date: 2026-05-01
 draft: false
 categories: [career]
 tags: [career, leadership, personal-branding]
-excerpt: "My walking deck, rebuilt as a web-native signal map: an interactive page instead of eight static slides."
+excerpt: "My walking deck, rebuilt as a seven-part interactive introduction I can pull up anywhere."
 ---
 
 My manager asked me to put together a walking deck.
@@ -18,14 +18,14 @@ I wanted to do something a little different with mine. Same goal, less fluff, an
 
 ## What I learned from Carson
 
-The eight-section shape of this came from [Carson Heady's post on LinkedIn](https://www.linkedin.com/feed/update/urn:li:activity:7391585014762758144/) about what a walking deck is actually for. A few things stuck with me:
+The starting point came from [Carson Heady's post on LinkedIn](https://www.linkedin.com/feed/update/urn:li:activity:7391585014762758144/) about what a walking deck is actually for. I kept those objectives, tightened mine into seven sections, and added recognition earned during my time as a Security Solution Engineer. A few things stuck with me:
 
 - A walking deck isn't a resume. It's a self-intro short enough to read in the time it takes someone to grab a coffee.
 - The objectives matter more than the slides &mdash; who I am, what I stand for, what I've done, and what I'm ready to do next.
 - The people who've worked with you can vouch for you in ways your own bullet points can't.
-- Proof of passion is the part most decks skip, and it's usually the part leaders actually remember.
+- A clear next seat gives the conversation somewhere to go.
 
-Carson laid out the objectives, and I tried to hit each one. The piece I added is the medium &mdash; a page where I can update Section 05 the day a new project ships, drop in a new voice for Section 06 as soon as I get one, and let someone who wants to know me read through it without me having to be in the room.
+I shaped those objectives around the conversation I actually want to have: who I am, the range I bring, how I built it, what others have seen, and where I want to go next. Keeping it on the web means I can update the evidence as the work changes and pull it up whenever the conversation happens.
 
 ## The forks section
 

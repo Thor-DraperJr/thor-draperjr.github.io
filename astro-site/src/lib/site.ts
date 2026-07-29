@@ -9,6 +9,7 @@ export const siteConfig: SiteConfig = {
 	url: 'https://thor-draperjr.github.io',
 	navigation: [
 		{ title: 'Home', url: '/' },
+		{ title: 'Walking Deck', url: '/career/walking-deck/present/' },
 		{ title: 'Archive', url: '/archive/' },
 		{ title: 'About', url: '/about/' },
 		{ title: 'Resume', url: '/resume/' },

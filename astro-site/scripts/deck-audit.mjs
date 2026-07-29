@@ -33,8 +33,8 @@ const DECKS = {
         presentSelector: '.walking-signal[data-present="true"]',
         sectionSelector: '[data-signal-section]',
         sections: [
-            'signal-cover', 'signal-human', 'signal-strengths', 'signal-essence',
-            'signal-impact', 'signal-voices', 'signal-passion', 'signal-ask',
+            'signal-cover', 'signal-human', 'signal-strengths', 'signal-impact',
+            'signal-recognition', 'signal-voices', 'signal-ask',
         ],
     },
     'first-pr': {
@@ -183,6 +183,29 @@ async function activateSection(page, sectionId) {
     await page.waitForTimeout(700);
 }
 
+async function waitForSectionImages(page, sectionId) {
+    await page.evaluate(async (sid) => {
+        const images = [...document.querySelectorAll(`#${sid} img`)];
+        await Promise.all(images.map(async (image) => {
+            if (!image.complete) {
+                await Promise.race([
+                    new Promise((resolve) => {
+                        image.addEventListener('load', resolve, { once: true });
+                        image.addEventListener('error', resolve, { once: true });
+                    }),
+                    new Promise((resolve) => setTimeout(resolve, 5000)),
+                ]);
+            }
+            if (image.complete && image.naturalWidth > 0 && typeof image.decode === 'function') {
+                await Promise.race([
+                    image.decode().catch(() => undefined),
+                    new Promise((resolve) => setTimeout(resolve, 5000)),
+                ]);
+            }
+        }));
+    }, sectionId);
+}
+
 async function runViewport(browser, name) {
     const vp = VIEWPORTS[name];
     if (!vp) throw new Error(`Unknown viewport: ${name}`);
@@ -197,13 +220,14 @@ async function runViewport(browser, name) {
         hasTouch: !!vp.isMobile,
     });
     const page = await ctx.newPage();
-    await page.goto(url, { waitUntil: 'networkidle' });
+    await page.goto(url, { waitUntil: 'domcontentloaded' });
     await page.waitForSelector(deckProfile.presentSelector, { timeout: 5000 }).catch(() => { });
     await page.waitForTimeout(500);
 
     const results = {};
     for (const sid of deckProfile.sections) {
         await activateSection(page, sid);
+        await waitForSectionImages(page, sid);
         const m = await measureSection(page, sid);
         results[sid] = m;
         await page.screenshot({ path: path.join(outDir, `${sid}.png`), fullPage: false });

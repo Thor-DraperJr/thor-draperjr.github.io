@@ -40,23 +40,68 @@ const pitchStory = [
     detail: 'CPCC Cloud and Virtualization opened Azure Networking Rapid Response. A SANS B.P.S. in Applied Cybersecurity, earned on nights and weekends, pulled me into the Security STU.',
   },
 ];
+
+const salesProof = [
+  { metric: '4 / 4', detail: 'FY26 revenue buckets exceeded' },
+  { metric: '8-figure TCV', detail: 'Microsoft 365 E5 step-up' },
+  { metric: '7-figure', detail: 'Identity governance motion' },
+  { metric: 'Mid-6-figure', detail: 'Defender Experts expansion' },
+];
+
+const recognitionBadges = [
+  {
+    id: 'sales-excellence',
+    title: 'Sales Excellence Momentum Program',
+    detail: 'Enterprise Sales Ready - FY26 H2',
+    src: '/assets/images/walking-deck/recognition/sales-excellence-momentum-fy26-h2.png',
+    alt: 'Sales Excellence Momentum Program badge for Enterprise Sales Ready, FY26 H2',
+    width: 1024,
+    height: 1024,
+  },
+  {
+    id: 'culture',
+    title: 'Living Our Culture',
+    detail: 'Microsoft - FY26 Q3',
+    src: '/assets/images/walking-deck/recognition/living-our-culture-fy26-q3.png',
+    alt: 'Microsoft Living Our Culture award badge, FY26 Q3',
+    width: 1200,
+    height: 627,
+  },
+  {
+    id: 'attainment',
+    title: '100% Sales Attainment',
+    detail: 'Microsoft - 2026',
+    src: '/assets/images/walking-deck/recognition/sales-attainment-2026.png',
+    alt: 'Microsoft 100 percent sales attainment badge for 2026',
+    width: 1200,
+    height: 627,
+  },
+  {
+    id: 'hackathon',
+    title: 'Hackathon Challenge Winner',
+    detail: 'Microsoft - 2025',
+    src: '/assets/images/walking-deck/recognition/hackathon-2025-challenge-winner.png',
+    alt: 'Microsoft Hackathon 2025 Challenge Winner badge',
+    width: 340,
+    height: 340,
+  },
+];
 ---
 
 <section class="walking-signal" data-walking-signal data-present={startInPresent ? 'true' : undefined}>
   <nav class="signal-rail" aria-label="Walking deck sections">
     <a href="#signal-cover" data-rail-link>Cover</a>
     <a href="#signal-human" data-rail-link>Human</a>
-    <a href="#signal-strengths" data-rail-link>Strengths</a>
-    <a href="#signal-essence" data-rail-link>Essence</a>
-    <a href="#signal-impact" data-rail-link>Impact</a>
+    <a href="#signal-strengths" data-rail-link>Range</a>
+    <a href="#signal-impact" data-rail-link>Journey</a>
+    <a href="#signal-recognition" data-rail-link>Recognition</a>
     <a href="#signal-voices" data-rail-link>Voices</a>
-    <a href="#signal-passion" data-rail-link>Passion</a>
-    <a href="#signal-ask" data-rail-link>Ask</a>
+    <a href="#signal-ask" data-rail-link>Next</a>
     <button type="button" class="present-toggle" data-present-toggle aria-label="Enter presentation mode">&#9654; Present</button>
   </nav>
 
   <div class="present-hud" data-present-hud aria-hidden={startInPresent ? 'false' : 'true'}>
-    <span class="present-counter" data-present-counter>Section 01 / 08</span>
+    <span class="present-counter" data-present-counter>Section 01 / 07</span>
     <span class="present-title" data-present-title>Cover</span>
     <div class="present-controls">
       <button type="button" class="present-btn" data-present-prev aria-label="Previous section">&lsaquo;</button>
@@ -98,8 +143,8 @@ const pitchStory = [
           </div>
           <div class="pitch-thesis">
             <span>Thesis</span>
-            <p data-pretext-fit data-pretext-lines="2" data-pretext-min-ratio="0.84" data-pretext-width-ratio="0.72">I did not leave sales because I was burnt out. I rebuilt on technical depth so the next sales seat compounds.</p>
-            <strong data-pretext-fit data-pretext-lines="1" data-pretext-min-ratio="0.82" data-pretext-width-ratio="0.72">Next: AE in the AI era, then sales leadership.</strong>
+            <p data-pretext-fit data-pretext-lines="2" data-pretext-min-ratio="0.84" data-pretext-width-ratio="0.72">Sales judgment, now backed by technical depth.</p>
+            <strong data-pretext-fit data-pretext-lines="1" data-pretext-min-ratio="0.82" data-pretext-width-ratio="0.72">I can connect the customer problem to the full Microsoft story.</strong>
           </div>
         </div>
 
@@ -168,30 +213,29 @@ const pitchStory = [
 
   <section class="strengths-section" id="signal-strengths" data-signal-section aria-labelledby="signal-strengths-title">
     <div class="section-copy compact">
-      <span class="signal-kicker">Section 03 &middot; Superpowers</span>
-      <h2 id="signal-strengths-title" data-pretext-fit data-pretext-lines="2" data-pretext-min-ratio="0.62" data-pretext-width-ratio="1">In plain English.</h2>
+      <span class="signal-kicker">Section 03 &middot; What I Bring</span>
+      <h2 id="signal-strengths-title" data-pretext-fit data-pretext-lines="2" data-pretext-min-ratio="0.62" data-pretext-width-ratio="1">I connect the full customer picture.</h2>
     </div>
     <ul class="strengths-list" role="list">
-      <li><strong>I earn trust fast.</strong><span>Eight-figure TCV E5 platform displacement at a regional health system, won on operational efficiency and security outcomes.</span></li>
-      <li><strong>I simplify the complex.</strong><span>Authored the AI Red Teaming workshop two regional user groups picked up and ran with their own communities.</span></li>
-      <li><strong>I run things end to end.</strong><span>40-plus person Enterprise branch and a hometown gym P&amp;L sold before the pandemic.</span></li>
-      <li><strong>I lift the team around the deal.</strong><span>Covered 60 accounts on a 24-account quota &mdash; load-bearing teammate on the largest closes of the year.</span></li>
-      <li><strong>I keep showing up.</strong><span>Exceeded quota across all four revenue buckets this H2, with deals advanced as an overlay.</span></li>
+      <li><strong>I earn trust and carry the story.</strong><span>Sales taught me to hear the business problem, connect value across the portfolio, and move a decision forward.</span></li>
+      <li><strong>I go deep without losing the room.</strong><span>Security is my deepest technical lane. I've also built range across cloud, AI, and business applications.</span></li>
+      <li><strong>I own the outcome.</strong><span>Leading teams, carrying a P&amp;L, and running work end to end taught me to stay accountable for the result.</span></li>
     </ul>
-  </section>
-
-  <section class="essence-section" id="signal-essence" data-signal-section aria-labelledby="signal-essence-title">
-    <span class="signal-kicker">Section 04 &middot; Brand Essence</span>
-    <span class="essence-mark" aria-hidden="true">&ldquo;</span>
-    <h2 id="signal-essence-title" data-pretext-fit data-pretext-lines="4" data-pretext-min-ratio="0.55" data-pretext-width-ratio="1">I'm a seller who learned the technology, so customers get the version of Microsoft that actually solves the problem.</h2>
-    <span class="essence-attribution">Thor Draper Jr &middot; Charlotte, NC</span>
+    <div class="strengths-proof" role="list" aria-label="FY26 sales outcomes">
+      {salesProof.map((proof) => (
+        <article role="listitem">
+          <strong>{proof.metric}</strong>
+          <span>{proof.detail}</span>
+        </article>
+      ))}
+    </div>
   </section>
 
   <section class="sphere-section" id="signal-impact" data-signal-section aria-labelledby="signal-impact-title">
     <div class="section-copy compact">
-      <span class="signal-kicker">Section 05 &middot; Experience with Impact</span>
-      <h2 id="signal-impact-title" data-pretext-fit data-pretext-lines="2" data-pretext-min-ratio="0.62" data-pretext-width-ratio="1">Three chapters. Each one carried its abilities forward.</h2>
-      <p class="sphere-instruction" data-pretext-fit data-pretext-lines="2" data-pretext-min-ratio="0.78" data-pretext-width-ratio="1">A career sphere grid. Click a node to load that chapter. Smaller satellites are the career, education, and service threads that branched off it.</p>
+      <span class="signal-kicker">Section 04 &middot; How I Built the Range</span>
+      <h2 id="signal-impact-title" data-pretext-fit data-pretext-lines="2" data-pretext-min-ratio="0.62" data-pretext-width-ratio="1">Each chapter added something I carry into the next seat.</h2>
+      <p class="sphere-instruction" data-pretext-fit data-pretext-lines="2" data-pretext-min-ratio="0.78" data-pretext-width-ratio="1">Select a chapter to see what I learned.</p>
     </div>
 
     <div class="sphere-grid" data-sphere data-sphere-payload={JSON.stringify(chapters)}>
@@ -336,6 +380,34 @@ const pitchStory = [
     </div>
   </section>
 
+  <section class="recognition-section" id="signal-recognition" data-signal-section aria-labelledby="signal-recognition-title">
+    <div class="section-copy compact">
+      <span class="signal-kicker">Section 05 &middot; Recognition</span>
+      <h2 id="signal-recognition-title" data-pretext-fit data-pretext-lines="2" data-pretext-min-ratio="0.62" data-pretext-width-ratio="1">Recognition from my time in the Security SE seat.</h2>
+    </div>
+
+    <div class="recognition-grid" role="list" aria-label="Microsoft badges and awards">
+      {recognitionBadges.map((badge) => (
+        <figure class={`recognition-card is-${badge.id}`} role="listitem">
+          <div class="recognition-art">
+            <img
+              src={badge.src}
+              alt={badge.alt}
+              width={badge.width}
+              height={badge.height}
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+          <figcaption>
+            <strong>{badge.title}</strong>
+            <span>{badge.detail}</span>
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+  </section>
+
   <section class="recordings-section" id="signal-voices" data-signal-section aria-labelledby="signal-voices-title">
     <div class="section-copy">
       <span class="signal-kicker">Section 06 &middot; Voices Around the Work</span>
@@ -391,48 +463,18 @@ const pitchStory = [
     </div>
   </section>
 
-  <section class="passion-section" id="signal-passion" data-signal-section aria-labelledby="signal-passion-title">
-    <div class="section-copy compact">
-      <span class="signal-kicker">Section 07 &middot; Proof of Passion</span>
-      <h2 id="signal-passion-title" data-pretext-fit data-pretext-lines="2" data-pretext-min-ratio="0.62" data-pretext-width-ratio="1">Where the work shows up off-hours.</h2>
-    </div>
-    <div class="passion-grid">
-      <article style="--passion-hue: 38;">
-        <span class="passion-glyph" aria-hidden="true">&#9650;</span>
-        <span class="passion-tag">Shipping</span>
-        <h3>Built, not bought.</h3>
-        <p>This blog and walking deck &mdash; Astro, custom interactions, no template. Proof I ship, not just pitch.</p>
-        <span class="passion-stat">main &middot; deployed continuously</span>
-      </article>
-      <article style="--passion-hue: 168;">
-        <span class="passion-glyph" aria-hidden="true">&#9670;</span>
-        <span class="passion-tag">Speaking</span>
-        <h3>Mic on, when it sharpens.</h3>
-        <p>Community talks, internal Microsoft sessions, and panels. I take the mic when it sharpens the message or the audience.</p>
-        <span class="passion-stat">internal &middot; external &middot; on demand</span>
-      </article>
-      <article style="--passion-hue: 200;">
-        <span class="passion-glyph" aria-hidden="true">&#9679;</span>
-        <span class="passion-tag">Writing</span>
-        <h3>Public thinking.</h3>
-        <p>Operator notes on security, AI, leadership, and career &mdash; published here on a steady cadence so the thinking stays public.</p>
-        <span class="passion-stat">cadence &middot; steady</span>
-      </article>
-    </div>
-  </section>
-
   <section class="ask-section" id="signal-ask" data-signal-section aria-labelledby="signal-ask-title">
-    <span class="signal-kicker">Section 08 &middot; The Ask</span>
+    <span class="signal-kicker">Section 07 &middot; The Next Seat</span>
     <div class="ask-body">
-      <h2 id="signal-ask-title" data-pretext-fit data-pretext-lines="2" data-pretext-min-ratio="0.6" data-pretext-width-ratio="1">An Account Executive seat, then sales leadership.</h2>
-      <p data-pretext-fit data-pretext-lines="4" data-pretext-min-ratio="0.78" data-pretext-width-ratio="1">Near term: AE at Microsoft, where sales judgment, customer trust, and security and AI fluency compound. Mid term: sales leadership. Long term: GM and CVP-shaped seats.</p>
+      <h2 id="signal-ask-title" data-pretext-fit data-pretext-lines="2" data-pretext-min-ratio="0.6" data-pretext-width-ratio="1">A Sales seat, then sales leadership.</h2>
+      <p data-pretext-fit data-pretext-lines="5" data-pretext-min-ratio="0.78" data-pretext-width-ratio="1">AE is the seat I want most. I want to carry Microsoft's full story, connect customer priorities across the portfolio, and own the commercial outcome. I'm also confident I can perform in Security, Cloud &amp; AI Platforms, or AI Business Solutions specialist roles. That range also prepares me to be a stronger AE.</p>
     </div>
-    <ol class="ask-arc" role="list" aria-label="Career arc">
+    <ul class="ask-arc" role="list" aria-label="Career direction">
       <li><strong>Now</strong><span>Senior Security SE</span></li>
-      <li><strong>Next</strong><span>AE, Microsoft</span></li>
+      <li><strong>Target seat</strong><span>Account Executive</span></li>
+      <li><strong>Specialist range</strong><span>Security &middot; Cloud &amp; AI &middot; Business Apps</span></li>
       <li><strong>Then</strong><span>Sales leadership</span></li>
-      <li><strong>Long</strong><span>GM &middot; CVP</span></li>
-    </ol>
+    </ul>
     <a class="signal-link" href="/career/career-development-plan/">Open the career development plan</a>
   </section>
 </section>
@@ -1018,6 +1060,24 @@ const pitchStory = [
   .walking-signal[data-present='true'] .strengths-list span {
     color: rgba(255, 255, 255, 0.72);
     font-size: clamp(1.1rem, 1.25vw, 1.45rem);
+  }
+
+  .walking-signal[data-present='true'] .strengths-proof {
+    width: min(100%, 72rem);
+    margin: 0;
+  }
+
+  .walking-signal[data-present='true'] .strengths-proof article {
+    border-color: rgba(241, 183, 95, 0.28);
+    background: rgba(8, 18, 30, 0.5);
+  }
+
+  .walking-signal[data-present='true'] .strengths-proof strong {
+    color: var(--signal-gold);
+  }
+
+  .walking-signal[data-present='true'] .strengths-proof span {
+    color: rgba(255, 255, 255, 0.76);
   }
 
   .walking-signal[data-present='true'] .essence-section h2 {
@@ -5301,6 +5361,47 @@ const pitchStory = [
     line-height: 1.5;
   }
 
+  .strengths-proof {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.65rem;
+    margin-top: 0.75rem;
+  }
+
+  .strengths-proof article {
+    display: grid;
+    align-content: center;
+    gap: 0.18rem;
+    min-width: 0;
+    padding: 0.7rem 0.8rem;
+    border: 1px solid var(--signal-line);
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.88);
+  }
+
+  .strengths-proof strong {
+    color: var(--signal-gold);
+    font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.88rem;
+    font-weight: 900;
+    line-height: 1.15;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .strengths-proof span {
+    color: var(--signal-muted);
+    font-size: 0.82rem;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  @media (max-width: 760px) {
+    .strengths-proof {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
   /* Essence (slide 4) */
   .essence-section {
     text-align: center;
@@ -5397,6 +5498,524 @@ const pitchStory = [
   @media (max-width: 760px) {
     .passion-grid {
       grid-template-columns: 1fr;
+    }
+  }
+
+  /* Recognition (slide 5) */
+  .recognition-section {
+    position: relative;
+    isolation: isolate;
+    margin-top: 1rem;
+    padding: clamp(1rem, 3vw, 1.5rem);
+    scroll-margin-top: 7rem;
+    overflow: hidden;
+    border: 1px solid rgba(52, 186, 255, 0.24);
+    border-radius: 8px;
+    background:
+      linear-gradient(118deg, rgba(52, 186, 255, 0.12), transparent 35%),
+      linear-gradient(145deg, #06171f, #143247);
+    color: white;
+    box-shadow: 0 18px 46px rgba(12, 24, 38, 0.16);
+  }
+
+  .recognition-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 42%;
+    height: 3px;
+    background: linear-gradient(90deg, #34baff, #f4c430 72%, transparent);
+    box-shadow: 0 0 18px rgba(52, 186, 255, 0.6);
+  }
+
+  .recognition-section::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background-image:
+      linear-gradient(rgba(165, 184, 238, 0.055) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(165, 184, 238, 0.055) 1px, transparent 1px);
+    background-size: 32px 32px;
+    -webkit-mask-image: linear-gradient(90deg, black, transparent 72%);
+    mask-image: linear-gradient(90deg, black, transparent 72%);
+    pointer-events: none;
+  }
+
+  .recognition-section .section-copy {
+    position: relative;
+    z-index: 1;
+  }
+
+  .recognition-section h2 {
+    color: white;
+  }
+
+  .recognition-grid {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    grid-template-rows: repeat(2, minmax(11rem, 1fr));
+    gap: 0.8rem;
+    margin-top: 1.2rem;
+  }
+
+  .recognition-card {
+    display: grid;
+    grid-template-rows: minmax(0, 1fr) auto;
+    min-width: 0;
+    margin: 0;
+    overflow: hidden;
+    border: 1px solid rgba(165, 184, 238, 0.3);
+    border-radius: 8px;
+    background: rgba(6, 23, 31, 0.84);
+    box-shadow: 0 16px 34px rgba(0, 0, 0, 0.24);
+  }
+
+  .recognition-card.is-sales-excellence {
+    grid-column: 1 / 6;
+    grid-row: 1 / 3;
+    border-color: rgba(52, 186, 255, 0.46);
+  }
+
+  .recognition-card.is-culture {
+    grid-column: 6 / 13;
+    grid-row: 1;
+  }
+
+  .recognition-card.is-attainment {
+    grid-column: 6 / 10;
+    grid-row: 2;
+  }
+
+  .recognition-card.is-hackathon {
+    grid-column: 10 / 13;
+    grid-row: 2;
+  }
+
+  .recognition-art {
+    --recognition-art-pad: clamp(0.55rem, 1.2vw, 0.9rem);
+    position: relative;
+    display: grid;
+    min-width: 0;
+    min-height: 0;
+    padding: 0;
+    place-items: center;
+    overflow: hidden;
+    background: linear-gradient(180deg, #fbfaf6, #f4f1ea);
+  }
+
+  .recognition-art img {
+    position: absolute;
+    inset: var(--recognition-art-pad);
+    display: block;
+    width: calc(100% - var(--recognition-art-pad) - var(--recognition-art-pad));
+    max-width: none;
+    height: calc(100% - var(--recognition-art-pad) - var(--recognition-art-pad));
+    max-height: none;
+    object-fit: contain;
+    filter: drop-shadow(0 8px 12px rgba(19, 34, 53, 0.16));
+  }
+
+  .recognition-card figcaption {
+    display: grid;
+    gap: 0.18rem;
+    padding: 0.65rem 0.75rem 0.7rem;
+    border-top: 1px solid rgba(165, 184, 238, 0.2);
+  }
+
+  .recognition-card figcaption strong {
+    color: white;
+    font-size: clamp(0.78rem, 0.9vw, 1rem);
+    line-height: 1.2;
+  }
+
+  .recognition-card figcaption span {
+    color: rgba(255, 255, 255, 0.62);
+    font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: clamp(0.7rem, 0.72vw, 0.78rem);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    line-height: 1.3;
+    text-transform: uppercase;
+  }
+
+  .walking-signal[data-present='true'] .recognition-section {
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr);
+    align-content: stretch;
+    gap: clamp(0.55rem, 1.2vh, 0.85rem);
+    margin: 0;
+    padding: clamp(1rem, 2.4vw, 2rem);
+    border: 1px solid rgba(241, 183, 95, 0.18);
+    background:
+      linear-gradient(118deg, rgba(52, 186, 255, 0.12), transparent 35%),
+      linear-gradient(145deg, rgba(6, 23, 31, 0.98), rgba(20, 50, 71, 0.96));
+    box-shadow: 0 32px 80px rgba(0, 0, 0, 0.55);
+  }
+
+  .walking-signal[data-present='true'] .recognition-section .section-copy {
+    gap: 0.3rem;
+  }
+
+  .walking-signal[data-present='true'] .recognition-section h2 {
+    font-size: clamp(1.8rem, 2.6vw, 3rem);
+    line-height: 1.12;
+  }
+
+  .walking-signal[data-present='true'] .recognition-grid {
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+    min-height: 0;
+    margin-top: 0;
+  }
+
+  .walking-signal[data-present='true'] .recognition-card {
+    min-height: 0;
+  }
+
+  .walking-signal[data-present='true'] .recognition-section.is-current .recognition-card {
+    animation: recognition-rise 460ms cubic-bezier(0.16, 1, 0.3, 1) backwards;
+  }
+
+  .walking-signal[data-present='true'] .recognition-section.is-current .recognition-card:nth-child(2) {
+    animation-delay: 80ms;
+  }
+
+  .walking-signal[data-present='true'] .recognition-section.is-current .recognition-card:nth-child(3) {
+    animation-delay: 140ms;
+  }
+
+  .walking-signal[data-present='true'] .recognition-section.is-current .recognition-card:nth-child(4) {
+    animation-delay: 200ms;
+  }
+
+  @keyframes recognition-rise {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @media (max-width: 760px) {
+    .recognition-section {
+      padding: 1rem;
+    }
+
+    .recognition-grid,
+    .walking-signal[data-present='true'] .recognition-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-rows: repeat(2, minmax(0, 1fr));
+      gap: 0.5rem;
+    }
+
+    .recognition-card.is-sales-excellence,
+    .recognition-card.is-culture,
+    .recognition-card.is-attainment,
+    .recognition-card.is-hackathon {
+      grid-column: auto;
+      grid-row: auto;
+    }
+
+    .recognition-card figcaption {
+      padding: 0.5rem 0.55rem 0.55rem;
+    }
+
+    .recognition-card figcaption strong {
+      font-size: 0.72rem;
+    }
+
+    .recognition-card figcaption span {
+      font-size: 0.7rem;
+      letter-spacing: 0.06em;
+    }
+
+    .walking-signal[data-present='true'] .recognition-section {
+      gap: 0.45rem;
+      padding: 0.8rem;
+    }
+
+    .walking-signal[data-present='true'] .recognition-section .section-copy {
+      gap: 0.18rem;
+    }
+
+    .walking-signal[data-present='true'] .recognition-section h2 {
+      font-size: clamp(1.2rem, 5.8vw, 1.65rem);
+    }
+
+    .walking-signal[data-present='true'] .recognition-art {
+      --recognition-art-pad: 0.4rem;
+    }
+  }
+
+  @media (max-height: 520px) and (orientation: landscape) {
+    .walking-signal[data-present='true'] .strengths-section {
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr) auto;
+      align-items: stretch;
+      justify-content: stretch;
+      gap: 0.5rem;
+      padding: 0.55rem 0.65rem;
+      overflow: hidden;
+      text-align: left;
+    }
+
+    .walking-signal[data-present='true'] .strengths-section .signal-kicker,
+    .walking-signal[data-present='true'] .ask-section .signal-kicker {
+      display: none;
+    }
+
+    .walking-signal[data-present='true'] .strengths-section .section-copy {
+      align-content: center;
+      gap: 0;
+    }
+
+    .walking-signal[data-present='true'] .strengths-section h2 {
+      max-width: none;
+      font-size: clamp(1.25rem, 3.3vw, 1.65rem);
+      line-height: 1.04;
+    }
+
+    .walking-signal[data-present='true'] .strengths-list {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-rows: minmax(0, 1fr);
+      gap: 0.5rem;
+      min-height: 0;
+      margin: 0;
+    }
+
+    .walking-signal[data-present='true'] .strengths-list li {
+      display: grid;
+      align-content: center;
+      min-height: 0;
+      padding: 0.55rem 0.65rem;
+    }
+
+    .walking-signal[data-present='true'] .strengths-list strong {
+      font-size: 0.88rem;
+      line-height: 1.2;
+    }
+
+    .walking-signal[data-present='true'] .strengths-list span {
+      margin-top: 0.2rem;
+      font-size: 0.72rem;
+      line-height: 1.3;
+    }
+
+    .walking-signal[data-present='true'] .strengths-proof {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0.4rem;
+    }
+
+    .walking-signal[data-present='true'] .strengths-proof article {
+      padding: 0.35rem 0.45rem;
+    }
+
+    .walking-signal[data-present='true'] .strengths-proof strong,
+    .walking-signal[data-present='true'] .strengths-proof span {
+      font-size: 0.78rem;
+      line-height: 1.15;
+    }
+
+    .walking-signal[data-present='true'] .ask-section {
+      gap: 0.6rem;
+      padding: 0.65rem;
+      overflow: hidden;
+    }
+
+    .walking-signal[data-present='true'] .ask-section .ask-body {
+      gap: 0.45rem;
+    }
+
+    .walking-signal[data-present='true'] .ask-section h2 {
+      font-size: clamp(1.35rem, 3.8vw, 1.9rem);
+      line-height: 1.05;
+    }
+
+    .walking-signal[data-present='true'] .ask-section .ask-body p {
+      max-width: 100%;
+      font-size: 0.76rem;
+      line-height: 1.28;
+    }
+
+    .walking-signal[data-present='true'] .ask-arc {
+      gap: 0.5rem;
+    }
+
+    .walking-signal[data-present='true'] .ask-arc li {
+      padding: 0.55rem 0.65rem;
+    }
+
+    .walking-signal[data-present='true'] .ask-arc strong {
+      font-size: 0.68rem;
+    }
+
+    .walking-signal[data-present='true'] .ask-arc span {
+      font-size: 0.85rem;
+    }
+
+    .walking-signal[data-present='true'] .ask-section .signal-link {
+      display: none;
+    }
+
+    .walking-signal[data-present='true'] .recognition-section {
+      gap: 0.35rem;
+      padding: 0.55rem 0.65rem;
+    }
+
+    .walking-signal[data-present='true'] .recognition-section .section-copy {
+      grid-template-columns: auto minmax(0, 1fr);
+      align-items: end;
+      gap: 0.65rem;
+    }
+
+    .walking-signal[data-present='true'] .recognition-section h2 {
+      font-size: clamp(1rem, 2.4vw, 1.35rem);
+    }
+
+    .walking-signal[data-present='true'] .recognition-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-template-rows: minmax(0, 1fr);
+      gap: 0.45rem;
+    }
+
+    .walking-signal[data-present='true'] .recognition-card.is-sales-excellence,
+    .walking-signal[data-present='true'] .recognition-card.is-culture,
+    .walking-signal[data-present='true'] .recognition-card.is-attainment,
+    .walking-signal[data-present='true'] .recognition-card.is-hackathon {
+      grid-column: auto;
+      grid-row: auto;
+    }
+
+    .walking-signal[data-present='true'] .recognition-card figcaption {
+      padding: 0.32rem 0.38rem 0.36rem;
+    }
+
+    .walking-signal[data-present='true'] .recognition-card figcaption strong {
+      font-size: 0.7rem;
+    }
+
+    .walking-signal[data-present='true'] .recognition-card figcaption span {
+      font-size: 0.7rem;
+      letter-spacing: 0.04em;
+      line-height: 1.15;
+    }
+  }
+
+  @media (max-width: 760px) and (orientation: portrait) {
+    .walking-signal[data-present='true'] .strengths-section {
+      display: grid;
+      grid-template-rows: auto auto auto;
+      align-items: stretch;
+      align-content: center;
+      gap: 1rem;
+      padding: 0.85rem;
+      overflow: hidden;
+    }
+
+    .walking-signal[data-present='true'] .strengths-section .section-copy {
+      gap: 0.2rem;
+    }
+
+    .walking-signal[data-present='true'] .strengths-section h2 {
+      font-size: clamp(1.75rem, 8vw, 2.15rem);
+      line-height: 1.05;
+    }
+
+    .walking-signal[data-present='true'] .strengths-list {
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-rows: repeat(3, auto);
+      align-content: center;
+      gap: 0.55rem;
+      min-height: 0;
+      margin: 0;
+    }
+
+    .walking-signal[data-present='true'] .strengths-list li {
+      display: grid;
+      align-content: center;
+      min-height: 0;
+      padding: 0.65rem 0.75rem;
+    }
+
+    .walking-signal[data-present='true'] .strengths-list strong {
+      font-size: 1rem;
+      line-height: 1.2;
+    }
+
+    .walking-signal[data-present='true'] .strengths-list span {
+      margin-top: 0.2rem;
+      font-size: 0.82rem;
+      line-height: 1.35;
+    }
+
+    .walking-signal[data-present='true'] .strengths-proof {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.45rem;
+    }
+
+    .walking-signal[data-present='true'] .strengths-proof article {
+      padding: 0.45rem 0.55rem;
+    }
+
+    .walking-signal[data-present='true'] .strengths-proof strong {
+      font-size: 0.82rem;
+    }
+
+    .walking-signal[data-present='true'] .strengths-proof span {
+      font-size: 0.78rem;
+      line-height: 1.2;
+    }
+
+    .walking-signal[data-present='true'] .ask-section {
+      gap: 0.75rem;
+      padding: 0.9rem;
+    }
+
+    .walking-signal[data-present='true'] .ask-section .ask-body {
+      gap: 0.55rem;
+    }
+
+    .walking-signal[data-present='true'] .ask-section .ask-body p {
+      font-size: 0.8rem;
+      line-height: 1.38;
+    }
+
+    .walking-signal[data-present='true'] .ask-arc {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.5rem;
+      width: 100%;
+    }
+
+    .walking-signal[data-present='true'] .ask-arc li {
+      min-width: 0;
+      padding: 0.55rem 0.65rem;
+    }
+
+    .walking-signal[data-present='true'] .ask-arc strong {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+    }
+
+    .walking-signal[data-present='true'] .ask-arc span {
+      font-size: 0.82rem;
+    }
+
+    .walking-signal[data-present='true'] .ask-section .signal-link {
+      margin-top: 0;
+      padding: 0.75rem 1rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .walking-signal[data-present='true'] .recognition-section.is-current .recognition-card {
+      animation: none;
     }
   }
 </style>

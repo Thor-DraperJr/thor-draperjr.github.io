@@ -185,12 +185,12 @@ export const chapters: Chapter[] = [
             'Microsoft contractor, Apr 2021',
             'FTE, Oct 2021',
             'Security STU + SANS B.S.',
-            'H2 FY26: all four buckets exceeded',
+            'Senior Security Solution Engineer',
         ],
         highlights: [
             'Azure Networking Support (contractor, Apr 2021) -> Rapid Response + Support Escalations (FTE, Oct 2021)',
             'Senior Security Solution Engineer + SANS B.S. in cybersecurity',
-            'H2 FY26: 8-figure TCV E5, 7-figure Entra ID Governance, mid-6-figure DEX, Sentinel data lake doubled',
+            'Built range across security, identity, cloud, and AI',
         ],
         branches: [
             { kind: 'education', label: 'SANS B.S.', detail: 'Cybersecurity', cx: 740, cy: 360 },

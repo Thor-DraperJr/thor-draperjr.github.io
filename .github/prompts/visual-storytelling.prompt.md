@@ -9,6 +9,8 @@ Use this when Thor wants to create or revise a blog graphic, infographic, animat
 
 Before making visual direction decisions, load `.github/instructions/visual-system.instructions.md` and use that as the reusable palette/composition template for this repo. It captures the Walking Deck section 05 influence and the process-blue signal system.
 
+When the work changes article prose or a prose-to-visual handoff, also load `.github/instructions/editorial-system.instructions.md`.
+
 The goal is not to decorate a post. The goal is to help readers understand and remember the idea. The default style is polished infographic storytelling: structured, visual, energetic, and clear enough to scan on mobile without losing sophistication on desktop.
 
 ## Input Modes
@@ -115,16 +117,17 @@ The graphic must work on mobile and desktop:
 
 Rendered proof is required before calling the visual done:
 
-1. Build the site or confirm the existing dev server/build state is appropriate.
+1. Build the site or confirm the existing dev server/build state is appropriate. Before starting the Astro dev server, fetch `http://localhost:4321`; do not spawn a second instance when one is already running.
 2. Render the target article or page.
 3. Screenshot the visual on desktop, mobile, and the `laptop-chrome` viewport when layout is complex.
-4. Inspect the screenshots for readability, proportions, overflow, clipping, placeholder assets, caption mismatch, section handoffs, hover/focus states for visible controls, and whether the visual teaches the intended point.
+4. Inspect the screenshots for an accurate subject, orientation, proportions, labels, real logos/assets, captions, readability, overflow, clipping, placeholder states, section handoffs, hover/focus states for visible controls, and whether the visual teaches the intended point.
 5. If a source slide or image exists, compare the native result to the source and state what was preserved, improved, or intentionally changed.
 6. Read the markdown around the visual without relying on the rendered figure. Confirm the prose explains why the visual exists and what the reader should carry forward without duplicating every detail.
 7. For talk-derived or slide-compatible visuals, read the surrounding markdown as speaker notes and fix abrupt transitions that would sound awkward in delivery.
 8. Check the visual's neighboring transitions in both directions: what line hands into the graphic, what line hands out of it, and whether the next heading arrives naturally.
 9. Reject empty bridge prose. A transition should teach table-stakes context, orient the learner's next action, or name the value of the visual. "Hold onto this" is usually a sign the prose should define the thing directly.
 10. Apply the teleprompter/transcript test: surrounding prose should talk through the slide's core idea enough that a listener still learns if the visual is missing, while the visual carries extra reference detail and spatial structure.
+11. Record what the rendered visual helped the article say, the insight it made easier to see, and whether the visual form should change in the next iteration. Reuse a card grid, flow diagram, or animation pattern only when it best teaches this specific point.
 
 ## Output
 
@@ -143,6 +146,11 @@ Return concise progress in this shape:
 - Viewports checked.
 - Screenshot evidence location.
 - Issues found and fixed.
+
+## Narrative Learning
+- Insight the visual created.
+- What it helped the article say.
+- Keep or change the visual form.
 
 ## Remaining Decisions
 - Only items that need Thor's judgment.

@@ -144,7 +144,7 @@ if (hasGhWorkshop) {
 }
 ---
 
-<Layout pageTitle={post.title} pageDescription={post.excerpt}>
+<Layout pageTitle={post.title} pageDescription={post.excerpt} currentPath={post.permalink}>
   {hasSocialLoop ? (
     <>
       <article class="shell-container">
@@ -560,6 +560,12 @@ if (hasGhWorkshop) {
             </div>
           )}
         </header>
+
+        {walkingDeckParts[0]?.trim() && (
+          <section class="prose panel">
+            <Fragment set:html={walkingDeckParts[0]} />
+          </section>
+        )}
       </article>
 
       <div class="walking-deck-breakout">
@@ -567,9 +573,11 @@ if (hasGhWorkshop) {
       </div>
 
       <article class="shell-container">
-        <section class="prose panel">
-          <Fragment set:html={walkingDeckParts.join('')} />
-        </section>
+        {walkingDeckParts.slice(1).join(walkingDeckMarker).trim() && (
+          <section class="prose panel">
+            <Fragment set:html={walkingDeckParts.slice(1).join(walkingDeckMarker)} />
+          </section>
+        )}
 
         <nav class="post-pagination">
           {previous ? (

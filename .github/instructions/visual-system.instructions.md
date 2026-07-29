@@ -41,6 +41,7 @@ Use the Walking Deck, especially `/career/walking-deck/present` section 05 (`sig
 ## Composition Gates
 
 - Judge pages as whole compositions, not isolated components. Check the first viewport, the hero-to-body handoff, the middle-body rhythm, the final band, and the footer together.
+- Keep a placeholder ledger for active monograms, letter tiles, icon fallbacks, fake logos, and temporary assets. A component or article with a live fallback is incomplete until the real asset is supplied or the fallback is intentionally approved.
 - For page-family or sitewide work, name the baseline page before editing, then compare both static composition and motion parity across the target pages. A single static screenshot is not enough when the baseline relies on animation for its visual language.
 - Section transitions must look authored. Avoid broad foggy washes, random exposed background bands, or abrupt palette jumps that make the next section feel like a different site.
 - Hover and focus states are part of the visual system. Test primary/secondary CTAs, nav links, cards, and archive links on their actual backgrounds; shadows should lift without creating muddy rectangles or overpowering the surrounding stage.
