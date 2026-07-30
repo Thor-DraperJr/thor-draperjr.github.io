@@ -3,9 +3,10 @@ import { branchLinks, chapters, imageSlots, linkPaths, slotExists } from '../lib
 
 interface Props {
   startInPresent?: boolean;
+  exitHref?: string;
 }
 
-const { startInPresent = false } = Astro.props;
+const { startInPresent = false, exitHref } = Astro.props;
 
 const pitchTerminalLines = [
   { prompt: '$', text: 'whoami --short' },
@@ -50,13 +51,13 @@ const salesProof = [
 
 const recognitionBadges = [
   {
-    id: 'sales-excellence',
-    title: 'Sales Excellence Momentum Program',
-    detail: 'Enterprise Sales Ready - FY26 H2',
-    src: '/assets/images/walking-deck/recognition/sales-excellence-momentum-fy26-h2.png',
-    alt: 'Sales Excellence Momentum Program badge for Enterprise Sales Ready, FY26 H2',
-    width: 1024,
-    height: 1024,
+    id: 'attainment',
+    title: '100% Sales Attainment',
+    detail: 'Microsoft - 2026',
+    src: '/assets/images/walking-deck/recognition/sales-attainment-2026.png',
+    alt: 'Microsoft 100 percent sales attainment badge for 2026',
+    width: 1200,
+    height: 627,
   },
   {
     id: 'culture',
@@ -68,13 +69,13 @@ const recognitionBadges = [
     height: 627,
   },
   {
-    id: 'attainment',
-    title: '100% Sales Attainment',
-    detail: 'Microsoft - 2026',
-    src: '/assets/images/walking-deck/recognition/sales-attainment-2026.png',
-    alt: 'Microsoft 100 percent sales attainment badge for 2026',
-    width: 1200,
-    height: 627,
+    id: 'sales-excellence',
+    title: 'Sales Excellence Momentum Program',
+    detail: 'Enterprise Sales Ready - FY26 H2',
+    src: '/assets/images/walking-deck/recognition/sales-excellence-momentum-fy26-h2.png',
+    alt: 'Sales Excellence Momentum Program badge for Enterprise Sales Ready, FY26 H2',
+    width: 1024,
+    height: 1024,
   },
   {
     id: 'hackathon',
@@ -88,7 +89,7 @@ const recognitionBadges = [
 ];
 ---
 
-<section class="walking-signal" data-walking-signal data-present={startInPresent ? 'true' : undefined}>
+<section class="walking-signal" data-walking-signal data-present={startInPresent ? 'true' : undefined} data-exit-href={exitHref}>
   <nav class="signal-rail" aria-label="Walking deck sections">
     <a href="#signal-cover" data-rail-link>Cover</a>
     <a href="#signal-human" data-rail-link>Human</a>
@@ -5574,7 +5575,7 @@ const recognitionBadges = [
     box-shadow: 0 16px 34px rgba(0, 0, 0, 0.24);
   }
 
-  .recognition-card.is-sales-excellence {
+  .recognition-card.is-attainment {
     grid-column: 1 / 6;
     grid-row: 1 / 3;
     border-color: rgba(52, 186, 255, 0.46);
@@ -5585,7 +5586,7 @@ const recognitionBadges = [
     grid-row: 1;
   }
 
-  .recognition-card.is-attainment {
+  .recognition-card.is-sales-excellence {
     grid-column: 6 / 10;
     grid-row: 2;
   }

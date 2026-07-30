@@ -648,6 +648,10 @@ function initDeck(deck: WalkingDeckElement) {
 
         const exitPresent = () => {
             if (!isPresenting) return;
+            if (deck.dataset.exitHref) {
+                window.location.href = deck.dataset.exitHref;
+                return;
+            }
             isPresenting = false;
             delete deck.dataset.present;
             delete deck.dataset.presentDir;
