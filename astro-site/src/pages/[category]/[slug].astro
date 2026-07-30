@@ -19,6 +19,7 @@ import DiffPreview from '../../components/DiffPreview.astro';
 import PresentationWorkflowMap from '../../components/PresentationWorkflowMap.astro';
 import AgenticSocialLoop from '../../components/AgenticSocialLoop.astro';
 import GatewayProcessMap from '../../components/GatewayProcessMap.astro';
+import AgentHarnessLayers from '../../components/AgentHarnessLayers.astro';
 import { getPosts } from '../../lib/content';
 
 export function getStaticPaths() {
@@ -56,6 +57,7 @@ const ghWorkshopFigureMarkers = ['WHAT_IS_GITHUB', 'GITHUB_FLOW', 'YOUR_TOOLS', 
 const presentationWorkflowMarker = '[[PRESENTATION_WORKFLOW]]';
 const socialLoopMarker = '[[SOCIAL_LOOP]]';
 const gatewayProcessMapMarker = '[[GATEWAY_PROCESS_MAP]]';
+const agentHarnessLayersMarker = '[[AGENT_HARNESS_LAYERS]]';
 
 let processedHtml = post.html;
 processedHtml = processedHtml.replace(`<p>${runtimeChartMarker}</p>`, runtimeChartMarker);
@@ -77,6 +79,7 @@ for (const figureMarker of ghWorkshopFigureMarkers) {
 processedHtml = processedHtml.replace(`<p>${presentationWorkflowMarker}</p>`, presentationWorkflowMarker);
 processedHtml = processedHtml.replace(`<p>${socialLoopMarker}</p>`, socialLoopMarker);
 processedHtml = processedHtml.replace(`<p>${gatewayProcessMapMarker}</p>`, gatewayProcessMapMarker);
+processedHtml = processedHtml.replace(`<p>${agentHarnessLayersMarker}</p>`, agentHarnessLayersMarker);
 
 const hasRuntimeChart = processedHtml.includes(runtimeChartMarker);
 const hasCareerDevPlan = processedHtml.includes(careerDevPlanMarker);
@@ -89,6 +92,7 @@ const hasPerformanceNarrative = processedHtml.includes(performanceNarrativeMarke
 const hasPresentationWorkflow = processedHtml.includes(presentationWorkflowMarker);
 const hasSocialLoop = processedHtml.includes(socialLoopMarker);
 const hasGatewayProcessMap = processedHtml.includes(gatewayProcessMapMarker);
+const hasAgentHarnessLayers = processedHtml.includes(agentHarnessLayersMarker);
 
 const runtimeParts = hasRuntimeChart ? processedHtml.split(runtimeChartMarker) : [];
 const careerParts = hasCareerDevPlan ? processedHtml.split(careerDevPlanMarker) : [];
@@ -122,6 +126,7 @@ const performanceNarrativeParts = hasPerformanceNarrative ? processedHtml.split(
 const presentationWorkflowParts = hasPresentationWorkflow ? processedHtml.split(presentationWorkflowMarker) : [];
 const socialLoopParts = hasSocialLoop ? processedHtml.split(socialLoopMarker) : [];
 const gatewayProcessMapParts = hasGatewayProcessMap ? processedHtml.split(gatewayProcessMapMarker) : [];
+const agentHarnessLayersParts = hasAgentHarnessLayers ? processedHtml.split(agentHarnessLayersMarker) : [];
 
 const hasGhWorkshop = processedHtml.includes(ghWorkshopMarker);
 const ghWorkshopParts = hasGhWorkshop ? processedHtml.split(ghWorkshopMarker) : [];
@@ -642,6 +647,12 @@ if (hasGhWorkshop) {
             <Fragment set:html={presentationWorkflowParts[0]} />
             <PresentationWorkflowMap />
             <Fragment set:html={presentationWorkflowParts.slice(1).join(presentationWorkflowMarker)} />
+          </>
+        ) : hasAgentHarnessLayers ? (
+          <>
+            <Fragment set:html={agentHarnessLayersParts[0]} />
+            <AgentHarnessLayers />
+            <Fragment set:html={agentHarnessLayersParts.slice(1).join(agentHarnessLayersMarker)} />
           </>
         ) : (
           <Fragment set:html={processedHtml} />

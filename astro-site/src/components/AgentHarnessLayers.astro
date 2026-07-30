@@ -1,0 +1,316 @@
+---
+const layers = [
+  {
+    layer: 'Instructions',
+    job: 'Set the defaults',
+    consequence: 'Every workspace starts with the same expectations for evidence, scope, and validation.',
+    tone: 'blue',
+  },
+  {
+    layer: 'Prompts + skills',
+    job: 'Reuse the work',
+    consequence: 'A successful workflow becomes a command or capability instead of another long prompt.',
+    tone: 'periwinkle',
+  },
+  {
+    layer: 'Agents + subagents',
+    job: 'Bound the role',
+    consequence: 'Planning, implementation, and review can use separate context and different tool access.',
+    tone: 'mint',
+  },
+  {
+    layer: 'Hooks',
+    job: 'Make checks run',
+    consequence: 'Policy, formatting, and audit steps can execute at lifecycle events instead of relying on recall.',
+    tone: 'gold',
+  },
+  {
+    layer: 'Sessions + worktrees',
+    job: 'Isolate the work',
+    consequence: 'Parallel tasks can continue without mixing every change into one working directory or conversation.',
+    tone: 'periwinkle',
+  },
+  {
+    layer: 'Approvals',
+    job: 'Keep authority explicit',
+    consequence: 'The operator decides which tools, commands, and external actions can proceed automatically.',
+    tone: 'gold',
+  },
+];
+---
+
+<figure
+  class="ahl-figure"
+  role="img"
+  aria-label="Six layers of an agentic coding harness. Instructions set defaults. Prompts and skills reuse work. Agents and subagents bound roles. Hooks make checks run. Sessions and worktrees isolate work. Approvals keep authority explicit."
+>
+  <header class="ahl-header">
+    <span class="ahl-eyebrow">The operating stack</span>
+    <h3>The model works inside a system of guidance, boundaries, and proof.</h3>
+    <p>Each layer answers a different question before the agent gets more authority.</p>
+  </header>
+
+  <ol class="ahl-grid" role="list">
+    {layers.map((item, index) => (
+      <li class={`ahl-layer ahl-layer--${item.tone}`}>
+        <span class="ahl-index">{String(index + 1).padStart(2, '0')}</span>
+        <span class="ahl-name">{item.layer}</span>
+        <strong>{item.job}</strong>
+        <p>{item.consequence}</p>
+      </li>
+    ))}
+  </ol>
+
+  <footer class="ahl-gate">
+    <span>Agent output</span>
+    <span class="ahl-rail" aria-hidden="true"></span>
+    <strong>Operator decision</strong>
+  </footer>
+
+  <figcaption>A stronger harness gives the model useful reach while preserving evidence, isolation, and a visible owner for consequential actions.</figcaption>
+</figure>
+
+<style>
+  .ahl-figure {
+    position: relative;
+    container-type: inline-size;
+    box-sizing: border-box;
+    width: 100%;
+    margin: 1.5rem 0;
+    overflow: hidden;
+    padding: clamp(1.15rem, 0.7rem + 2.2cqw, 2.3rem);
+    border-radius: 8px;
+    color: #f7fbff;
+    background:
+      radial-gradient(90% 75% at 5% 0%, rgba(52, 186, 255, 0.2), transparent 62%),
+      radial-gradient(70% 65% at 96% 100%, rgba(244, 196, 48, 0.13), transparent 58%),
+      linear-gradient(145deg, #06171f 0%, #0a2130 54%, #143247 100%);
+    box-shadow: 0 24px 56px rgba(6, 23, 31, 0.26);
+    isolation: isolate;
+  }
+
+  .ahl-figure::before {
+    position: absolute;
+    z-index: -1;
+    inset: -35% 42% -35% -18%;
+    content: "";
+    background: linear-gradient(90deg, transparent, rgba(52, 186, 255, 0.14), transparent);
+    transform: translateX(-75%) skewX(-14deg);
+    animation: ahl-stage-sweep 8s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+  }
+
+  .ahl-header {
+    display: grid;
+    grid-template-columns: minmax(0, 1.6fr) minmax(14rem, 0.8fr);
+    gap: 0.35rem clamp(1rem, 3cqw, 2.5rem);
+    align-items: end;
+    margin-bottom: clamp(1rem, 0.65rem + 1.5cqw, 1.7rem);
+    animation: ahl-rise 700ms 80ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .ahl-eyebrow {
+    grid-column: 1 / -1;
+    color: #34baff;
+    font-size: clamp(0.64rem, 0.58rem + 0.25cqw, 0.76rem);
+    font-weight: 850;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .ahl-header h3 {
+    margin: 0;
+    max-width: 23ch;
+    color: #fff;
+    font-size: clamp(1.2rem, 0.92rem + 1.5cqw, 2rem);
+    line-height: 1.08;
+    letter-spacing: 0;
+  }
+
+  .ahl-header p {
+    margin: 0;
+    color: #b9cbe0;
+    font-size: clamp(0.78rem, 0.7rem + 0.3cqw, 0.94rem);
+    line-height: 1.45;
+  }
+
+  .ahl-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(0.55rem, 0.35rem + 0.75cqw, 0.9rem);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .ahl-layer {
+    position: relative;
+    overflow: hidden;
+    min-height: 9.75rem;
+    padding: clamp(0.75rem, 0.55rem + 0.7cqw, 1rem);
+    border: 1px solid rgba(52, 186, 255, 0.3);
+    border-radius: 7px;
+    background: rgba(6, 23, 31, 0.7);
+    animation: ahl-rise 620ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .ahl-layer::after {
+    position: absolute;
+    inset: 0 auto auto 0;
+    width: 42%;
+    height: 2px;
+    content: "";
+    background: linear-gradient(90deg, transparent, currentColor, transparent);
+    opacity: 0;
+    transform: translateX(-120%);
+    animation: ahl-card-signal 8s ease-in-out infinite;
+  }
+
+  .ahl-layer:nth-child(1) { animation-delay: 180ms; }
+  .ahl-layer:nth-child(2) { animation-delay: 280ms; }
+  .ahl-layer:nth-child(3) { animation-delay: 380ms; }
+  .ahl-layer:nth-child(4) { animation-delay: 480ms; }
+  .ahl-layer:nth-child(5) { animation-delay: 580ms; }
+  .ahl-layer:nth-child(6) { animation-delay: 680ms; }
+
+  .ahl-layer:nth-child(1)::after { animation-delay: 0ms; }
+  .ahl-layer:nth-child(2)::after { animation-delay: 420ms; }
+  .ahl-layer:nth-child(3)::after { animation-delay: 840ms; }
+  .ahl-layer:nth-child(4)::after { animation-delay: 1260ms; }
+  .ahl-layer:nth-child(5)::after { animation-delay: 1680ms; }
+  .ahl-layer:nth-child(6)::after { animation-delay: 2100ms; }
+
+  .ahl-layer--periwinkle { border-color: rgba(165, 184, 238, 0.42); }
+  .ahl-layer--mint { border-color: rgba(226, 249, 217, 0.42); }
+  .ahl-layer--gold { border-color: rgba(244, 196, 48, 0.45); }
+
+  .ahl-index {
+    position: absolute;
+    top: 0.78rem;
+    right: 0.78rem;
+    color: rgba(247, 251, 255, 0.42);
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.68rem;
+    font-weight: 800;
+  }
+
+  .ahl-name {
+    display: block;
+    max-width: calc(100% - 2rem);
+    color: #34baff;
+    font-size: clamp(0.62rem, 0.57rem + 0.22cqw, 0.72rem);
+    font-weight: 850;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .ahl-layer--periwinkle .ahl-name { color: #c5d0f5; }
+  .ahl-layer--mint .ahl-name { color: #e2f9d9; }
+  .ahl-layer--gold .ahl-name { color: #f4c430; }
+
+  .ahl-layer strong {
+    display: block;
+    margin-top: 0.45rem;
+    color: #fff;
+    font-size: clamp(0.9rem, 0.79rem + 0.45cqw, 1.08rem);
+    line-height: 1.18;
+  }
+
+  .ahl-layer p {
+    margin: 0.55rem 0 0;
+    color: #b9cbe0;
+    font-size: clamp(0.71rem, 0.65rem + 0.25cqw, 0.84rem);
+    line-height: 1.4;
+  }
+
+  .ahl-gate {
+    display: grid;
+    grid-template-columns: auto minmax(2rem, 1fr) auto;
+    gap: 0.8rem;
+    align-items: center;
+    margin-top: clamp(0.9rem, 0.6rem + 1.2cqw, 1.4rem);
+    color: #b9cbe0;
+    font-size: clamp(0.67rem, 0.61rem + 0.22cqw, 0.78rem);
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    animation: ahl-rise 620ms 820ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .ahl-gate strong { color: #f4c430; }
+
+  .ahl-rail {
+    position: relative;
+    overflow: hidden;
+    height: 2px;
+    background: linear-gradient(90deg, #34baff 0%, #a5b8ee 52%, #f4c430 100%);
+  }
+
+  .ahl-rail::after {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: clamp(2.5rem, 18%, 7rem);
+    height: 8px;
+    content: "";
+    background: linear-gradient(90deg, transparent, #fff 68%, #f4c430);
+    filter: drop-shadow(0 0 5px rgba(244, 196, 48, 0.85));
+    transform: translate(-105%, -50%);
+    animation: ahl-rail-signal 4.8s 1.25s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+  }
+
+  .ahl-figure figcaption {
+    margin-top: 0.75rem;
+    color: #e2f9d9;
+    font-size: clamp(0.75rem, 0.68rem + 0.28cqw, 0.9rem);
+    line-height: 1.4;
+    animation: ahl-rise 620ms 930ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  @keyframes ahl-rise {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes ahl-stage-sweep {
+    0%, 12% { opacity: 0; transform: translateX(-75%) skewX(-14deg); }
+    34% { opacity: 1; }
+    62%, 100% { opacity: 0; transform: translateX(235%) skewX(-14deg); }
+  }
+
+  @keyframes ahl-card-signal {
+    0%, 11% { opacity: 0; transform: translateX(-120%); }
+    14% { opacity: 0.85; }
+    24%, 100% { opacity: 0; transform: translateX(300%); }
+  }
+
+  @keyframes ahl-rail-signal {
+    0%, 18% { opacity: 0; transform: translate(-105%, -50%); }
+    26% { opacity: 1; }
+    70% { opacity: 1; }
+    82%, 100% { opacity: 0; transform: translate(760%, -50%); }
+  }
+
+  @container (max-width: 670px) {
+    .ahl-header { grid-template-columns: 1fr; align-items: start; }
+    .ahl-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+
+  @container (max-width: 420px) {
+    .ahl-grid { grid-template-columns: 1fr; }
+    .ahl-layer { min-height: 0; }
+    .ahl-gate { grid-template-columns: 1fr; gap: 0.35rem; }
+    .ahl-rail { width: 100%; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ahl-figure::before,
+    .ahl-header,
+    .ahl-layer,
+    .ahl-layer::after,
+    .ahl-gate,
+    .ahl-rail::after,
+    .ahl-figure figcaption {
+      animation: none;
+    }
+  }
+</style>
