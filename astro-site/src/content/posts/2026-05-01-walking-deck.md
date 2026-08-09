@@ -4,7 +4,7 @@ title: "The Signal Map: My Walking Deck"
 date: 2026-05-01
 draft: false
 categories: [career]
-tags: [career, leadership, personal-branding]
+tags: [career, leadership]
 excerpt: "My walking deck, rebuilt as a seven-part interactive introduction I can pull up anywhere."
 ---
 

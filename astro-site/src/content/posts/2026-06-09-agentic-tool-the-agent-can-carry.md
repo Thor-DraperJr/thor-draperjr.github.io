@@ -3,7 +3,7 @@ layout: post
 title: "Building an Agentic Tool the Agent Can Actually Carry"
 date: 2026-06-09
 categories: [tech]
-tags: [ai, agents, vscode, github, product, leadership]
+tags: [technical, ai, leadership]
 draft: false
 excerpt: "I set out to build a social-promotion helper in VS Code and learned a more useful lesson about agentic tooling: where a capability lives decides whether it travels. The first version worked and went nowhere. The second one snaps into any session."
 ---

@@ -3,7 +3,7 @@ layout: post
 title: "All Aboard"
 date: 2026-05-28
 categories: [tech]
-tags: [ai, cybersecurity, identity, agents, frontier-firm, healthcare]
+tags: [technical, ai, cybersecurity, leadership]
 draft: false
 excerpt: "Your environment is already a platform. The agentic shift does not ask you to build a second one. It asks you to run agents across the same identity, data protection, investigation, and governance machinery your people already depend on."
 ---

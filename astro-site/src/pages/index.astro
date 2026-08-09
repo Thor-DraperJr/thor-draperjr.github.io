@@ -3,10 +3,9 @@ import Layout from '../layouts/Layout.astro';
 import { getPosts } from '../lib/content';
 
 const posts = getPosts();
-const latest = posts[0];
-const leadPost = posts[1];
-const supportingPosts = posts.slice(2, 5);
-const recentPosts = posts.slice(5, 11);
+const professionalCategories = new Set(['tech', 'career', 'business']);
+const heroPost = posts.find((post) => post.categories.some((category) => professionalCategories.has(category)));
+const recentPosts = posts.filter((post) => post !== heroPost).slice(0, 6);
 ---
 
 <Layout pageTitle="Home" currentPath="/" wide>
@@ -24,19 +23,19 @@ const recentPosts = posts.slice(5, 11);
 
 				<div class="button-row" data-reveal data-reveal-delay="3">
 					<a class="button" href="/archive/">Browse the archive</a>
-					{latest && <a class="button-ghost" href={latest.permalink}>Read the latest piece</a>}
+					{heroPost && <a class="button-ghost" href={heroPost.permalink}>Read the featured article</a>}
 				</div>
 			</div>
 
 			<div class="home-rail">
-				{latest && (
+				{heroPost && (
 					<article class="feature-panel home-latest-card" data-reveal data-reveal-delay="4">
-						<span class="eyebrow">Latest dispatch</span>
-						<h2 class="feature-panel-title"><a href={latest.permalink}>{latest.title}</a></h2>
-						<p class="card-copy">{latest.excerpt}</p>
+						<span class="eyebrow">Latest professional article</span>
+						<h2 class="feature-panel-title"><a href={heroPost.permalink}>{heroPost.title}</a></h2>
+						<p class="card-copy">{heroPost.excerpt}</p>
 						<div class="meta-row">
-							<span>{latest.date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
-							<span>{latest.readingTime} min read</span>
+							<span>{heroPost.date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
+							<span>{heroPost.readingTime} min read</span>
 						</div>
 					</article>
 				)}
@@ -52,54 +51,23 @@ const recentPosts = posts.slice(5, 11);
 			<div class="section-header">
 				<div>
 					<span class="eyebrow">Recent writing</span>
-					<h2 class="section-title">The current signal.</h2>
+					<h2 class="section-title">Latest from the notebook.</h2>
 				</div>
-				<p class="section-copy">A more deliberate trail through the latest posts: one idea in focus, a few nearby threads, and the rest of the queue close enough to keep moving.</p>
+				<p class="section-copy">Professional work and personal notes, together in straightforward chronological order.</p>
 			</div>
 
-			<div class="home-writing-grid">
-				<div class="home-writing-focus">
-					{leadPost && (
-						<article class="home-lead-post" data-reveal data-reveal-delay="1">
-							<div class="home-lead-post-signal" aria-hidden="true"></div>
-							<div class="card-topline">
-								<span class="eyebrow">Field note</span>
-								<span class="card-index">{leadPost.readingTime} min read</span>
-							</div>
-							<h3 class="home-lead-title"><a href={leadPost.permalink}>{leadPost.title}</a></h3>
-							<p class="home-lead-copy">{leadPost.excerpt}</p>
-							<div class="meta-row">
-								<span>{leadPost.date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
-								{leadPost.categories.slice(0, 2).map((category) => <span>{category}</span>)}
-							</div>
-						</article>
-					)}
-
-					{recentPosts.length > 0 && (
-						<div class="home-archive-strip" data-reveal data-reveal-delay="2">
-							<span class="home-archive-strip-label">Queue</span>
-							<div class="home-archive-strip-list">
-								{recentPosts.map((post) => (
-									<a href={post.permalink}>{post.title}</a>
-								))}
-							</div>
+			<div class="home-post-grid">
+				{recentPosts.map((post, index) => (
+					<article class="home-post-card" data-reveal data-reveal-delay={String(Math.min(index + 1, 4))}>
+						<div class="card-topline">
+							<span class="eyebrow">{post.categories[0]}</span>
+							<span class="stream-date">{post.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
 						</div>
-					)}
-				</div>
-
-				<div class="home-post-stack">
-					{supportingPosts.map((post, index) => (
-						<article class="home-post-tile" data-reveal data-reveal-delay={String(Math.min(index + 2, 4))}>
-							<div class="card-topline">
-								<span class="card-index">0{index + 1}</span>
-								<span class="stream-date">{post.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</span>
-							</div>
-							<h3 class="stream-title"><a href={post.permalink}>{post.title}</a></h3>
-							<p class="stream-excerpt">{post.excerpt}</p>
-							<div class="stream-meta">{post.readingTime} min read</div>
-						</article>
-					))}
-				</div>
+						<h3 class="stream-title"><a href={post.permalink}>{post.title}</a></h3>
+						<p class="stream-excerpt">{post.excerpt}</p>
+						<div class="stream-meta">{post.readingTime} min read</div>
+					</article>
+				))}
 			</div>
 
 			<div class="button-row" style="margin-top: 1.5rem;">

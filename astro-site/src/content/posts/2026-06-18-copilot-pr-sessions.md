@@ -3,7 +3,7 @@ layout: post
 title: "Learning to Let Copilot Work My GitHub Queue"
 date: 2026-06-18
 categories: [tech]
-tags: [ai, github, copilot, agents, software-development]
+tags: [technical, ai, software-development]
 draft: true
 excerpt: "A real session taught me the difference between using Copilot as a coding helper and using it as an operator inside GitHub. The lesson wasn't more automation. It was better judgment around issues, proof, and ownership."
 ---

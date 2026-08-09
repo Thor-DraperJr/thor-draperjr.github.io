@@ -3,7 +3,7 @@ layout: post
 title: "I Audited My VS Code Agent Setup"
 date: 2026-07-30
 categories: [tech]
-tags: [ai, agents, vscode, github-copilot, developer-tools, leadership]
+tags: [technical, ai, software-development, leadership]
 draft: false
 excerpt: "A review of VS Code's newer agent features changed how I think about instructions, portable skills, Agent Host sessions, subagents, hooks, and approval boundaries."
 ---

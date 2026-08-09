@@ -3,7 +3,7 @@ layout: post
 title: "Three New Years, Three Words"
 date: 2026-05-04
 categories: [life, career]
-tags: [mindset, resolutions, growth]
+tags: [personal, career]
 excerpt: "I gave up on January resolutions and replaced them with three personal new years -- relationship, professional, personal -- each one anchored to a single word."
 ---
 

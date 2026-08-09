@@ -3,7 +3,7 @@ layout: post
 title: "How I Turn Articles Into Presentations I Can Actually Teach From"
 date: 2026-06-25
 categories: [tech]
-tags: [github-copilot, agents, presentations, workflow, content, astro]
+tags: [technical, ai, leadership]
 draft: false
 excerpt: "A copyable markdown workflow for building presentation-ready articles with Copilot agents, optional present mode, and screenshots that prove the layout works."
 ---
@@ -55,7 +55,7 @@ layout: post
 title: "Your Article Title"
 date: YYYY-MM-DD
 categories: [tech]
-tags: [github-copilot, agents, presentations]
+tags: [technical, ai, leadership]
 draft: true
 excerpt: "One plain-English sentence about what the reader gets."
 # Add this only when the article genuinely needs a present route.

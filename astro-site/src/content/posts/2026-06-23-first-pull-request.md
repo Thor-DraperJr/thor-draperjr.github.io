@@ -3,7 +3,7 @@ layout: post
 title: "Your First Pull Request, No Commands Required"
 date: 2026-06-23
 categories: [tech]
-tags: [github, copilot, agents, workshop, enablement, leadership]
+tags: [technical, software-development, leadership]
 presentation: first-pull-request
 draft: false
 excerpt: "Missed the session? This is the walkthrough version: add your name to a real project, let a coding agent handle the Git mechanics in the open, and practice the part that matters most: understanding the change before you approve it."

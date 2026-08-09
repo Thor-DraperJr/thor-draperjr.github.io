@@ -3,7 +3,7 @@ layout: post
 title: "AI in the Enterprise Is Crossing a Control Boundary"
 date: 2026-03-15
 categories: [tech]
-tags: [ai, cybersecurity, cloud]
+tags: [technical, ai, cybersecurity]
 excerpt: "The current enterprise AI conversation is full of category mistakes. This post starts a series on how to tell the difference between an AI-enhanced app, an assistive agent, an autonomous runtime, and the security controls that should change as authority increases."
 ---
 

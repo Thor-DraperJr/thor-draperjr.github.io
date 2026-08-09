@@ -3,7 +3,7 @@ layout: post
 title: "Let the Session Write the Post"
 date: 2026-07-04
 categories: [tech]
-tags: [ai, agents, mcp, social-media, workflow, leadership]
+tags: [technical, ai, leadership]
 draft: false
 excerpt: "Staying present on social media usually dies as a separate chore. If the drafting capability lives inside the same agent session that ships the work, and the risky parts are deterministic guardrails, the post becomes a byproduct instead of a second job."
 ---

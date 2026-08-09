@@ -3,7 +3,7 @@ layout: post
 title: "Charlotte Arts Things To Do"
 date: 2026-04-12
 categories: [life]
-tags: [charlotte, arts, local]
+tags: [personal, local]
 excerpt: "A running list of Charlotte arts organizations and spots I want to keep handy for nights out, weekend plans, and general reminders that I should leave the house more often."
 ---
 

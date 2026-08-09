@@ -3,7 +3,7 @@ layout: post
 title: "The Canary Got a Raise"
 date: 2026-06-03
 categories: [tech]
-tags: [ai, agents, data, career, leadership]
+tags: [technical, ai, career, leadership]
 draft: false
 excerpt: "The loudest AI predictions keep getting the second move wrong. Radiologists were supposed to be gone by now; instead they are busier and better paid than ever. That same pattern shows up in two places nobody is watching closely enough: what happens to the value of data once a model is trained, and why the rush to put agents in charge of other agents is quietly admitting the limits of what we built."
 ---

@@ -3,7 +3,7 @@ layout: post
 title: "Two Charlotte Transportation Things I Keep Thinking About"
 date: 2026-07-08
 categories: [life]
-tags: [charlotte, transit, urban-planning, mobility]
+tags: [personal, local]
 draft: false
 excerpt: "A draft thought on two Charlotte transportation fixes I keep coming back to: parking incentives that use lots and decks first, and a faster path from transit idea to groundbreaking."
 ---

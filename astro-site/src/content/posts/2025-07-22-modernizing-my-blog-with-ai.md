@@ -3,7 +3,7 @@ layout: post
 title: "Modernizing My Jekyll Blog with AI: A Complete Transformation Journey"
 date: 2025-07-22
 categories: [tech, career]
-tags: [ai, devops]
+tags: [technical, ai, career]
 excerpt: "How I transformed my basic Jekyll blog into a modern, professional platform using AI assistance - including the exact prompts and techniques that made it successful."
 ---
 

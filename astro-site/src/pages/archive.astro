@@ -1,9 +1,14 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { getPosts } from '../lib/content';
+import { getPosts, getTagCounts } from '../lib/content';
 
 const posts = getPosts();
 const archiveBegins = posts[posts.length - 1]?.date.getFullYear();
+const topicOrder = ['technical', 'career', 'leadership', 'ai', 'cybersecurity', 'productivity', 'cloud', 'personal', 'local', 'software-development'];
+const tagCounts = new Map(getTagCounts().map(({ tag, count }) => [tag, count]));
+const topics = topicOrder
+  .map((tag) => ({ tag, count: tagCounts.get(tag) ?? 0 }))
+  .filter(({ count }) => count > 0);
 
 function normalizeSearchText(value: string) {
   return value.toLowerCase().replace(/\s+/g, ' ').trim();
@@ -44,6 +49,22 @@ const archiveVolumes = [...archivePosts.reduce((map, post) => {
           <span class="archive-search-label">Search the archive</span>
           <input id="archive-search-input" class="archive-search-input" type="search" placeholder="Try: agent, momentum, Azure, feedback, planning..." autocomplete="off" data-archive-search />
         </label>
+
+        <div class="archive-topic-index" aria-label="Filter by topic">
+          <span class="archive-search-label">Browse by topic</span>
+          <div class="archive-topic-list">
+            <button class="archive-topic-button is-active" type="button" data-archive-topic="" aria-pressed="true">
+              <span>All topics</span>
+              <span>{posts.length}</span>
+            </button>
+            {topics.map(({ tag, count }) => (
+              <button class="archive-topic-button" type="button" data-archive-topic={tag} aria-pressed="false">
+                <span>{tag.replace('-', ' ')}</span>
+                <span>{count}</span>
+              </button>
+            ))}
+          </div>
+        </div>
 
         <div class="archive-index-status">
           <span class="archive-index-status-count" data-archive-count>{posts.length}</span>
@@ -122,8 +143,10 @@ const archiveVolumes = [...archivePosts.reduce((map, post) => {
     const emptyState = document.querySelector('[data-archive-empty]');
     const queryNode = document.querySelector('[data-archive-query]');
     const searchInput = document.querySelector('[data-archive-search]');
+    const topicButtons = Array.from(document.querySelectorAll('[data-archive-topic]'));
 
     let activeQuery = '';
+    let activeTopic = '';
 
     function updateArchiveView() {
       let visibleCount = 0;
@@ -131,8 +154,10 @@ const archiveVolumes = [...archivePosts.reduce((map, post) => {
 
       records.forEach((record) => {
         const searchText = record.getAttribute('data-search') ?? '';
+        const tags = (record.getAttribute('data-tags') ?? '').split(',');
         const matchesQuery = !normalizedQuery || searchText.includes(normalizedQuery);
-        const visible = matchesQuery;
+        const matchesTopic = !activeTopic || tags.includes(activeTopic);
+        const visible = matchesQuery && matchesTopic;
 
         record.toggleAttribute('hidden', !visible);
         if (visible) visibleCount += 1;
@@ -164,6 +189,18 @@ const archiveVolumes = [...archivePosts.reduce((map, post) => {
         updateArchiveView();
       });
     }
+
+    topicButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        activeTopic = button.getAttribute('data-archive-topic') ?? '';
+        topicButtons.forEach((topicButton) => {
+          const isActive = topicButton === button;
+          topicButton.classList.toggle('is-active', isActive);
+          topicButton.setAttribute('aria-pressed', String(isActive));
+        });
+        updateArchiveView();
+      });
+    });
 
     updateArchiveView();
   </script>
