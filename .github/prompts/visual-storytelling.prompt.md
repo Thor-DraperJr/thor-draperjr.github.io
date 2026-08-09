@@ -1,6 +1,6 @@
 ---
-description: "Create informative infographic-style visuals for Thor's blog from PowerPoint slides, images, article sections, notes, data, or raw ideas: native Astro graphics, animation, mobile and desktop QA, and visual storytelling polish."
-mode: "agent"
+description: "Create informative infographic-style visuals for Thor's blog from PowerPoint slides, images, article sections, notes, data, or raw ideas: native Astro graphics, purposeful reader interaction, animation, mobile and desktop QA, and visual storytelling polish."
+agent: "agent"
 ---
 
 # /visual-storytelling
@@ -27,10 +27,11 @@ If PowerPoint slides exist, treat them as source evidence, not a prison. Preserv
 
 ## Visual North Star
 
-Every visual must answer four questions before implementation:
+Every visual must answer five questions before implementation:
 
 - What should the reader understand faster because this exists?
 - What should move, change, reveal, or contrast to make the idea feel alive?
+- Would reader-controlled interaction make a relationship, comparison, sequence, detail, or decision easier to understand? If yes, what information changes? If no, keep the visual direct instead of adding ornamental input.
 - What must remain readable and useful on a phone?
 - What visual detail makes it feel like Thor's blog instead of a generic generated chart?
 
@@ -84,7 +85,7 @@ Before building, produce a compact brief:
 | Teaching point | |
 | Source evidence | |
 | Visual form | |
-| Motion/interaction | |
+| Motion/interaction | Name the teaching state a reader can change, or state why interaction would not improve understanding. |
 | Mobile strategy | |
 | Assets needed | |
 | Validation | |
@@ -110,8 +111,12 @@ The graphic must work on mobile and desktop:
 - Use fluid `clamp()` sizing where it prevents viewport cliffs.
 - Ensure labels do not overlap, clip, or become too small.
 - Support `prefers-reduced-motion` for meaningful animation.
-- Do not rely on hover-only interactions for essential meaning.
-- Preserve keyboard and screen-reader basics when controls are interactive.
+- Use pointer interaction only when it changes meaningful information or viewpoint; decorative hover, tilt, parallax, and cursor-following effects do not count.
+- Do not rely on hover-only interactions for essential meaning. Give tap, click, and keyboard users an equivalent path through clear controls or native interactive elements.
+- Preserve visible focus, accessible names, and programmatic state when controls are interactive.
+- Keep controls usable at touch sizes and avoid gestures that block normal page scrolling. When direct manipulation helps, provide explicit controls as an equivalent path.
+- Treat interaction as progressive enhancement. Render a coherent default or summary state in HTML so the figure remains readable when JavaScript fails.
+- Under reduced motion, keep controls and state changes functional while removing or shortening animated travel.
 
 ### 5. Visual QA
 
@@ -120,14 +125,16 @@ Rendered proof is required before calling the visual done:
 1. Build the site or confirm the existing dev server/build state is appropriate. Before starting the Astro dev server, fetch `http://localhost:4321`; do not spawn a second instance when one is already running.
 2. Render the target article or page.
 3. Screenshot the visual on desktop, mobile, and the `laptop-chrome` viewport when layout is complex.
-4. Inspect the screenshots for an accurate subject, orientation, proportions, labels, real logos/assets, captions, readability, overflow, clipping, placeholder states, section handoffs, hover/focus states for visible controls, and whether the visual teaches the intended point.
-5. If a source slide or image exists, compare the native result to the source and state what was preserved, improved, or intentionally changed.
-6. Read the markdown around the visual without relying on the rendered figure. Confirm the prose explains why the visual exists and what the reader should carry forward without duplicating every detail.
-7. For talk-derived or slide-compatible visuals, read the surrounding markdown as speaker notes and fix abrupt transitions that would sound awkward in delivery.
-8. Check the visual's neighboring transitions in both directions: what line hands into the graphic, what line hands out of it, and whether the next heading arrives naturally.
-9. Reject empty bridge prose. A transition should teach table-stakes context, orient the learner's next action, or name the value of the visual. "Hold onto this" is usually a sign the prose should define the thing directly.
-10. Apply the teleprompter/transcript test: surrounding prose should talk through the slide's core idea enough that a listener still learns if the visual is missing, while the visual carries extra reference detail and spatial structure.
-11. Record what the rendered visual helped the article say, the insight it made easier to see, and whether the visual form should change in the next iteration. Reuse a card grid, flow diagram, or animation pattern only when it best teaches this specific point.
+4. For an interactive visual, use the rendered controls or direct-manipulation surface to produce at least one changed teaching state. Capture the initial state and changed state, verify the equivalent keyboard path, and check the mobile touch path. A hover-only capture or a static default screenshot does not prove the interaction.
+5. Inspect the screenshots for an accurate subject, orientation, proportions, labels, real logos/assets, captions, readability, overflow, clipping, placeholder states, section handoffs, hover/focus states for visible controls, and whether the visual teaches the intended point.
+6. Disable client JavaScript or inspect the server-rendered HTML for an interactive visual. Confirm that the figure still has a coherent reading order, useful labels, and a readable default or summary state.
+7. If a source slide or image exists, compare the native result to the source and state what was preserved, improved, or intentionally changed.
+8. Read the markdown around the visual without relying on the rendered figure. Confirm the prose explains why the visual exists and what the reader should carry forward without duplicating every detail.
+9. For talk-derived or slide-compatible visuals, read the surrounding markdown as speaker notes and fix abrupt transitions that would sound awkward in delivery.
+10. Check the visual's neighboring transitions in both directions: what line hands into the graphic, what line hands out of it, and whether the next heading arrives naturally.
+11. Reject empty bridge prose. A transition should teach table-stakes context, orient the learner's next action, or name the value of the visual. "Hold onto this" is usually a sign the prose should define the thing directly.
+12. Apply the teleprompter/transcript test: surrounding prose should talk through the slide's core idea enough that a listener still learns if the visual is missing, while the visual carries extra reference detail and spatial structure.
+13. Record what the rendered visual helped the article say, the insight it made easier to see, and whether the visual form should change in the next iteration. Reuse a card grid, flow diagram, or animation pattern only when it best teaches this specific point.
 
 ## Output
 

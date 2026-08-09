@@ -2740,6 +2740,15 @@ img {
   margin: 0 0 0.75rem;
 }
 
+.rt-era-bullets {
+  padding-left: 1.15rem;
+  text-align: left;
+}
+
+.rt-era-bullets li + li {
+  margin-top: 0.45rem;
+}
+
 .rt-era-skills {
   display: flex;
   flex-wrap: wrap;

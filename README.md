@@ -1,4 +1,8 @@
-# My personal blog
+<!-- Last modified: 2026-08-09 -->
+
+# Thor Draper Jr.
+
+I write here for technology and security leaders, builders, and people growing their careers. I share practical lessons from security, cloud, AI, and leadership that readers can use in their own work. The site also gives me one place to keep my writing and resume current.
 
 This repo is the Astro version of `thor-draperjr.github.io`. I've gone through a few iterations of Jekyll, but Astro is the first time I've felt like the stack is working for me instead of against me.
 

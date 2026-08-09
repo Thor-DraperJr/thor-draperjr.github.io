@@ -3,7 +3,7 @@ export interface ResumeEra {
     years: string;
     title: string;
     org: string;
-    description: string;
+    bullets: string[];
     skills: string[];
 }
 
@@ -32,8 +32,9 @@ export interface SpeakingEngagement {
 
 export const summary = {
     name: "Thor G. Draper Jr",
-    headline: "Senior Security Solution Engineer at Microsoft protecting cloud environments for U.S. healthcare payors, providers, and life-sciences organizations. I combine relationship-building instincts from a decade in sales and entrepreneurship with deep technical work across identity, threat protection, and data security.",
-    sub: "Every chapter of my career sharpened the same skill: translating complexity into action for the people who need it most. Now I am focused on where healthcare security intersects with AI, building the enablement programs and security architectures that let organizations move faster without increasing risk.",
+    positioning: "Sales and Security Leader | Enterprise Solution Selling | Cloud, AI, and Cybersecurity",
+    headline: "Senior Security Solution Engineer at Microsoft with a decade of sales, business operations, and people leadership experience strengthened by six years of hands-on cloud and cybersecurity work.",
+    sub: "Led a 40-plus-person branch with P&L responsibility, owned and sold a business, sold payroll and technology solutions, and now guides healthcare and life sciences organizations through security decisions in a pre-sales role. Built technical depth deliberately to bring stronger discovery, customer judgment, and architecture credibility to complex commercial conversations.",
     contact: {
         email: "thordraper2@outlook.com",
         linkedin: "https://www.linkedin.com/in/thor-draperjr/",
@@ -59,48 +60,111 @@ export const timeline: ResumeEra[] = [
         years: "2024 - Present",
         title: "Sr. Security Solution Engineer",
         org: "Microsoft Corporation",
-        description: "Own the full security stack for Modern Workplace across U.S. Healthcare payors, providers, and Life Sciences organizations. Architect and deploy Microsoft identity and security solutions, driving adoption of Zero Trust frameworks, AI-powered threat detection, and data loss prevention. Deliver pre-sales technical engagements that accelerate customer security posture and enable partner readiness.",
-        skills: ["Zero Trust", "AI Security", "Security Copilot", "Pre-Sales Architecture", "Healthcare Security"],
+        bullets: [
+            "Provide pre-sales technical guidance for identity, threat protection, data security, and cloud security across U.S. healthcare payors, providers, and life sciences organizations.",
+            "Lead discovery and architecture discussions that translate security requirements, operating risks, and technical constraints into practical solution paths.",
+            "Work across customers, partners, sales teams, and technical specialists to support security evaluations, deployment readiness, and customer adoption.",
+        ],
+        skills: ["Consultative Discovery", "Pre-Sales Solution Architecture", "Healthcare & Life Sciences", "Security Strategy", "Cross-Functional Orchestration"],
     },
     {
         id: "azure",
         years: "2021 - 2024",
-        title: "Azure Network Support Engineer, ARR",
+        title: "Azure Network Support Engineer, Azure Rapid Response",
         org: "Microsoft Corporation",
-        description: "Served on the Rapid Response team covering 18 IaaS technologies, resolving critical-severity incidents and clearing service request backlogs. As ARR Team Lead, drove proactive architecture and security posture reviews across customer Azure estates using Microsoft Sentinel and Log Analytics. Built community impact as ISSA Education Director, organizing mentoring events for students and hosting educational workshops at the Charlotte campus.",
-        skills: ["Azure IaaS", "Microsoft Sentinel", "KQL", "Architecture Review", "Incident Response"],
+        bullets: [
+            "Supported critical incidents and service-request backlogs across 18 Azure IaaS technologies, helping customers restore service and understand complex infrastructure failures.",
+            "Served as a team lead for proactive Azure architecture and security posture reviews, coordinating technical work across teams and guiding customers through findings and next steps.",
+            "Applied Microsoft Sentinel and Log Analytics to infrastructure investigation, security review, and operational decision support.",
+        ],
+        skills: ["Azure IaaS", "Critical Incident Response", "Architecture Reviews", "Security Posture Reviews", "Technical Team Leadership"],
     },
     {
         id: "teaching",
         years: "2020 - 2024",
-        title: "Cyber Security Instructor (Adjunct)",
+        title: "Cybersecurity Instructor, Adjunct",
         org: "Trilogy Education",
-        description: "Trained career-changers in Windows/Linux administration, ethical hacking, and SIEM management through hands-on labs and real-world scenarios. Earned the highest Net-promoter score in the 2020 cohort. Ran concurrently with Microsoft role, sharpening the ability to translate complex security concepts for diverse audiences.",
-        skills: ["Curriculum Design", "Ethical Hacking", "SIEM", "Mentorship"],
+        bullets: [
+            "Taught Windows and Linux administration, ethical hacking, and SIEM operations through hands-on labs and practical scenarios for career-changing professionals.",
+            "Earned the highest Net Promoter Score in the 2020 cohort while turning complex technical subjects into clear, usable instruction.",
+        ],
+        skills: ["Technical Instruction", "Technical-to-Business Translation", "Curriculum Design", "SIEM", "Mentorship"],
     },
     {
-        id: "infrastructure",
-        years: "2020 - 2021",
-        title: "Network Administrator & ISE",
-        org: "Nucentric Solution / Biz Technology Solutions",
-        description: "Earned three promotions at Nucentric by standing up ESXi and Hyper-V environments and building PowerShell automation that cut repetitive admin tasks. At Biz Technology Solutions, led client-facing discovery for on-premises-to-cloud migrations in healthcare and real estate, conducting network audits that identified technology gaps and closed new business.",
-        skills: ["PowerShell", "Virtualization", "Cloud Migration", "Network Architecture"],
+        id: "biz-technology",
+        years: "Nov 2020 - May 2021",
+        title: "Information Systems Engineer",
+        org: "Biz Technology Solutions",
+        bullets: [
+            "Led client discovery for network and cloud migration work across healthcare, real estate, and other industries.",
+            "Conducted network audits that identified technology gaps, established priorities, and secured follow-up customer conversations.",
+            "Supported cloud migrations, technical escalations, and PowerShell-based diagnosis of synchronization and profile issues.",
+        ],
+        skills: ["Client Discovery", "Network Assessment", "Cloud Migration", "Opportunity Development", "PowerShell"],
     },
     {
-        id: "entrepreneur",
-        years: "2018 - 2020",
-        title: "Entrepreneur & Consultant",
-        org: "Stay Fit CLT / Paychex / G-Net Solutions",
-        description: "Founded and operated a fitness facility in Charlotte, managing all aspects of the business from build-out to daily operations. At Paychex, consulted on mid-market payroll and HR solutions. At G-Net Solutions, sold and deployed Aternity (Riverbed) as a value-added reseller across NC/SC/VA, owning the full cycle from prospecting through technical deployment guidance.",
-        skills: ["Business Ownership", "Solution Selling", "Technical Consulting"],
+        id: "nucentric",
+        years: "Jan 2020 - Dec 2020",
+        title: "Network Administrator",
+        org: "Nucentric Solutions",
+        bullets: [
+            "Built and supported ESXi and Hyper-V environments and automated repetitive administration with PowerShell.",
+            "Combined customer support, infrastructure operations, and independent lab work to build practical cloud and virtualization depth.",
+        ],
+        skills: ["Infrastructure Operations", "Virtualization", "PowerShell Automation", "Customer Support", "Technical Troubleshooting"],
     },
     {
-        id: "early-career",
-        years: "2010 - 2018",
-        title: "Branch Manager & Army National Guard",
-        org: "Enterprise Rent-A-Car / Army National Guard",
-        description: "Managed operations and P&L at Enterprise Rent-A-Car's largest non-airport location, building the customer-experience and operational-management instincts that later translated to client-facing technical roles. Served concurrently as an E-4 Infantryman in the Army National Guard, developing leadership under pressure, team coordination, and the discipline that underpins every career chapter since.",
-        skills: ["P&L Ownership", "Operations Management", "Customer Experience", "Leadership", "Discipline", "Teamwork"],
+        id: "stay-fit",
+        years: "2020",
+        title: "Owner and Operator",
+        org: "Stay Fit CLT",
+        bullets: [
+            "Founded and operated a Charlotte fitness business, with responsibility for customer acquisition, daily operations, service delivery, and business performance.",
+            "Managed the business through its sale, gaining direct experience in ownership, risk, customer retention, and operational decision-making.",
+        ],
+        skills: ["Business Ownership", "Sales", "Operations", "Customer Retention", "Business Sale"],
+    },
+    {
+        id: "paychex",
+        years: "2019 - 2020",
+        title: "Mid-Market Consultant",
+        org: "Paychex",
+        bullets: [
+            "Sold payroll and human resources solutions to mid-market organizations through customer discovery and needs-based consultation.",
+        ],
+        skills: ["B2B Solution Selling", "Mid-Market Customers", "Consultative Discovery", "Payroll & HR Solutions"],
+    },
+    {
+        id: "g-net",
+        years: "Jul 2019 - Jan 2020",
+        title: "Technical Account Manager",
+        org: "G-Net Solutions",
+        bullets: [
+            "Prospected for and developed technology opportunities across North Carolina, South Carolina, and Virginia as a value-added reseller.",
+            "Managed the sales path from initial outreach and solution discussion through technical deployment and integration guidance.",
+        ],
+        skills: ["Full-Cycle Solution Selling", "Prospecting", "Territory Development", "Technical Consulting", "Deployment Guidance"],
+    },
+    {
+        id: "enterprise",
+        years: "2013 - 2019",
+        title: "Branch Manager",
+        org: "Enterprise Rent-A-Car",
+        bullets: [
+            "Led more than 40 employees at the company's largest non-airport location, with responsibility for team development, customer experience, daily operations, and P&L performance.",
+            "Balanced customer service, employee growth, operating discipline, and profitability in a high-volume business.",
+        ],
+        skills: ["P&L Management", "People Leadership", "Customer Experience", "Business Operations", "Performance Management"],
+    },
+    {
+        id: "military",
+        years: "2010 - 2016",
+        title: "Infantryman, E-4",
+        org: "Army National Guard",
+        bullets: [
+            "Served six years as an infantryman, developing discipline, team coordination, accountability, and calm decision-making under pressure.",
+        ],
+        skills: ["Team Leadership", "Operational Discipline", "Accountability", "Coordination", "Service"],
     },
 ];
 
@@ -133,23 +197,27 @@ export const speakingEngagements: SpeakingEngagement[] = [
 
 export const competencies: Competency[] = [
     {
-        label: "Security Strategy & Architecture",
-        skills: ["Microsoft Security Portfolio", "Zero Trust & Identity Security", "Cloud Security Posture Management", "Threat Detection & SOC Modernization", "Security Risk Assessment & Remediation"],
+        label: "Solution Selling & Customer Outcomes",
+        skills: ["Consultative Discovery", "Full-Cycle Solution Selling", "Pre-Sales Solution Architecture", "Opportunity Development", "Customer Outcome Alignment"],
     },
     {
-        label: "AI Security & Innovation",
-        skills: ["AI & Agentic Security Frameworks", "Microsoft Security Copilot", "AI Red Team Evaluation", "Generative AI Security Posture", "Responsible AI Implementation"],
+        label: "Leadership & Business Operations",
+        skills: ["People Leadership", "P&L Management", "Business Ownership", "Operational Decision-Making", "Team Development"],
     },
     {
-        label: "Solution Selling & Customer Impact",
-        skills: ["Pre-Sales Security Architecture", "Enterprise Security Assessments", "Cost Displacement & Business Cases", "Healthcare & Life Sciences Expertise", "Executive Technical Briefings"],
+        label: "Stakeholder Orchestration",
+        skills: ["Cross-Functional Coordination", "Customer & Partner Engagement", "Technical-to-Business Translation", "Deployment Readiness", "Workshop Facilitation"],
     },
     {
-        label: "Enablement & Force Multiplication",
-        skills: ["Enablement Program Design", "Hands-On Lab & CTF Development", "Technical Content & Thought Leadership", "Scalable Assets (Playbooks, Workshops)", "Cross-Org Partnership & Community"],
+        label: "Security, Cloud & AI Transformation",
+        skills: ["Microsoft Security Portfolio", "Zero Trust & Identity Security", "Cloud Security Posture", "Threat Detection", "AI Security"],
+    },
+    {
+        label: "Industry & Communication",
+        skills: ["Healthcare & Life Sciences", "Technical Instruction", "Public Speaking", "Mentorship", "Technical Content"],
     },
     {
         label: "Technical Depth",
-        skills: ["Azure Infrastructure & Cloud Networking", "PowerShell & Python Automation", "SIEM Engineering & KQL", "Identity & Access Architecture (Entra ID)", "Windows & Linux Security Operations"],
+        skills: ["Azure IaaS & Networking", "Microsoft Sentinel & KQL", "PowerShell", "Virtualization", "Windows & Linux Security"],
     },
 ];

@@ -20,6 +20,7 @@ import PresentationWorkflowMap from '../../components/PresentationWorkflowMap.as
 import AgenticSocialLoop from '../../components/AgenticSocialLoop.astro';
 import GatewayProcessMap from '../../components/GatewayProcessMap.astro';
 import AgentHarnessLayers from '../../components/AgentHarnessLayers.astro';
+import CareerSignalMap from '../../components/CareerSignalMap.astro';
 import { getPosts } from '../../lib/content';
 
 export function getStaticPaths() {
@@ -58,6 +59,7 @@ const presentationWorkflowMarker = '[[PRESENTATION_WORKFLOW]]';
 const socialLoopMarker = '[[SOCIAL_LOOP]]';
 const gatewayProcessMapMarker = '[[GATEWAY_PROCESS_MAP]]';
 const agentHarnessLayersMarker = '[[AGENT_HARNESS_LAYERS]]';
+const careerSignalMapMarker = '[[CAREER_SIGNAL_MAP]]';
 
 let processedHtml = post.html;
 processedHtml = processedHtml.replace(`<p>${runtimeChartMarker}</p>`, runtimeChartMarker);
@@ -80,6 +82,7 @@ processedHtml = processedHtml.replace(`<p>${presentationWorkflowMarker}</p>`, pr
 processedHtml = processedHtml.replace(`<p>${socialLoopMarker}</p>`, socialLoopMarker);
 processedHtml = processedHtml.replace(`<p>${gatewayProcessMapMarker}</p>`, gatewayProcessMapMarker);
 processedHtml = processedHtml.replace(`<p>${agentHarnessLayersMarker}</p>`, agentHarnessLayersMarker);
+processedHtml = processedHtml.replace(`<p>${careerSignalMapMarker}</p>`, careerSignalMapMarker);
 
 const hasRuntimeChart = processedHtml.includes(runtimeChartMarker);
 const hasCareerDevPlan = processedHtml.includes(careerDevPlanMarker);
@@ -93,6 +96,7 @@ const hasPresentationWorkflow = processedHtml.includes(presentationWorkflowMarke
 const hasSocialLoop = processedHtml.includes(socialLoopMarker);
 const hasGatewayProcessMap = processedHtml.includes(gatewayProcessMapMarker);
 const hasAgentHarnessLayers = processedHtml.includes(agentHarnessLayersMarker);
+const hasCareerSignalMap = processedHtml.includes(careerSignalMapMarker);
 
 const runtimeParts = hasRuntimeChart ? processedHtml.split(runtimeChartMarker) : [];
 const careerParts = hasCareerDevPlan ? processedHtml.split(careerDevPlanMarker) : [];
@@ -127,6 +131,7 @@ const presentationWorkflowParts = hasPresentationWorkflow ? processedHtml.split(
 const socialLoopParts = hasSocialLoop ? processedHtml.split(socialLoopMarker) : [];
 const gatewayProcessMapParts = hasGatewayProcessMap ? processedHtml.split(gatewayProcessMapMarker) : [];
 const agentHarnessLayersParts = hasAgentHarnessLayers ? processedHtml.split(agentHarnessLayersMarker) : [];
+const careerSignalMapParts = hasCareerSignalMap ? processedHtml.split(careerSignalMapMarker) : [];
 
 const hasGhWorkshop = processedHtml.includes(ghWorkshopMarker);
 const ghWorkshopParts = hasGhWorkshop ? processedHtml.split(ghWorkshopMarker) : [];
@@ -149,7 +154,7 @@ if (hasGhWorkshop) {
 }
 ---
 
-<Layout pageTitle={post.title} pageDescription={post.excerpt} currentPath={post.permalink}>
+<Layout pageTitle={post.title} pageDescription={post.excerpt} currentPath={post.permalink} pageType="article">
   {hasSocialLoop ? (
     <>
       <article class="shell-container">
@@ -653,6 +658,12 @@ if (hasGhWorkshop) {
             <Fragment set:html={agentHarnessLayersParts[0]} />
             <AgentHarnessLayers />
             <Fragment set:html={agentHarnessLayersParts.slice(1).join(agentHarnessLayersMarker)} />
+          </>
+        ) : hasCareerSignalMap ? (
+          <>
+            <Fragment set:html={careerSignalMapParts[0]} />
+            <CareerSignalMap />
+            <Fragment set:html={careerSignalMapParts.slice(1).join(careerSignalMapMarker)} />
           </>
         ) : (
           <Fragment set:html={processedHtml} />

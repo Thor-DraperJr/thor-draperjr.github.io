@@ -9,21 +9,7 @@ const totalCerts = certifications.reduce((s, g) => s + g.count, 0);
   <header class="hero-dark" data-reveal>
     <span class="hero-dark-eyebrow">Resume</span>
     <h1 class="hero-dark-name">{summary.name}</h1>
-    <p class="hero-dark-role" style="margin-bottom: 1.5rem">Senior Security Solution Engineer at Microsoft</p>
-    <div class="rt-hero-stats">
-      <div class="rt-stat">
-        <span class="rt-stat-value">6</span>
-        <span class="rt-stat-label">Career Chapters</span>
-      </div>
-      <div class="rt-stat">
-        <span class="rt-stat-value">{totalCerts}</span>
-        <span class="rt-stat-label">Certifications</span>
-      </div>
-      <div class="rt-stat">
-        <span class="rt-stat-value">5+</span>
-        <span class="rt-stat-label">Years at Microsoft</span>
-      </div>
-    </div>
+    <p class="hero-dark-role" style="margin-bottom: 1.5rem">{summary.positioning}</p>
     <div class="rt-contact">
       <a href={`mailto:${summary.contact.email}`}>{summary.contact.email}</a>
       <a href={summary.contact.linkedin} target="_blank" rel="noopener">LinkedIn</a>
@@ -36,32 +22,27 @@ const totalCerts = certifications.reduce((s, g) => s + g.count, 0);
     <p class="rt-summary rt-summary-sub">{summary.sub}</p>
   </section>
 
-  <!-- Education & Certs -->
-  <section class="rt-credentials" data-reveal>
-    <div class="rt-education">
-      <h2 class="rt-section-title">Education</h2>
-      {education.map(e => (
-        <div class="rt-edu-item">
-          <span class="rt-edu-degree">{e.degree}</span>
-          <span class="rt-edu-school">{e.school} &middot; {e.year}</span>
+  <!-- Expertise Matrix -->
+  <section class="rt-matrix" data-matrix>
+    <div class="rt-matrix-header">
+      <span class="rt-matrix-eyebrow">Core Competencies</span>
+      <div class="rt-matrix-counter">
+        <span class="rt-matrix-count" data-matrix-count>0</span>
+        <span class="rt-matrix-count-label">skills mapped</span>
+      </div>
+    </div>
+    <div class="rt-matrix-grid">
+      {competencies.map((c, i) => (
+        <div class="rt-matrix-card" data-matrix-card style={`--card-index: ${i}`}>
+          <div class="rt-matrix-card-bar" aria-hidden="true"></div>
+          <h4 class="rt-matrix-card-label">{c.label}</h4>
+          <div class="rt-matrix-card-skills">
+            {c.skills.map((s, j) => (
+              <span class="rt-matrix-skill" style={`--skill-index: ${j}`}>{s}</span>
+            ))}
+          </div>
         </div>
       ))}
-    </div>
-    <div class="rt-certs">
-      <h2 class="rt-section-title">Certifications <span class="rt-cert-total">{totalCerts}</span></h2>
-      <div class="rt-cert-grid">
-        {certifications.map(g => (
-          <details class="rt-cert-group">
-            <summary>
-              {g.vendor}
-              <span class="cert-count">{g.count}</span>
-            </summary>
-            <ul>
-              {g.certs.map(c => <li>{c}</li>)}
-            </ul>
-          </details>
-        ))}
-      </div>
     </div>
   </section>
 
@@ -85,13 +66,45 @@ const totalCerts = certifications.reduce((s, g) => s + g.count, 0);
             <span class="rt-era-years">{era.years}</span>
             <h3 class="rt-era-title">{era.title}</h3>
             <span class="rt-era-org">{era.org}</span>
-            <p class="rt-era-desc">{era.description}</p>
+            <ul class="rt-era-desc rt-era-bullets">
+              {era.bullets.map(bullet => <li>{bullet}</li>)}
+            </ul>
             <div class="rt-era-skills">
               {era.skills.map(s => <span class="rt-skill-pill">{s}</span>)}
             </div>
           </div>
         </article>
       ))}
+    </div>
+  </section>
+
+  <!-- Education & Certs -->
+  <section class="rt-credentials" data-reveal>
+    <div class="rt-education">
+      <h2 class="rt-section-title">Education</h2>
+      {education.map(e => (
+        <div class="rt-edu-item">
+          <span class="rt-edu-degree">{e.degree}</span>
+          <span class="rt-edu-school">{e.school} &middot; {e.year}</span>
+        </div>
+      ))}
+    </div>
+    <div class="rt-certs">
+      <h2 class="rt-section-title">Technical Certifications <span class="rt-cert-total">{totalCerts}</span></h2>
+      <p class="rt-cert-summary">{totalCerts} certifications across GIAC, CompTIA, Microsoft, VMware, and Cisco.</p>
+      <div class="rt-cert-grid">
+        {certifications.map(g => (
+          <details class="rt-cert-group">
+            <summary>
+              {g.vendor}
+              <span class="cert-count">{g.count}</span>
+            </summary>
+            <ul>
+              {g.certs.map(c => <li>{c}</li>)}
+            </ul>
+          </details>
+        ))}
+      </div>
     </div>
   </section>
 
@@ -124,30 +137,6 @@ const totalCerts = certifications.reduce((s, g) => s + g.count, 0);
       ))}
     </section>
   )}
-
-  <!-- Expertise Matrix -->
-  <section class="rt-matrix" data-matrix>
-    <div class="rt-matrix-header">
-      <span class="rt-matrix-eyebrow">Core Competencies</span>
-      <div class="rt-matrix-counter">
-        <span class="rt-matrix-count" data-matrix-count>0</span>
-        <span class="rt-matrix-count-label">skills mapped</span>
-      </div>
-    </div>
-    <div class="rt-matrix-grid">
-      {competencies.map((c, i) => (
-        <div class="rt-matrix-card" data-matrix-card style={`--card-index: ${i}`}>
-          <div class="rt-matrix-card-bar" aria-hidden="true"></div>
-          <h4 class="rt-matrix-card-label">{c.label}</h4>
-          <div class="rt-matrix-card-skills">
-            {c.skills.map((s, j) => (
-              <span class="rt-matrix-skill" style={`--skill-index: ${j}`}>{s}</span>
-            ))}
-          </div>
-        </div>
-      ))}
-    </div>
-  </section>
 
   <!-- Footer -->
   <div class="rt-footer" data-reveal>

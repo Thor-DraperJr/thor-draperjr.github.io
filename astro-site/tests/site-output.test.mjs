@@ -48,6 +48,17 @@ test('article emits article-specific social metadata', async () => {
     assert.ok(html.includes(`<meta name="twitter:description" content="${articleDescription}">`));
 });
 
+test('resume leads with hybrid positioning and distinct commercial experience', async () => {
+    const html = await readFile(path.join(distPath, 'resume/index.html'), 'utf8');
+
+    assert.ok(html.includes('Sales and Security Leader | Enterprise Solution Selling | Cloud, AI, and Cybersecurity'));
+    assert.ok(html.includes('40-plus-person branch with P&amp;L responsibility'));
+    assert.match(html, /<span class="rt-era-org">Enterprise Rent-A-Car<\/span>/);
+    assert.match(html, /<span class="rt-era-org">G-Net Solutions<\/span>/);
+    assert.match(html, /<span class="rt-era-org">Paychex<\/span>/);
+    assert.match(html, /<span class="rt-era-org">Stay Fit CLT<\/span>/);
+});
+
 test('RSS output identifies the public site', async () => {
     const xml = await readFile(path.join(distPath, 'rss.xml'), 'utf8');
 

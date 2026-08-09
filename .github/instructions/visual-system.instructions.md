@@ -1,11 +1,6 @@
 ---
 description: "Use when designing, revising, or reviewing the blog's visual system, Astro components, CSS, article graphics, presentation surfaces, favicon, palette, typography, or layout. Anchors future visual agents on the Walking Deck section 05 aesthetic."
-applyTo:
-  - "astro-site/src/**/*.astro"
-  - "astro-site/src/**/*.css"
-  - "astro-site/src/**/*.ts"
-  - "astro-site/src/content/**/*.md"
-  - "astro-site/public/**/*.svg"
+applyTo: "astro-site/src/**/*.astro,astro-site/src/**/*.css,astro-site/src/**/*.ts,astro-site/src/content/**/*.md,astro-site/public/**/*.svg"
 ---
 
 # Visual System
@@ -67,6 +62,17 @@ Use the Walking Deck, especially `/career/walking-deck/present` section 05 (`sig
 - Verify motion directly. Use two time-separated captures, browser animation inspection, or computed animation names to confirm that motion is present, legible, and not corrupting text. Then confirm reduced motion removes the movement without hiding content.
 - Use scroll-linked motion only as progressive emphasis on normal scrolling, such as rails filling, cards revealing, or section atmosphere shifting. Avoid scrolljacking, direction changes, or interactions that make users work to read text.
 - Every new motion pattern must respect reduced motion and leave critical navigation/content readable when JavaScript fails.
+
+## Interaction Language
+
+- Decide whether interaction improves the teaching point before implementation. Use it when readers learn by comparing states, tracing a relationship, inspecting detail, changing a filter, navigating a process, or testing a decision. Keep a visual static when one clear frame teaches faster.
+- Make interaction change meaningful information or viewpoint. A hover glow, tilt, parallax response, or cursor-following effect alone does not satisfy this rule.
+- Treat pointer input as one path, not the contract. Any teaching state available by mouse or pointer must also work with touch and keyboard through clear controls or native interactive elements. Preserve visible focus, useful accessible names, and programmatic state such as `aria-pressed`, `aria-selected`, or an announced status when appropriate.
+- Do not hide essential meaning behind hover. Hover can preview or reinforce a state, but tap, click, and keyboard input must expose the same useful content.
+- Build interaction as progressive enhancement. The initial HTML must contain a coherent reading order, labels, and the useful default or summary state before client JavaScript runs. A script failure must not turn the figure into an empty stage.
+- Reduced motion must remove or shorten animated travel without removing the interaction or its result. State changes can become immediate while controls and content remain available.
+- Inspect `ThreeNewYears.astro` for direct manipulation and keyboard navigation, and `CharlotteArtsMap.astro` for explicit controls and useful no-JavaScript content. Treat them as evidence patterns, not complete templates; verify each new visual against the full contract above.
+- Prove interaction in the rendered page. Capture the initial state and at least one changed teaching state produced by a real pointer action, then verify the equivalent keyboard path and the mobile touch-sized control path. A static screenshot of the default frame is not sufficient evidence for an interactive visual.
 
 ## Favicon Direction
 
