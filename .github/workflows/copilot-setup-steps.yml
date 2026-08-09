@@ -20,6 +20,6 @@ jobs:
         working-directory: astro-site
         run: npm ci
 
-      - name: Build site
+      - name: Check site
         working-directory: astro-site
-        run: npm run build
+        run: npm run check
