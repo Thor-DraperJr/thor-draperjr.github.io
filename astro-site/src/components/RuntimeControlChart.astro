@@ -1,62 +1,509 @@
-<figure class="post-visual post-visual-chart">
-  <div class="chart-shell">
-    <svg class="runtime-chart" viewBox="0 0 980 330" role="img" aria-labelledby="runtime-chart-title runtime-chart-desc">
-      <title id="runtime-chart-title">Enterprise AI control ladder</title>
-      <desc id="runtime-chart-desc">A ladder diagram showing Level 0 AI-enhanced app, a split into two Level 1 assistive agent shapes, then Level 2 autonomous, and Level 3 agent users.</desc>
-      <style>
-        .level-kicker { font: 600 10px 'SFMono-Regular', Consolas, monospace; letter-spacing: 0.08em; text-transform: uppercase; fill: rgba(232,242,251,0.82); }
-        .level-title { font: 700 16px Manrope, Arial, sans-serif; fill: #f8fbff; }
-        .connector { stroke: rgba(193, 214, 236, 0.72); stroke-width: 3.5; stroke-linecap: round; stroke-linejoin: round; fill: none; }
-      </style>
+---
+interface ControlLevel {
+  level: string;
+  variants: string[];
+  tone: 'blue' | 'teal' | 'rust' | 'gold';
+}
 
-      <g opacity="0">
-        <animate attributeName="opacity" from="0" to="1" dur="0.35s" begin="0s" fill="freeze" />
-        <rect x="36" y="132" width="184" height="64" rx="18" fill="#1a81d6" stroke="#d7eaff" stroke-opacity="0.6" />
-        <text x="128" y="158" text-anchor="middle" class="level-kicker">Level 0</text>
-        <text x="128" y="178" text-anchor="middle" class="level-title">AI-enhanced app</text>
-      </g>
+const controlLevels: ControlLevel[] = [
+  { level: 'Level 0', variants: ['AI-enhanced app'], tone: 'blue' },
+  { level: 'Level 1', variants: ['Narrow assistive', 'Rich assistive'], tone: 'teal' },
+  { level: 'Level 2', variants: ['Autonomous'], tone: 'rust' },
+  { level: 'Level 3', variants: ['Agent users'], tone: 'gold' },
+];
+---
 
-      <defs>
-        <marker id="ladder-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
-          <path d="M 0 0 L 10 5 L 0 10 z" fill="rgba(193, 214, 236, 0.82)" />
-        </marker>
-      </defs>
+<figure class="runtime-control" data-runtime-control aria-labelledby="runtime-chart-title" aria-describedby="runtime-chart-desc">
+  <div class="runtime-stage">
+    <div class="stage-grid" aria-hidden="true"></div>
 
-      <g opacity="0.84">
-        <path class="connector" marker-end="url(#ladder-arrow)" d="M220 164 C255 164 258 112 292 112" />
-        <path class="connector" marker-end="url(#ladder-arrow)" d="M220 164 C255 164 258 216 292 216" />
-        <path class="connector" marker-end="url(#ladder-arrow)" d="M502 112 C548 112 560 164 606 164" />
-        <path class="connector" marker-end="url(#ladder-arrow)" d="M502 216 C548 216 560 164 606 164" />
-        <path class="connector" marker-end="url(#ladder-arrow)" d="M790 164 C824 164 834 164 848 164" />
-      </g>
+    <header class="stage-header">
+      <span class="stage-index">00-03</span>
+      <div>
+        <p class="stage-kicker">Enterprise AI control ladder</p>
+        <h2 id="runtime-chart-title">Authority changes shape as AI moves into the runtime.</h2>
+      </div>
+      <span class="stage-status" aria-hidden="true"><i></i><span data-runtime-status>Control surface</span></span>
+    </header>
 
-      <g opacity="0">
-        <animate attributeName="opacity" from="0" to="1" dur="0.35s" begin="0.12s" fill="freeze" />
-        <rect x="292" y="80" width="210" height="64" rx="18" fill="#1a81d6" stroke="#d7eaff" stroke-opacity="0.6" />
-        <text x="397" y="106" text-anchor="middle" class="level-kicker">Level 1</text>
-        <text x="397" y="126" text-anchor="middle" class="level-title">Narrow assistive</text>
-      </g>
+    <p id="runtime-chart-desc" class="sr-only">
+      A ladder diagram showing Level 0 AI-enhanced app, a split into two Level 1 assistive agent shapes, then Level 2 autonomous, and Level 3 agent users.
+    </p>
 
-      <g opacity="0">
-        <animate attributeName="opacity" from="0" to="1" dur="0.35s" begin="0.24s" fill="freeze" />
-        <rect x="292" y="184" width="210" height="64" rx="18" fill="#1a81d6" stroke="#d7eaff" stroke-opacity="0.6" />
-        <text x="397" y="210" text-anchor="middle" class="level-kicker">Level 1</text>
-        <text x="397" y="230" text-anchor="middle" class="level-title">Rich assistive</text>
-      </g>
+    <ol class="control-ladder" data-runtime-ladder>
+      {controlLevels.map((item, index) => (
+        <li class={`control-stage tone-${item.tone}`} data-runtime-stage={index}>
+          <div class="level-marker" aria-hidden="true">
+            <span>{String(index).padStart(2, '0')}</span>
+          </div>
+          <div class:list={['stage-branches', { 'has-split': item.variants.length > 1 }]}>
+            {item.variants.map((variant) => (
+              <article class="control-node">
+                <span class="node-kicker">{item.level}</span>
+                <strong>{variant}</strong>
+              </article>
+            ))}
+          </div>
+        </li>
+      ))}
+    </ol>
 
-      <g opacity="0">
-        <animate attributeName="opacity" from="0" to="1" dur="0.35s" begin="0.36s" fill="freeze" />
-        <rect x="606" y="132" width="184" height="64" rx="18" fill="#1a81d6" stroke="#d7eaff" stroke-opacity="0.6" />
-        <text x="698" y="158" text-anchor="middle" class="level-kicker">Level 2</text>
-        <text x="698" y="178" text-anchor="middle" class="level-title">Autonomous</text>
-      </g>
-
-      <g opacity="0">
-        <animate attributeName="opacity" from="0" to="1" dur="0.35s" begin="0.48s" fill="freeze" />
-        <rect x="848" y="132" width="116" height="64" rx="18" fill="#1a81d6" stroke="#d7eaff" stroke-opacity="0.6" />
-        <text x="906" y="158" text-anchor="middle" class="level-kicker">Level 3</text>
-        <text x="906" y="178" text-anchor="middle" class="level-title">Agent users</text>
-      </g>
-    </svg>
+    <div class="stage-axis" aria-hidden="true">
+      <span>Application</span>
+      <span>Runtime authority</span>
+      <span>Agent estate</span>
+    </div>
   </div>
 </figure>
+
+<script is:inline>
+  const initializeRuntimeControls = () => {
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+    document.querySelectorAll('[data-runtime-control]').forEach((figure) => {
+      if (reducedMotion.matches || figure.dataset.runtimeInitialized === 'true') return;
+      figure.dataset.runtimeInitialized = 'true';
+
+      const stages = Array.from(figure.querySelectorAll('[data-runtime-stage]'));
+      const status = figure.querySelector('[data-runtime-status]');
+
+      const activate = (activeIndex) => {
+        stages.forEach((stage, index) => {
+          stage.classList.toggle('is-passed', index < activeIndex);
+          stage.classList.toggle('is-active', index === activeIndex);
+        });
+        figure.style.setProperty('--rail-progress', String(activeIndex / (stages.length - 1)));
+        if (status) status.textContent = `Level ${activeIndex} active`;
+      };
+
+      let started = false;
+      const play = () => {
+        if (started) return;
+        started = true;
+        figure.classList.add('is-sequencing');
+        figure.style.setProperty('--rail-progress', '0');
+        stages.forEach((stage) => stage.classList.remove('is-passed', 'is-active'));
+        activate(0);
+        window.requestAnimationFrame(() => figure.classList.add('is-playing'));
+
+        stages.slice(1).forEach((_, index) => {
+          window.setTimeout(() => activate(index + 1), (index + 1) * 1550);
+        });
+      };
+
+      let observer;
+
+      const playWhenVisible = () => {
+        const rect = figure.getBoundingClientRect();
+        if (rect.top <= window.innerHeight * 0.76 && rect.bottom >= window.innerHeight * 0.24) {
+          play();
+          observer?.disconnect();
+          window.removeEventListener('scroll', playWhenVisible);
+        }
+      };
+
+      if ('IntersectionObserver' in window) {
+        observer = new IntersectionObserver((entries) => {
+          if (entries.some((entry) => entry.isIntersecting)) playWhenVisible();
+        }, { threshold: 0.25 });
+        observer.observe(figure);
+      }
+
+      window.addEventListener('scroll', playWhenVisible, { passive: true });
+      window.requestAnimationFrame(playWhenVisible);
+    });
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeRuntimeControls, { once: true });
+  } else {
+    initializeRuntimeControls();
+  }
+</script>
+
+<style>
+  .runtime-control {
+    container-type: inline-size;
+    margin: 2rem 0 2.2rem;
+  }
+
+  .runtime-stage {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    padding: clamp(1.2rem, 2.6cqw, 2rem);
+    border: 1px solid rgba(241, 183, 95, 0.28);
+    border-radius: 1.5rem;
+    background:
+      radial-gradient(85% 110% at 10% 0%, rgba(241, 183, 95, 0.2), transparent 52%),
+      radial-gradient(80% 100% at 92% 110%, rgba(28, 79, 115, 0.36), transparent 58%),
+      linear-gradient(145deg, #060e1c 0%, #0e1d31 54%, #0c1d2e 100%);
+    box-shadow: 0 28px 72px rgba(12, 24, 38, 0.2);
+    color: #fbfaf6;
+  }
+
+  .stage-grid {
+    position: absolute;
+    z-index: -2;
+    inset: 0;
+    opacity: 0.2;
+    background-image:
+      linear-gradient(rgba(165, 184, 238, 0.16) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(165, 184, 238, 0.16) 1px, transparent 1px);
+    background-size: 2.5rem 2.5rem;
+    mask-image: linear-gradient(90deg, black, transparent 82%);
+  }
+
+  .stage-header {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: clamp(0.75rem, 2cqw, 1.5rem);
+    align-items: start;
+    padding-bottom: clamp(1rem, 2.2cqw, 1.6rem);
+    border-bottom: 1px solid rgba(165, 184, 238, 0.18);
+  }
+
+  .stage-index,
+  .stage-status,
+  .stage-kicker,
+  .node-kicker,
+  .stage-axis {
+    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .stage-index {
+    display: grid;
+    place-items: center;
+    width: 3.1rem;
+    aspect-ratio: 1;
+    border: 1px solid rgba(241, 183, 95, 0.5);
+    color: #f1b75f;
+    font-size: 0.68rem;
+    font-weight: 800;
+  }
+
+  .stage-kicker {
+    margin: 0 0 0.35rem;
+    color: #f1b75f;
+    font-size: clamp(0.62rem, 1.2cqw, 0.72rem);
+    font-weight: 800;
+  }
+
+  .stage-header h2 {
+    max-width: 31ch;
+    margin: 0;
+    color: #fbfaf6;
+    font-family: Lora, Georgia, serif;
+    font-size: clamp(1.15rem, 1rem + 1.35cqw, 1.8rem);
+    line-height: 1.12;
+  }
+
+  .stage-status {
+    display: inline-flex;
+    gap: 0.45rem;
+    align-items: center;
+    padding-top: 0.25rem;
+    color: rgba(251, 250, 246, 0.62);
+    font-size: 0.62rem;
+    white-space: nowrap;
+  }
+
+  .stage-status i {
+    width: 0.5rem;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: #f1b75f;
+    box-shadow: 0 0 14px rgba(241, 183, 95, 0.72);
+  }
+
+  .control-ladder {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: clamp(0.7rem, 2cqw, 1.4rem);
+    margin: 0;
+    padding: clamp(2rem, 4.5cqw, 3.4rem) 0 clamp(1.5rem, 3cqw, 2.2rem);
+    list-style: none;
+  }
+
+  .control-ladder::before,
+  .control-ladder::after {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    top: 50%;
+    right: 4%;
+    left: 4%;
+    height: 2px;
+    transform: translateY(-50%);
+  }
+
+  .control-ladder::before {
+    background: rgba(255, 255, 255, 0.16);
+  }
+
+  .control-ladder::after {
+    background: linear-gradient(90deg, #6aa9d8, #5fb8a6 38%, #d97a5a 72%, #f1b75f);
+    box-shadow: 0 0 18px rgba(241, 183, 95, 0.46);
+    transform: translateY(-50%) scaleX(1);
+    transform-origin: left;
+  }
+
+  .control-stage {
+    position: relative;
+    display: grid;
+    grid-template-rows: auto 1fr;
+    gap: 0.65rem;
+    align-items: center;
+    min-width: 0;
+    transition: opacity 480ms ease, filter 480ms ease, transform 620ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .level-marker {
+    display: flex;
+    align-items: center;
+    color: rgba(251, 250, 246, 0.42);
+    font: 700 0.6rem 'SFMono-Regular', Consolas, monospace;
+  }
+
+  .level-marker::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    margin-left: 0.45rem;
+    background: currentColor;
+  }
+
+  .stage-branches {
+    position: relative;
+    display: grid;
+    gap: 0.7rem;
+    align-content: center;
+    height: 100%;
+  }
+
+  .stage-branches.has-split::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    top: 20%;
+    bottom: 20%;
+    left: 0;
+    width: 2px;
+    background: rgba(95, 184, 166, 0.65);
+    box-shadow: 0 0 8px rgba(95, 184, 166, 0.32);
+  }
+
+  .stage-branches.has-split {
+    padding-left: 0.55rem;
+  }
+
+  .control-node {
+    position: relative;
+    min-width: 0;
+    padding: clamp(0.75rem, 1.7cqw, 1.05rem);
+    border: 1px solid color-mix(in srgb, var(--node-color) 56%, transparent);
+    border-radius: 0.7rem;
+    background:
+      linear-gradient(135deg, color-mix(in srgb, var(--node-color) 18%, transparent), transparent 72%),
+      rgba(8, 28, 42, 0.92);
+    box-shadow:
+      inset 3px 0 0 var(--node-color),
+      0 16px 28px rgba(0, 0, 0, 0.2);
+    transition: border-color 420ms ease, background 420ms ease, box-shadow 420ms ease, transform 420ms ease;
+  }
+
+  .stage-branches.has-split .control-node::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 100%;
+    width: 0.55rem;
+    height: 1px;
+    background: rgba(95, 184, 166, 0.7);
+  }
+
+  .control-node::after {
+    content: '';
+    position: absolute;
+    top: 0.55rem;
+    right: 0.55rem;
+    width: 0.35rem;
+    aspect-ratio: 1;
+    background: var(--node-color);
+    box-shadow: 0 0 12px var(--node-color);
+    transform: rotate(45deg);
+  }
+
+  .tone-blue { --node-color: #6aa9d8; }
+  .tone-teal { --node-color: #5fb8a6; }
+  .tone-rust { --node-color: #d97a5a; }
+  .tone-gold { --node-color: #f1b75f; }
+
+  .node-kicker {
+    display: block;
+    margin-bottom: 0.35rem;
+    color: var(--node-color);
+    font-size: clamp(0.58rem, 1.05cqw, 0.68rem);
+    font-weight: 800;
+  }
+
+  .control-node strong {
+    display: block;
+    color: #fbfaf6;
+    font-size: clamp(0.94rem, 1.45cqw, 1.08rem);
+    line-height: 1.18;
+  }
+
+  .stage-axis {
+    display: flex;
+    justify-content: space-between;
+    color: rgba(251, 250, 246, 0.58);
+    font-size: 0.62rem;
+  }
+
+  .runtime-control.is-sequencing {
+    --rail-progress: 0;
+  }
+
+  .runtime-control.is-sequencing .control-ladder::after {
+    transform: translateY(-50%) scaleX(var(--rail-progress));
+  }
+
+  .runtime-control.is-sequencing.is-playing .control-ladder::after {
+    transition: transform 760ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .runtime-control.is-sequencing .control-stage {
+    opacity: 0.34;
+    filter: saturate(0.5) brightness(0.72);
+  }
+
+  .runtime-control.is-sequencing .control-stage.is-passed {
+    opacity: 0.78;
+    filter: saturate(0.85) brightness(0.9);
+  }
+
+  .runtime-control.is-sequencing .control-stage.is-active {
+    z-index: 2;
+    opacity: 1;
+    filter: none;
+    transform: translateY(-0.38rem);
+  }
+
+  .runtime-control.is-sequencing .control-stage.is-active .control-node {
+    border-color: rgba(241, 183, 95, 0.92);
+    background:
+      linear-gradient(120deg, rgba(241, 183, 95, 0.2), rgba(95, 184, 166, 0.12) 58%, transparent),
+      rgba(8, 18, 30, 0.96);
+    box-shadow:
+      inset 3px 0 0 #f1b75f,
+      0 0 0 1px rgba(241, 183, 95, 0.2),
+      0 18px 34px rgba(0, 0, 0, 0.32),
+      0 0 24px rgba(241, 183, 95, 0.2);
+    transform: scale(1.035);
+  }
+
+  .runtime-control.is-sequencing .control-stage.is-active .level-marker {
+    color: #f1b75f;
+    text-shadow: 0 0 12px rgba(241, 183, 95, 0.7);
+  }
+
+  .runtime-control.is-sequencing .control-stage.is-active .stage-branches.has-split::before,
+  .runtime-control.is-sequencing .control-stage.is-active .stage-branches.has-split .control-node::before {
+    background: #f1b75f;
+    box-shadow: 0 0 10px rgba(241, 183, 95, 0.72);
+  }
+
+  .sr-only {
+    position: absolute;
+    overflow: hidden;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    border: 0;
+    margin: -1px;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .stage-status i {
+      animation: status-pulse 2.4s ease-in-out infinite;
+    }
+  }
+
+  @keyframes status-pulse {
+    50% { opacity: 0.48; box-shadow: 0 0 5px rgba(226, 249, 217, 0.4); }
+  }
+
+  @container (max-width: 680px) {
+    .stage-header {
+      grid-template-columns: auto minmax(0, 1fr);
+    }
+
+    .stage-status {
+      display: none;
+    }
+
+    .control-ladder {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      padding: 1.5rem 0;
+    }
+
+    .control-ladder::before,
+    .control-ladder::after {
+      top: 1.5rem;
+      right: auto;
+      bottom: 1.5rem;
+      left: 1.05rem;
+      width: 2px;
+      height: auto;
+      transform: none;
+    }
+
+    .control-ladder::after {
+      background: linear-gradient(180deg, #6aa9d8, #5fb8a6 38%, #d97a5a 72%, #f1b75f);
+      transform: scaleY(1);
+      transform-origin: top;
+    }
+
+    .runtime-control.is-sequencing .control-ladder::after {
+      transform: scaleY(var(--rail-progress));
+    }
+
+    .control-stage {
+      grid-template-columns: 2.1rem minmax(0, 1fr);
+      grid-template-rows: auto;
+      gap: 0.8rem;
+    }
+
+    .level-marker {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      place-items: center;
+      width: 2.1rem;
+      aspect-ratio: 1;
+      border: 1px solid var(--node-color);
+      background: #0a2130;
+      color: var(--node-color);
+    }
+
+    .level-marker::after {
+      display: none;
+    }
+
+    .stage-branches {
+      grid-column: 2;
+    }
+
+    .stage-axis {
+      display: none;
+    }
+
+  }
+</style>

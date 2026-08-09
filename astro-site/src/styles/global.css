@@ -2058,39 +2058,11 @@ img {
   border-radius: 18px;
 }
 
-.prose .post-visual-chart {
-  padding: 0;
-  border: 0;
-  background: transparent;
-  box-shadow: none;
-}
-
-.prose .chart-shell {
-  overflow: hidden;
-  border-radius: 2rem;
-  background: linear-gradient(180deg, #112537 0%, #0d1824 100%);
-  box-shadow: 0 28px 72px rgba(12, 24, 38, 0.16);
-}
-
-.prose .runtime-chart {
-  display: block;
-  width: 100%;
-  min-width: 0;
-  height: auto;
-}
-
 .prose .post-visual figcaption {
   margin-top: 1rem;
   color: var(--ink-soft);
   font-size: 0.96rem;
   line-height: 1.75;
-}
-
-.prose .post-visual-chart figcaption {
-  margin-top: 0.9rem;
-  color: var(--ink-soft);
-  font-size: 0.94rem;
-  line-height: 1.7;
 }
 
 .prose .post-visual-kicker {

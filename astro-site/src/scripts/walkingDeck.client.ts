@@ -669,6 +669,11 @@ function initDeck(deck: WalkingDeckElement) {
         presentPrev?.addEventListener('click', () => setSlide(currentIdx - 1));
         presentNext?.addEventListener('click', () => setSlide(currentIdx + 1));
 
+        const linkedSectionIdx = sections.findIndex((section) => `#${section.id}` === window.location.hash);
+        if (isPresenting && linkedSectionIdx >= 0) {
+            setSlide(linkedSectionIdx);
+        }
+
         // Deep link: ?present=1 or #present opens directly into presentation mode.
         const triggerDeepLink = () => {
             try {
