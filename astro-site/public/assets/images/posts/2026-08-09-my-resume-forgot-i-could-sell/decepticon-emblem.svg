@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 249 293" role="img" aria-labelledby="title">
+  <title id="title">Decepticon emblem</title>
+  <g fill="#6546ad">
+    <path d="M0 0l28 43 55 21L79 0l37 56h18l36-56-4 64 55-21 28-43-13 126-35 11-76 18-76-18-35-11z"/>
+    <path d="M16 145l98 19-29 83-54 12z"/>
+    <path d="M233 145l-98 19 29 83 54 12z"/>
+    <path d="M31 261l83 32-99-145z"/>
+    <path d="M218 261l-83 32 99-145z"/>
+    <path d="M91 78h67l-34 73zm23 16 10 34 11-34z" fill-rule="evenodd"/>
+    <path d="M28 77l72 24 5 13-73-22z"/>
+    <path d="M221 77l-72 24-5 13 73-22z"/>
+    <path d="M38 105l70 23 7 17-74-25z"/>
+    <path d="M211 105l-70 23-7 17 74-25z"/>
+  </g>
+</svg>

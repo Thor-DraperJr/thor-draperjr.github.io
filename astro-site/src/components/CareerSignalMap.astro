@@ -1,289 +1,281 @@
 ---
-const foundations = ['Sales', 'Sales management', 'Ownership', 'Military service'];
-const investments = ['Cloud', 'Security', 'Architecture', 'Technical instruction'];
+import { certifications, competencies, education, speakingEngagements, specialRoles, summary, timeline } from '../lib/resume';
+
+const oldPageOne = {
+  summary: [
+    'Cybersecurity professional with a dynamic career trajectory that began in sales, advanced through management, branched into entrepreneurship, and culminated in a focus on IT. Developed a profound interest in IT, not only as a tool for future-proofing career but also to complete academic qualifications. Found immense value in the IT career path, particularly in its certification processes that offer both professional development and academic advancement.',
+    'Early career stages were dedicated to networking in both on-premises and cloud settings, coupled with teaching cybersecurity fundamentals to individuals embarking on career changes. Actively seeking roles that merge a strong aptitude for relationship building and presentation skills with opportunities for ongoing enhancement of technical abilities.',
+  ],
+  education: [
+    ['Associates in Applied Science in Information Technology, Cloud and Virtualization', 'Central Piedmont Community College'],
+    ['Bachelors of Professional Studies in Applied Cybersecurity', 'SANS Technology Institute'],
+  ],
+  certifications: [
+    'CompTIA: CySA+, Cloud+, Linux+, Server+, Security+, Network+, A+, ITF+',
+    'Microsoft: SC-200',
+    'VMware: VCP-DCV',
+    'Cisco: CCNA',
+    'GIAC: GOSI, GPCS, GCIA, GPYC, GCLD, GCIH, GSEC, GFACT, GISF',
+  ],
+};
+
+const oldRoles = [
+  {
+    id: 'old-security',
+    title: 'Sr. Security Solution Engineer, Microsoft Corporation',
+    years: 'April 2024 - Present',
+    paragraphs: [
+      'The Security Specialist is focused on the full security stack for the Modern Workplace suite. Encompassing Protection, Detection and Remediation of security vulnerabilities and ensuring data retention and loss prevention for US Healthcare payors, providers and Life Sciences organizations. The role provides Pre-Sales technical support to enable customers and partners to architecture, develop, deploy and use our identity and security solutions.',
+    ],
+    note: 'This reads like a job description. Say how I lead discovery, guide customer decisions, and prepare teams for deployment and adoption.',
+  },
+  {
+    id: 'old-azure',
+    title: 'ARR Azure Network Support Engineer, Microsoft Corporation',
+    years: 'April 2021 - March 2024',
+    paragraphs: [
+      "In the Rapid Response team at Microsoft Corporation, played a key role in supporting and managing 18 IaaS technologies in Azure, focused on rapidly addressing critical severity situations and managing service request backlogs. As ARR Team Lead, was instrumental in coordinating with teams to proactively review Azure's architecture and security posture. Enhanced skills in client-facing interactions, effectively conveying and implementing Azure's best operational and security practices. Proactively guided clients in their Azure journey, ensuring optimal use of tools like Microsoft Sentinel and Log Analytics.",
+      'Prided in delivering exceptional customer experiences and preemptively assisting peers. Beyond formal job responsibilities, engaged with the IT community in Charlotte by organizing mentoring events for students and hosting educational events at the Charlotte campus, enriching the local IT industry through roles such as the ISSA education director.',
+    ],
+    note: 'Keep the technical depth. Add how I led work, restored service, and helped customers decide what to do next.',
+  },
+  {
+    id: 'old-teaching',
+    title: 'Cyber Security Instructor, Trilogy Education',
+    years: 'January 2020 - Present',
+    paragraphs: [
+      'At Trilogy Education, served as a cybersecurity instructor, playing a crucial role in shaping the next generation of IT professionals. Delivered hands-on teaching in areas such as Windows/Linux administration, ethical hacking, and SIEM management, equipping students for real-world challenges. This contribution to education was recognized with top accolades, including the highest Net-promoter score in 2020. Additionally, this role enhanced consulting skills at Microsoft, fostering a rich exchange of theoretical and practical knowledge.',
+    ],
+    note: 'This proves I can make technical work usable for other people. Keep the outcome visible.',
+  },
+  {
+    id: 'old-biz',
+    title: 'Information Systems Engineer, Biz Technology Solutions',
+    years: 'November 2020 - May 2021',
+    paragraphs: [
+      'At Biz Technology Solutions, led client communications for on-premises to cloud migrations across various sectors, including healthcare and real estate. Demonstrated expertise in using PowerShell for identifying synchronization issues and corrupted profiles. Conducted initial network audits in the capacity of a sales engineer, focusing on identifying technological gaps and arranging follow-up appointments to secure prospective clients. Routinely handled tier-two client issues, showcasing problem-solving skills and technical proficiency.',
+    ],
+    note: 'Pull the discovery and opportunity-development work forward. It connects the technical chapter to selling.',
+  },
+  {
+    id: 'old-nucentric',
+    title: 'Network Administrator, Nucentric Solution',
+    years: 'January 2020 - December 2020',
+    paragraphs: [
+      'At Nucentric Solutions, held multiple positions and received three promotions, a testament to exceptional performance and dedication. Recognized for actively pursuing certifications and using a home lab to simulate production environments. Demonstrated expertise in deploying ESXi and Hyper-V environments, along with developing PowerShell scripts and modules to automate administrative tasks, enhancing operational efficiency.',
+    ],
+    note: 'Keep the infrastructure proof. Remove the unsupported promotion claim and describe the work directly.',
+  },
+  {
+    id: 'old-gnet',
+    title: 'Technical Account Manager (NC/SC/VA), G-Net Solutions Inc.',
+    years: 'July 2019 - January 2020',
+    paragraphs: [
+      'At G-Net Solutions, Inc, specialized in Aternity from Riverbed, playing a key role as a VAR (value-added reseller) sales representative. Responsibilities included identifying and closing business opportunities, coupled with providing technical guidance on best practices for deployment and integration into client environments.',
+    ],
+    note: 'This is full-cycle technology selling. Show the path from outreach through deployment.',
+  },
+];
+
+const oldOtherExperience = [
+  ['Owner, Stay Fit CLT', '2020'],
+  ['Mid-market Consultant, Paychex', '2018 - 2019'],
+  ['Branch Manager, Enterprise Rent-A-Car', '2013 - 2018'],
+  ['E-4 Infantryman, Army National Guard', '2010 - 2016'],
+];
+
+const oldSansDescription = 'The role of an ISC handler is to deploy DShield sensors and web application honeypots to continually monitor. The data is processed, interpreted, analyzed and very quickly reported to the global information security community. The handlers effectively write and communicate about the issues seen in the data and turn them into short blog post write ups, "diaries".';
+
+const oldSpeaking = [
+  { label: 'RVASec 2021, Managing Mentors', url: 'https://youtu.be/bxD_0kLMnQs?si=-6-QRtrzAT6LTrgl' },
+  { label: 'Netflix/2u Speaker Series - Managing Mentors' },
+  { label: 'Microsoft Techcommunity: Defender for AI services: Threat Protection and AI red team workshop | Microsoft Community Hub', url: 'https://techcommunity.microsoft.com/blog/microsoftdefendercloudblog/defender-for-ai-services-threat-protection-and-ai-red-team-workshop/4464771' },
+];
+
+const newPageOneRoles = timeline.slice(0, 3);
+const newPageTwoRoles = timeline.slice(3);
 ---
 
-<figure class="csm" aria-labelledby="csm-title" aria-describedby="csm-caption">
-  <div class="csm-field" aria-hidden="true"></div>
-
-  <header class="csm-header">
-    <span class="csm-eyebrow">The same career bet · opposite proof problem</span>
-    <h3 id="csm-title">I spent six years building the middle.</h3>
+<figure class="review" data-resume-review aria-labelledby="review-title" aria-describedby="review-caption">
+  <header class="review-header">
+    <span>Full document review</span>
+    <h3 id="review-title">Three old pages, marked up. Two new pages, rebuilt.</h3>
+    <p>Red notes are my 2026 review. Historical wording and dates stay as they appeared in the application document.</p>
   </header>
 
-  <div class="csm-map">
-    <section class="csm-era csm-era--start">
-      <div class="csm-year">2020</div>
-      <p class="csm-question">Can the sales guy do the technical work?</p>
-      <div class="csm-chips">
-        {foundations.map((item) => <span>{item}</span>)}
-      </div>
-    </section>
-
-    <div class="csm-rail" aria-label="Six years of deliberate technical development">
-      <span class="csm-rail-label">Six-year technical investment</span>
-      <div class="csm-track">
-        <span class="csm-line"></span>
-        <span class="csm-node csm-node--one"></span>
-        <span class="csm-node csm-node--two"></span>
-        <span class="csm-node csm-node--three"></span>
-        <span class="csm-arrow"></span>
-      </div>
-      <div class="csm-investments">
-        {investments.map((item) => <span>{item}</span>)}
-      </div>
+  <section class="document-set document-set--old" aria-labelledby="old-document-title">
+    <div class="document-heading">
+      <span>Before</span>
+      <h4 id="old-document-title">The resume I was applying with</h4>
+      <p>Complete public-safe transcription. Four internal recognition lines are redacted.</p>
     </div>
 
-    <section class="csm-era csm-era--now">
-      <div class="csm-year">2026</div>
-      <p class="csm-question">Can the technical guy lead the commercial work?</p>
-      <div class="csm-outcome">
-        <span class="csm-outcome-kicker">The role I planned for</span>
-        <strong>Commercial leadership<br />+ technical judgment</strong>
-      </div>
-    </section>
-  </div>
+    <article class="resume-page resume-page--old" data-resume-version="old" data-resume-page="1" aria-label="Old resume, page 1 of 3">
+      <span class="page-number">Old resume · 1 / 3</span>
+      <header class="resume-name"><strong>Thor G Draper Jr</strong><span>[Historical email withheld from public transcription]</span><a href="https://www.linkedin.com/in/thor-draperjr/">linkedin.com/in/thor-draperjr/</a></header>
+      <section class="annotated-block">
+        {oldPageOne.summary.map((paragraph) => <p>{paragraph}</p>)}
+        <span class="red-mark red-mark--strike" aria-hidden="true"></span>
+        <aside>This starts with where I came from. I need to start with what I can do now.</aside>
+      </section>
+      <section class="resume-section annotated-block">
+        <h5>Education &amp; Certifications</h5>
+        {oldPageOne.education.map(([degree, school]) => <p><strong>{degree}</strong><br />{school}</p>)}
+        <div class="compact-list">{oldPageOne.certifications.map((certification) => <p>{certification}</p>)}</div>
+        <span class="red-mark red-mark--circle" aria-hidden="true"></span>
+        <aside>Keep all 20, but move them after experience. They prove the technical work; they are not the whole introduction.</aside>
+      </section>
+      <section class="resume-section">
+        <h5>Experience</h5>
+        <div class="annotated-block old-role">
+          <h6><span>{oldRoles[0].title}</span><span>{oldRoles[0].years}</span></h6>
+          <p>{oldRoles[0].paragraphs[0]}</p>
+          <span class="red-mark red-mark--underline" aria-hidden="true"></span>
+          <aside>{oldRoles[0].note}</aside>
+        </div>
+        <section class="resume-section public-redaction">
+          <h5>Awards</h5>
+          <ul>
+            <li>Internal performance recognition withheld from public transcription.</li>
+            <li>Internal culture recognition withheld from public transcription.</li>
+            <li>Internal development program withheld from public transcription.</li>
+            <li>Internal event recognition withheld from public transcription.</li>
+          </ul>
+          <aside>Useful application evidence, but not something I need to reproduce publicly here.</aside>
+        </section>
+        <h6 class="orphan-heading"><span>{oldRoles[1].title}</span><span>{oldRoles[1].years}</span></h6>
+        <aside class="page-note">The heading lands at the bottom of page one. The actual work starts on page two.</aside>
+      </section>
+    </article>
 
-  <figcaption id="csm-caption">
-    The plan did not reverse. The evidence changed. My resume needs to show the foundation, the investment, and the role they were meant to unlock.
-  </figcaption>
+    <article class="resume-page resume-page--old" data-resume-version="old" data-resume-page="2" aria-label="Old resume, page 2 of 3">
+      <span class="page-number">Old resume · 2 / 3</span>
+      <div class="annotated-block old-role continuation">
+        {oldRoles[1].paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+        <aside>{oldRoles[1].note}</aside>
+      </div>
+      {oldRoles.slice(2).map((role) => (
+        <section class="annotated-block old-role" data-old-role={role.id}>
+          <h6><span>{role.title}</span><span>{role.years}</span></h6>
+          {role.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+          <aside>{role.note}</aside>
+        </section>
+      ))}
+      <section class="annotated-block old-other">
+        <h5>Other Experience</h5>
+        {oldOtherExperience.map(([role, years]) => <p><span>{role}</span><span>{years}</span></p>)}
+        <span class="red-mark red-mark--cross" aria-hidden="true"></span>
+        <aside>None of this is “other.” This is sales, ownership, management, and service. Every role needs its own entry.</aside>
+      </section>
+      <h6 class="orphan-heading">Apprentice Handler, SANS Internet Storm Center</h6>
+      <aside class="page-note">Another heading split from its description.</aside>
+    </article>
+
+    <article class="resume-page resume-page--old" data-resume-version="old" data-resume-page="3" aria-label="Old resume, page 3 of 3">
+      <span class="page-number">Old resume · 3 / 3</span>
+      <p>{oldSansDescription}</p>
+      <section class="resume-section">
+        <h5>Speaking Engagements / Publications</h5>
+        <ul>{oldSpeaking.map((engagement) => <li>{engagement.url ? <a href={engagement.url}>{engagement.label}</a> : engagement.label}</li>)}</ul>
+      </section>
+      <section class="replacement-note">
+        <span>Bottom-line edit</span>
+        <strong>Stop making the reader reconstruct the commercial career from the last half of the document.</strong>
+      </section>
+    </article>
+  </section>
+
+  <div class="revision-break" aria-hidden="true"><span>Rebuilt from the same career</span></div>
+
+  <section class="document-set document-set--new" aria-labelledby="new-document-title">
+    <div class="document-heading">
+      <span>After</span>
+      <h4 id="new-document-title">The revised resume</h4>
+      <p>Clean public transcription of the new two-page application document.</p>
+    </div>
+
+    <article class="resume-page resume-page--new" data-resume-version="new" data-resume-page="1" aria-label="Revised resume, page 1 of 2">
+      <span class="page-number">Revised resume · 1 / 2</span>
+      <header class="resume-name resume-name--new"><strong>{summary.name}</strong><b>{summary.positioning}</b><span><a href={`mailto:${summary.contact.email}`}>{summary.contact.email}</a> · <a href={summary.contact.linkedin}>linkedin.com/in/thor-draperjr/</a></span></header>
+      <div class="new-summary"><p>{summary.headline}</p><p>{summary.sub}</p></div>
+      <section class="resume-section"><h5>Core Competencies</h5>{competencies.map((group) => <p class="competency"><strong>{group.label}:</strong> {group.skills.join(', ')}</p>)}</section>
+      <section class="resume-section"><h5>Professional Experience</h5>{newPageOneRoles.map((role) => <div class="new-role" data-new-role={role.id}><h6><span>{role.title} | {role.org}</span><span>{role.years}</span></h6><ul>{role.bullets.map((bullet) => <li>{bullet}</li>)}</ul><p class="skills">{role.skills.join(' · ')}</p></div>)}</section>
+    </article>
+
+    <article class="resume-page resume-page--new" data-resume-version="new" data-resume-page="2" aria-label="Revised resume, page 2 of 2">
+      <span class="page-number">Revised resume · 2 / 2</span>
+      <section class="resume-section"><h5>Professional Experience, continued</h5>{newPageTwoRoles.map((role) => <div class="new-role" data-new-role={role.id}><h6><span>{role.title} | {role.org}</span><span>{role.years}</span></h6><ul>{role.bullets.map((bullet) => <li>{bullet}</li>)}</ul><p class="skills">{role.skills.join(' · ')}</p></div>)}</section>
+      <section class="resume-section"><h5>Education &amp; Technical Certifications</h5>{education.map((item) => <p><strong>{item.degree}</strong> · {item.school}, {item.year}</p>)}{certifications.map((group) => <p><strong>{group.vendor}:</strong> {group.certs.join(', ')}</p>)}</section>
+      <section class="resume-section"><h5>Additional Leadership &amp; Public Work</h5>{specialRoles.map((role) => <div class="new-role"><h6><span>{role.title} | {role.org}</span><span>{role.year}</span></h6><p>{role.description}</p><p><a href={role.link.url}>{role.link.label}</a></p></div>)}<ul>{speakingEngagements.map((item) => <li>{item.url ? <a href={item.url}>{item.title} · {item.venue}</a> : `${item.title} · ${item.venue}`}</li>)}</ul></section>
+    </article>
+  </section>
+
+  <figcaption id="review-caption">The old version had the experience. The new version stops making a recruiter or a parser hunt for it.</figcaption>
 </figure>
 
 <style>
-  .csm {
-    container-type: inline-size;
-    position: relative;
-    isolation: isolate;
-    scroll-margin-top: 6rem;
-    box-sizing: border-box;
-    width: 100%;
-    margin: 0;
-    overflow: hidden;
-    border: 1px solid rgba(165, 184, 238, 0.22);
-    border-radius: 18px;
-    padding: clamp(1.35rem, 0.85rem + 2.4cqw, 2.7rem);
-    color: #fbfaf6;
-    background:
-      radial-gradient(130% 95% at 12% -10%, rgba(52, 186, 255, 0.24), transparent 58%),
-      radial-gradient(100% 90% at 92% 110%, rgba(244, 196, 48, 0.15), transparent 56%),
-      linear-gradient(150deg, #0e2a52 0%, #0b2344 55%, #081a36 100%);
-    box-shadow: 0 26px 70px rgba(6, 23, 31, 0.32);
-  }
-
-  .csm-field {
-    position: absolute;
-    z-index: -1;
-    inset: 0;
-    opacity: 0.32;
-    background-image:
-      linear-gradient(rgba(165, 184, 238, 0.08) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(165, 184, 238, 0.08) 1px, transparent 1px);
-    background-size: 34px 34px;
-    mask-image: linear-gradient(to bottom, transparent, #000 24%, #000 80%, transparent);
-  }
-
-  .csm-header {
-    max-width: 46rem;
-    margin-bottom: clamp(1.6rem, 1rem + 2.5cqw, 3rem);
-  }
-
-  .csm-eyebrow,
-  .csm-outcome-kicker {
-    display: block;
-    color: #34baff;
-    font-size: clamp(0.65rem, 0.58rem + 0.3cqw, 0.78rem);
-    font-weight: 850;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-  }
-
-  .csm h3 {
-    margin: 0.45rem 0 0;
-    color: #fff;
-    font-family: 'Lora', serif;
-    font-size: clamp(1.45rem, 1rem + 2.2cqw, 2.65rem);
-    line-height: 1.06;
-  }
-
-  .csm-map {
-    display: grid;
-    grid-template-columns: minmax(0, 0.92fr) minmax(13rem, 1.35fr) minmax(0, 0.92fr);
-    gap: clamp(1rem, 0.5rem + 2cqw, 2.2rem);
-    align-items: stretch;
-  }
-
-  .csm-era {
-    display: flex;
-    min-width: 0;
-    flex-direction: column;
-    border-radius: 10px;
-    padding: clamp(1rem, 0.72rem + 1.2cqw, 1.5rem);
-    border: 1px solid rgba(165, 184, 238, 0.24);
-    background: rgba(6, 23, 31, 0.52);
-  }
-
-  .csm-era--now {
-    border-color: rgba(244, 196, 48, 0.42);
-    background: linear-gradient(145deg, rgba(244, 196, 48, 0.09), rgba(6, 23, 31, 0.58));
-  }
-
-  .csm-year {
-    color: #a5b8ee;
-    font-family: ui-monospace, 'Cascadia Code', monospace;
-    font-size: clamp(0.72rem, 0.66rem + 0.25cqw, 0.86rem);
-    font-weight: 850;
-  }
-
-  .csm-question {
-    min-height: 4.2em;
-    margin: 0.65rem 0 1.2rem;
-    color: #fff;
-    font-size: clamp(1rem, 0.82rem + 0.7cqw, 1.28rem);
-    font-weight: 800;
-    line-height: 1.28;
-  }
-
-  .csm-chips,
-  .csm-investments {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.42rem;
-  }
-
-  .csm-chips span,
-  .csm-investments span {
-    border: 1px solid rgba(165, 184, 238, 0.25);
-    border-radius: 999px;
-    padding: 0.33rem 0.58rem;
-    color: #dce7f7;
-    background: rgba(165, 184, 238, 0.09);
-    font-size: clamp(0.66rem, 0.61rem + 0.2cqw, 0.78rem);
-    font-weight: 750;
-  }
-
-  .csm-rail {
-    position: relative;
-    display: flex;
-    min-height: 13rem;
-    flex-direction: column;
-    justify-content: center;
-    padding: 2.25rem 0 1.25rem;
-  }
-
-  .csm-rail-label {
-    position: absolute;
-    top: 0.25rem;
-    left: 50%;
-    width: 100%;
-    transform: translateX(-50%);
-    color: #e2f9d9;
-    font-size: clamp(0.7rem, 0.62rem + 0.28cqw, 0.82rem);
-    font-weight: 800;
-    text-align: center;
-  }
-
-  .csm-line {
-    position: relative;
-    display: block;
-    height: 4px;
-    border-radius: 4px;
-    background: rgba(165, 184, 238, 0.2);
-    overflow: hidden;
-  }
-
-  .csm-track {
-    position: relative;
-  }
-
-  .csm-line::after {
-    position: absolute;
-    content: '';
-    inset: 0;
-    transform-origin: left;
-    background: linear-gradient(90deg, #008fd3, #34baff 58%, #f4c430);
-    box-shadow: 0 0 16px rgba(52, 186, 255, 0.75);
-    animation: csm-charge 2.4s cubic-bezier(0.22, 1, 0.36, 1) both;
-  }
-
-  .csm-node {
-    position: absolute;
-    top: 2px;
-    width: 0.72rem;
-    aspect-ratio: 1;
-    transform: translate(-50%, -50%) rotate(45deg);
-    border: 2px solid #34baff;
-    background: #0b2344;
-    box-shadow: 0 0 14px rgba(52, 186, 255, 0.65);
-  }
-
-  .csm-node--one { left: 22%; }
-  .csm-node--two { left: 50%; }
-  .csm-node--three { left: 78%; border-color: #f4c430; }
-
-  .csm-arrow {
-    position: absolute;
-    top: 2px;
-    right: -0.05rem;
-    width: 0.8rem;
-    height: 0.8rem;
-    transform: translateY(-50%) rotate(45deg);
-    border-top: 3px solid #f4c430;
-    border-right: 3px solid #f4c430;
-  }
-
-  .csm-investments {
-    justify-content: center;
-    margin-top: 1.35rem;
-  }
-
-  .csm-investments span {
-    border-color: rgba(52, 186, 255, 0.3);
-    color: #e8f7ff;
-    background: rgba(0, 143, 211, 0.14);
-  }
-
-  .csm-outcome {
-    margin-top: auto;
-    border-top: 1px solid rgba(244, 196, 48, 0.32);
-    padding-top: 1rem;
-  }
-
-  .csm-outcome-kicker { color: #f4c430; }
-
-  .csm-outcome strong {
-    display: block;
-    margin-top: 0.45rem;
-    color: #fff;
-    font-size: clamp(0.88rem, 0.76rem + 0.45cqw, 1.06rem);
-    line-height: 1.3;
-  }
-
-  .csm figcaption {
-    margin-top: clamp(1.35rem, 0.85rem + 1.6cqw, 2rem);
-    border-top: 1px solid rgba(165, 184, 238, 0.18);
-    padding-top: 1rem;
-    color: #d8e4f4;
-    font-size: clamp(0.78rem, 0.7rem + 0.28cqw, 0.94rem);
-    font-weight: 650;
-    line-height: 1.55;
-  }
-
-  @keyframes csm-charge {
-    from { transform: scaleX(0); opacity: 0.45; }
-    to { transform: scaleX(1); opacity: 1; }
-  }
-
-  @container (max-width: 600px) {
-    .csm-map { grid-template-columns: 1fr; }
-    .csm-question { min-height: 0; }
-    .csm-rail {
-      min-height: 10rem;
-      padding-inline: 0.5rem;
-    }
-    .csm-arrow { right: 0.45rem; }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .csm-line::after { animation: none; }
+  .review { container-type: inline-size; box-sizing: border-box; width: 100%; margin: 0; padding: clamp(1rem, .6rem + 2cqw, 2.2rem); overflow: hidden; border: 1px solid rgba(165,184,238,.24); border-radius: 10px; color: #fbfaf6; background: radial-gradient(110% 70% at 8% 0%, rgba(52,186,255,.2), transparent 55%), linear-gradient(150deg,#0e2a52,#081a36); }
+  .review-header, .document-heading { max-width: 48rem; margin: 0 auto 1.25rem; }
+  .review-header { text-align: center; }
+  .review-header > span, .document-heading > span { color: #34baff; font-size: .72rem; font-weight: 850; letter-spacing: .12em; text-transform: uppercase; }
+  .review-header h3 { margin: .4rem 0; color: #fff; font-family: 'Lora', serif; font-size: clamp(1.4rem,1rem + 1.8cqw,2.5rem); line-height: 1.08; }
+  .review-header p, .document-heading p { margin: .4rem 0 0; color: #d8e4f4; font-size: .88rem; line-height: 1.5; }
+  .document-heading h4 { margin: .2rem 0 0; color: #fff; font-size: 1.35rem; }
+  .resume-page { position: relative; box-sizing: border-box; width: min(100%, 48rem); margin: 0 auto 1.35rem; padding: clamp(1.25rem,.8rem + 2.3cqw,2.6rem); color: #20242a; background: #fbfaf6; box-shadow: 0 18px 45px rgba(2,12,20,.38); font-family: Arial, sans-serif; }
+  .resume-page--old { min-height: 56rem; }
+  .resume-page--new { min-height: 58rem; }
+  .page-number { position: absolute; top: .65rem; right: .8rem; color: #6a7078; font-size: .62rem; font-weight: 700; text-transform: uppercase; }
+  .resume-name { display: grid; gap: .2rem; border-bottom: 2px solid #555; padding-bottom: .55rem; text-align: center; }
+  .resume-name strong { font-size: 1.35rem; letter-spacing: .07em; text-transform: uppercase; }
+  .resume-name b { color: #1e6a8d; font-size: .85rem; }
+  .resume-name span { font-size: .68rem; }
+  .resume-page a { color: inherit; text-decoration-color: #008fd3; text-underline-offset: .12em; }
+  .resume-page p, .resume-page li { font-size: clamp(.65rem,.58rem + .25cqw,.8rem); line-height: 1.38; }
+  .resume-page p { margin: .45rem 0 0; }
+  .resume-page ul { margin: .35rem 0 0; padding-left: 1.1rem; }
+  .resume-section { margin-top: 1.05rem; }
+  .resume-section h5 { margin: 0 0 .5rem; border-bottom: 1px solid #777; padding-bottom: .18rem; font-size: .82rem; letter-spacing: .05em; text-align: center; text-transform: uppercase; }
+  .compact-list { columns: 2; column-gap: 1rem; }
+  .annotated-block { position: relative; margin-top: .9rem; }
+  .annotated-block aside, .page-note, .public-redaction aside { position: relative; z-index: 2; margin: .55rem 0 0 auto; max-width: 25rem; color: #a52520; font-family: 'Segoe Print','Bradley Hand',cursive; font-size: clamp(.72rem,.65rem + .25cqw,.88rem); font-weight: 700; line-height: 1.25; transform: rotate(-1deg); }
+  .old-role h6, .orphan-heading, .new-role h6 { display: flex; justify-content: space-between; gap: 1rem; margin: 0 0 .3rem; font-size: .75rem; text-transform: uppercase; }
+  .old-role h6 span:last-child, .new-role h6 span:last-child { white-space: nowrap; }
+  .old-role + .old-role, .new-role + .new-role { margin-top: .85rem; }
+  .old-other p { display: flex; justify-content: space-between; gap: 1rem; }
+  .red-mark { position: absolute; z-index: 1; pointer-events: none; }
+  .red-mark--strike { top: 18%; left: 0; width: 98%; height: 3px; background: #b3261e; transform: rotate(-1deg); box-shadow: 0 2.2rem 0 #b3261e, 0 4.4rem 0 #b3261e; }
+  .red-mark--circle { inset: -.4rem -.55rem .2rem; border: 3px solid #b3261e; border-radius: 48% 52% 50% 46% / 52% 47% 53% 48%; transform: rotate(-1deg); }
+  .red-mark--underline { bottom: 2.8rem; left: 0; width: 92%; height: 3px; background: #b3261e; transform: rotate(.5deg); }
+  .red-mark--cross { inset: 1.1rem -.3rem 2.7rem; border: 3px solid #b3261e; border-radius: 48%; transform: rotate(1deg); }
+  .red-mark--cross::after { position: absolute; content: ''; top: 48%; left: -2%; width: 104%; height: 3px; background: #b3261e; transform: rotate(-7deg); }
+  .orphan-heading { margin-top: 1rem; }
+  .continuation { border-top: 2px dashed #b3261e; padding-top: .8rem; }
+  .public-redaction li { color: #59636e; font-style: italic; }
+  .replacement-note { margin-top: 2rem; border: 3px solid #a52520; border-radius: 46% 54% 48% 52% / 12% 9% 11% 8%; padding: 1rem; color: #8e1e1a; font-family: 'Segoe Print','Bradley Hand',cursive; transform: rotate(-.5deg); }
+  .replacement-note span { display: block; font-size: .7rem; font-weight: 800; text-transform: uppercase; }
+  .replacement-note strong { display: block; margin-top: .35rem; font-size: .9rem; line-height: 1.3; }
+  .revision-break { display: flex; align-items: center; gap: 1rem; max-width: 48rem; margin: 2.5rem auto; color: #f4c430; font-weight: 850; text-transform: uppercase; }
+  .revision-break::before, .revision-break::after { content: ''; flex: 1; height: 2px; background: linear-gradient(90deg,transparent,#f4c430); }
+  .revision-break::after { transform: scaleX(-1); }
+  .new-summary { margin-top: .8rem; }
+  .competency { margin-top: .3rem !important; }
+  .new-role { break-inside: avoid; }
+  .new-role ul { margin-bottom: 0; }
+  .skills { color: #1e6a8d; font-size: .66rem !important; font-weight: 700; }
+  .review figcaption { max-width: 48rem; margin: 1.1rem auto 0; color: #d8e4f4; font-size: .9rem; font-weight: 650; line-height: 1.5; }
+  @container (max-width: 500px) {
+    .resume-page { min-height: 0; padding-inline: .85rem; }
+    .resume-page p, .resume-page li { font-size: .78rem; line-height: 1.45; }
+    .old-role h6, .orphan-heading, .new-role h6 { font-size: .76rem; line-height: 1.35; }
+    .skills { font-size: .7rem !important; }
+    .compact-list { columns: 1; }
+    .old-role h6, .new-role h6, .orphan-heading { display: block; }
+    .old-role h6 span, .new-role h6 span { display: block; }
+    .old-other p { display: block; }
+    .old-other p span { display: block; }
+    .red-mark--strike { box-shadow: 0 4rem 0 #b3261e, 0 8rem 0 #b3261e; }
+    .red-mark--underline { bottom: 4.4rem; }
+    .red-mark--cross { bottom: 4rem; }
+    .revision-break { font-size: .7rem; }
   }
 </style>

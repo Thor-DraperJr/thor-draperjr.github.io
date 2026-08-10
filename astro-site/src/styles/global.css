@@ -1982,6 +1982,20 @@ img {
   font-size: 2.1rem;
 }
 
+.prose h2 .decepticon-word {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  white-space: nowrap;
+}
+
+.prose h2 img[src$="/decepticon-emblem.svg"] {
+  display: block;
+  width: 2.25rem;
+  height: auto;
+  filter: drop-shadow(0 0 8px rgba(101, 70, 173, 0.28));
+}
+
 .prose h3 {
   font-size: 1.55rem;
 }
@@ -2745,7 +2759,7 @@ img {
   text-align: left;
 }
 
-.rt-era-bullets li + li {
+.rt-era-bullets li+li {
   margin-top: 0.45rem;
 }
 

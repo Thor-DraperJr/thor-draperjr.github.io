@@ -151,7 +151,7 @@ export const timeline: ResumeEra[] = [
         title: "Branch Manager",
         org: "Enterprise Rent-A-Car",
         bullets: [
-            "Led more than 40 employees at the company's largest non-airport location, with responsibility for team development, customer experience, daily operations, and P&L performance.",
+            "Led more than 40 employees at a high-volume branch, with responsibility for team development, customer experience, daily operations, and P&L performance.",
             "Balanced customer service, employee growth, operating discipline, and profitability in a high-volume business.",
         ],
         skills: ["P&L Management", "People Leadership", "Customer Experience", "Business Operations", "Performance Management"],

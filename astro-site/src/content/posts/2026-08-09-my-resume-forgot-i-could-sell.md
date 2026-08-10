@@ -10,11 +10,11 @@ excerpt: "I spent six years building technical depth on top of sales leadership.
 
 In 2020, I was an entrepreneur and sales leader trying to break into a technical role. I would not have guessed that six years later I would have the exact opposite problem.
 
-Back then, I made a bet on myself: spend the next five years building real technical acumen, then find the role where I could bring it together with sales and sales management. I worked the plan. Now I am applying for Security Solution Area Specialist and Account Executive roles, and the technical investment comes through more clearly than what I always intended to build with it.
+Back then, I made a bet on myself: spend the next five years building real technical acumen, then find the role where I could bring it together with sales and sales management. I worked the plan. Now I am applying for Security Solution Area Specialist and Account Executive roles, and the technical investment comes through more clearly than the sales and management experience I built it to support.
 
 So far, I have not made it to an interview.
 
-I call whatever lives between **Submit application** and **Thank you for your interest** the deceptecon. I have no idea what happens in there. I do know that it sent me back to the document.
+I call whatever lives between **Submit application** and **Thank you for your interest** the Decepticon. I have no idea what happens in there. I do know that it sent me back to the document.
 
 This time I reviewed the resume against the jobs I am actually pursuing. I looked at what a hiring manager would see in the first screen, which experience received the most space, which terms were easy to find, and what the document made them work to discover.
 
@@ -22,67 +22,36 @@ Then I rebuilt the [resume](/resume/).
 
 ## What the review found
 
-The old first screen identified me as a Senior Security Solution Engineer and immediately counted 22 certifications. Education and certifications came before experience. That was a strong technical introduction.
+The old first screen identified me as a Senior Security Solution Engineer and immediately listed 20 certifications. Education and certifications came before experience. That was a strong technical introduction.
 
 It was also incomplete for the roles I was targeting.
 
-Enterprise Rent-A-Car, Paychex, G-Net Solutions, Stay Fit CLT, and the Army National Guard were compressed into two timeline cards. A recruiter could see technical depth quickly, but finding the 40-plus-person team, P&L responsibility, full-cycle selling, business ownership, and military service took more work.
+Stay Fit CLT, Paychex, Enterprise Rent-A-Car, and the Army National Guard were compressed into four one-line entries under "Other Experience." A recruiter could see technical depth quickly, but finding the 40-plus-person team, P&L responsibility, business ownership, and military service took more work. G-Net had a full entry, but its prospecting, territory development, and sales process were easy to miss inside the paragraph.
 
-Some of the combined cards also created a parsing problem. One record held multiple employers, titles, and dates. That may look tidy on a timeline, but it makes the actual career harder for a recruiter or an applicant tracking system to read.
+The document also made commercial terms harder to find. The experience was there, but the words connected to the roles I am pursuing were either buried in paragraphs or absent from the one-line entries.
 
 The career itself was not missing. The hierarchy was telling the wrong version of it.
 
-The career bet has stayed the same. The proof problem flipped as the middle of the plan filled in.
+Once I marked up all three old pages, the problem was hard to miss. The opening looked backward, the certifications took over, two headings were split from their descriptions, and the sales and leadership work I needed recruiters to see had been pushed into "Other Experience."
 
 [[CAREER_SIGNAL_MAP]]
 
-## I changed the first signal
+## What I can actually say about the <span class="decepticon-word">Decepticon <img src="/assets/images/posts/2026-08-09-my-resume-forgot-i-could-sell/decepticon-emblem.svg" width="249" height="293" alt="Decepticon emblem"></span>
 
-The old resume opened with my current title. The new version opens with the combination I want a hiring manager to evaluate:
+[Microsoft's published hiring lifecycle](https://careers.microsoft.com/v2/global/en/hiring-tips.html) puts **Application review** between **Submit application** and **Interview**. The company says its structured interviews evaluate real skills against a role's requirements. The [Microsoft Careers search site](https://apply.careers.microsoft.com/careers) also says that it uses Eightfold AI and that Microsoft applies human oversight and judgment when using the technology.
 
-> **Sales and Security Leader | Enterprise Solution Selling | Cloud, AI, and Cybersecurity**
+That is more useful than applicant-tracking folklore, but it does not reveal a secret score. I found no public Microsoft source that describes a universal keyword threshold, an automatic rejection rule, or the order in which recruiters see applicants. The Decepticon could include matching technology, knockout questions, recruiter review, role fit, timing, or all of them.
 
-That line does not ask the reader to choose between a sales career and a technical career. It gives them the category I have been building toward.
+The practical move is to read the exact posting and use its language where my experience supports it. Across the roles I am pursuing, I am checking for two groups of terms:
 
-The summary underneath now proves both sides immediately: a decade in sales, operations, and people leadership; six years of cloud and cybersecurity work; a 40-plus-person branch and P&L; business ownership; solution selling; and current pre-sales security work in healthcare and life sciences.
+- **Security Solution Area Specialist:** solution selling, customer security transformation, Zero Trust, cloud security, threat protection, customer discovery, opportunity identification, partner collaboration, and business outcomes.
+- **Account Executive:** account planning, executive engagement, opportunity creation, pipeline management, revenue growth, digital transformation, account-team orchestration, and industry expertise.
 
-## I moved the evidence recruiters need first
+My resume already supports solution selling, discovery, security architecture, Zero Trust, cloud security, partner engagement, healthcare industry experience, prospecting, territory development, P&L management, and people leadership. My current role contributes to opportunities, but that is different from claiming direct AE account ownership, forecasting responsibility, or a revenue number I personally carried from plan through close. Those remain evidence gaps, so I left them out.
 
-Core competencies now sit directly below the summary. The first three categories are:
+The rewrite gives the review stage a cleaner record to work with. The opening names the combination I am pursuing. Every employer has its own title, dates, and evidence. Commercial results appear before the certification inventory, and the technical bullets explain how the work moved a customer or team. The revised resume also lists 22 current certifications, including two added after the old version, and corrects the Paychex and Enterprise date ranges.
 
-- Solution Selling and Customer Outcomes
-- Leadership and Business Operations
-- Stakeholder Orchestration
-
-Security, cloud, AI, industry knowledge, communication, and technical depth still follow. The order is deliberate. It lets a sales hiring manager classify the profile before the technical detail arrives, while preserving the terms a Security Solution Area Specialist search needs.
-
-Education and certifications moved below experience. All 22 certifications remain available as technical proof, but they no longer control the first screen.
-
-## I separated every employer
-
-The old timeline grouped Nucentric Solutions with Biz Technology Solutions. It also grouped Stay Fit CLT, Paychex, and G-Net Solutions, then combined Enterprise Rent-A-Car with the Army National Guard.
-
-The new resume gives each employer or service commitment its own title, organization, dates, evidence, and skills. That change makes the chronology easier to scan and restores the commercial experience that had been compressed.
-
-Enterprise now shows the 40-plus-person team, P&L responsibility, customer experience, daily operations, and profitability. G-Net shows prospecting, territory development, solution selling, and technical deployment guidance. Paychex shows mid-market discovery and needs-based selling. Stay Fit shows customer acquisition, operations, retention, risk, and the sale of the business.
-
-The military entry stands on its own too. Six years of infantry service should not be a clause attached to a rental-car job.
-
-## I rewrote technical work through the customer decision
-
-The technical roles remain technically credible, but the bullets now explain how that work moved a customer or a team.
-
-The Senior Security Solution Engineer entry now leads with pre-sales guidance, discovery, architecture discussions, operating risk, cross-functional work, deployment readiness, and adoption. Azure Rapid Response still includes 18 IaaS technologies and critical incidents, while also showing team leadership, architecture reviews, customer findings, and next steps.
-
-That wording helps both role families. The SSA Specialist path needs security credibility and the ability to move a technical sales process. The AE path needs discovery, orchestration, customer judgment, and business context. I have evidence for those capabilities, so the resume now says so directly.
-
-## I kept the gaps honest
-
-I did not turn pre-sales influence into direct quota ownership. I did not add forecasting, strategic account ownership, or sustained C-suite coverage because the public evidence I have does not prove those things yet.
-
-A stronger resume does not need inflated verbs. It needs the strongest honest evidence arranged around the role.
-
-I have accepted admission to an MBA program that begins August 17, 2026. I left it off the public resume because the program has not started and I am intentionally not naming the school here. I will add it after enrollment begins and when I am ready to identify the institution publicly.
+This does not promise an interview. It stops asking software or a person to assemble the strongest version of my career from scattered clues.
 
 ## The shoe is still on the other foot
 
@@ -91,7 +60,5 @@ In 2020, I needed technical hiring managers to see more than a sales background.
 Six years later, I need commercial hiring leaders to see what all that technical depth was built to support.
 
 There is some sweet irony in that. I spent years making sure nobody could dismiss me as "just a sales guy." I may have made the case a little too well.
-
-I spent six years adding technical depth to a foundation in sales, ownership, and leadership.
 
 The new resume shows the whole bet.
