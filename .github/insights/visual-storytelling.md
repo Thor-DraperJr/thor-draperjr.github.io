@@ -1,10 +1,21 @@
-<!-- Last modified: 2026-08-10T15:05:00.000-04:00 -->
+<!-- Last modified: 2026-08-10 -->
 
 # visual-storytelling insight
 
-## 2026-08-10T15:05:00.000-04:00 - Mark up the complete artifact
-**Mission:** make career articles useful to leaders and builders while keeping Thor's public profile current.
-**Improved:** The resume article now reproduces all three old pages in source order, marks the original passages with red editorial notes, and places the complete two-page revision directly below them. Readers can inspect the full chronology, awkward page breaks, credential placement, technical descriptions, compressed commercial history, and the resulting rewrite before reading the researched Decepticon assessment. A local vector based on the user-supplied emblem reference makes the joke visible without adding a remote dependency.
-**Prune candidates:** None in the current article output. The component marker resolves before archive and article output are emitted.
-**Reusable learnings:** When an article explains an edit, use the complete original artifact as the visual surface. Preserve source order, page boundaries, historical wording, and historical dates. Use explicit placeholders for private contact and internal recognition instead of silently deleting their positions. Treat the original document and canonical revised data as separate authorities, including honest differences such as 20 old certifications and 22 revised certifications.
-**Agent self-improvement:** Avoid abstract vocabulary when the source document can carry the explanation. Place a visual cue beside the concept it names instead of borrowing an unrelated component header for decoration. Validate ordering as well as text presence, keep links semantic, reject malformed screenshots, and inspect every paper sheet at laptop and mobile widths. On mobile, preserve readable type and let the sheet expand instead of shrinking a full Letter page below practical reading size. When describing application screening, separate verified platform disclosures from inference and present role terms as truthful evidence checks rather than a secret scoring formula.
+## Current learning
+
+The visual identity and motion language were already strong, but the workflow could accept the first plausible composition without an independent concept or rendered-motion gate.
+
+## Improved
+
+Substantial visual work now compares materially different concepts when form is ambiguous, defines a `default -> entry -> build -> hold -> exit` scene contract, and names the stable frame the audience must understand. The build owner performs internal QA, then sends rendered evidence to Presentation Reviewer for independent acceptance and bounded re-review.
+
+## Reusable learning
+
+Choose visual form before styling. Score concepts against teaching clarity, source fidelity, distinctiveness, responsive viability, and presentability. Generic equal-card, pill, and arrow compositions need a teaching reason. Motion should change understanding or focus; a static scene is stronger when movement adds no teaching value.
+
+Keep role names explicit in every handoff: Visual Storytelling is the build owner, Presentation Reviewer is the acceptance owner, Visual System supplies standards, and the root conductor owns routing and final decisions. Capability names without ownership labels hide dependencies and make the workflow harder to invoke correctly.
+
+## Prune candidates
+
+Keep durable interaction and motion policy in `visual-system.instructions.md`, build orchestration in `visual-storytelling.prompt.md`, and acceptance judgment in Presentation Reviewer. Remove repeated policy from prompts when future edits create drift.

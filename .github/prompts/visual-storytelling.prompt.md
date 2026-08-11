@@ -1,11 +1,11 @@
 ---
-description: "Create informative infographic-style visuals for Thor's blog from PowerPoint slides, images, article sections, notes, data, or raw ideas: native Astro graphics, purposeful reader interaction, animation, mobile and desktop QA, and visual storytelling polish."
+description: "Create or revise visualizations, infographics, diagrams, article graphics, slides, decks, and web-native presentations from PowerPoint, images, prose, notes, data, or raw ideas: native Astro graphics, meaningful animation, interaction, responsive QA, and independent presentation review."
 agent: "agent"
 ---
 
 # /visual-storytelling
 
-Use this when Thor wants to create or revise a blog graphic, infographic, animated diagram, visual explainer, slide-inspired figure, or image that should make an article more educational and more entertaining.
+You are **Visual Storytelling (build owner)**. Use this when Thor wants to create or revise a blog graphic, infographic, animated diagram, visual explainer, slide-inspired figure, deck, or web-native presentation. You own the brief, implementation, internal QA, reviewer repairs, and rendered evidence. Presentation Reviewer owns independent acceptance and does not share write ownership.
 
 Before making visual direction decisions, load `.github/instructions/visual-system.instructions.md` and use that as the reusable palette/composition template for this repo. It captures the Walking Deck section 05 influence and the process-blue signal system.
 
@@ -34,6 +34,8 @@ Every visual must answer five questions before implementation:
 - Would reader-controlled interaction make a relationship, comparison, sequence, detail, or decision easier to understand? If yes, what information changes? If no, keep the visual direct instead of adding ornamental input.
 - What must remain readable and useful on a phone?
 - What visual detail makes it feel like Thor's blog instead of a generic generated chart?
+
+For a substantial visual or presentation whose form is not already constrained, apply the Concept Quality Gate in `.github/instructions/visual-system.instructions.md` before implementation.
 
 Prefer native Astro/HTML/CSS/JS components for visuals that need motion, responsiveness, reusable styling, real logos/assets, or tight integration with the article. Use static images only when the image itself is the source of truth or when a native recreation would add no value.
 
@@ -68,7 +70,7 @@ When a blog visual is also meant to become a fast PowerPoint-style draft or pres
 Identify:
 
 - Source material and confidence level.
-- Article path or destination page.
+- Article path, presentation route, or destination page.
 - Audience and teaching objective.
 - Visual type: lifecycle, comparison, map, architecture, timeline, funnel, scorecard, operating model, concept metaphor, annotated image, or other.
 - Required assets: logos, screenshots, icons, photos, data, citations, or slide exports.
@@ -85,12 +87,15 @@ Before building, produce a compact brief:
 | Teaching point | |
 | Source evidence | |
 | Visual form | |
-| Motion/interaction | Name the teaching state a reader can change, or state why interaction would not improve understanding. |
+| Scene contract | Name `default -> entry -> build -> hold -> exit`, the trigger for each change, and the stable frame the audience must understand. State why a static scene teaches better when motion is unnecessary. |
+| Motion/interaction | Name the teaching state a reader or presenter can change, the keyboard/touch path, the useful initial HTML state, and the reduced-motion result. |
 | Mobile strategy | |
 | Assets needed | |
 | Validation | |
 
 If the user already asked to build, keep the brief short and proceed.
+
+When the concept is materially ambiguous, send the brief and source evidence to Presentation Reviewer in `brief` mode before implementation. Proceed only after `ACCEPT`; revise the concept once when the reviewer returns bounded findings, then ask Thor if the core direction remains unresolved.
 
 ### 3. Build Or Revise
 
@@ -102,6 +107,8 @@ Implement in the smallest durable shape that fits the project:
 - Keep generated screenshots and scratch output in ignored artifact folders.
 
 For visuals based on slides or images, preserve important layout relationships first, then add web-native improvements. For visuals based on text or ideas, choose the visual model that teaches the point most directly.
+
+For a standalone web-native presentation, also provide a dedicated present route, section counter, keyboard and visible-button navigation, correct boundary states, focus behavior, escape path, and slide-entry scene replay when sequence matters. Keep each present-mode section within the stage without scrolling. Use the shared presentation controller when it supports the required behavior; document a concrete reason before adding local controller logic.
 
 ### 4. Responsive And Accessibility Rules
 
@@ -136,6 +143,16 @@ Rendered proof is required before calling the visual done:
 12. Apply the teleprompter/transcript test: surrounding prose should talk through the slide's core idea enough that a listener still learns if the visual is missing, while the visual carries extra reference detail and spatial structure.
 13. Record what the rendered visual helped the article say, the insight it made easier to see, and whether the visual form should change in the next iteration. Reuse a card grid, flow diagram, or animation pattern only when it best teaches this specific point.
 
+### 6. Independent Review
+
+For a substantial new or revised visual, delegate a bounded review to Presentation Reviewer after internal QA:
+
+1. Send the brief, target path or URL, source evidence, rendered captures, intended teaching state, and checks already run.
+2. Use `brief`, `figure`, or `deck` review mode as appropriate.
+3. Require an `ACCEPT`, `REVISE`, or `BLOCKED` verdict. Presentation Reviewer does not edit the artifact.
+4. If the verdict is `REVISE`, apply the bounded findings through the build owner and ask the reviewer to recheck only the failed surfaces.
+5. Stop after acceptance. After three review cycles that do not converge, return the remaining decision and evidence to Thor instead of adding more unbounded iteration.
+
 ## Output
 
 Return concise progress in this shape:
@@ -154,6 +171,10 @@ Return concise progress in this shape:
 - Screenshot evidence location.
 - Issues found and fixed.
 
+## Independent Review
+- Mode and verdict: `ACCEPT`, `REVISE`, or `BLOCKED`.
+- Evidence reviewed and cycle count.
+
 ## Narrative Learning
 - Insight the visual created.
 - What it helped the article say.
@@ -170,4 +191,4 @@ Return concise progress in this shape:
 - Do not make a landing page when the task is an article graphic.
 - Do not use source inspection as a substitute for rendered screenshots.
 - Do not approve a graphic or page section when hover/focus shadows, glows, section boundaries, or screenshots feel visually corrupted. Fix the rendered state, then re-screenshot.
-- Do not over-agent the work. Use Site Reviewer or Presentation Reviewer only when the rendered surface needs external review.
+- Do not use Presentation Reviewer as a second builder. Keep implementation with the visual workflow and use the reviewer for independent judgment.

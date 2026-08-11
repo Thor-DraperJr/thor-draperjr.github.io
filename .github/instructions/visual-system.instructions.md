@@ -51,6 +51,14 @@ Use the Walking Deck, especially `/career/walking-deck/present` section 05 (`sig
 - Depth and pacing: use signal gold, periwinkle, and mint as atmospheric glows, gradients, and section handoff accents. They should shape rhythm without becoming the dominant brand color.
 - Avoid greenish page washes unless there is a specific content reason. If a gradient starts reading teal/green by accident, rebalance toward blue-black, paper, gold, or periwinkle.
 
+## Concept Quality Gate
+
+- Before building a substantial visual or presentation, name the visual model, primary focal path, state sequence, and source assets. Compare at least two materially different concepts when the best form is not already clear.
+- Select the concept against teaching clarity, source fidelity, visual distinctiveness, responsive viability, and presentability. A palette change does not make a second concept.
+- Reject equal-card grids, pill collections, generic arrows, and stacked panels as defaults unless that visual grammar directly teaches the idea.
+- Give each scene one authored mechanism, such as progressive assembly, state comparison, signal travel, direct manipulation, spatial zoom, or evidence reveal. Keep a scene static when movement would not improve understanding.
+- Define the stable hold frame first. Entry, build, interaction, and exit states must support that frame instead of competing with it.
+
 ## Motion Language
 
 - Use Walking Deck section 05 as the motion north star: cinematic stage energy, luminous rails, depth shifts, and reveal timing that feels authored.

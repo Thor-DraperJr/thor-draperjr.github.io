@@ -22,13 +22,28 @@ This repository is Thor Draper Jr's public platform for technology, cybersecurit
 | Workload | Primary owner |
 |---|---|
 | Article creation or revision | `.github/prompts/article-pass.prompt.md`, governed by `.github/instructions/editorial-system.instructions.md` |
-| New or substantially revised article visual | `.github/prompts/visual-storytelling.prompt.md`, governed by `.github/instructions/visual-system.instructions.md` |
+| New or substantially revised visualization, article visual, or web-native presentation | Visual Storytelling (build owner), governed by `.github/instructions/visual-system.instructions.md` |
 | Rendered page, layout, or sitewide UX review | Site Reviewer |
-| Web-native presentation or Walking Deck review | Presentation Reviewer |
+| Visual brief, standalone figure, web-native presentation, or Walking Deck review | Presentation Reviewer (acceptance owner) |
 | Narrative, voice, claims, or provider realism | The specialist selected by the article workflow; invoke only the lenses that are load-bearing |
 | Broad repository discovery | Explore, with a specific read-only question and expected evidence |
 
 The workflow and specialist files own their execution details. Keep those methods out of this root contract so they can evolve without creating competing instructions.
+
+For a substantial new or revised visualization, infographic, diagram, article graphic, slide, deck, or presentation, use Presentation Reviewer as an independent acceptance gate. Review the brief before implementation when the concept is materially ambiguous. After the build or revision, review rendered evidence and require `ACCEPT`; if the verdict is `REVISE`, return the bounded findings to the build owner and re-review only the failed surfaces. A review-only request can route directly to Presentation Reviewer. Small mechanical corrections and minor copy or asset replacements do not require this loop.
+
+### Visual Delivery Roles
+
+Use these names and dependencies consistently:
+
+| Role | Owns | Depends on | Returns to conductor |
+|---|---|---|---|
+| **Root conductor** | Routing, scope, final decision, and user-facing result | User request and repository rules | Approved work graph and final account |
+| **Visual System** | Durable concept, composition, motion, interaction, and accessibility standards | Existing site identity and rendered baselines | Design constraints; it does not build or review |
+| **Visual Storytelling (build owner)** | Brief, implementation, internal QA, repair, and rendered evidence | Visual System; accepted brief when pre-build review applies | Built artifact and evidence package |
+| **Presentation Reviewer (acceptance owner)** | Independent brief, figure, or deck verdict | Brief or rendered evidence from the build owner; canonical audit output for deck mode | `ACCEPT`, `REVISE`, or `BLOCKED`; it does not edit |
+
+The dependency order is `Root conductor -> Visual System -> Visual Storytelling -> Presentation Reviewer -> Root conductor`. When an ambiguous concept needs pre-build review, Visual Storytelling sends the brief to Presentation Reviewer, receives a verdict through the conductor, and then continues the build. Site Reviewer joins only when page-level UX outside the visual artifact is also in scope.
 
 ## Public Boundaries
 

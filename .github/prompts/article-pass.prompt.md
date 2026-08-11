@@ -24,7 +24,7 @@ The default loop uses at most three durable roles:
 Optional specialists and workflows stay optional:
 
 - **HLS Provider Reality Check** only when provider realism is load-bearing.
-- **Site Reviewer** or **Presentation Reviewer** only when the rendered site, page UX, or presentation surface is the deliverable.
+- **Site Reviewer** when rendered page UX is the deliverable. **Presentation Reviewer** is required for a substantial new or revised visualization or presentation, as defined by the root acceptance gate.
 - Use `/visual-storytelling` when the article needs a new or substantially revised infographic, animated visual, deck-derived graphic, or concept diagram.
 
 ## Intake
@@ -126,6 +126,8 @@ Typical review:
 
 A third agent is allowed only for a clear reason: provider realism is load-bearing, the user asked to publish, or the draft introduced major new factual claims.
 
+The required Presentation Reviewer acceptance gate for a substantial new or revised visual does not count against this editorial review budget. Keep that review bounded to the visual artifact and its rendered evidence.
+
 ## Consolidated Output
 
 Return one report:
@@ -159,6 +161,9 @@ Candidate, teaching value, and `build now` or `defer with reason` decision.
 
 ## Visual QA
 PASS/FAIL per custom visual, including markdown-only narrative balance, or "Skipped: <reason>."
+
+## Independent Visual Review
+Presentation Reviewer mode, `ACCEPT`/`REVISE`/`BLOCKED` verdict, evidence reviewed, and cycle count, or "Skipped: <reason>."
 
 ## Action Queue
 Numbered changes the user can approve. Each item names file, section, action type, and one-line description.
