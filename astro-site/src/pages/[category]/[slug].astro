@@ -17,6 +17,7 @@ import WhatIsGitHub from '../../components/WhatIsGitHub.astro';
 import WorkshopTools from '../../components/WorkshopTools.astro';
 import DiffPreview from '../../components/DiffPreview.astro';
 import PresentationWorkflowMap from '../../components/PresentationWorkflowMap.astro';
+import CopilotVisualWorkflow from '../../components/CopilotVisualWorkflow.astro';
 import AgenticSocialLoop from '../../components/AgenticSocialLoop.astro';
 import GatewayProcessMap from '../../components/GatewayProcessMap.astro';
 import AgentHarnessLayers from '../../components/AgentHarnessLayers.astro';
@@ -93,6 +94,7 @@ const hasAllAboard = processedHtml.includes(allAboardMarker);
 const hasThreeNewYears = processedHtml.includes(threeNewYearsMarker);
 const hasPerformanceNarrative = processedHtml.includes(performanceNarrativeMarker);
 const hasPresentationWorkflow = processedHtml.includes(presentationWorkflowMarker);
+const hasWebsitePresentation = hasPresentationWorkflow && post.presentation === 'website-presentation';
 const hasSocialLoop = processedHtml.includes(socialLoopMarker);
 const hasGatewayProcessMap = processedHtml.includes(gatewayProcessMapMarker);
 const hasAgentHarnessLayers = processedHtml.includes(agentHarnessLayersMarker);
@@ -537,6 +539,58 @@ if (hasGhWorkshop) {
       ))}
 
       <article class="shell-container">
+        <nav class="post-pagination">
+          {previous ? (
+            <a href={previous.permalink}>
+              <span>Older</span>
+              {previous.title}
+            </a>
+          ) : <div></div>}
+
+          {next ? (
+            <a href={next.permalink} style="text-align: right;">
+              <span>Newer</span>
+              {next.title}
+            </a>
+          ) : <div></div>}
+        </nav>
+      </article>
+    </>
+  ) : hasWebsitePresentation ? (
+    <>
+      <article class="shell-container">
+        <header class="post-hero">
+          <span class="eyebrow">{post.category}</span>
+          <h1 class="post-heading">{post.title}</h1>
+          <div class="post-meta-row">
+            <span>{post.date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
+            <span>{post.readingTime} min read</span>
+          </div>
+          {post.tags.length > 0 && (
+            <div class="post-tags" style="margin-top: 1rem;">
+              {post.tags.map((tag) => <span class="post-tag">{tag}</span>)}
+            </div>
+          )}
+        </header>
+
+        {presentationWorkflowParts[0]?.trim() && (
+          <section class="prose panel">
+            <Fragment set:html={presentationWorkflowParts[0]} />
+          </section>
+        )}
+      </article>
+
+      <div class="walking-deck-breakout">
+        <CopilotVisualWorkflow />
+      </div>
+
+      <article class="shell-container">
+        {presentationWorkflowParts.slice(1).join(presentationWorkflowMarker).trim() && (
+          <section class="prose panel">
+            <Fragment set:html={presentationWorkflowParts.slice(1).join(presentationWorkflowMarker)} />
+          </section>
+        )}
+
         <nav class="post-pagination">
           {previous ? (
             <a href={previous.permalink}>

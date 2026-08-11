@@ -14,6 +14,9 @@ const criticalOutputs = [
     'career/walking-deck/present/index.html',
     'tech/all-aboard/index.html',
     'tech/first-pull-request/present/index.html',
+    'tech/presentation-workflow/index.html',
+    'tech/how-my-website-becomes-a-presentation/index.html',
+    'tech/how-my-website-becomes-a-presentation/present/index.html',
 ];
 
 for (const outputPath of criticalOutputs) {
@@ -110,4 +113,75 @@ test('RSS output identifies the public site', async () => {
 
     assert.match(xml, /<title>Thor Draper Jr<\/title>/);
     assert.match(xml, /<link>https:\/\/thor-draperjr\.github\.io<\/link>/);
+});
+
+test('website presentation article and present view share one resolved deck', async () => {
+    const article = await readFile(path.join(distPath, 'tech/how-my-website-becomes-a-presentation/index.html'), 'utf8');
+    const presentation = await readFile(path.join(distPath, 'tech/how-my-website-becomes-a-presentation/present/index.html'), 'utf8');
+    const juneArticle = await readFile(path.join(distPath, 'tech/presentation-workflow/index.html'), 'utf8');
+    const sectionPattern = /<section\b(?=[^>]*\bdata-presentation-section\b)[^>]*\bid="([^"]+)"[^>]*>/g;
+    const articleSections = [...article.matchAll(sectionPattern)].map(match => match[1]);
+    const presentationSections = [...presentation.matchAll(sectionPattern)].map(match => match[1]);
+    const expectedSections = ['vw-ask', 'vw-rules', 'vw-team', 'vw-proof', 'vw-gate'];
+
+    assert.doesNotMatch(article, /<p>\[\[PRESENTATION_WORKFLOW\]\]<\/p>/);
+    assert.match(article, /data-presentation-deck/);
+    assert.match(article, /How I Build Presentations in the Browser with GitHub Copilot/);
+    assert.deepEqual(articleSections, expectedSections);
+    assert.equal(new Set(articleSections).size, expectedSections.length);
+    assert.match(article, /I start with the article and one request/);
+    assert.match(article, /copilot-instructions\.md/);
+    assert.match(article, /visual-storytelling\.prompt\.md/);
+    assert.match(article, /Visual Storytelling/);
+    assert.match(article, /Presentation Reviewer/);
+    assert.match(article, /Walking Deck(?:'|&#39;)s fifth section/);
+    assert.match(article, /deep ink and blue-black for structure/);
+    assert.match(article, /laptop with browser chrome/);
+    assert.match(article, /phone in landscape/);
+    assert.match(article, /intent, rendered proof, and the verification record/);
+    assert.match(article, /Visual Storytelling fixes the problem/);
+    assert.match(article, /Visual Storytelling owns execution/);
+    assert.match(article, /tool availability and my approval settings/);
+    assert.match(article, /I delegate the mechanics and keep accountability/);
+    assert.match(article, /The browser shows the evidence\. I make the call/);
+    const teachingSequence = ['The Request', 'The Control Plane', 'The Run Graph', 'Rendered Evidence', 'The Human Gate'];
+    let previousTeachingStep = -1;
+    for (const step of teachingSequence) {
+        const teachingStepIndex = article.indexOf(step);
+
+        assert.ok(teachingStepIndex > previousTeachingStep, `${step} must appear in teaching order`);
+        previousTeachingStep = teachingStepIndex;
+    }
+    assert.match(presentation, /REVISE/);
+    assert.match(presentation, /ACCEPT/);
+    assert.match(presentation, /VISUAL SYSTEM OUTPUT/);
+    assert.match(presentation, /palette \+ composition \+ motion \+ interaction \+ access/);
+    assert.match(presentation, /REPAIR OWNER/);
+    assert.match(presentation, /Named surface returns to the builder/);
+    for (const viewportWidth of ['1920', '1440', '1366', '1214', '960', '720', '844L', '390P']) {
+        assert.match(presentation, new RegExp(viewportWidth));
+    }
+    assert.match(presentation, /These actions require my approval/);
+    assert.doesNotMatch(article, /npm create astro@latest|npm run dev|&lt;h1&gt;|Create Your Project|Save\. Refresh\. Test\. Revise\./);
+    assert.doesNotMatch(article, /Clone Repository/);
+    assert.doesNotMatch(article, /thor-draperjr\.github\.io\.git/);
+    assert.doesNotMatch(article, /cd astro-site/);
+    assert.match(juneArticle, /How I Turn Articles Into Presentations I Can Actually Teach From/);
+    assert.doesNotMatch(juneArticle, /data-exit-href="\/tech\/how-my-website-becomes-a-presentation\//);
+    for (const sectionId of expectedSections) {
+        const section = article.match(new RegExp(`<section\\b(?=[^>]*\\bid="${sectionId}")[^>]*>`))?.[0];
+
+        assert.ok(section);
+        assert.match(section, /data-presentation-title="[^"]+"/);
+        assert.match(section, /data-presentation-note="[^"]+"/);
+        assert.match(section, /aria-labelledby="[^"]+"/);
+    }
+    assert.match(presentation, /data-present="true"/);
+    assert.match(presentation, /data-exit-href="\/tech\/how-my-website-becomes-a-presentation\/"/);
+    assert.deepEqual(presentationSections, expectedSections);
+    assert.match(presentation, /<meta name="robots" content="noindex, nofollow">/);
+    assert.match(presentation, /data-present-toggle/);
+    for (const control of ['prev', 'next', 'cues', 'exit']) {
+        assert.match(presentation, new RegExp(`data-present-${control}`));
+    }
 });

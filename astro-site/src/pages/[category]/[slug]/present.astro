@@ -1,11 +1,12 @@
 ---
 import '../../../styles/global.css';
 import FirstPullRequestDeck from '../../../components/FirstPullRequestDeck.astro';
+import CopilotVisualWorkflow from '../../../components/CopilotVisualWorkflow.astro';
 import { getPosts, getSiteConfig } from '../../../lib/content';
 
 export function getStaticPaths() {
   return getPosts()
-    .filter((post) => post.presentation === 'first-pull-request')
+    .filter((post) => ['first-pull-request', 'website-presentation'].includes(post.presentation ?? ''))
     .map((post) => ({
       params: {
         category: post.category,
@@ -42,6 +43,7 @@ const description = `Presentation view for ${post.title}.`;
   <body class="presentation-presenting presentation-present-page">
     <main id="main-content">
       {post.presentation === 'first-pull-request' && <FirstPullRequestDeck startInPresent={true} />}
+      {post.presentation === 'website-presentation' && <CopilotVisualWorkflow startInPresent={true} />}
     </main>
 
     <style is:global>

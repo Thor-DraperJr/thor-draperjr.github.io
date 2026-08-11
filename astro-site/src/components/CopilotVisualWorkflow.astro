@@ -1,0 +1,430 @@
+---
+interface Props {
+  startInPresent?: boolean;
+}
+
+const { startInPresent = false } = Astro.props;
+const articleHref = '/tech/how-my-website-becomes-a-presentation/';
+const slides = [
+  { id: 'vw-ask', title: 'The Request', note: 'I start with the article and one request: read this, find the idea readers need to remember, and create a visual that makes it easier to understand.' },
+  { id: 'vw-rules', title: 'The Control Plane', note: 'The root instructions route the request. Visual System supplies the existing ink, paper, process-blue, gold, periwinkle, and mint color roles before the build starts.' },
+  { id: 'vw-team', title: 'The Run Graph', note: 'Under this repository policy, the root conductor selects the smallest useful team. Visual System supplies design rules. Visual Storytelling owns the build. Presentation Reviewer owns acceptance.' },
+  { id: 'vw-proof', title: 'Rendered Evidence', note: 'The build owner renders eight frames: desktop, two laptops, laptop chrome, two snapped windows, phone landscape, and phone portrait. The matrix exposes different layout risks.' },
+  { id: 'vw-gate', title: 'The Human Gate', note: 'The reviewer receives the brief, source, eight renders, measurements, teaching states, and checks. REVISE names the failed scene and viewport; ACCEPT returns the evidence to me.' },
+];
+---
+
+<section
+  class="pw-deck vw-deck"
+  data-presentation-deck
+  data-present={startInPresent ? 'true' : undefined}
+  data-exit-href={startInPresent ? articleHref : undefined}
+  aria-label="How one Copilot request becomes a reviewed article visual"
+>
+  <nav class="vw-rail" aria-label="Presentation sections">
+    <span class="vw-brand">Article to accepted visual</span>
+    <div class="vw-links">
+      {slides.map((slide, index) => <a href={`#${slide.id}`} data-presentation-link><span>{String(index + 1).padStart(2, '0')}</span>{slide.title}</a>)}
+    </div>
+    <button type="button" class="vw-present" data-present-toggle aria-label="Enter presentation mode"><span aria-hidden="true">&#9654;</span> Present</button>
+  </nav>
+
+  <div class="vw-hud" data-present-hud aria-hidden={startInPresent ? 'false' : 'true'}>
+    <div class="vw-status">
+      <span data-present-counter>Section 01 / {String(slides.length).padStart(2, '0')}</span>
+      <strong data-present-title>{slides[0].title}</strong>
+    </div>
+    <div class="vw-controls">
+      <button type="button" data-present-prev aria-label="Previous section">&larr;</button>
+      <button type="button" data-present-next aria-label="Next section">&rarr;</button>
+      <button type="button" data-present-cues aria-label="Toggle speaker cues" aria-pressed="false">Cues</button>
+      <button type="button" data-present-exit aria-label="Exit presentation">Exit</button>
+    </div>
+    <p class="vw-cue" data-presentation-note-display>{slides[0].note}</p>
+  </div>
+
+  <section class:list={['vw-slide', 'vw-ask', startInPresent && 'is-current']} id="vw-ask" data-presentation-section data-presentation-title={slides[0].title} data-presentation-note={slides[0].note} aria-labelledby="vw-ask-title">
+    <div class="vw-slide-inner vw-split">
+      <div class="vw-copy">
+        <span class="vw-kicker">The only manual starting point</span>
+        <h2 id="vw-ask-title">I start with the article and one request.</h2>
+        <p>I do not open the component or write a command. I ask Copilot to read the story and invent the visual.</p>
+      </div>
+      <div class="vw-ask-stage" role="img" aria-label="An article and a Copilot request combine into a visual brief.">
+        <article class="vw-paper">
+          <span>ARTICLE DRAFT</span>
+          <strong>Why this story matters</strong>
+          <i></i><i></i><i></i><i></i><i></i>
+          <b>The idea readers should remember</b>
+        </article>
+        <div class="vw-plus" aria-hidden="true">+</div>
+        <article class="vw-request">
+          <span>THOR TO COPILOT</span>
+          <blockquote>Read this article. Find the idea readers need to remember. Create a visual that makes it clear.</blockquote>
+        </article>
+        <div class="vw-signal" aria-hidden="true"><i></i></div>
+        <article class="vw-brief-ticket"><span>OUTPUT</span><strong>Visual brief</strong><em>teaching point + concept + proof</em></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="vw-slide vw-rules" id="vw-rules" data-presentation-section data-presentation-title={slides[1].title} data-presentation-note={slides[1].note} aria-labelledby="vw-rules-title">
+    <div class="vw-slide-inner vw-split">
+      <div class="vw-copy compact">
+        <span class="vw-kicker">Configured once in Markdown</span>
+        <h2 id="vw-rules-title">The repository already knows how to work.</h2>
+        <p>Copilot starts with the workspace rules. Those rules direct the conductor to the playbook and specialist definitions needed for my request.</p>
+      </div>
+      <div class="vw-control-plane" role="img" aria-label="Markdown files form a control plane of standing instructions, reusable prompts, specialist agents, and current insights. Visual System supplies the canonical ink, paper, process-blue, gold, periwinkle, and mint palette before the visual is built.">
+        <article class="vw-control-root"><span>ALWAYS APPLIES</span><strong>copilot-instructions.md</strong><em>routing, ownership, safety, approval</em></article>
+        <div class="vw-control-rail" aria-hidden="true"><i></i></div>
+        <div class="vw-control-columns">
+          <section><span>PROMPTS</span><strong>Reusable playbooks</strong><b class="is-selected">visual-storytelling.prompt.md</b><b>article-pass.prompt.md</b></section>
+          <section><span>INSTRUCTIONS</span><strong>Standing standards</strong><b class="is-selected">visual-system.instructions.md</b><b>editorial-system.instructions.md</b></section>
+          <section><span>AGENTS</span><strong>Defined specialists</strong><b class="is-selected">Presentation Reviewer</b><b>Narrative Strategist</b></section>
+          <section><span>INSIGHTS</span><strong>Learning from prior runs</strong><b>what worked</b><b>what to inspect next</b></section>
+        </div>
+        <div class="vw-palette">
+          <strong>VISUAL SYSTEM OUTPUT</strong>
+          <span><i class="ink"></i>stage</span>
+          <span><i class="paper"></i>paper</span>
+          <span><i class="blue"></i>signal</span>
+          <span><i class="gold"></i>moment</span>
+          <span><i class="support"></i>depth</span>
+          <b>palette + composition + motion + interaction + access</b>
+        </div>
+        <p class="vw-control-note"><b>Selected for this request</b> Only the needed files and specialists join this run.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="vw-slide vw-team" id="vw-team" data-presentation-section data-presentation-title={slides[2].title} data-presentation-note={slides[2].note} aria-labelledby="vw-team-title">
+    <div class="vw-slide-inner">
+      <div class="vw-copy compact vw-horizontal">
+        <div><span class="vw-kicker">A request-specific run graph</span><h2 id="vw-team-title">The root conductor assembles the smallest useful team.</h2></div>
+        <p>Each role has one owner. The builder cannot approve its own work.</p>
+      </div>
+      <div class="vw-run-graph" role="img" aria-label="Thor's request goes to the root conductor. Visual System supplies rules to Visual Storytelling, which builds. Presentation Reviewer independently accepts or revises the result. Thor remains the final decision owner.">
+        <article class="vw-person"><span>INPUT</span><strong>Thor</strong><em>article + request</em></article>
+        <i aria-hidden="true"></i>
+        <article class="vw-conductor"><span>ROUTES</span><strong>Root conductor</strong><em>chooses the run graph</em></article>
+        <i aria-hidden="true"></i>
+        <div class="vw-ownership">
+          <article><span>RULEBOOK</span><strong>Visual System</strong><em>concept, composition, motion, access</em></article>
+          <article class="is-builder"><span>BUILD OWNER</span><strong>Visual Storytelling</strong><em>brief, build, QA, evidence, repair</em></article>
+          <article class="is-reviewer"><span>ACCEPTANCE OWNER</span><strong>Presentation Reviewer</strong><em>ACCEPT, REVISE, or BLOCKED</em></article>
+        </div>
+        <i aria-hidden="true"></i>
+        <article class="vw-person vw-person-end"><span>DECIDES</span><strong>Thor</strong><em>keep, change, or publish</em></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="vw-slide vw-proof" id="vw-proof" data-presentation-section data-presentation-title={slides[3].title} data-presentation-note={slides[3].note} aria-labelledby="vw-proof-title">
+    <div class="vw-slide-inner vw-split">
+      <div class="vw-copy compact">
+        <span class="vw-kicker">Eight frames, different risks</span>
+        <h2 id="vw-proof-title">The browser matrix tests every medium.</h2>
+        <p>Desktop, laptop chrome, snapped windows, and both phone orientations each expose a different layout failure.</p>
+      </div>
+      <div class="vw-proof-stage" role="img" aria-label="A visual brief becomes one shared Astro component. The build owner renders it across eight required frames: desktop, two laptops, laptop chrome, two snapped windows, phone landscape, and phone portrait. Screenshots and measurements become the evidence package.">
+        <article class="vw-contract"><span>VISUAL CONTRACT</span><strong>one teaching point</strong><em>entry &rarr; build &rarr; hold</em><em>mobile + reduced motion</em></article>
+        <div class="vw-proof-arrow" aria-hidden="true"><i></i></div>
+        <article class="vw-component"><span>BUILD OWNER</span><strong>Visual Storytelling</strong><em>one shared Astro visual</em><div><b>ARTICLE</b><b>PRESENT</b></div></article>
+        <div class="vw-proof-arrow" aria-hidden="true"><i></i></div>
+        <div class="vw-evidence">
+          <span>EIGHT-VIEWPORT EVIDENCE</span>
+          <article class="vw-screen desktop"><header></header><div><b>Desktop</b><em>1920 · 1440</em><i></i></div></article>
+          <article class="vw-screen laptop"><header></header><div><b>Laptops</b><em>1366 · 1214</em><i></i></div></article>
+          <article class="vw-screen snapped"><header></header><div><b>Snapped</b><em>960 · 720</em><i></i></div></article>
+          <article class="vw-screen phone"><header></header><div><b>Phones</b><em>844L · 390P</em><i></i></div></article>
+          <p><b>8</b> frames <b>&#10003;</b> fit <b>&#10003;</b> controls <b>&#10003;</b> motion</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="vw-slide vw-gate" id="vw-gate" data-presentation-section data-presentation-title={slides[4].title} data-presentation-note={slides[4].note} aria-labelledby="vw-gate-title">
+    <div class="vw-slide-inner vw-split">
+      <div class="vw-copy compact">
+        <span class="vw-kicker">Automation with accountability</span>
+        <h2 id="vw-gate-title">Weak work goes back. Accepted work comes to me.</h2>
+        <p>With approved tools, Copilot can read, design, build, render, and repair. My repository policy keeps final decisions and publishing with me.</p>
+      </div>
+      <div class="vw-review-loop" role="img" aria-label="Visual Storytelling hands Presentation Reviewer the brief, source evidence, eight viewport renders, measurements, teaching states, and completed checks. A revise verdict names the failed scene and viewport, then returns through the conductor for repair and new evidence. An accept verdict goes to Thor's final approval gate.">
+        <div class="vw-review-stack">
+          <article class="vw-return"><span>REPAIR OWNER</span><strong>Visual Storytelling</strong><em>affected + adjacent rerenders</em></article>
+          <article class="vw-reviewer"><span>REVIEW PACKAGE</span><strong>Presentation Reviewer</strong><em>brief + source</em><em>8 renders + metrics</em><em>states + checks</em></article>
+        </div>
+        <div class="vw-verdicts">
+          <section class="vw-revise"><b>REVISE</b><span>mobile-land · vw-proof · clipped label</span><i aria-hidden="true"></i><strong>Named surface returns to the builder</strong><em>new evidence comes back to review</em></section>
+          <section class="vw-accept"><b>ACCEPT</b><span>every medium clears the brief</span><i aria-hidden="true"></i><strong>Finished visual returns to Thor</strong><em>artifact + verdict + evidence</em></section>
+        </div>
+        <article class="vw-human-gate"><span>REPOSITORY POLICY</span><strong>I make the call.</strong><div><b>COMMIT</b><b>PUSH</b><b>PUBLISH</b></div><em>These actions require my approval.</em></article>
+      </div>
+    </div>
+  </section>
+</section>
+
+<script>
+  import { initPresentationDeck } from '../scripts/presentationDeck.client';
+  initPresentationDeck();
+  document.addEventListener('astro:page-load', () => initPresentationDeck());
+</script>
+
+<style>
+  .vw-deck { --ink:#132235; --depth:#06171f; --stage:#0a2130; --mid:#143247; --paper:#fbfaf6; --blue:#008fd3; --bright:#34baff; --gold:#f4c430; --peri:#a5b8ee; --mint:#e2f9d9; container-type:inline-size; width:min(calc(100vw - 2rem),76rem); margin:2rem auto; color:var(--paper); font-family:'Manrope',sans-serif; }
+  .vw-deck * { box-sizing:border-box; letter-spacing:0; }
+  .vw-deck h2,.vw-deck p,.vw-deck blockquote { margin:0; }
+  .vw-rail { display:flex; align-items:center; gap:1rem; padding:.65rem .8rem; border:1px solid rgba(19,34,53,.12); border-radius:6px; background:rgba(251,250,246,.96); box-shadow:0 14px 40px rgba(19,34,53,.12); color:var(--ink); }
+  .vw-brand { color:#006fa8; font-family:'JetBrains Mono',monospace; font-size:.7rem; font-weight:800; text-transform:uppercase; white-space:nowrap; }
+  .vw-links { display:flex; gap:.2rem; flex:1; overflow:auto; }
+  .vw-links a { display:flex; align-items:center; gap:.3rem; padding:.48rem .55rem; border-radius:4px; color:var(--ink); font-size:.72rem; font-weight:750; text-decoration:none; white-space:nowrap; }
+  .vw-links a span { color:#007db8; font-family:'JetBrains Mono',monospace; }
+  .vw-links a:hover,.vw-links a:focus-visible,.vw-links a.is-active { background:#e8f6fc; color:#006fa8; }
+  .vw-present,.vw-controls button { min-width:2.75rem; min-height:2.75rem; border:1px solid rgba(52,186,255,.35); border-radius:4px; padding:.55rem .8rem; background:var(--blue); color:white; font:inherit; font-size:.74rem; font-weight:800; cursor:pointer; }
+  .vw-present:hover,.vw-present:focus-visible,.vw-controls button:hover,.vw-controls button:focus-visible { outline:2px solid var(--gold); outline-offset:2px; }
+  .vw-controls button:disabled { border-color:rgba(165,184,238,.18); background:#143247; color:#8da0ad; cursor:not-allowed; opacity:.65; }
+  .vw-slide { position:relative; min-height:min(43rem,78vh); margin-top:1rem; overflow:hidden; border:1px solid rgba(52,186,255,.18); border-radius:6px; background:radial-gradient(90% 100% at 8% 0%,rgba(52,186,255,.2),transparent 58%),radial-gradient(70% 90% at 100% 100%,rgba(244,196,48,.12),transparent 58%),linear-gradient(145deg,var(--depth),var(--stage) 55%,var(--mid)); box-shadow:0 26px 64px rgba(6,23,31,.26); }
+  .vw-slide::before { content:''; position:absolute; inset:0; pointer-events:none; background:linear-gradient(rgba(52,186,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(52,186,255,.035) 1px,transparent 1px); background-size:2.5rem 2.5rem; mask-image:linear-gradient(to bottom,black,transparent 82%); }
+  .vw-slide-inner { position:relative; z-index:1; display:grid; align-items:center; min-height:inherit; padding:clamp(2rem,5cqw,4.75rem); }
+  .vw-split { grid-template-columns:minmax(0,.76fr) minmax(30rem,1.24fr); gap:clamp(1.5rem,4cqw,4rem); }
+  .vw-kicker { display:block; margin-bottom:.8rem; color:var(--bright); font-family:'JetBrains Mono',monospace; font-size:clamp(.7rem,1.2cqw,.88rem); font-weight:800; text-transform:uppercase; }
+  .vw-copy h2 { max-width:13ch; color:white; font-family:'Lora',serif; font-size:clamp(2.4rem,5.5cqw,4.8rem); line-height:1.02; }
+  .vw-copy.compact h2 { font-size:clamp(2rem,4.2cqw,3.55rem); }
+  .vw-copy p { max-width:55ch; margin-top:1rem; color:#d9e7f3; font-size:clamp(.95rem,1.45cqw,1.12rem); line-height:1.55; }
+  .vw-copy,.vw-ask-stage,.vw-control-plane,.vw-run-graph,.vw-proof-stage,.vw-evidence,.vw-review-loop { min-width:0; }
+  .vw-ask-stage { display:grid; grid-template-columns:1fr 2rem 1.1fr; grid-template-rows:1fr 2.4rem auto; align-items:center; }
+  .vw-paper,.vw-request,.vw-brief-ticket,.vw-control-root,.vw-control-columns section,.vw-run-graph article,.vw-contract,.vw-component,.vw-reviewer,.vw-human-gate { border:1px solid rgba(165,184,238,.3); background:rgba(7,25,35,.84); }
+  .vw-paper { grid-row:1; min-height:22rem; padding:1.3rem; background:var(--paper); color:var(--ink); transform:rotate(-1.5deg); }
+  .vw-paper>span,.vw-request>span,.vw-brief-ticket>span,.vw-control-root>span,.vw-control-columns span,.vw-run-graph article>span,.vw-contract>span,.vw-component>span,.vw-evidence>span,.vw-reviewer>span,.vw-human-gate>span { color:#0075ad; font-family:'JetBrains Mono',monospace; font-size:.72rem; font-weight:800; }
+  .vw-paper strong { display:block; margin:1rem 0; font-family:'Lora',serif; font-size:1.4rem; }
+  .vw-paper i { display:block; height:.35rem; margin:.65rem 0; background:#dbe1e5; }
+  .vw-paper i:nth-of-type(2),.vw-paper i:nth-of-type(5) { width:72%; }
+  .vw-paper b { display:block; margin-top:1.5rem; padding:1rem; border-left:4px solid var(--blue); background:#e8f6fc; color:#005f8e; font-size:.85rem; }
+  .vw-plus { color:var(--gold); font-size:2rem; font-weight:900; text-align:center; }
+  .vw-request { min-height:16rem; padding:1.3rem; border-top:4px solid var(--bright); }
+  .vw-request>span,.vw-brief-ticket>span,.vw-control-root>span,.vw-run-graph article>span,.vw-contract>span,.vw-component>span,.vw-evidence>span,.vw-reviewer>span,.vw-human-gate>span { color:var(--bright); }
+  .vw-request blockquote { margin-top:1rem; color:white; font-family:'Lora',serif; font-size:clamp(1.05rem,1.6cqw,1.35rem); line-height:1.4; }
+  .vw-signal { grid-column:1/4; position:relative; height:2px; background:rgba(52,186,255,.35); }
+  .vw-signal::after,.vw-control-rail::after,.vw-proof-arrow::after,.vw-run-graph>i::after { content:''; position:absolute; right:0; top:-.28rem; border-width:.3rem 0 .3rem .45rem; border-style:solid; border-color:transparent transparent transparent var(--gold); }
+  .vw-signal i,.vw-control-rail i,.vw-proof-arrow i { position:absolute; top:-.3rem; left:0; width:.65rem; height:.65rem; border-radius:50%; background:var(--gold); box-shadow:0 0 14px rgba(244,196,48,.8); animation:vw-travel 2.7s linear infinite; }
+  .vw-brief-ticket { grid-column:2/4; justify-self:end; min-width:15rem; padding:.8rem 1rem; border-left:4px solid var(--gold); }
+  .vw-brief-ticket strong,.vw-brief-ticket em { display:block; }
+  .vw-brief-ticket strong { margin:.3rem 0; color:white; font-family:'Lora',serif; font-size:1.15rem; }
+  .vw-brief-ticket em { color:#b8cbd8; font-size:.75rem; font-style:normal; }
+  .vw-control-plane { display:grid; grid-template-columns:.72fr 2rem 1.6fr; align-items:center; }
+  .vw-control-root { padding:1.1rem; border-top:4px solid var(--bright); }
+  .vw-control-root strong,.vw-control-root em { display:block; }
+  .vw-control-root strong { margin:.65rem 0; color:white; font-size:.9rem; overflow-wrap:anywhere; }
+  .vw-control-root em { color:#b8cbd8; font-size:.75rem; font-style:normal; }
+  .vw-control-rail,.vw-proof-arrow,.vw-run-graph>i { position:relative; height:2px; background:rgba(52,186,255,.35); }
+  .vw-control-columns { display:grid; grid-template-columns:1fr 1fr; gap:.55rem; }
+  .vw-control-columns section { min-height:10rem; padding:.8rem; }
+  .vw-control-columns strong,.vw-control-columns b { display:block; }
+  .vw-control-columns strong { margin:.45rem 0 .75rem; color:white; font-family:'Lora',serif; font-size:1rem; }
+  .vw-control-columns b { margin-top:.35rem; padding:.38rem; color:#b8cbd8; font-size:.72rem; overflow-wrap:anywhere; }
+  .vw-control-columns b.is-selected { border-left:3px solid var(--gold); background:rgba(244,196,48,.1); color:var(--gold); }
+  .vw-palette { grid-column:1/4; display:grid; grid-template-columns:1.35fr repeat(5,1fr); align-items:center; gap:.4rem; margin-top:.75rem; padding:.55rem .65rem; border:1px solid rgba(165,184,238,.22); background:rgba(7,25,35,.72); }
+  .vw-palette strong { color:var(--bright); font-family:'JetBrains Mono',monospace; font-size:.7rem; }
+  .vw-palette span { display:flex; align-items:center; gap:.35rem; color:#d9e7f3; font-size:.7rem; }
+  .vw-palette i { flex:0 0 auto; width:.8rem; height:.8rem; border:1px solid rgba(255,255,255,.3); }
+  .vw-palette i.ink { background:linear-gradient(135deg,var(--ink) 50%,var(--stage) 50%); }
+  .vw-palette i.paper { background:var(--paper); }
+  .vw-palette i.blue { background:linear-gradient(135deg,var(--blue) 50%,var(--bright) 50%); }
+  .vw-palette i.gold { background:var(--gold); }
+  .vw-palette i.support { background:linear-gradient(135deg,var(--peri) 50%,var(--mint) 50%); }
+  .vw-palette>b { grid-column:1/7; padding-top:.35rem; border-top:1px solid rgba(165,184,238,.16); color:#b8cbd8; font-size:.7rem; font-weight:650; }
+  .vw-control-note { grid-column:1/4; margin-top:.4rem!important; padding:.55rem .65rem; background:rgba(52,186,255,.08); color:#d9e7f3!important; font-size:.78rem!important; }
+  .vw-control-note b { color:var(--bright); }
+  .vw-horizontal { display:grid; grid-template-columns:1fr minmax(18rem,.55fr); align-items:end; gap:2rem; margin-bottom:2rem; }
+  .vw-horizontal p { margin:0; }
+  .vw-run-graph { display:grid; grid-template-columns:.65fr 2rem .8fr 2rem 1.8fr 2rem .65fr; align-items:center; }
+  .vw-run-graph article { padding:1rem; text-align:center; }
+  .vw-run-graph article strong,.vw-run-graph article em { display:block; }
+  .vw-run-graph article strong { margin:.45rem 0; color:white; font-family:'Lora',serif; font-size:1.05rem; }
+  .vw-run-graph article em { color:#b8cbd8; font-size:.72rem; font-style:normal; }
+  .vw-ownership { display:grid; gap:.55rem; }
+  .vw-ownership article { display:grid; grid-template-columns:.7fr 1fr 1.25fr; align-items:center; gap:.65rem; border-left:3px solid var(--peri); text-align:left; }
+  .vw-ownership article.is-builder { border-color:var(--bright); background:rgba(52,186,255,.09); }
+  .vw-ownership article.is-reviewer { border-color:var(--gold); background:rgba(244,196,48,.08); }
+  .vw-person,.vw-person-end { border-top:4px solid var(--gold)!important; }
+  .vw-proof-stage { display:grid; grid-template-columns:.8fr 2rem .85fr 2rem 1.25fr; align-items:center; }
+  .vw-contract,.vw-component { min-height:14rem; padding:1rem; }
+  .vw-contract strong,.vw-contract em,.vw-component strong,.vw-component em { display:block; }
+  .vw-contract strong,.vw-component strong { margin:.7rem 0; color:white; font-family:'Lora',serif; font-size:1.1rem; }
+  .vw-contract em,.vw-component em { margin-top:.45rem; color:#b8cbd8; font-size:.75rem; font-style:normal; }
+  .vw-component>div { display:grid; grid-template-columns:1fr 1fr; gap:.35rem; margin-top:1rem; }
+  .vw-component>div b { padding:.45rem; background:rgba(52,186,255,.1); color:var(--bright); font-size:.7rem; text-align:center; }
+  .vw-evidence { display:grid; grid-template-columns:1fr 1fr .72fr .48fr; gap:.35rem; align-items:end; }
+  .vw-evidence>span,.vw-evidence>p { grid-column:1/5; }
+  .vw-screen { border:1px solid rgba(165,184,238,.35); background:#071922; }
+  .vw-screen header { height:1.1rem; background:#102b3c; }
+  .vw-screen>div { display:grid; place-items:center; min-height:7rem; padding:.45rem; background:linear-gradient(145deg,#0a2130,#143247); }
+  .vw-screen b { color:white; font-size:.72rem; }
+  .vw-screen em { color:#b8cbd8; font-size:.7rem; font-style:normal; }
+  .vw-screen i { display:block; width:70%; height:.28rem; margin-top:.5rem; background:var(--bright); }
+  .vw-screen.laptop>div { min-height:5.5rem; }
+  .vw-screen.snapped>div { min-height:7.5rem; }
+  .vw-screen.phone>div { min-height:8.5rem; }
+  .vw-evidence>p { padding:.55rem; background:rgba(226,249,217,.08); color:var(--mint); font-size:.72rem; }
+  .vw-evidence>p b { margin-right:.2rem; color:var(--mint); }
+  .vw-review-loop { display:grid; grid-template-columns:.72fr 1.25fr .78fr; align-items:center; gap:1rem; }
+  .vw-review-stack { display:grid; gap:.55rem; }
+  .vw-reviewer,.vw-return,.vw-human-gate { padding:1rem; border:1px solid rgba(165,184,238,.3); background:rgba(7,25,35,.84); }
+  .vw-reviewer strong,.vw-reviewer em,.vw-return strong,.vw-return em,.vw-human-gate strong,.vw-human-gate em { display:block; }
+  .vw-reviewer strong,.vw-return strong,.vw-human-gate strong { margin:.55rem 0; color:white; font-family:'Lora',serif; font-size:1.05rem; }
+  .vw-reviewer em,.vw-return em,.vw-human-gate em { color:#b8cbd8; font-size:.75rem; font-style:normal; line-height:1.4; }
+  .vw-return { border-left:4px solid var(--gold); background:rgba(244,196,48,.08); }
+  .vw-return>span { color:var(--gold); font-family:'JetBrains Mono',monospace; font-size:.72rem; font-weight:800; }
+  .vw-verdicts { display:grid; gap:.65rem; }
+  .vw-verdicts section { position:relative; min-height:9rem; padding:1rem; background:rgba(7,25,35,.82); }
+  .vw-verdicts b,.vw-verdicts span,.vw-verdicts strong,.vw-verdicts em { display:block; }
+  .vw-verdicts b { font-family:'JetBrains Mono',monospace; font-size:.8rem; }
+  .vw-verdicts span { margin:.25rem 0 .65rem; color:#b8cbd8; font-size:.72rem; }
+  .vw-verdicts strong { color:white; font-size:.8rem; }
+  .vw-verdicts em { margin-top:.3rem; color:#b8cbd8; font-size:.72rem; font-style:normal; }
+  .vw-revise { border-left:4px solid var(--gold); }
+  .vw-revise>b { color:var(--gold); }
+  .vw-accept { border-left:4px solid var(--mint); }
+  .vw-accept>b { color:var(--mint); }
+  .vw-verdicts i { position:absolute; right:-1rem; top:50%; width:1rem; height:2px; background:currentColor; }
+  .vw-revise i { right:auto; left:-1rem; }
+  .vw-revise i::before { content:''; position:absolute; left:0; top:-.25rem; border-width:.3rem .45rem .3rem 0; border-style:solid; border-color:transparent var(--gold) transparent transparent; }
+  .vw-accept i::after { content:''; position:absolute; right:0; top:-.25rem; border-width:.3rem 0 .3rem .45rem; border-style:solid; border-color:transparent transparent transparent var(--mint); }
+  .vw-human-gate { border-top:4px solid var(--gold); background:linear-gradient(145deg,rgba(244,196,48,.14),rgba(7,25,35,.9)); }
+  .vw-human-gate>div { display:grid; gap:.35rem; margin:1rem 0; }
+  .vw-human-gate>div b { padding:.4rem; border:1px solid rgba(244,196,48,.35); color:var(--gold); font-size:.7rem; text-align:center; }
+  .vw-hud { display:none; }
+  .vw-deck[data-present='true'] { position:fixed; inset:0; z-index:9999; width:100vw; height:100dvh; margin:0; background:var(--depth); }
+  .vw-deck[data-present='true'] .vw-rail { display:none; }
+  .vw-deck[data-present='true'] .vw-hud { position:fixed; z-index:10002; top:.75rem; right:.75rem; left:.75rem; display:flex; align-items:center; gap:1rem; min-height:3.25rem; padding:.4rem .6rem; border:1px solid rgba(52,186,255,.24); background:rgba(6,23,31,.94); box-shadow:0 12px 28px rgba(0,0,0,.28); }
+  .vw-status { display:flex; align-items:center; gap:.75rem; min-width:0; }
+  .vw-status span { color:var(--bright); font-family:'JetBrains Mono',monospace; font-size:.72rem; }
+  .vw-status strong { color:white; font-size:.72rem; }
+  .vw-controls { display:flex; gap:.35rem; margin-left:auto; }
+  .vw-cue { position:absolute; top:calc(100% + .4rem); right:0; display:none; width:min(30rem,80vw); padding:.75rem; border-left:3px solid var(--gold); background:rgba(6,23,31,.96); color:#d9e7f3; font-size:.75rem; line-height:1.5; }
+  .vw-deck[data-present='true'][data-cues='true'] .vw-cue { display:block; }
+  .vw-deck[data-present='true'] .vw-slide { position:fixed; inset:0; margin:0; min-height:100dvh; border:0; border-radius:0; opacity:0; visibility:hidden; pointer-events:none; transform:translateX(4%); transition:opacity 360ms ease,transform 520ms cubic-bezier(.2,.8,.2,1),visibility 0s linear 520ms; }
+  .vw-deck[data-present='true'][data-present-dir='back'] .vw-slide { transform:translateX(-4%); }
+  .vw-deck[data-present='true'] .vw-slide.is-current { z-index:10000; opacity:1; visibility:visible; pointer-events:auto; transform:none; transition-delay:0s; }
+  .vw-deck[data-present='true'] .vw-slide.is-leaving { z-index:9999; opacity:0; visibility:visible; }
+  .vw-deck[data-present='true'] .vw-slide-inner { height:100dvh; min-height:0; padding:clamp(4.8rem,7vh,6rem) clamp(2rem,6vw,6rem) clamp(1.25rem,3vh,2.5rem); }
+  @container (max-width:1050px) {
+    .vw-deck[data-present='true'] .vw-proof .vw-slide-inner { grid-template-columns:1fr; grid-template-rows:auto 1fr; }
+    .vw-deck[data-present='true'] .vw-proof-stage { align-self:center; }
+    .vw-deck[data-present='true'] .vw-gate .vw-slide-inner { grid-template-columns:1fr; grid-template-rows:auto 1fr; }
+    .vw-deck[data-present='true'] .vw-gate .vw-review-loop { align-self:center; width:100%; }
+  }
+  @container (max-width:900px) {
+    .vw-brand { display:none; }
+    .vw-split { grid-template-columns:1fr; }
+    .vw-deck:not([data-present='true']) .vw-slide-inner { padding:2rem; }
+    .vw-deck[data-present='true'] .vw-split { grid-template-columns:minmax(13rem,.64fr) minmax(0,1.36fr); gap:1.25rem; }
+    .vw-deck[data-present='true'] .vw-copy h2 { font-size:clamp(2rem,5cqw,2.7rem); }
+    .vw-deck[data-present='true'] .vw-proof .vw-slide-inner { grid-template-columns:1fr; grid-template-rows:auto 1fr; }
+    .vw-deck[data-present='true'] .vw-proof-stage { align-self:center; }
+  }
+  @container (max-width:620px) {
+    .vw-deck { width:calc(100vw - 1rem); margin:1rem auto; }
+    .vw-links { display:none; }
+    .vw-present { margin-left:auto; }
+    .vw-deck[data-present='true'] .vw-hud { top:.35rem; right:.35rem; left:.35rem; }
+    .vw-deck[data-present='true'] .vw-status span,.vw-controls button[data-present-cues] { display:none; }
+    .vw-deck[data-present='true'] .vw-status strong { display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .vw-deck[data-present='true'] .vw-slide { overflow:hidden; }
+    .vw-deck[data-present='true'] .vw-slide-inner { display:grid; height:100dvh; padding:4.5rem .85rem .65rem; gap:.65rem; }
+    .vw-deck[data-present='true'] .vw-split { grid-template-columns:1fr; grid-template-rows:auto 1fr; }
+    .vw-deck[data-present='true'] .vw-copy h2,.vw-deck[data-present='true'] .vw-copy.compact h2 { max-width:15ch; font-size:clamp(1.75rem,8.5cqw,2.2rem); }
+    .vw-deck[data-present='true'] .vw-copy p { margin-top:.4rem; font-size:.78rem; line-height:1.35; }
+    .vw-deck[data-present='true'] .vw-kicker { margin-bottom:.3rem; font-size:.72rem; }
+    .vw-deck[data-present='true'] .vw-ask-stage { grid-template-columns:1fr 1rem 1fr; min-height:0; }
+    .vw-deck[data-present='true'] .vw-paper { min-height:20rem; padding:.7rem; }
+    .vw-deck[data-present='true'] .vw-request { min-height:16rem; padding:.7rem; }
+    .vw-deck[data-present='true'] .vw-request blockquote { font-size:.95rem; }
+    .vw-deck[data-present='true'] .vw-brief-ticket { min-width:0; }
+    .vw-deck[data-present='true'] .vw-control-plane { grid-template-columns:1fr; grid-template-rows:auto .75rem 1fr auto; min-height:0; }
+    .vw-deck[data-present='true'] .vw-control-root { padding:.65rem; }
+    .vw-deck[data-present='true'] .vw-control-rail { width:2px; height:auto; margin:auto; }
+    .vw-deck[data-present='true'] .vw-control-rail::after { right:-.28rem; top:auto; bottom:0; border-width:.45rem .3rem 0; border-color:var(--gold) transparent transparent; }
+    .vw-deck[data-present='true'] .vw-control-rail i { display:none; }
+    .vw-deck[data-present='true'] .vw-control-columns { grid-template-columns:1fr 1fr; gap:.3rem; }
+    .vw-deck[data-present='true'] .vw-control-columns section { min-height:0; padding:.45rem; }
+    .vw-deck[data-present='true'] .vw-control-columns strong { margin:.25rem 0; font-size:.8rem; }
+    .vw-deck[data-present='true'] .vw-control-columns b { margin-top:.2rem; padding:.25rem; font-size:.7rem; }
+    .vw-deck[data-present='true'] .vw-palette { grid-column:1/-1; grid-template-columns:1fr repeat(5,auto); gap:.25rem; margin-top:.3rem; padding:.35rem; }
+    .vw-deck[data-present='true'] .vw-palette strong { font-size:.7rem; }
+    .vw-deck[data-present='true'] .vw-palette span { font-size:0; gap:0; }
+    .vw-deck[data-present='true'] .vw-palette i { width:.75rem; height:.75rem; }
+    .vw-deck[data-present='true'] .vw-palette>b { font-size:.7rem; }
+    .vw-deck[data-present='true'] .vw-control-note { grid-column:1/-1; margin-top:.3rem!important; padding:.4rem; font-size:.7rem!important; }
+    .vw-deck[data-present='true'] .vw-horizontal { grid-template-columns:1fr; gap:.3rem; margin:0 0 .5rem; }
+    .vw-deck[data-present='true'] .vw-horizontal p { font-size:.75rem; }
+    .vw-deck[data-present='true'] .vw-run-graph { grid-template-columns:.7fr .5rem .8fr .5rem 1.7fr .5rem .7fr; min-height:0; }
+    .vw-deck[data-present='true'] .vw-run-graph article { padding:.45rem; }
+    .vw-deck[data-present='true'] .vw-run-graph article strong { font-size:.8rem; }
+    .vw-deck[data-present='true'] .vw-run-graph article em { font-size:.7rem; }
+    .vw-deck[data-present='true'] .vw-ownership { gap:.25rem; }
+    .vw-deck[data-present='true'] .vw-ownership article { display:block; }
+    .vw-deck[data-present='true'] .vw-proof-stage { grid-template-columns:1fr .5rem 1fr; grid-template-rows:auto .5rem 1fr; min-height:0; }
+    .vw-deck[data-present='true'] .vw-contract { grid-column:1; grid-row:1; }
+    .vw-deck[data-present='true'] .vw-component { grid-column:3; grid-row:1; }
+    .vw-deck[data-present='true'] .vw-proof-arrow:nth-of-type(1) { grid-column:2; grid-row:1; }
+    .vw-deck[data-present='true'] .vw-proof-arrow:nth-of-type(2) { grid-column:1/4; grid-row:2; }
+    .vw-deck[data-present='true'] .vw-evidence { grid-column:1/4; grid-row:3; }
+    .vw-deck[data-present='true'] .vw-contract,.vw-deck[data-present='true'] .vw-component { min-height:0; padding:.5rem; }
+    .vw-deck[data-present='true'] .vw-evidence { gap:.2rem; }
+    .vw-deck[data-present='true'] .vw-screen>div { min-height:5rem; }
+    .vw-deck[data-present='true'] .vw-screen.phone>div { min-height:6rem; }
+    .vw-deck[data-present='true'] .vw-review-loop { grid-template-columns:.7fr 1.2fr .75fr; gap:.4rem; min-height:0; }
+    .vw-deck[data-present='true'] .vw-reviewer,.vw-deck[data-present='true'] .vw-return,.vw-deck[data-present='true'] .vw-human-gate { padding:.55rem; }
+    .vw-deck[data-present='true'] .vw-verdicts section { min-height:8.5rem; padding:.55rem; }
+  }
+  @media (max-height:500px) and (orientation:landscape) {
+    .vw-deck[data-present='true'] .vw-hud { top:.25rem; right:.25rem; left:.25rem; min-height:2.75rem; padding:.2rem .4rem; }
+    .vw-deck[data-present='true'] .vw-controls button { min-width:2.75rem; min-height:2.75rem; padding:.25rem; }
+    .vw-deck[data-present='true'] .vw-controls button[data-present-cues] { display:none; }
+    .vw-deck[data-present='true'] .vw-slide-inner { height:100dvh; padding:3.35rem 1rem .55rem; gap:.7rem; }
+    .vw-deck[data-present='true'] .vw-copy h2,.vw-deck[data-present='true'] .vw-copy.compact h2 { font-size:clamp(1.45rem,4vw,2rem); }
+    .vw-deck[data-present='true'] .vw-copy p { margin-top:.35rem; font-size:.72rem; line-height:1.25; }
+    .vw-deck[data-present='true'] .vw-kicker { margin-bottom:.25rem; font-size:.7rem; }
+    .vw-deck[data-present='true'] .vw-split { grid-template-columns:minmax(12rem,.62fr) minmax(0,1.38fr); }
+    .vw-deck[data-present='true'] .vw-proof .vw-slide-inner { grid-template-columns:minmax(12rem,.62fr) minmax(0,1.38fr); grid-template-rows:1fr; }
+    .vw-deck[data-present='true'] .vw-gate .vw-slide-inner { grid-template-columns:minmax(12rem,.62fr) minmax(0,1.38fr); grid-template-rows:1fr; }
+    .vw-deck[data-present='true'] .vw-proof-stage { grid-template-columns:.55fr 1rem .7fr 1rem 1.65fr; }
+    .vw-deck[data-present='true'] .vw-paper { min-height:14rem; padding:.55rem; }
+    .vw-deck[data-present='true'] .vw-paper strong { margin:.4rem 0; font-size:1rem; }
+    .vw-deck[data-present='true'] .vw-paper i { margin:.35rem 0; }
+    .vw-deck[data-present='true'] .vw-paper b { margin-top:.55rem; padding:.45rem; font-size:.7rem; }
+    .vw-deck[data-present='true'] .vw-request { min-height:11rem; padding:.6rem; }
+    .vw-deck[data-present='true'] .vw-request blockquote { margin-top:.45rem; font-size:.9rem; }
+    .vw-deck[data-present='true'] .vw-brief-ticket { padding:.4rem; }
+    .vw-deck[data-present='true'] .vw-brief-ticket strong { margin:.1rem 0; }
+    .vw-deck[data-present='true'] .vw-brief-ticket em { display:none; }
+    .vw-deck[data-present='true'] .vw-control-columns { gap:.25rem; }
+    .vw-deck[data-present='true'] .vw-control-columns section { min-height:6.7rem; padding:.35rem; }
+    .vw-deck[data-present='true'] .vw-control-columns strong { margin:.2rem 0; font-size:.75rem; }
+    .vw-deck[data-present='true'] .vw-control-columns b { padding:.15rem; font-size:.7rem; }
+    .vw-deck[data-present='true'] .vw-palette { margin-top:.2rem; padding:.25rem; }
+    .vw-deck[data-present='true'] .vw-control-root { padding:.5rem; }
+    .vw-deck[data-present='true'] .vw-control-note { margin-top:.25rem!important; padding:.3rem; }
+    .vw-deck[data-present='true'] .vw-rules .vw-control-note { display:none; }
+    .vw-deck[data-present='true'] .vw-horizontal { grid-template-columns:1fr .65fr; margin:0 0 .4rem; }
+    .vw-deck[data-present='true'] .vw-team .vw-horizontal { grid-template-columns:.7fr 1fr; }
+    .vw-deck[data-present='true'] .vw-team .vw-copy h2 { max-width:none; font-size:1.45rem; }
+    .vw-deck[data-present='true'] .vw-team .vw-run-graph article em { display:none; }
+    .vw-deck[data-present='true'] .vw-run-graph article { padding:.4rem; }
+    .vw-deck[data-present='true'] .vw-ownership { gap:.2rem; }
+    .vw-deck[data-present='true'] .vw-ownership article { grid-template-columns:.7fr 1fr 1.2fr; }
+    .vw-deck[data-present='true'] .vw-contract,.vw-deck[data-present='true'] .vw-component { min-height:0; padding:.45rem; }
+    .vw-deck[data-present='true'] .vw-screen>div { min-height:4.5rem; }
+    .vw-deck[data-present='true'] .vw-screen.phone>div { min-height:5.5rem; }
+    .vw-deck[data-present='true'] .vw-reviewer,.vw-deck[data-present='true'] .vw-return,.vw-deck[data-present='true'] .vw-human-gate { padding:.45rem; }
+    .vw-deck[data-present='true'] .vw-verdicts section { min-height:6.5rem; padding:.4rem; }
+  }
+  @keyframes vw-travel { from { left:0; } to { left:calc(100% - .65rem); } }
+  @media (prefers-reduced-motion:reduce) {
+    .vw-deck *,.vw-deck *::before,.vw-deck *::after { animation-duration:.01ms!important; animation-iteration-count:1!important; scroll-behavior:auto!important; transition-duration:.01ms!important; }
+    .vw-deck[data-present='true'] .vw-slide { transform:none; }
+  }
+</style>

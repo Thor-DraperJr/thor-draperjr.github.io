@@ -48,6 +48,16 @@ const DECKS = {
             'fpr-loop', 'fpr-diff', 'fpr-correction', 'fpr-recap', 'fpr-finish',
         ],
     },
+    'website-presentation': {
+        label: 'Website Presentation Deck',
+        url: 'http://localhost:4321/tech/how-my-website-becomes-a-presentation/present/',
+        outRoot: '.artifacts/website-presentation-audit',
+        presentSelector: '.pw-deck[data-present="true"]',
+        sectionSelector: '[data-presentation-section]',
+        sections: [
+            'vw-ask', 'vw-rules', 'vw-team', 'vw-proof', 'vw-gate',
+        ],
+    },
 };
 
 const args = Object.fromEntries(process.argv.slice(2).map(a => {

@@ -1,4 +1,4 @@
-<!-- Last modified: 2026-08-10 -->
+<!-- Last modified: 2026-08-11 -->
 <!-- Managed by loop-improver-mcp -->
 
 # presentation-reviewer insight
@@ -14,6 +14,10 @@ The reviewer now supports brief, figure, and deck modes and remains independent 
 ## Reusable learning
 
 Animation count is not evidence of dynamism. A presentation feels alive when state changes carry the teaching sequence, the presenter controls the pace where sequence matters, the scene reaches a clear hold frame, and the handoff to the next idea is intentional. A justified static scene remains valid.
+
+Clean section-level overflow metrics do not prove comprehension or panel containment. A workflow deck should carry one real request through applicable rules, selected roles, build evidence, independent review, and the human gate without implying that every available file or specialist runs. Inspect the 720x900 and short-landscape screenshots directly, and compare `scrollWidth`/`scrollHeight` with each fixed child panel's client dimensions.
+
+Clean geometry also does not prove a workflow diagram is true. Compare connector direction, ownership labels, and branch destinations with the handoff contract. A `REVISE` branch must visibly return to the repair owner; only `ACCEPT` should proceed to the human approval gate.
 
 ## Next evidence
 
