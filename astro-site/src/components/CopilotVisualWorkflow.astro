@@ -1,36 +1,50 @@
 ---
 interface Props {
   startInPresent?: boolean;
+  scene?: number;
+  launcherOnly?: boolean;
 }
 
-const { startInPresent = false } = Astro.props;
+const { startInPresent = false, scene, launcherOnly = false } = Astro.props;
 const articleHref = '/tech/how-my-website-becomes-a-presentation/';
+const presentationHref = `${articleHref}present/`;
+const fullDeck = scene === undefined && !launcherOnly;
+const showScene = (index: number) => fullDeck || scene === index;
 const slides = [
   { id: 'vw-ask', title: 'The Request', note: 'I start with the article and one request: read this, find the idea readers need to remember, and create a visual that makes it easier to understand.' },
-  { id: 'vw-rules', title: 'The Control Plane', note: 'The root instructions route the request. Visual System supplies the existing ink, paper, process-blue, gold, periwinkle, and mint color roles before the build starts.' },
-  { id: 'vw-team', title: 'The Run Graph', note: 'Under this repository policy, the root conductor selects the smallest useful team. Visual System supplies design rules. Visual Storytelling owns the build. Presentation Reviewer owns acceptance.' },
-  { id: 'vw-proof', title: 'Rendered Evidence', note: 'The build owner renders eight frames: desktop, two laptops, laptop chrome, two snapped windows, phone landscape, and phone portrait. The matrix exposes different layout risks.' },
-  { id: 'vw-gate', title: 'The Human Gate', note: 'The reviewer receives the brief, source, eight renders, measurements, teaching states, and checks. REVISE names the failed scene and viewport; ACCEPT returns the evidence to me.' },
+  { id: 'vw-rules', title: 'The Saved Rules', note: 'The repository instructions point Copilot to the saved prompt, design standards, and specialist roles needed for the request.' },
+  { id: 'vw-team', title: 'The Team', note: 'Copilot chooses the roles needed for the job. Visual System supplies the design rules. Visual Storytelling builds. Presentation Reviewer checks the result.' },
+  { id: 'vw-proof', title: 'Browser Checks', note: 'Visual Storytelling checks eight screen sizes: desktop, two laptops, laptop chrome, two snapped windows, phone landscape, and phone portrait. Each size can expose a different problem.' },
+  { id: 'vw-gate', title: 'My Final Call', note: 'The reviewer receives the brief, source, eight screenshots, measurements, interaction results, and completed checks. REVISE sends a named problem back for repair. ACCEPT sends the finished visual to me.' },
 ];
 ---
 
+{launcherOnly ? (
+  <nav class="vw-rail vw-launcher" aria-label="Presentation controls">
+    <span class="vw-brand">Presentation mode</span>
+    <span class="vw-launcher-copy">Five scenes · full screen · speaker cues</span>
+    <a class="vw-present" href={presentationHref} aria-label="Open full-screen presentation"><span aria-hidden="true">&#9654;</span> Present</a>
+  </nav>
+ ) : (
 <section
-  class="pw-deck vw-deck"
-  data-presentation-deck
+  class:list={['pw-deck', 'vw-deck', !fullDeck && 'vw-article-scene']}
+  data-presentation-deck={fullDeck || undefined}
   data-present={startInPresent ? 'true' : undefined}
   data-exit-href={startInPresent ? articleHref : undefined}
   aria-label="How one Copilot request becomes a reviewed article visual"
 >
-  <nav class="vw-rail" aria-label="Presentation sections">
-    <span class="vw-brand">Article to accepted visual</span>
-    <div class="vw-links">
-      {slides.map((slide, index) => <a href={`#${slide.id}`} data-presentation-link><span>{String(index + 1).padStart(2, '0')}</span>{slide.title}</a>)}
-    </div>
-    <button type="button" class="vw-present" data-present-toggle aria-label="Enter presentation mode"><span aria-hidden="true">&#9654;</span> Present</button>
-  </nav>
+  {fullDeck && (
+    <nav class="vw-rail" aria-label="Presentation sections">
+      <span class="vw-brand">Article to accepted visual</span>
+      <div class="vw-links">
+        {slides.map((slide, index) => <a href={`#${slide.id}`} data-presentation-link><span>{String(index + 1).padStart(2, '0')}</span>{slide.title}</a>)}
+      </div>
+      <button type="button" class="vw-present" data-present-toggle aria-label="Enter presentation mode"><span aria-hidden="true">&#9654;</span> Present</button>
+    </nav>
+  )}
 
-  <div class="vw-hud" data-present-hud aria-hidden={startInPresent ? 'false' : 'true'}>
-    <div class="vw-status">
+  {fullDeck && <div class="vw-hud" data-present-hud aria-hidden={startInPresent ? 'false' : 'true'}>
+    <div class="vw-status" role="status" aria-live="polite" aria-atomic="true">
       <span data-present-counter>Section 01 / {String(slides.length).padStart(2, '0')}</span>
       <strong data-present-title>{slides[0].title}</strong>
     </div>
@@ -41,14 +55,14 @@ const slides = [
       <button type="button" data-present-exit aria-label="Exit presentation">Exit</button>
     </div>
     <p class="vw-cue" data-presentation-note-display>{slides[0].note}</p>
-  </div>
+  </div>}
 
-  <section class:list={['vw-slide', 'vw-ask', startInPresent && 'is-current']} id="vw-ask" data-presentation-section data-presentation-title={slides[0].title} data-presentation-note={slides[0].note} aria-labelledby="vw-ask-title">
+  {showScene(0) && <section class:list={['vw-slide', 'vw-ask', startInPresent && 'is-current']} id="vw-ask" data-presentation-section data-presentation-title={slides[0].title} data-presentation-note={slides[0].note} aria-labelledby="vw-ask-title">
     <div class="vw-slide-inner vw-split">
       <div class="vw-copy">
         <span class="vw-kicker">The only manual starting point</span>
         <h2 id="vw-ask-title">I start with the article and one request.</h2>
-        <p>I do not open the component or write a command. I ask Copilot to read the story and invent the visual.</p>
+        <p>The article gives Copilot the story. My request gives it the idea readers should remember.</p>
       </div>
       <div class="vw-ask-stage" role="img" aria-label="An article and a Copilot request combine into a visual brief.">
         <article class="vw-paper">
@@ -66,23 +80,23 @@ const slides = [
         <article class="vw-brief-ticket"><span>OUTPUT</span><strong>Visual brief</strong><em>teaching point + concept + proof</em></article>
       </div>
     </div>
-  </section>
+  </section>}
 
-  <section class="vw-slide vw-rules" id="vw-rules" data-presentation-section data-presentation-title={slides[1].title} data-presentation-note={slides[1].note} aria-labelledby="vw-rules-title">
+  {showScene(1) && <section class="vw-slide vw-rules" id="vw-rules" data-presentation-section data-presentation-title={slides[1].title} data-presentation-note={slides[1].note} aria-labelledby="vw-rules-title">
     <div class="vw-slide-inner vw-split">
       <div class="vw-copy compact">
         <span class="vw-kicker">Configured once in Markdown</span>
         <h2 id="vw-rules-title">The repository already knows how to work.</h2>
-        <p>Copilot starts with the workspace rules. Those rules direct the conductor to the playbook and specialist definitions needed for my request.</p>
+        <p>Copilot reads the workspace rules and uses the saved prompt, standards, and specialist roles needed for my request.</p>
       </div>
-      <div class="vw-control-plane" role="img" aria-label="Markdown files form a control plane of standing instructions, reusable prompts, specialist agents, and current insights. Visual System supplies the canonical ink, paper, process-blue, gold, periwinkle, and mint palette before the visual is built.">
-        <article class="vw-control-root"><span>ALWAYS APPLIES</span><strong>copilot-instructions.md</strong><em>routing, ownership, safety, approval</em></article>
+      <div class="vw-control-plane" role="img" aria-label="Markdown files store the repository rules, reusable prompts, specialist roles, and lessons from earlier work. Visual System supplies the ink, paper, blue, gold, periwinkle, and mint colors before the visual is built.">
+        <article class="vw-control-root"><span>ALWAYS APPLIES</span><strong>copilot-instructions.md</strong><em>where to look, safety, approval</em></article>
         <div class="vw-control-rail" aria-hidden="true"><i></i></div>
         <div class="vw-control-columns">
           <section><span>PROMPTS</span><strong>Reusable playbooks</strong><b class="is-selected">visual-storytelling.prompt.md</b><b>article-pass.prompt.md</b></section>
           <section><span>INSTRUCTIONS</span><strong>Standing standards</strong><b class="is-selected">visual-system.instructions.md</b><b>editorial-system.instructions.md</b></section>
           <section><span>AGENTS</span><strong>Defined specialists</strong><b class="is-selected">Presentation Reviewer</b><b>Narrative Strategist</b></section>
-          <section><span>INSIGHTS</span><strong>Learning from prior runs</strong><b>what worked</b><b>what to inspect next</b></section>
+          <section><span>INSIGHTS</span><strong>Lessons from earlier work</strong><b>what worked</b><b>what to inspect next</b></section>
         </div>
         <div class="vw-palette">
           <strong>VISUAL SYSTEM OUTPUT</strong>
@@ -93,47 +107,47 @@ const slides = [
           <span><i class="support"></i>depth</span>
           <b>palette + composition + motion + interaction + access</b>
         </div>
-        <p class="vw-control-note"><b>Selected for this request</b> Only the needed files and specialists join this run.</p>
+        <p class="vw-control-note"><b>Selected for this request</b> Copilot uses only the files and roles needed for this job.</p>
       </div>
     </div>
-  </section>
+  </section>}
 
-  <section class="vw-slide vw-team" id="vw-team" data-presentation-section data-presentation-title={slides[2].title} data-presentation-note={slides[2].note} aria-labelledby="vw-team-title">
+  {showScene(2) && <section class="vw-slide vw-team" id="vw-team" data-presentation-section data-presentation-title={slides[2].title} data-presentation-note={slides[2].note} aria-labelledby="vw-team-title">
     <div class="vw-slide-inner">
       <div class="vw-copy compact vw-horizontal">
-        <div><span class="vw-kicker">A request-specific run graph</span><h2 id="vw-team-title">The root conductor assembles the smallest useful team.</h2></div>
-        <p>Each role has one owner. The builder cannot approve its own work.</p>
+        <div><span class="vw-kicker">The roles for this request</span><h2 id="vw-team-title">Each role has one clear job.</h2></div>
+        <p>One role builds the visual. Another reviews it. I make the final call.</p>
       </div>
-      <div class="vw-run-graph" role="img" aria-label="Thor's request goes to the root conductor. Visual System supplies rules to Visual Storytelling, which builds. Presentation Reviewer independently accepts or revises the result. Thor remains the final decision owner.">
+      <div class="vw-run-graph" role="img" aria-label="Thor gives Copilot an article and a request. Visual System supplies design rules. Visual Storytelling builds the visual. Presentation Reviewer checks it. Thor makes the final decision.">
         <article class="vw-person"><span>INPUT</span><strong>Thor</strong><em>article + request</em></article>
         <i aria-hidden="true"></i>
-        <article class="vw-conductor"><span>ROUTES</span><strong>Root conductor</strong><em>chooses the run graph</em></article>
+        <article class="vw-conductor"><span>CHOOSES ROLES</span><strong>Copilot</strong><em>uses the saved rules</em></article>
         <i aria-hidden="true"></i>
         <div class="vw-ownership">
-          <article><span>RULEBOOK</span><strong>Visual System</strong><em>concept, composition, motion, access</em></article>
-          <article class="is-builder"><span>BUILD OWNER</span><strong>Visual Storytelling</strong><em>brief, build, QA, evidence, repair</em></article>
-          <article class="is-reviewer"><span>ACCEPTANCE OWNER</span><strong>Presentation Reviewer</strong><em>ACCEPT, REVISE, or BLOCKED</em></article>
+          <article><span>DESIGN RULES</span><strong>Visual System</strong><em>look, layout, motion, access</em></article>
+          <article class="is-builder"><span>BUILDS</span><strong>Visual Storytelling</strong><em>brief, build, test, repair</em></article>
+          <article class="is-reviewer"><span>REVIEWS</span><strong>Presentation Reviewer</strong><em>checks the work and returns a verdict</em></article>
         </div>
         <i aria-hidden="true"></i>
         <article class="vw-person vw-person-end"><span>DECIDES</span><strong>Thor</strong><em>keep, change, or publish</em></article>
       </div>
     </div>
-  </section>
+  </section>}
 
-  <section class="vw-slide vw-proof" id="vw-proof" data-presentation-section data-presentation-title={slides[3].title} data-presentation-note={slides[3].note} aria-labelledby="vw-proof-title">
+  {showScene(3) && <section class="vw-slide vw-proof" id="vw-proof" data-presentation-section data-presentation-title={slides[3].title} data-presentation-note={slides[3].note} aria-labelledby="vw-proof-title">
     <div class="vw-slide-inner vw-split">
       <div class="vw-copy compact">
-        <span class="vw-kicker">Eight frames, different risks</span>
-        <h2 id="vw-proof-title">The browser matrix tests every medium.</h2>
-        <p>Desktop, laptop chrome, snapped windows, and both phone orientations each expose a different layout failure.</p>
+        <span class="vw-kicker">Eight sizes, different risks</span>
+        <h2 id="vw-proof-title">The browser checks every screen size.</h2>
+        <p>Desktop, laptop, snapped windows, and both phone orientations can each expose a different layout problem.</p>
       </div>
-      <div class="vw-proof-stage" role="img" aria-label="A visual brief becomes one shared Astro component. The build owner renders it across eight required frames: desktop, two laptops, laptop chrome, two snapped windows, phone landscape, and phone portrait. Screenshots and measurements become the evidence package.">
-        <article class="vw-contract"><span>VISUAL CONTRACT</span><strong>one teaching point</strong><em>entry &rarr; build &rarr; hold</em><em>mobile + reduced motion</em></article>
+      <div class="vw-proof-stage" role="img" aria-label="A visual brief becomes one shared Astro component. Visual Storytelling checks it at eight screen sizes: desktop, two laptops, laptop chrome, two snapped windows, phone landscape, and phone portrait. Screenshots and measurements show what happened.">
+        <article class="vw-contract"><span>VISUAL BRIEF</span><strong>one teaching point</strong><em>first view &rarr; change &rarr; final view</em><em>phone + reduced motion</em></article>
         <div class="vw-proof-arrow" aria-hidden="true"><i></i></div>
-        <article class="vw-component"><span>BUILD OWNER</span><strong>Visual Storytelling</strong><em>one shared Astro visual</em><div><b>ARTICLE</b><b>PRESENT</b></div></article>
+        <article class="vw-component"><span>BUILDS</span><strong>Visual Storytelling</strong><em>one shared Astro visual</em><div><b>ARTICLE</b><b>PRESENT</b></div></article>
         <div class="vw-proof-arrow" aria-hidden="true"><i></i></div>
         <div class="vw-evidence">
-          <span>EIGHT-VIEWPORT EVIDENCE</span>
+          <span>EIGHT BROWSER CHECKS</span>
           <article class="vw-screen desktop"><header></header><div><b>Desktop</b><em>1920 · 1440</em><i></i></div></article>
           <article class="vw-screen laptop"><header></header><div><b>Laptops</b><em>1366 · 1214</em><i></i></div></article>
           <article class="vw-screen snapped"><header></header><div><b>Snapped</b><em>960 · 720</em><i></i></div></article>
@@ -142,47 +156,46 @@ const slides = [
         </div>
       </div>
     </div>
-  </section>
+  </section>}
 
-  <section class="vw-slide vw-gate" id="vw-gate" data-presentation-section data-presentation-title={slides[4].title} data-presentation-note={slides[4].note} aria-labelledby="vw-gate-title">
+  {showScene(4) && <section class="vw-slide vw-gate" id="vw-gate" data-presentation-section data-presentation-title={slides[4].title} data-presentation-note={slides[4].note} aria-labelledby="vw-gate-title">
     <div class="vw-slide-inner vw-split">
       <div class="vw-copy compact">
-        <span class="vw-kicker">Automation with accountability</span>
-        <h2 id="vw-gate-title">Weak work goes back. Accepted work comes to me.</h2>
-        <p>With approved tools, Copilot can read, design, build, render, and repair. My repository policy keeps final decisions and publishing with me.</p>
+        <span class="vw-kicker">My approval stays in the process</span>
+        <h2 id="vw-gate-title">Problems go back. Finished work comes to me.</h2>
+        <p>With approved tools, Copilot can read, design, build, check, and repair. I still decide what is ready to publish.</p>
       </div>
-      <div class="vw-review-loop" role="img" aria-label="Visual Storytelling hands Presentation Reviewer the brief, source evidence, eight viewport renders, measurements, teaching states, and completed checks. A revise verdict names the failed scene and viewport, then returns through the conductor for repair and new evidence. An accept verdict goes to Thor's final approval gate.">
+      <div class="vw-review-loop" role="img" aria-label="Visual Storytelling gives Presentation Reviewer the brief, source, eight screenshots, measurements, interaction results, and completed checks. A revise verdict names the problem and sends it back for repair. An accept verdict sends the finished visual to Thor for final approval.">
         <div class="vw-review-stack">
-          <article class="vw-return"><span>REPAIR OWNER</span><strong>Visual Storytelling</strong><em>affected + adjacent rerenders</em></article>
-          <article class="vw-reviewer"><span>REVIEW PACKAGE</span><strong>Presentation Reviewer</strong><em>brief + source</em><em>8 renders + metrics</em><em>states + checks</em></article>
+          <article class="vw-return"><span>FIXES</span><strong>Visual Storytelling</strong><em>affected + nearby screens</em></article>
+          <article class="vw-reviewer"><span>REVIEWER CHECKS</span><strong>Presentation Reviewer</strong><em>brief + source</em><em>8 screenshots + measurements</em><em>interactions + checks</em></article>
         </div>
         <div class="vw-verdicts">
-          <section class="vw-revise"><b>REVISE</b><span>mobile-land · vw-proof · clipped label</span><i aria-hidden="true"></i><strong>Named surface returns to the builder</strong><em>new evidence comes back to review</em></section>
-          <section class="vw-accept"><b>ACCEPT</b><span>every medium clears the brief</span><i aria-hidden="true"></i><strong>Finished visual returns to Thor</strong><em>artifact + verdict + evidence</em></section>
+          <section class="vw-revise"><b>REVISE</b><span>phone landscape · browser checks · clipped label</span><i aria-hidden="true"></i><strong>The problem goes back to the builder</strong><em>updated screenshots return to review</em></section>
+          <section class="vw-accept"><b>ACCEPT</b><span>all eight sizes pass</span><i aria-hidden="true"></i><strong>The finished visual returns to Thor</strong><em>visual + verdict + screenshots</em></section>
         </div>
-        <article class="vw-human-gate"><span>REPOSITORY POLICY</span><strong>I make the call.</strong><div><b>COMMIT</b><b>PUSH</b><b>PUBLISH</b></div><em>These actions require my approval.</em></article>
+        <article class="vw-human-gate"><span>MY APPROVAL</span><strong>I make the call.</strong><div><b>COMMIT</b><b>PUSH</b><b>PUBLISH</b></div><em>These actions require my approval.</em></article>
       </div>
     </div>
-  </section>
+  </section>}
 </section>
-
-<script>
-  import { initPresentationDeck } from '../scripts/presentationDeck.client';
-  initPresentationDeck();
-  document.addEventListener('astro:page-load', () => initPresentationDeck());
-</script>
+)}
 
 <style>
   .vw-deck { --ink:#132235; --depth:#06171f; --stage:#0a2130; --mid:#143247; --paper:#fbfaf6; --blue:#008fd3; --bright:#34baff; --gold:#f4c430; --peri:#a5b8ee; --mint:#e2f9d9; container-type:inline-size; width:min(calc(100vw - 2rem),76rem); margin:2rem auto; color:var(--paper); font-family:'Manrope',sans-serif; }
   .vw-deck * { box-sizing:border-box; letter-spacing:0; }
   .vw-deck h2,.vw-deck p,.vw-deck blockquote { margin:0; }
   .vw-rail { display:flex; align-items:center; gap:1rem; padding:.65rem .8rem; border:1px solid rgba(19,34,53,.12); border-radius:6px; background:rgba(251,250,246,.96); box-shadow:0 14px 40px rgba(19,34,53,.12); color:var(--ink); }
+  .vw-launcher { width:100%; margin:0 0 1.25rem; }
+  .vw-launcher-copy { flex:1; color:#526170; font-size:.74rem; }
+  .vw-launcher .vw-present { border-color:rgba(0,143,211,.45); background:#008fd3; color:white; }
+  .vw-launcher .vw-present:hover,.vw-launcher .vw-present:focus-visible { outline:2px solid #f4c430; outline-offset:2px; }
   .vw-brand { color:#006fa8; font-family:'JetBrains Mono',monospace; font-size:.7rem; font-weight:800; text-transform:uppercase; white-space:nowrap; }
   .vw-links { display:flex; gap:.2rem; flex:1; overflow:auto; }
   .vw-links a { display:flex; align-items:center; gap:.3rem; padding:.48rem .55rem; border-radius:4px; color:var(--ink); font-size:.72rem; font-weight:750; text-decoration:none; white-space:nowrap; }
   .vw-links a span { color:#007db8; font-family:'JetBrains Mono',monospace; }
   .vw-links a:hover,.vw-links a:focus-visible,.vw-links a.is-active { background:#e8f6fc; color:#006fa8; }
-  .vw-present,.vw-controls button { min-width:2.75rem; min-height:2.75rem; border:1px solid rgba(52,186,255,.35); border-radius:4px; padding:.55rem .8rem; background:var(--blue); color:white; font:inherit; font-size:.74rem; font-weight:800; cursor:pointer; }
+  .vw-present,.vw-controls button { display:inline-flex; align-items:center; justify-content:center; gap:.35rem; min-width:2.75rem; min-height:2.75rem; border:1px solid rgba(52,186,255,.35); border-radius:4px; padding:.55rem .8rem; background:var(--blue); color:white; font:inherit; font-size:.74rem; font-weight:800; text-decoration:none; cursor:pointer; }
   .vw-present:hover,.vw-present:focus-visible,.vw-controls button:hover,.vw-controls button:focus-visible { outline:2px solid var(--gold); outline-offset:2px; }
   .vw-controls button:disabled { border-color:rgba(165,184,238,.18); background:#143247; color:#8da0ad; cursor:not-allowed; opacity:.65; }
   .vw-slide { position:relative; min-height:min(43rem,78vh); margin-top:1rem; overflow:hidden; border:1px solid rgba(52,186,255,.18); border-radius:6px; background:radial-gradient(90% 100% at 8% 0%,rgba(52,186,255,.2),transparent 58%),radial-gradient(70% 90% at 100% 100%,rgba(244,196,48,.12),transparent 58%),linear-gradient(145deg,var(--depth),var(--stage) 55%,var(--mid)); box-shadow:0 26px 64px rgba(6,23,31,.26); }
@@ -310,6 +323,20 @@ const slides = [
   .vw-deck[data-present='true'] .vw-slide.is-current { z-index:10000; opacity:1; visibility:visible; pointer-events:auto; transform:none; transition-delay:0s; }
   .vw-deck[data-present='true'] .vw-slide.is-leaving { z-index:9999; opacity:0; visibility:visible; }
   .vw-deck[data-present='true'] .vw-slide-inner { height:100dvh; min-height:0; padding:clamp(4.8rem,7vh,6rem) clamp(2rem,6vw,6rem) clamp(1.25rem,3vh,2.5rem); }
+  @media (min-width:1400px) and (min-height:800px) {
+    .vw-deck[data-present='true'] .vw-slide-inner { align-content:center; }
+    .vw-deck[data-present='true'] .vw-ask-stage,.vw-deck[data-present='true'] .vw-control-plane { min-height:min(64vh,43rem); }
+    .vw-deck[data-present='true'] .vw-run-graph { min-height:min(54vh,36rem); }
+    .vw-deck[data-present='true'] .vw-proof-stage,.vw-deck[data-present='true'] .vw-review-loop { min-height:min(58vh,39rem); }
+    .vw-deck[data-present='true'] .vw-paper { min-height:27rem; }
+    .vw-deck[data-present='true'] .vw-request { min-height:20rem; }
+    .vw-deck[data-present='true'] .vw-control-columns section { min-height:12.5rem; }
+    .vw-deck[data-present='true'] .vw-contract,.vw-deck[data-present='true'] .vw-component { min-height:18rem; }
+    .vw-deck[data-present='true'] .vw-screen>div { min-height:10rem; }
+    .vw-deck[data-present='true'] .vw-screen.laptop>div { min-height:8rem; }
+    .vw-deck[data-present='true'] .vw-screen.phone>div { min-height:11rem; }
+    .vw-deck[data-present='true'] .vw-verdicts section { min-height:11rem; }
+  }
   @container (max-width:1050px) {
     .vw-deck[data-present='true'] .vw-proof .vw-slide-inner { grid-template-columns:1fr; grid-template-rows:auto 1fr; }
     .vw-deck[data-present='true'] .vw-proof-stage { align-self:center; }
@@ -379,6 +406,41 @@ const slides = [
     .vw-deck[data-present='true'] .vw-review-loop { grid-template-columns:.7fr 1.2fr .75fr; gap:.4rem; min-height:0; }
     .vw-deck[data-present='true'] .vw-reviewer,.vw-deck[data-present='true'] .vw-return,.vw-deck[data-present='true'] .vw-human-gate { padding:.55rem; }
     .vw-deck[data-present='true'] .vw-verdicts section { min-height:8.5rem; padding:.55rem; }
+    .vw-article-scene .vw-slide { min-height:0; overflow:hidden; }
+    .vw-article-scene .vw-slide-inner { display:grid; min-height:0; padding:1.25rem; gap:1.25rem; }
+    .vw-article-scene .vw-split { grid-template-columns:1fr; }
+    .vw-article-scene .vw-copy h2,.vw-article-scene .vw-copy.compact h2 { max-width:15ch; font-size:clamp(1.8rem,9cqw,2.35rem); }
+    .vw-article-scene .vw-copy p { font-size:.9rem; }
+    .vw-article-scene .vw-ask-stage { grid-template-columns:1fr; grid-template-rows:auto; gap:.75rem; }
+    .vw-article-scene .vw-paper,.vw-article-scene .vw-request,.vw-article-scene .vw-signal,.vw-article-scene .vw-brief-ticket { grid-column:1; grid-row:auto; width:100%; min-width:0; transform:none; }
+    .vw-article-scene .vw-paper { min-height:18rem; }
+    .vw-article-scene .vw-request { min-height:12rem; }
+    .vw-article-scene .vw-plus { grid-column:1; grid-row:auto; }
+    .vw-article-scene .vw-brief-ticket { justify-self:stretch; }
+    .vw-article-scene .vw-control-plane { grid-template-columns:1fr; gap:.65rem; }
+    .vw-article-scene .vw-control-root,.vw-article-scene .vw-control-columns,.vw-article-scene .vw-palette,.vw-article-scene .vw-control-note { grid-column:1; }
+    .vw-article-scene .vw-control-rail { width:2px; height:1.5rem; margin:auto; }
+    .vw-article-scene .vw-control-rail i { display:none; }
+    .vw-article-scene .vw-control-columns { grid-template-columns:1fr; }
+    .vw-article-scene .vw-control-columns section { min-height:0; }
+    .vw-article-scene .vw-palette { grid-template-columns:1fr repeat(5,auto); }
+    .vw-article-scene .vw-palette span { font-size:0; }
+    .vw-article-scene .vw-palette>b { grid-column:1/-1; }
+    .vw-article-scene .vw-horizontal { grid-template-columns:1fr; gap:.5rem; margin-bottom:1rem; }
+    .vw-article-scene .vw-run-graph { grid-template-columns:1fr; gap:.6rem; }
+    .vw-article-scene .vw-run-graph>i { width:2px; height:1.25rem; margin:auto; }
+    .vw-article-scene .vw-run-graph>i::after { right:-.28rem; top:auto; bottom:0; border-width:.45rem .3rem 0; border-color:var(--gold) transparent transparent; }
+    .vw-article-scene .vw-ownership article { grid-template-columns:.75fr 1fr 1.2fr; }
+    .vw-article-scene .vw-proof-stage { grid-template-columns:1fr; gap:.65rem; }
+    .vw-article-scene .vw-contract,.vw-article-scene .vw-component,.vw-article-scene .vw-evidence { grid-column:1; min-height:0; width:100%; }
+    .vw-article-scene .vw-proof-arrow { width:2px; height:1.25rem; margin:auto; }
+    .vw-article-scene .vw-proof-arrow::after { right:-.28rem; top:auto; bottom:0; border-width:.45rem .3rem 0; border-color:var(--gold) transparent transparent; }
+    .vw-article-scene .vw-proof-arrow i { display:none; }
+    .vw-article-scene .vw-evidence { grid-template-columns:1fr 1fr; }
+    .vw-article-scene .vw-evidence>span,.vw-article-scene .vw-evidence>p { grid-column:1/-1; }
+    .vw-article-scene .vw-review-loop { grid-template-columns:1fr; gap:.75rem; }
+    .vw-article-scene .vw-review-stack,.vw-article-scene .vw-verdicts,.vw-article-scene .vw-human-gate { width:100%; min-width:0; }
+    .vw-article-scene .vw-verdicts i { display:none; }
   }
   @media (max-height:500px) and (orientation:landscape) {
     .vw-deck[data-present='true'] .vw-hud { top:.25rem; right:.25rem; left:.25rem; min-height:2.75rem; padding:.2rem .4rem; }

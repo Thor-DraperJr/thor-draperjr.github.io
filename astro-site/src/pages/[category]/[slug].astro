@@ -56,7 +56,7 @@ const threeNewYearsMarker = '[[THREE_NEW_YEARS]]';
 const performanceNarrativeMarker = '[[PERFORMANCE_NARRATIVE]]';
 const ghWorkshopMarker = '[[GH_WORKSHOP]]';
 const ghWorkshopFigureMarkers = ['WHAT_IS_GITHUB', 'GITHUB_FLOW', 'YOUR_TOOLS', 'AGENT_LOOP', 'DIFF_PREVIEW', 'WORKSHOP_OBJECTIVES', 'SESSION_PLAN'].map((n) => `[[${n}]]`);
-const presentationWorkflowMarker = '[[PRESENTATION_WORKFLOW]]';
+const presentationWorkflowMarkers = ['ASK', 'RULES', 'TEAM', 'PROOF', 'GATE'].map((name) => `[[PRESENTATION_WORKFLOW_${name}]]`);
 const socialLoopMarker = '[[SOCIAL_LOOP]]';
 const gatewayProcessMapMarker = '[[GATEWAY_PROCESS_MAP]]';
 const agentHarnessLayersMarker = '[[AGENT_HARNESS_LAYERS]]';
@@ -79,7 +79,9 @@ processedHtml = processedHtml.replace(`<p>${ghWorkshopMarker}</p>`, ghWorkshopMa
 for (const figureMarker of ghWorkshopFigureMarkers) {
   processedHtml = processedHtml.replace(`<p>${figureMarker}</p>`, figureMarker);
 }
-processedHtml = processedHtml.replace(`<p>${presentationWorkflowMarker}</p>`, presentationWorkflowMarker);
+for (const workflowMarker of presentationWorkflowMarkers) {
+  processedHtml = processedHtml.replace(`<p>${workflowMarker}</p>`, workflowMarker);
+}
 processedHtml = processedHtml.replace(`<p>${socialLoopMarker}</p>`, socialLoopMarker);
 processedHtml = processedHtml.replace(`<p>${gatewayProcessMapMarker}</p>`, gatewayProcessMapMarker);
 processedHtml = processedHtml.replace(`<p>${agentHarnessLayersMarker}</p>`, agentHarnessLayersMarker);
@@ -93,7 +95,7 @@ const hasAgent365Deck = processedHtml.includes(agent365DeckMarker);
 const hasAllAboard = processedHtml.includes(allAboardMarker);
 const hasThreeNewYears = processedHtml.includes(threeNewYearsMarker);
 const hasPerformanceNarrative = processedHtml.includes(performanceNarrativeMarker);
-const hasPresentationWorkflow = processedHtml.includes(presentationWorkflowMarker);
+const hasPresentationWorkflow = presentationWorkflowMarkers.some((marker) => processedHtml.includes(marker));
 const hasWebsitePresentation = hasPresentationWorkflow && post.presentation === 'website-presentation';
 const hasSocialLoop = processedHtml.includes(socialLoopMarker);
 const hasGatewayProcessMap = processedHtml.includes(gatewayProcessMapMarker);
@@ -129,7 +131,22 @@ if (hasAllAboard) {
 }
 const threeNewYearsParts = hasThreeNewYears ? processedHtml.split(threeNewYearsMarker) : [];
 const performanceNarrativeParts = hasPerformanceNarrative ? processedHtml.split(performanceNarrativeMarker) : [];
-const presentationWorkflowParts = hasPresentationWorkflow ? processedHtml.split(presentationWorkflowMarker) : [];
+const presentationWorkflowMarkerRegex = /\[\[PRESENTATION_WORKFLOW_(?:ASK|RULES|TEAM|PROOF|GATE)\]\]/g;
+const presentationWorkflowSegments: Array<{ kind: 'html' | 'marker'; value: string }> = [];
+if (hasWebsitePresentation) {
+  let lastIndex = 0;
+  let match: RegExpExecArray | null;
+  while ((match = presentationWorkflowMarkerRegex.exec(processedHtml)) !== null) {
+    if (match.index > lastIndex) {
+      presentationWorkflowSegments.push({ kind: 'html', value: processedHtml.slice(lastIndex, match.index) });
+    }
+    presentationWorkflowSegments.push({ kind: 'marker', value: match[0] });
+    lastIndex = match.index + match[0].length;
+  }
+  if (lastIndex < processedHtml.length) {
+    presentationWorkflowSegments.push({ kind: 'html', value: processedHtml.slice(lastIndex) });
+  }
+}
 const socialLoopParts = hasSocialLoop ? processedHtml.split(socialLoopMarker) : [];
 const gatewayProcessMapParts = hasGatewayProcessMap ? processedHtml.split(gatewayProcessMapMarker) : [];
 const agentHarnessLayersParts = hasAgentHarnessLayers ? processedHtml.split(agentHarnessLayersMarker) : [];
@@ -572,25 +589,24 @@ if (hasGhWorkshop) {
             </div>
           )}
         </header>
-
-        {presentationWorkflowParts[0]?.trim() && (
-          <section class="prose panel">
-            <Fragment set:html={presentationWorkflowParts[0]} />
-          </section>
-        )}
+        <CopilotVisualWorkflow launcherOnly={true} />
       </article>
 
-      <div class="walking-deck-breakout">
-        <CopilotVisualWorkflow />
-      </div>
+      {presentationWorkflowSegments.map((segment) => segment.kind === 'html' ? (
+        segment.value.trim() && (
+          <article class="shell-container">
+            <section class="prose panel">
+              <Fragment set:html={segment.value} />
+            </section>
+          </article>
+        )
+      ) : (
+        <div class="walking-deck-breakout">
+          <CopilotVisualWorkflow scene={presentationWorkflowMarkers.indexOf(segment.value)} />
+        </div>
+      ))}
 
       <article class="shell-container">
-        {presentationWorkflowParts.slice(1).join(presentationWorkflowMarker).trim() && (
-          <section class="prose panel">
-            <Fragment set:html={presentationWorkflowParts.slice(1).join(presentationWorkflowMarker)} />
-          </section>
-        )}
-
         <nav class="post-pagination">
           {previous ? (
             <a href={previous.permalink}>
@@ -742,3 +758,11 @@ if (hasGhWorkshop) {
     </article>
   )}
 </Layout>
+
+<style is:global>
+  @media (max-width: 620px) {
+    body:has(.vw-article-scene) .site-header {
+      position: relative;
+    }
+  }
+</style>

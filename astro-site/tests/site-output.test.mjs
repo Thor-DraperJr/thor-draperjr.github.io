@@ -115,7 +115,7 @@ test('RSS output identifies the public site', async () => {
     assert.match(xml, /<link>https:\/\/thor-draperjr\.github\.io<\/link>/);
 });
 
-test('website presentation article and present view share one resolved deck', async () => {
+test('website presentation article interleaves scenes and keeps one complete present view', async () => {
     const article = await readFile(path.join(distPath, 'tech/how-my-website-becomes-a-presentation/index.html'), 'utf8');
     const presentation = await readFile(path.join(distPath, 'tech/how-my-website-becomes-a-presentation/present/index.html'), 'utf8');
     const juneArticle = await readFile(path.join(distPath, 'tech/presentation-workflow/index.html'), 'utf8');
@@ -124,27 +124,43 @@ test('website presentation article and present view share one resolved deck', as
     const presentationSections = [...presentation.matchAll(sectionPattern)].map(match => match[1]);
     const expectedSections = ['vw-ask', 'vw-rules', 'vw-team', 'vw-proof', 'vw-gate'];
 
-    assert.doesNotMatch(article, /<p>\[\[PRESENTATION_WORKFLOW\]\]<\/p>/);
-    assert.match(article, /data-presentation-deck/);
+    assert.doesNotMatch(article, /\[\[PRESENTATION_WORKFLOW_(?:ASK|RULES|TEAM|PROOF|GATE)\]\]/);
+    assert.doesNotMatch(article, /data-presentation-deck/);
+    assert.match(article, /aria-label="Presentation controls"/);
+    assert.match(article, /href="\/tech\/how-my-website-becomes-a-presentation\/present\/"/);
+    assert.equal((article.match(/vw-article-scene/g) || []).length, expectedSections.length);
     assert.match(article, /How I Build Presentations in the Browser with GitHub Copilot/);
     assert.deepEqual(articleSections, expectedSections);
     assert.equal(new Set(articleSections).size, expectedSections.length);
-    assert.match(article, /I start with the article and one request/);
+    assert.match(article, /I start with an article and ask Copilot/);
     assert.match(article, /copilot-instructions\.md/);
     assert.match(article, /visual-storytelling\.prompt\.md/);
     assert.match(article, /Visual Storytelling/);
     assert.match(article, /Presentation Reviewer/);
-    assert.match(article, /Walking Deck(?:'|&#39;)s fifth section/);
-    assert.match(article, /deep ink and blue-black for structure/);
+    assert.match(article, /fifth section of the Walking Deck/);
+    assert.match(article, /gives each color a job and puts readability first/);
     assert.match(article, /laptop with browser chrome/);
     assert.match(article, /phone in landscape/);
-    assert.match(article, /intent, rendered proof, and the verification record/);
+    assert.match(article, /screenshots and measurements for all eight conditions/);
     assert.match(article, /Visual Storytelling fixes the problem/);
-    assert.match(article, /Visual Storytelling owns execution/);
-    assert.match(article, /tool availability and my approval settings/);
-    assert.match(article, /I delegate the mechanics and keep accountability/);
-    assert.match(article, /The browser shows the evidence\. I make the call/);
-    const teachingSequence = ['The Request', 'The Control Plane', 'The Run Graph', 'Rendered Evidence', 'The Human Gate'];
+    assert.match(article, /same role doesn(?:'|&#39;)t build and approve the visual/);
+    assert.match(article, /tool and approval settings still control what it can do/);
+    assert.match(article, /handle the repeatable work while I stay responsible/);
+    assert.match(article, /Before I publish, I can see what Copilot built/);
+    const teachingSequence = [
+        'aria-label="Presentation controls"',
+        'I write this blog in VS Code',
+        'id="vw-ask"',
+        'What I configured once',
+        'id="vw-rules"',
+        'What happens after I ask',
+        'id="vw-team"',
+        'The build owner creates one shared visual',
+        'id="vw-proof"',
+        'The reviewer gets the results',
+        'id="vw-gate"',
+        'The repository pieces',
+    ];
     let previousTeachingStep = -1;
     for (const step of teachingSequence) {
         const teachingStepIndex = article.indexOf(step);
@@ -156,8 +172,8 @@ test('website presentation article and present view share one resolved deck', as
     assert.match(presentation, /ACCEPT/);
     assert.match(presentation, /VISUAL SYSTEM OUTPUT/);
     assert.match(presentation, /palette \+ composition \+ motion \+ interaction \+ access/);
-    assert.match(presentation, /REPAIR OWNER/);
-    assert.match(presentation, /Named surface returns to the builder/);
+    assert.match(presentation, /FIXES/);
+    assert.match(presentation, /The problem goes back to the builder/);
     for (const viewportWidth of ['1920', '1440', '1366', '1214', '960', '720', '844L', '390P']) {
         assert.match(presentation, new RegExp(viewportWidth));
     }

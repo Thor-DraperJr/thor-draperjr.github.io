@@ -23,25 +23,46 @@ Primary reference set:
 
 When doing voice work, read the target draft and sample at least three reference posts from different years. Favor posts that match the draft's category or topic when possible.
 
+## Author Edit Evidence
+
+- Treat the user's current draft, selected text, comments, and supplied diff as the strongest voice evidence for the pass.
+- Treat deliberate deletions as evidence. Do not restore a removed anecdote, hook, transition slogan, or conclusion unless the user asks for it.
+- When a deletion leaves a weak transition, tighten the surrounding prose or let the next heading carry the move. Do not replace the deleted line with a paraphrase.
+- Convert explicit user feedback into acceptance criteria and check each item before returning a verdict.
+
 ## Thor's Voice Traits
 
 Preserve:
 
 - Direct, conversational, practical language.
+- Word economy. Each sentence and paragraph should do a clear job.
 - Confidence without inflated thought-leadership theater.
 - Clear takeaways, questions, or next moves.
 - A sense that a real person with field experience is talking.
 - Light humor or casual phrasing when it helps.
 - Operator voice over vendor voice.
+- Technical accuracy explained through actions and outcomes a new reader can follow.
 
 Reduce:
 
 - Generic AI phrasing and tidy synthetic setup lines.
 - Corporate-speak, empty leadership jargon, and deck-polish residue.
 - Over-explaining obvious points.
+- Soft openings that delay the main action.
+- Repeated words within a sentence, repeated formal role names, and repeated claims across sections.
 - Forced transitions, stacked adjectives, and dramatic flourish.
 - Public conclusions that sound sanitized, vague, or artificially inspirational.
 - Em dashes and negative clarification habits when they make the prose sound machine-polished.
+
+## Word Economy And Teaching Language
+
+- Assume the reader does not know repository, agent, or customization terms.
+- Explain the person, action, and visible result before introducing a formal workflow label.
+- Define each necessary technical term in plain language at first use. Use one stable name after that, and cut terms that only help repository maintainers.
+- Treat terms such as `contract`, `conductor`, `ownership`, `route`, `matrix`, `evidence package`, and `handoff` as review signals. Keep them only when they add precision that plain language cannot provide.
+- Read technical and visual articles without their code blocks or graphics. A new reader should still be able to explain what Thor asks for, what Copilot does, how the result is checked, and what Thor decides.
+- Cut setup lines that only announce the next idea. After a visual, continue with the next useful explanation instead of adding a polished summary slogan.
+- Use term counts and repeated phrases as diagnostic signals, not automatic reasons to cut accurate source quotations.
 
 ## Visual Article Balance
 
@@ -79,11 +100,14 @@ Also check:
 ## Workflow
 
 1. Read the target draft.
-2. Sample voice reference posts unless the user explicitly asks for a narrow copyedit only.
-3. Identify voice drift, mechanical issues, and publish blockers.
-4. For visual-heavy posts, perform the speaker-notes transition audit before returning a verdict.
-5. If review-only, return findings and suggested rewrites.
-6. If editing is approved, edit the file directly and summarize only the meaningful changes.
+2. Record the user's explicit feedback and current edits as acceptance criteria.
+3. Sample voice reference posts unless the user explicitly asks for a narrow copyedit only.
+4. Run the opening, word-economy, teaching-language, and terminology checks.
+5. Identify voice drift, mechanical issues, and publish blockers.
+6. For visual-heavy posts, perform the speaker-notes transition audit before returning a verdict.
+7. Confirm each acceptance criterion before returning the verdict.
+8. If review-only, return findings and suggested rewrites.
+9. If editing is approved, edit the file directly and summarize only the meaningful changes.
 
 ## Output Format For Review-Only
 

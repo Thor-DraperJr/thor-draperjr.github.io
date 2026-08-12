@@ -41,10 +41,52 @@ const description = `Presentation view for ${post.title}.`;
     <title>{documentTitle}</title>
   </head>
   <body class="presentation-presenting presentation-present-page">
+    <noscript>
+      <nav class="presentation-fallback-nav" aria-label="Presentation fallback navigation">
+        <a href={`/tech/${post.slug}/`}>Return to article</a>
+        {post.presentation === 'website-presentation' && (
+          <span>
+            <a href="#vw-ask">Request</a>
+            <a href="#vw-rules">Saved rules</a>
+            <a href="#vw-team">Team</a>
+            <a href="#vw-proof">Browser checks</a>
+            <a href="#vw-gate">Final call</a>
+          </span>
+        )}
+      </nav>
+      <style is:global>
+        .vw-deck[data-present='true'] {
+          position: static !important;
+          width: 100% !important;
+          height: auto !important;
+        }
+
+        .vw-deck[data-present='true'] .vw-hud {
+          display: none !important;
+        }
+
+        .vw-deck[data-present='true'] .vw-slide {
+          position: relative !important;
+          inset: auto !important;
+          min-height: 100vh !important;
+          min-height: 100dvh !important;
+          opacity: 1 !important;
+          visibility: visible !important;
+          pointer-events: auto !important;
+          transform: none !important;
+        }
+      </style>
+    </noscript>
     <main id="main-content">
       {post.presentation === 'first-pull-request' && <FirstPullRequestDeck startInPresent={true} />}
       {post.presentation === 'website-presentation' && <CopilotVisualWorkflow startInPresent={true} />}
     </main>
+
+    <script>
+      import { initPresentationDeck } from '../../../scripts/presentationDeck.client';
+      initPresentationDeck();
+      document.addEventListener('astro:page-load', () => initPresentationDeck());
+    </script>
 
     <style is:global>
       html.presentation-presenting,
@@ -61,6 +103,29 @@ const description = `Presentation view for ${post.title}.`;
         margin: 0;
         padding: 0;
       }
+
+      .presentation-fallback-nav {
+        position: sticky;
+        top: 0;
+        z-index: 10003;
+        display: flex;
+        flex-wrap: wrap;
+        gap: .75rem 1rem;
+        padding: .75rem 1rem;
+        background: #06171f;
+        color: white;
+      }
+
+      .presentation-fallback-nav span {
+        display: flex;
+        flex-wrap: wrap;
+        gap: .5rem 1rem;
+      }
+
+      .presentation-fallback-nav a {
+        color: #34baff;
+      }
+
     </style>
   </body>
 </html>

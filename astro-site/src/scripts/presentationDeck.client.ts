@@ -9,15 +9,25 @@ type PresentationDeckElement = HTMLElement & {
 };
 
 const initializedDecks = new WeakSet<PresentationDeckElement>();
+let pendingDeckObserver: MutationObserver | undefined;
 
 export function initPresentationDeck(root: ParentNode = document) {
     const decks = Array.from(root.querySelectorAll<PresentationDeckElement>('[data-presentation-deck]'));
-    decks.forEach(initDeck);
+    const initialized = decks.some(initDeck);
+    if (initialized) {
+        pendingDeckObserver?.disconnect();
+        pendingDeckObserver = undefined;
+        return;
+    }
+
+    if (root === document && !pendingDeckObserver) {
+        pendingDeckObserver = new MutationObserver(() => initPresentationDeck());
+        pendingDeckObserver.observe(document.documentElement, { childList: true, subtree: true });
+    }
 }
 
 function initDeck(deck: PresentationDeckElement) {
-    if (initializedDecks.has(deck)) return;
-    initializedDecks.add(deck);
+    if (initializedDecks.has(deck)) return true;
 
     const sectionSelector = deck.dataset.sectionSelector || '[data-presentation-section]';
     const sections = Array.from(deck.querySelectorAll<HTMLElement>(sectionSelector));
@@ -32,7 +42,8 @@ function initDeck(deck: PresentationDeckElement) {
     const presentExit = deck.querySelector<HTMLButtonElement>('[data-present-exit]');
     const presentCues = deck.querySelector<HTMLButtonElement>('[data-present-cues]');
 
-    if (!sections.length || !presentToggle) return;
+    if (!sections.length || !presentToggle) return false;
+    initializedDecks.add(deck);
 
     const total = sections.length;
     const totalLabel = String(total).padStart(2, '0');
@@ -64,6 +75,14 @@ function initDeck(deck: PresentationDeckElement) {
         updateRail();
     };
 
+    const updateSectionAccessibility = (activeIndex: number) => {
+        sections.forEach((section, sectionIndex) => {
+            const isActive = sectionIndex === activeIndex;
+            section.setAttribute('aria-hidden', isActive ? 'false' : 'true');
+            section.inert = !isActive;
+        });
+    };
+
     const setSlide = (index: number, force = false) => {
         const nextIndex = Math.min(total - 1, Math.max(0, index));
         if (!force && nextIndex === currentIndex && sections[nextIndex]?.classList.contains('is-current')) {
@@ -86,6 +105,7 @@ function initDeck(deck: PresentationDeckElement) {
         sections.forEach((section, sectionIndex) => {
             section.setAttribute('data-presentation-state', sectionIndex === nextIndex ? 'active' : 'inactive');
         });
+        updateSectionAccessibility(nextIndex);
         next.classList.add('is-current');
         next.classList.remove('is-leaving');
         next.scrollTop = 0;
@@ -117,7 +137,11 @@ function initDeck(deck: PresentationDeckElement) {
         document.documentElement.classList.remove('presentation-presenting');
         document.body.classList.remove('presentation-presenting');
         if (presentHud) presentHud.setAttribute('aria-hidden', 'true');
-        sections.forEach((section) => section.classList.remove('is-current', 'is-leaving'));
+        sections.forEach((section) => {
+            section.classList.remove('is-current', 'is-leaving');
+            section.removeAttribute('aria-hidden');
+            section.inert = false;
+        });
         presentToggle.focus();
     };
 
@@ -150,6 +174,12 @@ function initDeck(deck: PresentationDeckElement) {
 
     document.addEventListener('keydown', (event) => {
         if (!isPresenting && deck.dataset.present !== 'true') return;
+        const target = event.target;
+        const isControlActivation = (event.key === 'Enter' || event.key === ' ')
+            && target instanceof HTMLElement
+            && Boolean(target.closest('button, a, input, select, textarea'));
+        if (isControlActivation) return;
+
         if (event.key === 'Escape') {
             event.preventDefault();
             exitPresent();
@@ -177,6 +207,12 @@ function initDeck(deck: PresentationDeckElement) {
         presentHud?.removeAttribute('aria-hidden');
         setSlide(currentIndex, true);
     } else {
+        sections.forEach((section) => {
+            section.removeAttribute('aria-hidden');
+            section.inert = false;
+        });
         updateHud();
     }
+
+    return true;
 }
