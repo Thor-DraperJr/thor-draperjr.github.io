@@ -39,6 +39,14 @@ test('homepage emits canonical social metadata', async () => {
     assert.ok(html.includes(`<meta name="twitter:description" content="${siteDescription}">`));
 });
 
+test('privacy page is public and identifies its canonical route', async () => {
+    const html = await readFile(path.join(distPath, 'privacy/index.html'), 'utf8');
+
+    assert.match(html, /<link rel="canonical" href="https:\/\/thordraperjr\.com\/privacy\/">/);
+    assert.match(html, /<h1[^>]*>Privacy Policy<\/h1>/);
+    assert.match(html, /thordraper2@outlook\.com/);
+});
+
 test('article emits article-specific social metadata', async () => {
     const html = await readFile(path.join(distPath, 'tech/all-aboard/index.html'), 'utf8');
 
