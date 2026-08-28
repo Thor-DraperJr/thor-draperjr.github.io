@@ -6,7 +6,7 @@ export const siteConfig: SiteConfig = {
 	description:
 		'A working library of ideas, experiments, and operator notes on technology, leadership, AI, and career development from Thor Draper Jr.',
 	lang: 'en',
-	url: 'https://thor-draperjr.github.io',
+	url: 'https://thordraperjr.com',
 	navigation: [
 		{ title: 'Home', url: '/' },
 		{ title: 'Walking Deck', url: '/career/walking-deck/present/' },

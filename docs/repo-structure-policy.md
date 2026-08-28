@@ -36,7 +36,7 @@ The repo contains `.github/workflows/deploy-astro.yml`, which builds `astro-site
 
 GitHub Pages repository settings must match that model: Pages source should be GitHub Actions, not a legacy branch build from `main` `/`. If GitHub shows a separate `pages build and deployment` run that tries to parse the repo root with Jekyll, that is a repository settings issue, not an Astro code issue. Do not paper it over with a root `.nojekyll` unless the Pages source has been confirmed.
 
-Current Pages check: Settings > Pages is configured for GitHub Actions publishing. Authenticated `gh api repos/Thor-DraperJr/thor-draperjr.github.io/pages` returned `build_type: workflow`, with the site live at `https://thor-draperjr.github.io/`.
+Current Pages check: Settings > Pages is configured for GitHub Actions publishing. Authenticated `gh api repos/Thor-DraperJr/thor-draperjr.github.io/pages` returned `build_type: workflow`, with the site live at `https://thor-draperjr.github.io/`. The intended custom domain is `https://thordraperjr.com/`; update the Pages `cname` and verify DNS/HTTPS before treating the custom domain as active.
 
 ## Copilot Instruction Scope
 
