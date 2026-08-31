@@ -80,7 +80,11 @@ What I am arguing against is t-shirt sizing your commitments. You estimate high,
 
 It is not a research project anymore. When you can see which capabilities are load-bearing, which seats are dormant, and which of five overlapping contracts does the real work, your purchase stops being a size and becomes a specification. Tailored to observed consumption rather than a forecast made under uncertainty.
 
-The savings show up in three places. You stop paying for shelfware. You stop paying twice for the same capability in two contracts. And you stop paying a third time in tokens and engineering salary to rebuild a capability you were already entitled to.
+The savings show up in three places:
+
+- You stop paying for shelfware.
+- You stop paying twice for the same capability in two contracts.
+- You stop paying a third time, in tokens and engineering salary, to rebuild a capability you were already entitled to.
 
 ## The order is the whole argument
 
