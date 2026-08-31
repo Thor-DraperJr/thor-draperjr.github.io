@@ -4,42 +4,47 @@ permalink: /about/
 layout: page
 ---
 
-## From Gym Owner to Cloud Defender
+## I made a bet in 2020
 
-I’m Thor Draper Jr—Senior Security Solution Engineer at Microsoft by day and perpetual puzzle-solver at heart. After selling my Charlotte gym to an escape-room operator, I traded dumbbells for dashboards and discovered my passion for protecting healthcare’s most critical clouds.
+I was an entrepreneur and a sales leader trying to get into a technical role. The bet was that if I spent five years building real technical depth, I would end up somewhere most people are not: able to run the commercial conversation and the architecture conversation in the same room, without handing either one off.
 
----
+I worked the plan. I am Senior Security Solution Engineer at Microsoft now, advising U.S. healthcare payors, providers, and life sciences organizations on Sentinel, XDR, and Azure security. Twenty-two certifications and a SANS degree came out of those five years.
 
-## My Unconventional Journey
-
-- Army National Guard (E-4 Infantryman): mastering grit and teamwork  
-- Branch Manager at Enterprise Rent-A-Car’s largest non-airport location: delivering top-tier customer experiences  
-- Mid-Market Consultant at Paychex: solving payroll puzzles for small businesses  
-- Founder & Owner of Stay Fit LLC in Charlotte (2020): built and sold my own gym to an escape-room operator  
-- Cybersecurity Bootcamp Instructor (2020–2024): guided career-changers through hands-on labs and cert prep  
-- Senior Security Solution Engineer at Microsoft (Apr 2024–present): advising U.S. payors, providers & life-sciences on Sentinel, XDR & Azure security  
-
-Each chapter taught me that true security starts by understanding real human needs.
+The funny part is that the bet worked well enough to create the opposite problem. My technical credentials now read louder than the sales leadership they were meant to support. I wrote about [rebuilding my resume](/career/my-resume-forgot-i-could-sell/) to fix exactly that.
 
 ---
 
-## Why I Wake Up Excited
+## The path here
 
-Every morning I journal under my word for the year—**Velocity**—to sharpen focus and keep momentum. Whether I'm threat-hunting in Log Analytics or sketching a 3D-printed desk lamp, I'm always asking: "How can I make this more meaningful?"
+- **Army National Guard, E-4 Infantryman.** Where I learned what a standard is.
+- **Branch Manager, Enterprise Rent-A-Car.** Largest non-airport location. P&L, a team of forty-plus, and a lot of customer conversations that went badly before they went well.
+- **Mid-Market Consultant, Paychex.** Prospecting, territory development, and running a real sales process.
+- **Founder and Owner, Stay Fit LLC.** Built a Charlotte gym and sold it to an escape-room operator.
+- **Cybersecurity Instructor, 2020 to 2024.** Taught career-changers through labs and cert prep. Teaching is still the fastest way I know to find out whether I actually understand something.
+- **Senior Security Solution Engineer, Microsoft, 2024 to present.** Healthcare security, and increasingly what it takes to run an agent workforce on a platform you already own.
 
----
-
-## Beyond the Keyboard
-
-- Savoring coffee at hidden cafés on road-trip detours—Jaspers’ Ottos Cache remains unmatched
-- Mapping strategic financial blueprints to fuel future adventures  
-- Experimenting with AI tools to automate routine tasks and free up headspace  
-- Crafting pun-fueled icebreakers to keep security conversations human  
+Every one of those roles was the same job wearing different clothes: understand what someone actually needs, then translate complexity into a decision they can make.
 
 ---
 
-## Let’s Connect
+## What I write about here
 
-I love swapping war stories about cloud security, sharing journaling hacks, or recommending off-the-map cafés. Drop me a line:
+Security and AI from an operator's point of view. Not what a model can do on a benchmark, but what it changes about how an organization decides, spends, and stays accountable.
+
+I also write in public about my own career on purpose. The performance narrative, the development plan, the resume rewrite, the things that did not work. Publishing the process is how I keep myself honest about it, and it seems to be useful to people making similar moves.
+
+The site is where I keep my [resume](/resume/) current and where my [Walking Deck](/career/walking-deck/present/) lives.
+
+---
+
+## Beyond the keyboard
+
+Charlotte is home, and I have opinions about its parking and its transit that I have inflicted on this blog. I chase good coffee on road-trip detours. Jaspers' Ottos Cache is still the one to beat.
+
+---
+
+## Let's connect
+
+I am glad to talk about cloud security, healthcare, where AI actually earns its cost in an enterprise, or how to make a career change land.
 
 <a class="button-ghost" href="https://www.linkedin.com/in/thor-draperjr/" target="_blank">Connect on LinkedIn</a>

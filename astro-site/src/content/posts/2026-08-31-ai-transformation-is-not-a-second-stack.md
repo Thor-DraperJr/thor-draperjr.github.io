@@ -4,15 +4,19 @@ title: "Stop Rebuilding the CRM You Already Pay For"
 date: 2026-08-31
 categories: [tech]
 tags: [technical, ai, leadership, business]
-draft: true
+draft: false
 excerpt: "Most enterprise AI projects I see are a new front door onto software the company already owns. My philosophy for AI transformation is three moves in order: make today faster, get the rest of what you bought, then buy more precisely."
 ---
 
-The pattern I keep running into is a team that built its own version of something the company already pays for.
+Someone walks you through an agent they built. It is genuinely good work. It pulls up account context, drafts the follow-up, and summarizes where the deal stands, all without the seller opening the CRM.
 
-Sometimes it is a chat interface over the ticketing system. Sometimes it is a summarizer that duplicates a reporting feature sitting one tab over, unused. Occasionally it is worse than duplication: an agent whose entire job is to let a seller avoid opening the CRM. The work is real, the demo is good, and the outcome is that the enterprise now pays twice, once for the SaaS contract and again in tokens, to get less than the original product does.
+That last part is said as the feature.
 
-For an individual, that is fine. Building your own tool is how you learn what the category actually is. I do it constantly. I have written here about turning my own posting workflow into an MCP server and auditing my own agent workbench, and both of those were me rebuilding something I could have bought.
+Sit with it. The company is paying for a CRM. It is now also paying an engineering team to build, and forever maintain, a second interface whose value proposition is that nobody has to use the first one. The demo is impressive and the arithmetic is upside down.
+
+The pattern generalizes past sales. Sometimes it is a chat interface over the ticketing system. Sometimes it is a summarizer that duplicates a reporting feature sitting one tab over, unused, because nobody knew it shipped. The work is real, the demo lands, and the outcome is that the enterprise pays twice, once for the SaaS contract and again in tokens, to get less than the original product already does.
+
+For an individual, that is fine. Building your own version is how you learn what the category actually is. I do it constantly. I have written here about turning my own posting workflow into an MCP server and auditing my own agent workbench, and both were me rebuilding something I could have bought.
 
 At enterprise scale it stops being fine. I do not want to spend tokens avoiding the CRM.
 
