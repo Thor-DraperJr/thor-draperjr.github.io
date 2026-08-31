@@ -12,13 +12,23 @@ Someone walks you through an agent they built. It is genuinely good work. It pul
 
 That last part is said as the feature.
 
-Sit with it. The company is paying for a CRM. It is now also paying an engineering team to build, and forever maintain, a second interface whose value proposition is that nobody has to use the first one. The demo is impressive and the arithmetic is upside down.
+Sit with the economics. The company already pays for a CRM. Somebody just spent real time building a second interface whose entire value proposition is that nobody has to open the first one.
 
-The pattern generalizes past sales. Sometimes it is a chat interface over the ticketing system. Sometimes it is a summarizer that duplicates a reporting feature sitting one tab over, unused, because nobody knew it shipped. The work is real, the demo lands, and the outcome is that the enterprise pays twice, once for the SaaS contract and again in tokens, to get less than the original product already does.
+If a platform team had done that, it would be an old, familiar problem. Companies have paid engineering teams to build and maintain internal wrappers for decades. That was the siloed method: one team owns the thing, it has a budget line, somebody's name is on the maintenance, and when the person who wrote it leaves you at least know which team to go ask.
 
-For an individual, that is fine. Building your own version is how you learn what the category actually is. I do it constantly. I have written here about turning my own posting workflow into an MCP server and auditing my own agent workbench, and both were me rebuilding something I could have bought.
+That is not what is happening now. We decided the company should be agentic, so we gave tokens to everybody. Which is the right instinct. But look at what it produced: we took a siloed organization and turned every individual employee into their own silo.
+
+The CRM is plumbing. So are the reporting dashboards, the ticketing system, the data warehouse. Those are the pipes the business already runs through, and I am genuinely in favor of modernizing them. Putting an agent in front of plumbing so that a person never has to touch it is not modernization. It is spending money on avoidance.
+
+Then it gets worse, and this is the part that actually bothers me. Say the agent is good. Say someone builds something that legitimately saves four hours a week. There is no avenue to share it. It lives in one person's chat history, or a personal workspace nobody else has access to, wired to their own credentials and their own idea of what a good answer looks like. The old silo was at least a team. This silo is a single person, and the solution dies with their next role change.
+
+So the failure mode is not just duplicated spend. It is duplicated spend that cannot compound. Two hundred people can independently solve the same problem, at full cost each time, and the organization learns nothing.
+
+For an individual, building your own version is fine. It is how you learn what the category actually is, and I do it constantly. I have written here about turning my own posting workflow into an MCP server and auditing my own agent workbench, and both were me rebuilding something I could have bought.
 
 At enterprise scale it stops being fine. I do not want to spend tokens avoiding the CRM.
+
+[[TOKEN_SILOS]]
 
 ## Why the failures cluster where they do
 
@@ -42,7 +52,11 @@ The reason to start here is that it is the only step where you can measure hones
 
 There is a distinction I want to be careful about, because people collapse it. AI is not automation. Automation is a deterministic path somebody designed on purpose, and it has been available for decades. What changed is that the person who owns the process can now build the automation themselves, in language, without filing a ticket and waiting a quarter for a developer who does not know the work.
 
-That is the real shift, and it points somewhere specific. The most valuable thing AI does in this phase is not doing the task. It is finding the task. Ask it to sit with a workflow and tell you which steps are repetitive, low-judgment, and high-volume, and it will hand you an offload list that the people doing the work were too close to see. Then you automate those steps, and quite often the thing you build is a deterministic script rather than a model call, which is a good outcome and a cheap one.
+The most valuable thing AI does in this phase is not doing the task. It is finding the task. Ask it to sit with a workflow and tell you which steps are repetitive, low-judgment, and high-volume, and it will hand you an offload list that the people doing the work were too close to see. Then you automate those steps, and quite often the thing you build is a deterministic script rather than a model call, which is a good outcome and a cheap one.
+
+Here is the part that gets missed when this is framed as a headcount conversation. Offload 40 percent of a role and you have not removed 40 percent of a person. You have concentrated them into the 60 percent that needed judgment, relationships, and accountability all along. That 60 percent is the part with the leverage in it, and it is the part that was getting squeezed by the other 40.
+
+Which means the honest outcome is usually more demand for that work, not less. When your sellers stop spending Thursday on data entry, you do not need fewer sellers. You find out how much selling was not happening on Thursdays. When your analysts stop assembling the report, the questions get harder and better, and somebody has to answer them. Acceleration raises the ceiling on the human part of the job before it ever touches the floor.
 
 If your first AI initiative changed how the business runs, you skipped a step. Make today faster first.
 

@@ -1,0 +1,269 @@
+---
+const eras = [
+  {
+    key: 'then',
+    kicker: 'The old shape',
+    title: 'The team was the silo',
+    unitLabel: 'Owning team',
+    units: 4,
+    ledger: [
+      { term: 'Budget line', value: 'One, visible' },
+      { term: 'Maintainer', value: 'A named team' },
+      { term: 'When it works', value: 'Ships to everyone behind it' },
+      { term: 'When they leave', value: 'You know who to ask' },
+    ],
+    verdict: 'Slow to move, but the work accumulated somewhere.',
+  },
+  {
+    key: 'now',
+    kicker: 'The new shape',
+    title: 'The person is the silo',
+    unitLabel: 'Every employee',
+    units: 16,
+    ledger: [
+      { term: 'Budget line', value: 'Tokens, spread thin' },
+      { term: 'Maintainer', value: 'Whoever built it' },
+      { term: 'When it works', value: 'Stays in one chat history' },
+      { term: 'When they leave', value: 'It leaves with them' },
+    ],
+    verdict: 'Fast to move, and nothing compounds.',
+  },
+];
+---
+
+<figure
+  class="ts-figure"
+  role="img"
+  aria-label="Two organizational shapes compared. Previously the owning team was the silo: one visible budget line, a named maintainer team, work that shipped to everyone behind it, and a known owner when someone left. Now the individual employee is the silo: token spend spread thin, whoever built it maintains it, successful work stays in one chat history, and the solution leaves when the person does."
+>
+  <header class="ts-header">
+    <span class="ts-eyebrow">What giving everyone tokens actually changed</span>
+    <h3>We did not remove the silos. We made one per person.</h3>
+  </header>
+
+  <div class="ts-compare">
+    {eras.map((era) => (
+      <section class={`ts-era ts-era--${era.key}`}>
+        <span class="ts-kicker">{era.kicker}</span>
+        <h4>{era.title}</h4>
+
+        <div class="ts-field" aria-hidden="true">
+          {Array.from({ length: era.units }).map(() => (
+            <span class="ts-unit"></span>
+          ))}
+        </div>
+        <span class="ts-unit-label" aria-hidden="true">{era.unitLabel}</span>
+
+        <dl class="ts-ledger">
+          {era.ledger.map((row) => (
+            <div class="ts-row">
+              <dt>{row.term}</dt>
+              <dd>{row.value}</dd>
+            </div>
+          ))}
+        </dl>
+
+        <p class="ts-verdict">{era.verdict}</p>
+      </section>
+    ))}
+  </div>
+
+  <figcaption>
+    The plumbing did not change. The CRM, the dashboards, and the ticketing system are
+    still the pipes the business runs through. What changed is that avoidance of that
+    plumbing is now a per-seat expense with no path back to the organization.
+  </figcaption>
+</figure>
+
+<style>
+  .ts-figure {
+    margin: 3rem 0;
+    padding: 2rem;
+    border: 1px solid rgba(19, 34, 53, 0.14);
+    border-radius: 18px;
+    background: linear-gradient(160deg, #fbfaf6 0%, #f4f1ea 100%);
+  }
+
+  .ts-header {
+    margin-bottom: 1.9rem;
+    max-width: 46ch;
+  }
+
+  .ts-eyebrow {
+    display: block;
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+    color: #008fd3;
+    margin-bottom: 0.6rem;
+  }
+
+  .ts-header h3 {
+    margin: 0;
+    font-size: 1.34rem;
+    line-height: 1.3;
+    color: #132235;
+  }
+
+  .ts-compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.4rem;
+  }
+
+  .ts-era {
+    position: relative;
+    padding: 1.5rem 1.35rem 1.4rem;
+    border-radius: 14px;
+    border: 1px solid rgba(19, 34, 53, 0.12);
+    background: #fbfaf6;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .ts-era--now {
+    background: linear-gradient(165deg, #0a2130 0%, #143247 100%);
+    border-color: rgba(52, 186, 255, 0.32);
+  }
+
+  .ts-kicker {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(19, 34, 53, 0.55);
+  }
+
+  .ts-era--now .ts-kicker {
+    color: #34baff;
+  }
+
+  .ts-era h4 {
+    margin: 0.45rem 0 1.25rem;
+    font-size: 1.08rem;
+    line-height: 1.32;
+    color: #132235;
+  }
+
+  .ts-era--now h4 {
+    color: #fbfaf6;
+  }
+
+  .ts-field {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.42rem;
+    min-height: 3.6rem;
+    align-content: flex-start;
+    margin-bottom: 0.5rem;
+  }
+
+  .ts-unit {
+    width: 1.45rem;
+    height: 1.45rem;
+    border-radius: 5px;
+    background: rgba(0, 143, 211, 0.16);
+    border: 1px solid rgba(0, 143, 211, 0.45);
+  }
+
+  .ts-era--now .ts-unit {
+    width: 0.72rem;
+    height: 0.72rem;
+    border-radius: 3px;
+    background: rgba(244, 196, 48, 0.2);
+    border-color: rgba(244, 196, 48, 0.6);
+  }
+
+  .ts-unit-label {
+    font-size: 0.72rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: rgba(19, 34, 53, 0.5);
+    margin-bottom: 1.15rem;
+  }
+
+  .ts-era--now .ts-unit-label {
+    color: rgba(251, 250, 246, 0.6);
+  }
+
+  .ts-ledger {
+    margin: 0 0 1.1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.05rem;
+  }
+
+  .ts-row {
+    display: grid;
+    grid-template-columns: minmax(0, 8.5rem) minmax(0, 1fr);
+    gap: 0.75rem;
+    padding: 0.5rem 0;
+    border-top: 1px solid rgba(19, 34, 53, 0.1);
+  }
+
+  .ts-era--now .ts-row {
+    border-top-color: rgba(165, 184, 238, 0.22);
+  }
+
+  .ts-row dt {
+    margin: 0;
+    font-size: 0.79rem;
+    color: rgba(19, 34, 53, 0.62);
+  }
+
+  .ts-era--now .ts-row dt {
+    color: rgba(165, 184, 238, 0.85);
+  }
+
+  .ts-row dd {
+    margin: 0;
+    font-size: 0.86rem;
+    font-weight: 600;
+    color: #132235;
+  }
+
+  .ts-era--now .ts-row dd {
+    color: #fbfaf6;
+  }
+
+  .ts-verdict {
+    margin: auto 0 0;
+    padding-top: 0.9rem;
+    font-size: 0.87rem;
+    line-height: 1.45;
+    font-style: italic;
+    color: rgba(19, 34, 53, 0.7);
+    border-top: 2px solid rgba(0, 143, 211, 0.35);
+  }
+
+  .ts-era--now .ts-verdict {
+    color: #f4c430;
+    font-style: normal;
+    font-weight: 600;
+    border-top-color: rgba(244, 196, 48, 0.5);
+  }
+
+  .ts-figure figcaption {
+    margin-top: 1.6rem;
+    padding-top: 1.1rem;
+    border-top: 1px solid rgba(19, 34, 53, 0.12);
+    font-size: 0.87rem;
+    line-height: 1.6;
+    color: rgba(19, 34, 53, 0.72);
+  }
+
+  @media (max-width: 760px) {
+    .ts-figure {
+      padding: 1.4rem 1.15rem;
+    }
+
+    .ts-compare {
+      grid-template-columns: 1fr;
+    }
+
+    .ts-row {
+      grid-template-columns: minmax(0, 7.5rem) minmax(0, 1fr);
+    }
+  }
+</style>
