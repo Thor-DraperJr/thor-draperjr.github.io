@@ -14,17 +14,17 @@ That last part is said as the feature.
 
 Sit with the economics. The company already pays for a CRM. Somebody just spent real time building a second interface whose entire value proposition is that nobody has to open the first one.
 
-If a platform team had done that, it would be an old, familiar problem. Companies have paid engineering teams to build and maintain internal wrappers for decades. That was the siloed method: one team owns the thing, it has a budget line, somebody's name is on the maintenance, and when the person who wrote it leaves you at least know which team to go ask.
+If a platform team had done that, it would be an old, familiar problem. Companies have paid engineering teams to build and maintain internal wrappers for decades. That was the siloed method: one team owns it, it has a budget line, somebody's name is on the maintenance, and when they leave you know which team to ask.
 
 That is not what is happening now. We decided the company should be agentic, so we gave tokens to everybody. Which is the right instinct. But look at what it produced: we took a siloed organization and turned every individual employee into their own silo.
 
-The CRM is plumbing. So are the reporting dashboards, the ticketing system, the data warehouse. Those are the pipes the business already runs through, and I am genuinely in favor of modernizing them. Putting an agent in front of plumbing so that a person never has to touch it is not modernization. It is spending money on avoidance.
+The CRM is plumbing. So are the dashboards, the ticketing system, the data warehouse. Those are the pipes the business runs through, and I am genuinely in favor of modernizing them. Putting an agent in front of plumbing so nobody has to touch it is not modernization. It is spending money on avoidance.
 
-Then it gets worse, and this is the part that actually bothers me. Say the agent is good. Say someone builds something that legitimately saves four hours a week. There is no avenue to share it. It lives in one person's chat history, or a personal workspace nobody else has access to, wired to their own credentials and their own idea of what a good answer looks like. The old silo was at least a team. This silo is a single person, and the solution dies with their next role change.
+Then it gets worse. Say the agent is good. Say it legitimately saves four hours a week. There is no avenue to share it. It lives in one person's chat history, wired to their credentials and their idea of a good answer. The old silo was at least a team. This one is a single person, and the solution dies with their next role change.
 
 So the failure mode is not just duplicated spend. It is duplicated spend that cannot compound. Two hundred people can independently solve the same problem, at full cost each time, and the organization learns nothing.
 
-For an individual, building your own version is fine. It is how you learn what the category actually is, and I do it constantly. I have written here about turning my own posting workflow into an MCP server and auditing my own agent workbench, and both were me rebuilding something I could have bought.
+For an individual, building your own version is fine. It is how you learn what the category actually is, and I do it constantly. I have turned my own posting workflow into an MCP server and audited my own agent workbench, and both were me rebuilding something I could have bought.
 
 At enterprise scale it stops being fine. I do not want to spend tokens avoiding the CRM.
 
@@ -32,13 +32,13 @@ At enterprise scale it stops being fine. I do not want to spend tokens avoiding 
 
 ## Why the failures cluster where they do
 
-MIT's Project NANDA put a number on this that got quoted everywhere for the wrong reason. Their [State of AI in Business 2025 report](https://mlq.ai/media/quarterly_decks/v0.1_State_of_AI_in_Business_2025_Report.pdf) found that roughly 95 percent of generative AI pilots delivered no measurable impact on P&L, against thirty to forty billion dollars of enterprise spend. The headline got read as "AI does not work."
+MIT's Project NANDA put a number on this that got quoted everywhere for the wrong reason. Their [State of AI in Business 2025 report](https://mlq.ai/media/quarterly_decks/v0.1_State_of_AI_in_Business_2025_Report.pdf) found roughly 95 percent of generative AI pilots delivered no measurable P&L impact, against thirty to forty billion dollars of spend. The headline got read as "AI does not work."
 
-Read the diagnosis instead of the number. The report's lead author told [Fortune](https://fortune.com/2025/08/18/mit-report-95-percent-generative-ai-pilots-at-companies-failing-cfo/) that almost everywhere they went, enterprises were trying to build their own tool, and that purchased solutions delivered more reliable results. More than half of the budgets went to sales and marketing surfaces while the measurable return sat in back-office work nobody wanted to demo.
+Read the diagnosis instead of the number. The report's lead author told [Fortune](https://fortune.com/2025/08/18/mit-report-95-percent-generative-ai-pilots-at-companies-failing-cfo/) that almost everywhere they went, enterprises were trying to build their own tool, and purchased solutions delivered more reliable results. Over half of budgets went to sales and marketing while the measurable return sat in back-office work nobody wanted to demo.
 
-That is not a model problem. That is a portfolio problem, and the portfolio was already in trouble before anyone bought a model. Zylo's [2026 SaaS Management Index](https://zylo.com/saas-management-index/) has the average organization spending $55.7 million a year across 305 applications, with app counts flat and costs still climbing 8 percent because vendors are layering AI tiers and consumption pricing into contracts that used to be predictable. The bill goes up without a single new tool appearing on the list.
+That is not a model problem. It is a portfolio problem, and the portfolio was in trouble before anyone bought a model. Zylo's [2026 SaaS Management Index](https://zylo.com/saas-management-index/) has the average organization spending $55.7 million a year across 305 applications, app counts flat, costs climbing 8 percent as vendors layer AI tiers into contracts that used to be predictable. The bill rises without one new tool on the list.
 
-Meanwhile the governance side is chasing the same sprawl. Gartner's 2025 survey of cybersecurity leaders found [69 percent have evidence or suspicion](https://www.infosecurity-magazine.com/news/gartner-40-firms-hit-shadow-ai/) that employees are using public generative AI at work, and Gartner predicts more than 40 percent of organizations will hit a security or compliance incident from unauthorized AI tools by 2030. Same analyst, same piece, second prediction worth sitting with: half of enterprises will face delayed upgrades or rising maintenance costs from unmanaged technical debt in AI-generated artifacts.
+Governance is chasing the same sprawl. Gartner found [69 percent of security leaders](https://www.infosecurity-magazine.com/news/gartner-40-firms-hit-shadow-ai/) suspect employees use public generative AI at work, and predicts over 40 percent of organizations will hit a compliance incident from unauthorized AI by 2030. Same piece: half will face delayed upgrades or rising maintenance costs from AI-generated technical debt.
 
 Every bespoke internal tool you ship is a small deposit into that second number. You own it now. You maintain it, you patch it, you explain it to the auditor.
 
@@ -48,25 +48,25 @@ So here is the order I would run instead. It is deliberately unexciting.
 
 Mission one is acceleration of the work as it exists today. No new process. No reorg. No transformation office.
 
-The reason to start here is that it is the only step where you can measure honestly. The process already has a cycle time, an error rate, and a person who can tell you where it hurts. Put AI against that and the before and after are real numbers instead of a satisfaction survey.
+Start here because it is the only step you can measure honestly. The process already has a cycle time, an error rate, and someone who can tell you where it hurts. Put AI against that and the before and after are real numbers instead of a satisfaction survey.
 
-There is a distinction I want to be careful about, because people collapse it. AI is not automation. Automation is a deterministic path somebody designed on purpose, and it has been available for decades. What changed is that the person who owns the process can now build the automation themselves, in language, without filing a ticket and waiting a quarter for a developer who does not know the work.
+One distinction people collapse: AI is not automation. Automation is a deterministic path somebody designed on purpose, available for decades. What changed is that the person who owns the process can now build it themselves, in language, without filing a ticket and waiting a quarter for a developer who does not know the work.
 
-The most valuable thing AI does in this phase is not doing the task. It is finding the task. Ask it to sit with a workflow and tell you which steps are repetitive, low-judgment, and high-volume, and it will hand you an offload list that the people doing the work were too close to see. Then you automate those steps, and quite often the thing you build is a deterministic script rather than a model call, which is a good outcome and a cheap one.
+The most valuable thing AI does here is not doing the task. It is finding the task. Ask it to sit with a workflow and name the steps that are repetitive, low-judgment, and high-volume, and it hands you an offload list the people doing the work were too close to see. Often what you build is a deterministic script rather than a model call, which is the cheap outcome and the right one.
 
-Here is the part that gets missed when this is framed as a headcount conversation. Offload 40 percent of a role and you have not removed 40 percent of a person. You have concentrated them into the 60 percent that needed judgment, relationships, and accountability all along. That 60 percent is the part with the leverage in it, and it is the part that was getting squeezed by the other 40.
+Here is what gets missed when this becomes a headcount conversation. Offload 40 percent of a role and you have not removed 40 percent of a person. You have concentrated them into the 60 percent that always needed judgment, relationships, and accountability. That 60 percent holds the leverage, and it was the part getting squeezed by the other 40.
 
-Which means the honest outcome is usually more demand for that work, not less. When your sellers stop spending Thursday on data entry, you do not need fewer sellers. You find out how much selling was not happening on Thursdays. When your analysts stop assembling the report, the questions get harder and better, and somebody has to answer them. Acceleration raises the ceiling on the human part of the job before it ever touches the floor.
+So the honest outcome is usually more demand for that work, not less. When sellers stop spending Thursday on data entry, you do not need fewer sellers. You find out how much selling was not happening on Thursdays. When analysts stop assembling the report, the questions get harder. Acceleration raises the ceiling on the human part of the job before it touches the floor.
 
 If your first AI initiative changed how the business runs, you skipped a step. Make today faster first.
 
 ## Two: get the rest of what you already bought
 
-There is a longstanding claim in software that customers use something like 20 percent of what they purchased. I have not found a clean primary source for that exact number, and I would not put it in a business case. The measurable version is worse: Zylo's data has license utilization sitting under half, with organizations wasting real money on seats nobody opened.
+There is a longstanding claim that customers use about 20 percent of what they purchased. I have not found a clean primary source for it, and I would not put it in a business case. The measurable version is worse: Zylo has license utilization under half, with real money going to seats nobody opened.
 
-The reason is not that buyers are careless. It is that they are running a business. Nobody has an afternoon to read release notes, evaluate a new configuration, understand a feature they never asked for, and shepherd it through change control. So the platform keeps shipping capability and the customer keeps using the same eight screens they learned during onboarding.
+Not because buyers are careless. Because they are running a business. Nobody has an afternoon to read release notes, evaluate a config, and shepherd it through change control. So the platform keeps shipping capability and the customer keeps using the same eight screens they learned at onboarding.
 
-This is the highest-return AI work available in most enterprises, and almost nobody frames it as AI work. Point the model at the documentation, the release notes, and your actual configuration and tenancy, and ask what you are entitled to that you have not turned on. Ask what you configured in 2022 that the vendor has since replaced with something better. Ask which of the six overlapping tools in a category is the one your contract already makes free.
+This is the highest-return AI work in most enterprises, and nobody frames it as AI work. Point the model at the docs, the release notes, and your own configuration, and ask what you are entitled to that you have not turned on. Ask what you configured in 2022 that the vendor has since replaced. Ask which of six overlapping tools your contract already makes free.
 
 The answer to "we need a tool that does X" is very often "you have four, and one of them is good."
 
@@ -74,11 +74,11 @@ That step costs a conversation. Building X costs a roadmap.
 
 ## Three: buy more precisely
 
-Only now does the money conversation get interesting, and I want to be clear about what I am arguing. I am not saying kill SaaS. The MIT data points the other direction, and so does my own experience: buying the platform beats building the platform almost every time.
+Only now does the money conversation get interesting, and I want to be clear what I am arguing. I am not saying kill SaaS. The MIT data points the other direction, and so does my own experience: buying the platform beats building the platform almost every time.
 
-What I am arguing against is t-shirt sizing your commitments. The traditional cycle is that you estimate high, buy a tier, true up at renewal, and carry the slack for three years because visibility into actual consumption was too expensive to obtain. That was a reasonable trade when measuring usage per feature per team was a research project.
+What I am arguing against is t-shirt sizing your commitments. You estimate high, buy a tier, true up at renewal, and carry the slack for three years because visibility into real consumption was too expensive to get. That was a reasonable trade when measuring usage per feature per team was a research project.
 
-It is not a research project anymore. When you can see which capabilities are actually load-bearing, which seats are dormant, and which of your five overlapping contracts is doing the real work, your purchase stops being a size and becomes a specification. Bespoke, in the sense of tailored to observed consumption rather than to a forecast you made under uncertainty.
+It is not a research project anymore. When you can see which capabilities are load-bearing, which seats are dormant, and which of five overlapping contracts does the real work, your purchase stops being a size and becomes a specification. Tailored to observed consumption rather than a forecast made under uncertainty.
 
 The savings show up in three places. You stop paying for shelfware. You stop paying twice for the same capability in two contracts. And you stop paying a third time in tokens and engineering salary to rebuild a capability you were already entitled to.
 
@@ -90,11 +90,11 @@ The savings show up in three places. You stop paying for shelfware. You stop pay
 | Get the rest of what you bought | A conversation with your own contracts | Features turned on, tools retired, tickets that stop being filed |
 | Buy more precisely | A renewal cycle with real usage data | Commitments that match consumption instead of a forecast |
 
-Each step funds the next one. Acceleration proves the capability is real to people who were skeptical. Utilization work retires overlapping spend and shows you where the genuine gaps are. Only then do you know enough to negotiate, and only then do you know which gap is worth building for, because by that point the list of things you actually have to build yourself is short and specific and defensible.
+Each step funds the next. Acceleration proves the capability is real to skeptics. Utilization work retires overlapping spend and exposes the genuine gaps. Only then do you know enough to negotiate, and only then do you know which gap is worth building for, because by that point the build list is short, specific, and defensible.
 
 Skip to step three and you are cost-cutting blind. Skip to building and you join the 95 percent.
 
-The uncomfortable version of this philosophy is that a successful first year of AI transformation should look boring from the outside. Same org chart, same systems of record, same vendors. Faster cycle times, higher utilization on what you own, and a renewal where you knew more than the vendor did.
+The uncomfortable version is that a successful first year of AI transformation looks boring from the outside. Same org chart, same systems of record, same vendors. Faster cycle times, higher utilization on what you own, and a renewal where you knew more than the vendor did.
 
 The demo is worse. The P&L is better.
 
