@@ -1,8 +1,10 @@
 ---
 title:  "Azure-to-AWS"
 layout: post
-categories: tech
+categories: [tech]
 tags: [technical, cloud]
+excerpt: "A full walkthrough for connecting an Azure vNet to an AWS VPC from scratch, jumping between both consoles, with every resource and doc link at the bottom."
+draft: false
 ---
 
 Alright! This was a little lab that I did to connect an Azure vNet to an AWS VPC. I'll walk you through doing a complete from scratch deployment. At the bottom of the article, I included a list of all of the individual resources that I used and the relevant links so you could learn more about that cloud technology. Due to how the VPNs deploy, we'll need to jump between the Azure Portal and the AWS console.

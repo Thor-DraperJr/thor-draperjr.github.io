@@ -1,8 +1,10 @@
 ---
 title:  "Building a Framework: Soft skills to help you dominate a career change"
 layout: post
-categories: business
+categories: [business]
 tags: [career, productivity]
+excerpt: "Moving from sales to tech meant relearning how I learned. These are the soft skills I had to rebuild first: reading comprehension, research method, and critical thinking."
+draft: false
 ---
 Changing careers is a daunting task.
 

@@ -1,8 +1,10 @@
 ---
 title: "Should Cybersecurity Certificates Shape Your Salary Expectations?"
 layout: post
-categories: tech
+categories: [tech]
 tags: [technical, cybersecurity, career]
+excerpt: "People ask what salary a certification should get them. Certifications buy you confidence and interview anecdotes, and I would not price a career on them."
+draft: false
 ---
 
 One of the questions I've often heard is, "Once I get my X certification, what should my salary expectations be?"

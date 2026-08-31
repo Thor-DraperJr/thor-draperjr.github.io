@@ -1,8 +1,10 @@
 ---
 title:  "Balancing Work, Education, and Personal Life: A Time Blocking Schedule"
 layout: post
-categories: life
+categories: [life]
 tags: [personal, productivity, career]
+excerpt: "Between Microsoft, teaching at night, and SANS certifications, time blocking is the only scheduling method that held. Here is my actual weekly schedule."
+draft: false
 ---
 
 As someone who works a full-time job at Microsoft, teaches part-time, and is also working on obtaining multiple certifications through the SANS Institute, I understand the importance of balancing work, education, and personal life. To help manage my time and stay organized, I've adopted the time blocking technique.

@@ -1,8 +1,10 @@
 ---
 title:  "How to choose your cybersecurity career with Feedback Loops"
 layout: post
-categories: tech
+categories: [tech]
 tags: [technical, cybersecurity, career]
+excerpt: "Telling people to go ask someone in the field stopped feeling like a real answer. Feedback loops give a better way to choose a cybersecurity path and correct as you go."
+draft: false
 ---
 I’ve had a tough time answering the question - “How do I get into Cybersecurity?”
 

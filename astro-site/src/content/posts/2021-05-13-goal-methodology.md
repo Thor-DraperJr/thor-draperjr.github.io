@@ -1,8 +1,10 @@
 ---
 title:  "Goal Methodology"
 layout: post
-categories: business
+categories: [business]
 tags: [career, productivity]
+excerpt: "There is no such thing as a bad goal, but there are unclear ones. Here is how I move a goal from something I keep changing to something I actually do."
+draft: false
 ---
 Go from ‘Goal-Changer’ to ‘Goal-Doer’.
 

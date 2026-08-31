@@ -5,6 +5,7 @@ date: 2026-05-04
 categories: [life, career]
 tags: [personal, career]
 excerpt: "I gave up on January resolutions and replaced them with three personal new years -- relationship, professional, personal -- each one anchored to a single word."
+draft: false
 ---
 
 A while back I came across the idea of picking one word for the year instead of a list of resolutions. The pitch was simple: a checklist is easy to fail and easy to forget, but a word is something you can carry around. You can hold a decision up against it and ask, "does this move me toward the word or away from it?"

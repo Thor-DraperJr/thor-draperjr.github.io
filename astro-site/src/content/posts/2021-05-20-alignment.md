@@ -1,8 +1,10 @@
 ---
 title:  "Alignment"
 layout: post
-categories: business
+categories: [business]
 tags: [career, productivity]
+excerpt: "You check your tire alignment once a year for a smoother ride and better mileage. This is what happens when you run the same inspection on your goals."
+draft: false
 ---
 You’re supposed to check the alignment on your tires at least once a year. So on top of ensuring a smooth ride, you get benefits like gas mileage and proper road contact. That got me thinking. Shouldn’t we also check our personal alignment to our goals?
 

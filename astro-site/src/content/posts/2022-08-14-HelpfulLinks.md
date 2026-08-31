@@ -1,8 +1,10 @@
 ---
 title:  "Helpful Links"
 layout: post
-categories: tech
+categories: [tech]
 tags: [technical, cybersecurity, productivity]
+excerpt: "The ten links I keep handing to people who want to supplement their cybersecurity learning with something interactive instead of another video course."
+draft: false
 ---
 I often get asked for some links that would would help supplement learning and add in a bit of gamification to cyber. Here are my top 10 links:
 

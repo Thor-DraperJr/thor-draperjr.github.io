@@ -1,8 +1,10 @@
 ---
 title:  "Twitter to Power BI"
 layout: post
-categories: tech
+categories: [tech]
 tags: [technical, cloud, productivity]
+excerpt: "A build log for pulling my tweets through Azure Logic Apps into Power BI, so I could see whether I was spending my time well or just spending it."
+draft: false
 ---
 Another tech tutorial!
 
