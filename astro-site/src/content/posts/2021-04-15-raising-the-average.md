@@ -1,8 +1,10 @@
 ---
 title:  "Raising the Average"
 layout: post
-categories: business
+categories: [business]
 tags: [career, leadership]
+excerpt: "You are the average of the five people you spend the most time with, which makes mentorship a math problem. Here is how I went about raising my average."
+draft: false
 ---
 
 According to Jim Rohn: “You’re the average of the five people you spend the most time with.” Meaning, the people you spend the most time with are the same ones that shape you in-to you. You are their average. This same relationship applies when you’re referring to mentors.

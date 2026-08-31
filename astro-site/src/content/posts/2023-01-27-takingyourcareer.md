@@ -1,8 +1,10 @@
 ---
 title:  "Taking Your Career to the Next Level"
 layout: post
-categories: business
+categories: [business]
 tags: [career, leadership]
+excerpt: "A short guide to the three levers I keep coming back to for professional growth: setting specific goals, building a real network, and never stopping the learning."
+draft: false
 ---
 
 ## Introduction

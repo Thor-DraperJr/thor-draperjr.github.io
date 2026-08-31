@@ -1,8 +1,10 @@
 ---
 title:  "Choosing the Right Cybersecurity Career Path"
 layout: post
-categories: tech
+categories: [tech]
 tags: [technical, cybersecurity, career]
+excerpt: "Real questions from people trying to choose a cybersecurity path, pulled from Reddit, with the direct answers I would give each of them."
+draft: false
 ---
 
 ## Cybersecurity Career Path Questions

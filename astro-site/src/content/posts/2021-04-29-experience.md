@@ -1,8 +1,10 @@
 ---
 title:  "Experience without experience"
 layout: post
-categories: business
+categories: [business]
 tags: [career, productivity]
+excerpt: "Everyone says to apply anyway and ignore the experience requirement. That advice is lazy on its own. Here is how to go build the experience instead of pretending you have it."
+draft: false
 ---
 Has anyone else heard the advice of “just ignore the experience requirement and apply anyway?” I agree (mainly because I’m a believer in you miss 100% of shots you don’t take). But I do feel like it’s a bit lazy. Don’t just blindly apply places, do something about it!
 

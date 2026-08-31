@@ -1,8 +1,10 @@
 ---
 title:  "Creating your momentum"
 layout: post
-categories: business
+categories: [business]
 tags: [career, productivity]
+excerpt: "Luck is timing meeting preparation. After a career change I had to build the preparation half on purpose, and this is the system I used to keep momentum going."
+draft: false
 ---
 
 ## Tagline

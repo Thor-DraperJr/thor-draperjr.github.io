@@ -1,8 +1,10 @@
 ---
 title:  "Don’t Wait. Contribute Now."
 layout: post
-categories: business
+categories: [business]
 tags: [career, leadership]
+excerpt: "Missing out on a promotion or a project is a signal, not a verdict. Isolate the problem, ask directly, and start contributing before anyone hands you permission."
+draft: false
 ---
 There are two types of people—those who find problems and those who bring solutions.
 

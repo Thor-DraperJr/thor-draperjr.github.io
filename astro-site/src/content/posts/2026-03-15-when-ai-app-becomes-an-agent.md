@@ -5,6 +5,7 @@ date: 2026-03-15
 categories: [tech]
 tags: [technical, ai, cybersecurity]
 excerpt: "The current enterprise AI conversation is full of category mistakes. This post starts a series on how to tell the difference between an AI-enhanced app, an assistive agent, an autonomous runtime, and the security controls that should change as authority increases."
+draft: false
 ---
 
 I've noticed a common theme in the current enterprise AI conversation: it is confused in a very specific way.

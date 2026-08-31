@@ -5,6 +5,7 @@ date: 2025-07-22
 categories: [tech, career]
 tags: [technical, ai, career]
 excerpt: "How I transformed my basic Jekyll blog into a modern, professional platform using AI assistance - including the exact prompts and techniques that made it successful."
+draft: false
 ---
 
 What up! So I just finished completely modernizing my Jekyll blog with some serious AI assistance, and honestly? The results are pretty incredible. I went from a basic, minimal Jekyll site to a modern, professional platform that actually reflects who I am as a person and professional.
