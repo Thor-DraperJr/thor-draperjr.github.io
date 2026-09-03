@@ -1,16 +1,42 @@
 ---
 layout: post
-title: "Four Repos I Deleted Around, and What They Taught Me About Working With AI"
+title: "Four Repos I Kept, Seventeen I Deleted, and What They Taught Me About Working With AI"
 date: 2026-09-02
 draft: true
 categories: [tech]
 tags: [technical, ai, cloud, career]
-excerpt: "An ARM template from 2021, two wedding apps from 2025, and an identity framework. Four repos that mark the points where my relationship with AI actually changed."
+excerpt: "I cut my GitHub account from 32 repositories to 15. Here is the rule I used, and what the four survivors say about where AI actually helps."
 ---
 
-I spent an afternoon pruning my GitHub account down from 32 repositories to 15. Most of the deletions were easy. A fork I made to demo a first pull request. A bootcamp exercise. A workshop that Microsoft shipped into the product a year later.
+I spent an afternoon pruning my GitHub account from 32 repositories down to 15. Seventeen deletions, one archive bundle kept on a local disk, and no attempt to preserve the contribution graph.
 
-Four survived the pass, and they survived for the same reason: each one marks a point where the way I work with AI changed. Not the way I talk about AI at work. The way I actually sit down and build something.
+Four repos survived the pass for the same reason: each one marks a point where the way I work with AI changed. Not the way I talk about AI at work. The way I actually sit down and build something.
+
+First, why the other seventeen went.
+
+## The pruning rule
+
+A public repository is a claim that you maintain something. Thirty-two of them was a claim I could not back, and an account full of dead experiments makes the live work harder to find, not easier.
+
+So I sorted every repo by one question: if someone opened this tomorrow and asked me about it, could I explain what it does and why it still exists?
+
+The seventeen that failed fell into four groups.
+
+**The product shipped it.** `AI-Red-Teaming-Workshop` was a real workshop I built and taught. Microsoft then built red teaming into Foundry, which is the correct outcome and also the end of that repo's usefulness. Same with `SecCopilot-CDR-Custom-Plugin`, which no longer works against the current API surface. Teaching material has a shelf life tied to the gap it fills.
+
+**The model caught up.** `ai-maker-toolkit`, `loop-improver-mcp`, and `social-promoter-mcp` were scaffolding I wrote because the models of that moment needed it. `social-promoter-mcp` was a governed posting workflow with a human approval gate; my agent runtime now does that natively. Frontier models improving is the whole thesis of my job. It would be strange to keep tooling around as a monument to a limitation that went away.
+
+**The contribution is already merged.** `Microsoft-Defender-for-Cloud` and `first-contributions` were forks. My work is in the upstream repositories where it belongs. A fork sitting on my account after the pull request merged is not evidence of anything except that I once clicked Fork.
+
+**It was learning, and the learning is done.** `first-pr-practice`, `LogScanner`, `old-GHPages-Project`, `MondayMagicTracker`, `VId-SsprSar`, `AzFwTLS-Term-Lab`. Bootcamp exercises, term labs, a tracker I built and stopped opening. One of them I genuinely did not recognize when I found it, which is its own verdict.
+
+I archived a batch first, then went back and deleted the archives too. Archiving is a way of not deciding. If a repo is not worth maintaining and not worth reading, leaving it visible with a gray banner on it is just a slower delete.
+
+The one exception is `AI-Red-Teaming-Workshop`. I made a Git bundle of the full history before deleting it and put it on local disk. That is 104 MB holding every commit, and it costs me nothing. Preserving history and publishing history are different decisions, and conflating them is why most people's accounts look like mine did.
+
+What I did not weigh at all: the green squares. Deleting repositories can change what shows up on a contribution graph, and I decided in about ten seconds that I did not care. A wall of green that represents abandoned work is a claim about volume. I would rather make a claim about maintenance.
+
+Now the four that stayed.
 
 ## 2021: I typed every line
 
@@ -87,6 +113,6 @@ The rule I use now is boring, and I trust it: let the model do the work you coul
 
 The board game app was the right call for a model to write. I did not need to learn Vite the week of my wedding. The identity framework was the wrong call for a model to write, because the sequencing was the deliverable.
 
-Deleting seventeen repositories was not painful, and the four I kept are not my best code. They are the four I can still explain.
+That rule is also what made the deletions easy. Seventeen of those repos existed because building something had gotten cheap. None of them existed because I had judgment worth keeping around. The four that stayed are not my best code. They are the four I can still explain.
 
 Thanks for reading. If your own account has a repo you would not delete, it is probably worth writing down why.
