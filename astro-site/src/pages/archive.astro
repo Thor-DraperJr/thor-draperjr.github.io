@@ -19,7 +19,6 @@ const archivePosts = posts.map((post) => ({
   searchText: normalizeSearchText([
     post.title,
     post.excerpt,
-    post.rawContent,
     post.tags.join(' '),
     post.categories.join(' '),
     String(post.date.getFullYear()),
@@ -97,7 +96,7 @@ const archiveVolumes = [...archivePosts.reduce((map, post) => {
 
             <div class="archive-record-list">
               {items.map((post, index) => (
-                <article class="archive-record" data-category={post.category} data-tags={post.tags.map((tag) => tag.toLowerCase()).join(',')} data-search={post.searchText} data-year={year}>
+                <article class="archive-record" data-category={post.category} data-tags={post.tags.map((tag) => tag.toLowerCase()).join(',')} data-search={post.searchText} data-permalink={post.permalink} data-year={year}>
                   <div class="archive-record-spine">
                     <span class="archive-record-date">{post.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</span>
                     <span class="archive-record-call">{year}.{String(index + 1).padStart(2, '0')}</span>
@@ -147,13 +146,32 @@ const archiveVolumes = [...archivePosts.reduce((map, post) => {
 
     let activeQuery = '';
     let activeTopic = '';
+    let fullTextIndex: Record<string, string> | undefined;
+    let searchIndexPromise: Promise<void> | undefined;
+
+    function loadSearchIndex() {
+      searchIndexPromise ??= fetch('/archive-search.json')
+        .then((response) => {
+          if (!response.ok) throw new Error(`Archive search index returned ${response.status}`);
+          return response.json();
+        })
+        .then((index) => {
+          fullTextIndex = index;
+        })
+        .catch(() => {
+          fullTextIndex = undefined;
+        });
+
+      return searchIndexPromise;
+    }
 
     function updateArchiveView() {
       let visibleCount = 0;
       const normalizedQuery = activeQuery.toLowerCase().trim();
 
       records.forEach((record) => {
-        const searchText = record.getAttribute('data-search') ?? '';
+        const permalink = record.getAttribute('data-permalink') ?? '';
+        const searchText = fullTextIndex?.[permalink] ?? record.getAttribute('data-search') ?? '';
         const tags = (record.getAttribute('data-tags') ?? '').split(',');
         const matchesQuery = !normalizedQuery || searchText.includes(normalizedQuery);
         const matchesTopic = !activeTopic || tags.includes(activeTopic);
@@ -187,6 +205,7 @@ const archiveVolumes = [...archivePosts.reduce((map, post) => {
       searchInput.addEventListener('input', () => {
         activeQuery = searchInput.value.trim();
         updateArchiveView();
+        if (activeQuery) void loadSearchIndex().then(updateArchiveView);
       });
     }
 
