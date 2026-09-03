@@ -1,8 +1,14 @@
 import matter from 'gray-matter';
 import { marked } from 'marked';
+import { getCollection } from 'astro:content';
 import fs from 'node:fs';
 import path from 'node:path';
 import { siteConfig } from './site';
+import {
+  validatePostExperience,
+  type PostExperience,
+  type PresentationId,
+} from './visualizations';
 
 export interface SiteConfig {
   title: string;
@@ -34,19 +40,21 @@ export interface Post {
   tags: string[];
   excerpt: string;
   html: string;
+  headings: Array<{ depth: number; id: string; text: string }>;
   rawContent: string;
   date: Date;
   permalink: string;
-  presentation?: string;
+  presentation?: PresentationId;
   presentHref?: string;
+  experience: PostExperience;
   readingTime: number;
   draft: boolean;
 }
 
 const contentRoot = path.join(process.cwd(), 'src', 'content');
-const postsDirectory = path.join(contentRoot, 'posts');
 const aboutPath = path.join(contentRoot, 'about.md');
 const resumePath = path.join(contentRoot, 'resume.md');
+const postEntries = await getCollection('posts');
 
 marked.setOptions({
   gfm: true,
@@ -65,21 +73,6 @@ function normalizeSegment(value: string): string {
     .replace(/['"]/g, '')
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-+|-+$/g, '');
-}
-
-function ensureArray(value: unknown): string[] {
-  if (Array.isArray(value)) {
-    return value.map((item) => String(item).trim()).filter(Boolean);
-  }
-
-  if (typeof value === 'string') {
-    return value
-      .split(',')
-      .map((item) => item.trim())
-      .filter(Boolean);
-  }
-
-  return [];
 }
 
 function stripMarkup(markdown: string): string {
@@ -115,6 +108,56 @@ function calculateReadingTime(content: string): number {
 // other content); section headings use <h2>+ and are untouched.
 function stripLeadingH1(html: string): string {
   return html.replace(/^\s*<h1[^>]*>[\s\S]*?<\/h1>\s*/i, '');
+}
+
+function decodeHtmlEntities(value: string): string {
+  const codePoint = (match: string, value: string, radix: number) => {
+    const number = Number.parseInt(value, radix);
+    return Number.isInteger(number) && number >= 0 && number <= 0x10ffff && !(number >= 0xd800 && number <= 0xdfff)
+      ? String.fromCodePoint(number)
+      : match;
+  };
+
+  return value
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;|&apos;/g, "'")
+    .replace(/&#(\d+);/g, (match, code: string) => codePoint(match, code, 10))
+    .replace(/&#x([0-9a-f]+);/gi, (match, code: string) => codePoint(match, code, 16));
+}
+
+function headingId(value: string): string {
+  return normalizeSegment(decodeHtmlEntities(value.replace(/<[^>]+>/g, ' '))) || 'section';
+}
+
+function escapeAttribute(value: string): string {
+  return value.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+function enhanceHeadings(html: string): { html: string; headings: Post['headings'] } {
+  const headings: Post['headings'] = [];
+  const seen = new Map<string, number>();
+  const enhanced = html.replace(/<h([2-4])([^>]*)>([\s\S]*?)<\/h\1>/gi, (_, depthValue, attributes, content) => {
+    const depth = Number(depthValue);
+    const text = decodeHtmlEntities(String(content).replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim());
+    const attributeText = String(attributes);
+    const existingIdMatch = attributeText.match(/\sid\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s>]+))/i);
+    const existingId = existingIdMatch?.[1] ?? existingIdMatch?.[2] ?? existingIdMatch?.[3];
+    const baseId = existingId || headingId(String(content));
+    const occurrence = (seen.get(baseId) ?? 0) + 1;
+    seen.set(baseId, occurrence);
+    const id = occurrence === 1 ? baseId : `${baseId}-${occurrence}`;
+    headings.push({ depth, id, text });
+    const nextAttributes = existingIdMatch
+      ? attributeText.replace(existingIdMatch[0], ` id="${escapeAttribute(id)}"`)
+      : `${attributeText} id="${escapeAttribute(id)}"`;
+
+    return `<h${depth}${nextAttributes}>${content}<a class="heading-anchor" href="#${escapeAttribute(id)}" aria-label="Link to ${escapeAttribute(text)}">#</a></h${depth}>`;
+  });
+
+  return { html: enhanced, headings };
 }
 
 function parseMarkdownFile(filePath: string) {
@@ -172,38 +215,46 @@ export function getPosts(): Post[] {
     return cachedPosts;
   }
 
-  const entries = fs
-    .readdirSync(postsDirectory)
-    .filter((fileName) => /\.md$/i.test(fileName))
-    .map((fileName) => {
-      const filePath = path.join(postsDirectory, fileName);
-      const { data, content, html } = parseMarkdownFile(filePath);
-      const slug = path.basename(fileName, path.extname(fileName)).replace(/^\d{4}-\d{2}-\d{2}-/, '');
-      const categories = ensureArray(data.categories);
-      const tags = ensureArray(data.tags);
-      const category = normalizeSegment(categories[0] ?? 'posts');
-      const dateFromFileName = path.basename(fileName).slice(0, 10);
-      const dateValue = data.date instanceof Date
-        ? data.date.toISOString().slice(0, 10)
-        : String(data.date ?? dateFromFileName);
-      const excerpt = deriveExcerpt(content, String(data.excerpt ?? ''));
-      const draft = data.draft === true;
-      const presentation = typeof data.presentation === 'string' ? normalizeSegment(data.presentation) : undefined;
+  const entries = postEntries
+    .map((entry) => {
+      const source = entry.filePath ? path.basename(entry.filePath) : `${entry.id}.md`;
+      const content = entry.body?.trim();
+      if (!content) {
+        throw new Error(`${source} has no Markdown body`);
+      }
+
+      const slug = entry.id;
+      const categories = [...entry.data.categories];
+      const tags = [...entry.data.tags];
+      const category = normalizeSegment(categories[0]);
+      const dateFromFileName = source.slice(0, 10);
+      const dateValue = entry.data.date?.toISOString().slice(0, 10) ?? dateFromFileName;
+      const date = new Date(`${dateValue}T12:00:00Z`);
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(dateValue) || Number.isNaN(date.getTime()) || date.toISOString().slice(0, 10) !== dateValue) {
+        throw new Error(`${source} must declare a date or use a YYYY-MM-DD-prefixed filename`);
+      }
+      const excerpt = deriveExcerpt(content, entry.data.excerpt);
+      const draft = entry.data.draft;
+      const presentation = entry.data.presentation as PresentationId | undefined;
+      const experience = validatePostExperience(content, presentation, source);
       const permalink = `/${category}/${slug}/`;
+      const rendered = enhanceHeadings(stripLeadingH1(marked.parse(content) as string));
 
       return {
-        title: String(data.title ?? slug.replace(/-/g, ' ')),
+        title: entry.data.title,
         slug,
         category,
         categories,
         tags,
         excerpt,
-        html: stripLeadingH1(html),
+        html: rendered.html,
+        headings: rendered.headings,
         rawContent: content,
-        date: new Date(`${dateValue}T12:00:00`),
+        date,
         permalink,
         presentation,
         presentHref: presentation ? `${permalink}present/` : undefined,
+        experience,
         readingTime: calculateReadingTime(content),
         draft,
       } satisfies Post;
