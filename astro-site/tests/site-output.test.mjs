@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
+import { readFile, readdir } from 'node:fs/promises';
 import path from 'node:path';
 import test from 'node:test';
 
@@ -151,7 +151,7 @@ test('website presentation article interleaves scenes and keeps one complete pre
     assert.doesNotMatch(article, /data-presentation-deck/);
     assert.match(article, /aria-label="Presentation controls"/);
     assert.match(article, /href="\/tech\/how-my-website-becomes-a-presentation\/present\/"/);
-    assert.equal((article.match(/vw-article-scene/g) || []).length, expectedSections.length);
+    assert.equal((article.match(/class="[^"]*\bvw-article-scene\b[^"]*"/g) || []).length, expectedSections.length);
     assert.match(article, /How I Build Presentations in the Browser with GitHub Copilot/);
     assert.deepEqual(articleSections, expectedSections);
     assert.equal(new Set(articleSections).size, expectedSections.length);
@@ -223,4 +223,41 @@ test('website presentation article interleaves scenes and keeps one complete pre
     for (const control of ['prev', 'next', 'cues', 'exit']) {
         assert.match(presentation, new RegExp(`data-present-${control}`));
     }
+});
+
+test('standard articles expose a durable reading layer', async () => {
+    const html = await readFile(path.join(distPath, 'tech/coding/index.html'), 'utf8');
+
+    assert.match(html, /class="reading-progress"/);
+    assert.match(html, /class="reading-map"[^>]*aria-label="On this page"/);
+    assert.match(html, /<h2 id="the-short-answer">/);
+    assert.match(html, /class="heading-anchor" href="#the-short-answer"/);
+});
+
+test('all publication modes self-host their fonts', async () => {
+    const pages = await Promise.all([
+        readFile(path.join(distPath, 'index.html'), 'utf8'),
+        readFile(path.join(distPath, 'career/walking-deck/present/index.html'), 'utf8'),
+        readFile(path.join(distPath, 'tech/first-pull-request/present/index.html'), 'utf8'),
+    ]);
+
+    for (const page of pages) assert.doesNotMatch(page, /fonts\.googleapis\.com/);
+    const fontAssets = (await readdir(path.join(distPath, '_astro'))).filter((file) => file.endsWith('.woff2'));
+    assert.ok(fontAssets.length >= 4, `expected at least four local font assets, found ${fontAssets.length}`);
+});
+
+test('articles publish branded social metadata and structured data', async () => {
+    const html = await readFile(path.join(distPath, 'tech/coding/index.html'), 'utf8');
+    const socialCard = await readFile(path.join(distPath, 'social/tech/coding.png'));
+    const socialCards = (await readdir(path.join(distPath, 'social'), { recursive: true })).filter((file) => file.endsWith('.png'));
+
+    assert.match(html, /<meta property="og:image" content="https:\/\/thordraperjr\.com\/social\/tech\/coding\.png">/);
+    assert.match(html, /<meta property="og:image:type" content="image\/png">/);
+    assert.match(html, /<meta property="og:image:width" content="1200">/);
+    assert.match(html, /<meta property="og:image:height" content="630">/);
+    assert.match(html, /<meta name="twitter:card" content="summary_large_image">/);
+    assert.match(html, /<meta property="article:published_time" content="2021-08-08T12:00:00\.000Z">/);
+    assert.match(html, /<script type="application\/ld\+json">.*"@type":"BlogPosting".*<\/script>/s);
+    assert.deepEqual([...socialCard.subarray(0, 8)], [137, 80, 78, 71, 13, 10, 26, 10]);
+    assert.equal(socialCards.length, 46);
 });

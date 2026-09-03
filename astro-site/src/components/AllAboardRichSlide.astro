@@ -19,8 +19,8 @@ import langchainSvg from './logos/langchain.svg?raw';
 import splunkSvg from './logos/splunk.svg?raw';
 import servicenowSvg from './logos/servicenow.svg?raw';
 
-interface Props { n: string; }
-const { n } = Astro.props;
+interface Props { n: string; includeStyles?: boolean; }
+const { n, includeStyles = false } = Astro.props;
 
 const msLogos = {
   agent365: agent365Svg,
@@ -391,7 +391,9 @@ function slideLabel(id: string) {
   )}
 </section>
 
-<style>
+{includeStyles && (
+<style is:inline>
+  .aa-slide {
   .aas {
     aspect-ratio: 16 / 9;
     width: 100%;
@@ -411,8 +413,8 @@ function slideLabel(id: string) {
 
   .aas-title h3 { margin: 0; font-size: clamp(1.8em, 1.1em + 3cqw, 3em); line-height: 1.12; font-weight: 800; }
   .aas-title p { margin: 0.25em 0 0; color: #b9d9f7; font-size: clamp(1em, 0.7em + 1.35cqw, 1.75em); font-weight: 700; }
-  .center { text-align: center; }
-  .left { text-align: left; }
+  .aas .center { text-align: center; }
+  .aas .left { text-align: left; }
 
   .ga-pill { position: absolute; top: 26.2%; left: 50%; transform: translateX(-50%); z-index: 3; padding: 0.45em 4.8em; border-radius: 11px; background: #d9edf8; color: #000; font-size: clamp(0.9em, 0.7em + 0.8cqw, 1.25em); font-weight: 800; }
   .suite-frame { position: absolute; left: 4.7%; right: 4.7%; top: 29%; bottom: 13%; display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; gap: 1.1em; align-items: start; padding: 2.6em 1.8em 4.8em; border: 2px solid #0088e8; border-radius: 38px; }
@@ -426,9 +428,9 @@ function slideLabel(id: string) {
   .slide-foot { position: absolute; bottom: 6.5%; left: 0; right: 0; text-align: center; font-size: 0.72em; font-style: italic; }
 
   .product-logo, .product-glyph { width: clamp(2em, 1.3em + 2.4cqw, 3.4em); height: clamp(2em, 1.3em + 2.4cqw, 3.4em); display: inline-grid; place-items: center; border-radius: 10px; background: #fff; padding: 0.25em; box-sizing: border-box; }
-  .product-logo :global(svg), .mini-products i :global(svg) { width: 100%; height: 100%; display: block; }
+  .product-logo svg, .mini-products i svg { width: 100%; height: 100%; display: block; }
   .product-image { width: clamp(2.4em, 1.6em + 2.5cqw, 4em); height: clamp(2.4em, 1.6em + 2.5cqw, 4em); object-fit: contain; display: block; }
-  .large { width: 5em; height: 5em; }
+
   .copilot-glyph { background: conic-gradient(from 210deg, #01a6f0, #7c5cff, #ff7fb3, #f5cc37, #01a6f0); border-radius: 18px; }
 
   .stats-row { position: absolute; left: 5%; right: 5%; top: 31%; bottom: 10%; display: grid; grid-template-columns: 1.05fr 1fr; grid-template-rows: 1fr 1fr; gap: 1em; align-items: stretch; }
@@ -597,6 +599,7 @@ function slideLabel(id: string) {
   .foundation-product-row img { width: 2.15em; height: 2.15em; object-fit: contain; }
   .bottom-foundation { left: 20%; right: 15%; bottom: 1.7%; background: #0784d8; padding: 1.6em 0.75em 0.6em; border-radius: 0.35em; grid-template-columns: repeat(6, 1fr); gap: 0.65em; }
   .bottom-foundation::before { content: 'Shared Foundation'; position: absolute; left: 0; right: 0; top: 0.18em; text-align: center; color: #fff; font-weight: 900; font-size: 0.95em; }
+  }
 
   @keyframes local-chug {
     0%, 100% { transform: translateX(-0.4em) translateY(0); }
@@ -629,6 +632,7 @@ function slideLabel(id: string) {
     50% { transform: translate(-50%, -50%) translateY(-0.36em); }
   }
 
+  .aa-slide {
   .local-car { animation: local-chug 8s ease-in-out infinite; }
   .bullet-train { animation: bullet-pass 4.6s cubic-bezier(0.2, 0.8, 0.24, 1) infinite; }
   .speed-lines span { animation: speed-pulse 1.7s ease-in-out infinite; }
@@ -639,12 +643,16 @@ function slideLabel(id: string) {
   .network-node:nth-of-type(3n) { animation-delay: -1.4s; }
   .network-node:nth-of-type(4n) { animation-delay: -2.6s; }
   .network-node:nth-of-type(5n) { animation-delay: -3.4s; }
+  }
 
   @media (prefers-reduced-motion: reduce) {
+    .aa-slide {
     .local-car,
     .bullet-train,
     .speed-lines span,
     .security-lines line,
     .network-node { animation: none; }
+    }
   }
 </style>
+)}

@@ -89,7 +89,17 @@ const recognitionBadges = [
 ];
 ---
 
-<section class="walking-signal" data-walking-signal data-present={startInPresent ? 'true' : undefined} data-exit-href={exitHref}>
+<section
+  class="walking-signal"
+  data-walking-signal
+  data-presentation-deck
+  data-section-selector="[data-signal-section]"
+  data-rail-selector="[data-rail-link]"
+  data-present-body-class="walking-presenting"
+  data-present-start="first"
+  data-present={startInPresent ? 'true' : undefined}
+  data-exit-href={exitHref}
+>
   <nav class="signal-rail" aria-label="Walking deck sections">
     <a href="#signal-cover" data-rail-link>Cover</a>
     <a href="#signal-human" data-rail-link>Human</a>
@@ -482,11 +492,13 @@ const recognitionBadges = [
 
 <script>
   import { initWalkingDeck } from '../scripts/walkingDeck.client';
+  import { initPresentationDeck } from '../scripts/presentationDeck.client';
 
   initWalkingDeck();
+  initPresentationDeck();
 </script>
 
-<style>
+<style is:inline>
   .walking-signal {
     --signal-ink: #132235;
     --signal-muted: #526273;
@@ -1794,8 +1806,8 @@ const recognitionBadges = [
     color: rgba(255, 255, 255, 0.78);
   }
 
-  :global(html.walking-presenting),
-  :global(body.walking-presenting) {
+  html.walking-presenting,
+  body.walking-presenting {
     overflow: hidden !important;
   }
 
@@ -6021,7 +6033,7 @@ const recognitionBadges = [
   }
 </style>
 
-<style is:global>
+<style is:inline>
   /* === View Transitions for present mode (must be global; pseudo-elements live
      on the document, not inside scoped components). === */
   ::view-transition-old(root) {
@@ -6126,5 +6138,30 @@ const recognitionBadges = [
   .walking-signal p,
   .walking-signal .mchapter-thesis {
     text-wrap: pretty;
+  }
+</style>
+
+<style is:inline>
+  @media (max-width: 760px) and (orientation: portrait) {
+    .walking-signal[data-present='true'] [data-signal-section].is-current {
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      padding-bottom: calc(6rem + env(safe-area-inset-bottom));
+    }
+
+    .walking-signal[data-present='true'] [data-signal-section] :is(p, li, blockquote) {
+      font-size: clamp(1rem, 4vw, 1.15rem) !important;
+      line-height: 1.45;
+    }
+
+    .walking-signal[data-present='true'] [data-signal-section] :is(small, figcaption, .eyebrow) {
+      font-size: 0.875rem !important;
+      line-height: 1.35;
+    }
+
+    .walking-signal[data-present='true'] [data-present-hud] button {
+      min-width: 44px;
+      min-height: 44px;
+    }
   }
 </style>

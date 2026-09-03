@@ -15,7 +15,8 @@ const hasSlide = slideNumbers.has(n);
 
 {hasSlide && (
   <figure class="aa-slide">
-    <AllAboardRichSlide n={n} />
+    <AllAboardRichSlide n={n} includeStyles={n === '03'} />
+    <figcaption class="aa-slide-mobile-cue" data-mobile-visual-cue>Swipe to explore this diagram.</figcaption>
   </figure>
 )}
 
@@ -27,6 +28,39 @@ const hasSlide = slideNumbers.has(n);
     overflow: hidden;
     box-shadow: 0 18px 50px -24px rgba(8, 22, 48, 0.55), 0 0 0 1px rgba(15, 36, 72, 0.12);
     background: #0a1b34;
+  }
+
+  .aa-slide-mobile-cue { display: none; }
+
+  @media (max-width: 620px) {
+    .aa-slide {
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      overscroll-behavior-inline: contain;
+      border-radius: 10px;
+    }
+
+    .aa-slide :global(.aas) {
+      width: 64rem;
+      max-width: none;
+      min-width: 64rem;
+      font-size: 18px;
+      scroll-snap-align: start;
+    }
+
+    .aa-slide-mobile-cue {
+      position: sticky;
+      left: 0;
+      display: block;
+      width: min(100vw - 2rem, 24rem);
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0.7rem 1rem;
+      color: #d9edf8;
+      background: #0a1b34;
+      font-size: 0.875rem;
+      text-align: center;
+    }
   }
 
 </style>

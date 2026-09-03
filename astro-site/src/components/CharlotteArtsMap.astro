@@ -4,10 +4,12 @@ import {
   artsRailStations,
   artsVenues,
 } from '../lib/charlotteArtsMap';
+import leafletStylesUrl from 'leaflet/dist/leaflet.css?url';
 
 const mapCanvasId = 'charlotte-arts-map-canvas';
 ---
 
+<link rel="stylesheet" href={leafletStylesUrl} />
 <section class="arts-map-shell" data-charlotte-arts-map data-reveal>
   <div class="arts-map-header">
     <span class="arts-map-kicker">Venue Map</span>
@@ -112,7 +114,6 @@ const mapCanvasId = 'charlotte-arts-map-canvas';
 
 <script>
   import * as L from 'leaflet';
-  import 'leaflet/dist/leaflet.css';
   import { artsMapCenter as mapCenter, artsRailStations as stations, artsVenues as venues } from '../lib/charlotteArtsMap';
 
   function initCharlotteArtsMaps() {
@@ -404,7 +405,7 @@ const mapCanvasId = 'charlotte-arts-map-canvas';
   document.addEventListener('astro:page-load', initCharlotteArtsMaps);
 </script>
 
-<style is:global>
+<style is:inline>
   .arts-map-shell {
     margin: 2.5rem 0;
     padding: 1.4rem;

@@ -1,9 +1,13 @@
 type PresentationDeckElement = HTMLElement & {
+    _presentReplay?: Record<string, () => void>;
     dataset: DOMStringMap & {
+        presentBodyClass?: string;
         cues?: string;
         exitHref?: string;
         present?: string;
         presentDir?: string;
+        presentStart?: string;
+        railSelector?: string;
         sectionSelector?: string;
     };
 };
@@ -13,8 +17,9 @@ let pendingDeckObserver: MutationObserver | undefined;
 
 export function initPresentationDeck(root: ParentNode = document) {
     const decks = Array.from(root.querySelectorAll<PresentationDeckElement>('[data-presentation-deck]'));
-    const initialized = decks.some(initDeck);
-    if (initialized) {
+    const states = decks.map(initDeck);
+    const allInitialized = states.length > 0 && states.every(Boolean);
+    if (allInitialized) {
         pendingDeckObserver?.disconnect();
         pendingDeckObserver = undefined;
         return;
@@ -31,7 +36,8 @@ function initDeck(deck: PresentationDeckElement) {
 
     const sectionSelector = deck.dataset.sectionSelector || '[data-presentation-section]';
     const sections = Array.from(deck.querySelectorAll<HTMLElement>(sectionSelector));
-    const railLinks = Array.from(deck.querySelectorAll<HTMLAnchorElement>('[data-presentation-link]'));
+    const railSelector = deck.dataset.railSelector || '[data-presentation-link]';
+    const railLinks = Array.from(deck.querySelectorAll<HTMLAnchorElement>(railSelector));
     const presentToggle = deck.querySelector<HTMLButtonElement>('[data-present-toggle]');
     const presentHud = deck.querySelector<HTMLElement>('[data-present-hud]');
     const presentCounter = deck.querySelector<HTMLElement>('[data-present-counter]');
@@ -57,6 +63,31 @@ function initDeck(deck: PresentationDeckElement) {
     if (currentIndex < 0) currentIndex = 0;
     let isPresenting = deck.dataset.present === 'true';
     let leaveTimer = 0;
+    let previousFocus: HTMLElement | null = null;
+    let surroundingInert: Array<{ element: HTMLElement; inert: boolean }> = [];
+    const bodyClass = deck.dataset.presentBodyClass || 'presentation-presenting';
+    const supportsViewTransitions = typeof document.startViewTransition === 'function'
+        && !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const isolateSurroundings = () => {
+        if (surroundingInert.length > 0) return;
+        let node: HTMLElement = deck;
+        while (node.parentElement) {
+            const parent = node.parentElement;
+            for (const sibling of parent.children) {
+                if (sibling === node || !(sibling instanceof HTMLElement)) continue;
+                surroundingInert.push({ element: sibling, inert: sibling.inert });
+                sibling.inert = true;
+            }
+            if (parent === document.body) break;
+            node = parent;
+        }
+    };
+
+    const restoreSurroundings = () => {
+        for (const record of surroundingInert) record.element.inert = record.inert;
+        surroundingInert = [];
+    };
 
     const updateRail = () => {
         railLinks.forEach((link) => {
@@ -83,23 +114,19 @@ function initDeck(deck: PresentationDeckElement) {
         });
     };
 
-    const setSlide = (index: number, force = false) => {
-        const nextIndex = Math.min(total - 1, Math.max(0, index));
-        if (!force && nextIndex === currentIndex && sections[nextIndex]?.classList.contains('is-current')) {
-            updateHud();
-            return;
-        }
-
+    const applySlide = (nextIndex: number) => {
         const previous = sections[currentIndex];
         const next = sections[nextIndex];
-        const direction = nextIndex >= currentIndex ? 'forward' : 'back';
-        deck.dataset.presentDir = direction;
 
         if (previous && previous !== next) {
             previous.classList.remove('is-current');
-            previous.classList.add('is-leaving');
-            window.clearTimeout(leaveTimer);
-            leaveTimer = window.setTimeout(() => previous.classList.remove('is-leaving'), 520);
+            if (supportsViewTransitions) {
+                previous.classList.remove('is-leaving');
+            } else {
+                previous.classList.add('is-leaving');
+                window.clearTimeout(leaveTimer);
+                leaveTimer = window.setTimeout(() => previous.classList.remove('is-leaving'), 520);
+            }
         }
 
         sections.forEach((section, sectionIndex) => {
@@ -113,15 +140,48 @@ function initDeck(deck: PresentationDeckElement) {
         updateHud();
     };
 
+    const finishSlide = () => {
+        const section = sections[currentIndex];
+        const replay = section && deck._presentReplay?.[section.id];
+        if (isPresenting && replay) window.setTimeout(replay, 240);
+        deck.dispatchEvent(new CustomEvent('presentation:slide', {
+            detail: { index: currentIndex, sectionId: section?.id || '' },
+        }));
+    };
+
+    const setSlide = (index: number, force = false) => {
+        const nextIndex = Math.min(total - 1, Math.max(0, index));
+        if (!force && nextIndex === currentIndex && sections[nextIndex]?.classList.contains('is-current')) {
+            updateHud();
+            return;
+        }
+
+        const direction = nextIndex >= currentIndex ? 'forward' : 'back';
+        deck.dataset.presentDir = direction;
+
+        if (supportsViewTransitions && isPresenting) {
+            deck.classList.add('using-view-transitions');
+            const transition = document.startViewTransition(() => applySlide(nextIndex));
+            transition.finished.then(finishSlide, finishSlide);
+        } else {
+            applySlide(nextIndex);
+            finishSlide();
+        }
+    };
+
     const enterPresent = () => {
         if (isPresenting && deck.dataset.present === 'true') return;
         isPresenting = true;
+        previousFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+        isolateSurroundings();
         deck.dataset.present = 'true';
-        document.documentElement.classList.add('presentation-presenting');
-        document.body.classList.add('presentation-presenting');
+        document.documentElement.classList.add(bodyClass);
+        document.body.classList.add(bodyClass);
         if (presentHud) presentHud.removeAttribute('aria-hidden');
+        if (deck.dataset.presentStart === 'first') currentIndex = 0;
         sections.forEach((section) => section.classList.remove('is-current', 'is-leaving'));
         setSlide(currentIndex, true);
+        deck.dispatchEvent(new CustomEvent('presentation:enter'));
         window.setTimeout(() => presentNext?.focus(), 60);
     };
 
@@ -134,15 +194,18 @@ function initDeck(deck: PresentationDeckElement) {
         isPresenting = false;
         delete deck.dataset.present;
         delete deck.dataset.presentDir;
-        document.documentElement.classList.remove('presentation-presenting');
-        document.body.classList.remove('presentation-presenting');
+        deck.classList.remove('using-view-transitions');
+        document.documentElement.classList.remove(bodyClass);
+        document.body.classList.remove(bodyClass);
         if (presentHud) presentHud.setAttribute('aria-hidden', 'true');
         sections.forEach((section) => {
             section.classList.remove('is-current', 'is-leaving');
             section.removeAttribute('aria-hidden');
             section.inert = false;
         });
-        presentToggle.focus();
+        restoreSurroundings();
+        deck.dispatchEvent(new CustomEvent('presentation:exit'));
+        (previousFocus?.isConnected ? previousFocus : presentToggle).focus();
     };
 
     const toggleCues = () => {
@@ -172,6 +235,15 @@ function initDeck(deck: PresentationDeckElement) {
     presentNext?.addEventListener('click', () => setSlide(currentIndex + 1));
     presentCues?.addEventListener('click', toggleCues);
 
+    const triggerDeepLink = () => {
+        const params = new URLSearchParams(window.location.search);
+        if ((params.get('present') === '1' || window.location.hash === '#present') && !isPresenting) {
+            window.scrollTo(0, 0);
+            enterPresent();
+        }
+    };
+    window.setTimeout(triggerDeepLink, 80);
+
     document.addEventListener('keydown', (event) => {
         if (!isPresenting && deck.dataset.present !== 'true') return;
         const target = event.target;
@@ -179,6 +251,18 @@ function initDeck(deck: PresentationDeckElement) {
             && target instanceof HTMLElement
             && Boolean(target.closest('button, a, input, select, textarea'));
         if (isControlActivation) return;
+
+        if (event.key === 'Tab') {
+            const focusable = Array.from(deck.querySelectorAll<HTMLElement>('a[href], button:not([disabled]), input, select, textarea, [tabindex]:not([tabindex="-1"])'))
+                .filter((element) => !element.closest('[inert]') && element.getClientRects().length > 0);
+            const first = focusable[0];
+            const last = focusable.at(-1);
+            if (first && last && (event.shiftKey ? document.activeElement === first : document.activeElement === last)) {
+                event.preventDefault();
+                (event.shiftKey ? last : first).focus();
+            }
+            return;
+        }
 
         if (event.key === 'Escape') {
             event.preventDefault();
@@ -202,8 +286,11 @@ function initDeck(deck: PresentationDeckElement) {
     });
 
     if (isPresenting) {
-        document.documentElement.classList.add('presentation-presenting');
-        document.body.classList.add('presentation-presenting');
+        const linkedIndex = sections.findIndex((section) => `#${section.id}` === window.location.hash);
+        if (linkedIndex >= 0) currentIndex = linkedIndex;
+        document.documentElement.classList.add(bodyClass);
+        document.body.classList.add(bodyClass);
+        isolateSurroundings();
         presentHud?.removeAttribute('aria-hidden');
         setSlide(currentIndex, true);
     } else {

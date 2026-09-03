@@ -1,29 +1,10 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import RuntimeControlChart from '../../components/RuntimeControlChart.astro';
-import CareerDevelopmentPlan from '../../components/CareerDevelopmentPlan.astro';
-import CharlotteArtsMap from '../../components/CharlotteArtsMap.astro';
-import WalkingDeck from '../../components/WalkingDeck.astro';
-import AllAboardSlide from '../../components/AllAboardSlide.astro';
-import ThreeNewYears from '../../components/ThreeNewYears.astro';
-import PerformanceNarrative from '../../components/PerformanceNarrative.astro';
-import GitHubFlowModernized from '../../components/GitHubFlowModernized.astro';
-import AgentActionLoop from '../../components/AgentActionLoop.astro';
-import WorkshopObjectives from '../../components/WorkshopObjectives.astro';
-import SessionRunOfShow from '../../components/SessionRunOfShow.astro';
-import WhatIsGitHub from '../../components/WhatIsGitHub.astro';
-import WorkshopTools from '../../components/WorkshopTools.astro';
-import DiffPreview from '../../components/DiffPreview.astro';
-import PresentationWorkflowMap from '../../components/PresentationWorkflowMap.astro';
-import CopilotVisualWorkflow from '../../components/CopilotVisualWorkflow.astro';
-import AgenticSocialLoop from '../../components/AgenticSocialLoop.astro';
-import GatewayProcessMap from '../../components/GatewayProcessMap.astro';
-import AgentHarnessLayers from '../../components/AgentHarnessLayers.astro';
-import CareerSignalMap from '../../components/CareerSignalMap.astro';
-import TokenSilos from '../../components/TokenSilos.astro';
 import PostHeader from '../../components/PostHeader.astro';
 import PostPagination from '../../components/PostPagination.astro';
+import PostReadingTools from '../../components/PostReadingTools.astro';
 import { getPosts } from '../../lib/content';
+import { VISUALIZATION_DEFINITIONS, type VisualizationId } from '../../lib/visualizations';
 
 export function getStaticPaths() {
   const posts = getPosts();
@@ -43,25 +24,28 @@ export function getStaticPaths() {
 
 const { post, previous, next } = Astro.props;
 
-const runtimeChartMarker = '[[RUNTIME_CONTROL_CHART]]';
-const careerDevPlanMarker = '[[CAREER_DEV_PLAN]]';
-const charlotteArtsMapMarker = '[[CHARLOTTE_ARTS_MAP]]';
-const walkingDeckMarker = '[[WALKING_DECK]]';
-const allAboardMarker = '[[ALL_ABOARD]]';
-const allAboardSlideMarkers = ['03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14'].map(
-  (n) => `[[SLIDE_${n}]]`,
-);
-const threeNewYearsMarker = '[[THREE_NEW_YEARS]]';
-const performanceNarrativeMarker = '[[PERFORMANCE_NARRATIVE]]';
-const ghWorkshopMarker = '[[GH_WORKSHOP]]';
-const ghWorkshopFigureMarkers = ['WHAT_IS_GITHUB', 'GITHUB_FLOW', 'YOUR_TOOLS', 'AGENT_LOOP', 'DIFF_PREVIEW', 'WORKSHOP_OBJECTIVES', 'SESSION_PLAN'].map((n) => `[[${n}]]`);
-const presentationWorkflowMapMarker = '[[PRESENTATION_WORKFLOW]]';
-const presentationWorkflowMarkers = ['ASK', 'RULES', 'TEAM', 'PROOF', 'GATE'].map((name) => `[[PRESENTATION_WORKFLOW_${name}]]`);
-const socialLoopMarker = '[[SOCIAL_LOOP]]';
-const gatewayProcessMapMarker = '[[GATEWAY_PROCESS_MAP]]';
-const agentHarnessLayersMarker = '[[AGENT_HARNESS_LAYERS]]';
-const careerSignalMapMarker = '[[CAREER_SIGNAL_MAP]]';
-const tokenSilosMarker = '[[TOKEN_SILOS]]';
+const markersFor = (id: VisualizationId) => {
+  const definition = VISUALIZATION_DEFINITIONS.find((candidate) => candidate.id === id);
+  if (!definition) throw new Error(`Missing visualization definition: ${id}`);
+  return definition.markers.map((marker) => `[[${marker}]]`);
+};
+const hasVisualization = (id: VisualizationId) => post.experience.visualizationIds.includes(id);
+
+const [runtimeChartMarker] = markersFor('runtime-control-chart');
+const [careerDevPlanMarker] = markersFor('career-development-plan');
+const [charlotteArtsMapMarker] = markersFor('charlotte-arts-map');
+const [walkingDeckMarker] = markersFor('walking-deck');
+const [allAboardMarker, ...allAboardSlideMarkers] = markersFor('all-aboard');
+const [threeNewYearsMarker] = markersFor('three-new-years');
+const [performanceNarrativeMarker] = markersFor('performance-narrative');
+const [ghWorkshopMarker, ...ghWorkshopFigureMarkers] = markersFor('github-workshop');
+const [presentationWorkflowMapMarker] = markersFor('presentation-workflow-map');
+const presentationWorkflowMarkers = markersFor('website-presentation');
+const [socialLoopMarker] = markersFor('social-loop');
+const [gatewayProcessMapMarker] = markersFor('gateway-process-map');
+const [agentHarnessLayersMarker] = markersFor('agent-harness-layers');
+const [careerSignalMapMarker] = markersFor('career-signal-map');
+const [tokenSilosMarker] = markersFor('token-silos');
 
 let processedHtml = post.html;
 processedHtml = processedHtml.replace(`<p>${runtimeChartMarker}</p>`, runtimeChartMarker);
@@ -88,21 +72,44 @@ processedHtml = processedHtml.replace(`<p>${agentHarnessLayersMarker}</p>`, agen
 processedHtml = processedHtml.replace(`<p>${careerSignalMapMarker}</p>`, careerSignalMapMarker);
 processedHtml = processedHtml.replace(`<p>${tokenSilosMarker}</p>`, tokenSilosMarker);
 
-const hasRuntimeChart = processedHtml.includes(runtimeChartMarker);
-const hasCareerDevPlan = processedHtml.includes(careerDevPlanMarker);
-const hasCharlotteArtsMap = processedHtml.includes(charlotteArtsMapMarker);
-const hasWalkingDeck = processedHtml.includes(walkingDeckMarker);
-const hasAllAboard = processedHtml.includes(allAboardMarker);
-const hasThreeNewYears = processedHtml.includes(threeNewYearsMarker);
-const hasPerformanceNarrative = processedHtml.includes(performanceNarrativeMarker);
-const hasPresentationWorkflowMap = processedHtml.includes(presentationWorkflowMapMarker);
-const hasPresentationWorkflow = presentationWorkflowMarkers.some((marker) => processedHtml.includes(marker));
+const hasRuntimeChart = hasVisualization('runtime-control-chart');
+const hasCareerDevPlan = hasVisualization('career-development-plan');
+const hasCharlotteArtsMap = hasVisualization('charlotte-arts-map');
+const hasWalkingDeck = hasVisualization('walking-deck');
+const hasAllAboard = hasVisualization('all-aboard');
+const hasThreeNewYears = hasVisualization('three-new-years');
+const hasPerformanceNarrative = hasVisualization('performance-narrative');
+const hasPresentationWorkflowMap = hasVisualization('presentation-workflow-map');
+const hasPresentationWorkflow = hasVisualization('website-presentation');
 const hasWebsitePresentation = hasPresentationWorkflow && post.presentation === 'website-presentation';
-const hasSocialLoop = processedHtml.includes(socialLoopMarker);
-const hasGatewayProcessMap = processedHtml.includes(gatewayProcessMapMarker);
-const hasAgentHarnessLayers = processedHtml.includes(agentHarnessLayersMarker);
-const hasCareerSignalMap = processedHtml.includes(careerSignalMapMarker);
-const hasTokenSilos = processedHtml.includes(tokenSilosMarker);
+const hasSocialLoop = hasVisualization('social-loop');
+const hasGatewayProcessMap = hasVisualization('gateway-process-map');
+const hasAgentHarnessLayers = hasVisualization('agent-harness-layers');
+const hasCareerSignalMap = hasVisualization('career-signal-map');
+const hasTokenSilos = hasVisualization('token-silos');
+
+const RuntimeControlChart = hasRuntimeChart ? (await import('../../components/RuntimeControlChart.astro')).default : undefined;
+const CareerDevelopmentPlan = hasCareerDevPlan ? (await import('../../components/CareerDevelopmentPlan.astro')).default : undefined;
+const CharlotteArtsMap = hasCharlotteArtsMap ? (await import('../../components/CharlotteArtsMap.astro')).default : undefined;
+const WalkingDeck = hasWalkingDeck ? (await import('../../components/WalkingDeck.astro')).default : undefined;
+const AllAboardSlide = hasAllAboard ? (await import('../../components/AllAboardSlide.astro')).default : undefined;
+const ThreeNewYears = hasThreeNewYears ? (await import('../../components/ThreeNewYears.astro')).default : undefined;
+const PerformanceNarrative = hasPerformanceNarrative ? (await import('../../components/PerformanceNarrative.astro')).default : undefined;
+const PresentationWorkflowMap = hasPresentationWorkflowMap ? (await import('../../components/PresentationWorkflowMap.astro')).default : undefined;
+const CopilotVisualWorkflow = hasPresentationWorkflow ? (await import('../../components/CopilotVisualWorkflow.astro')).default : undefined;
+const AgenticSocialLoop = hasSocialLoop ? (await import('../../components/AgenticSocialLoop.astro')).default : undefined;
+const GatewayProcessMap = hasGatewayProcessMap ? (await import('../../components/GatewayProcessMap.astro')).default : undefined;
+const AgentHarnessLayers = hasAgentHarnessLayers ? (await import('../../components/AgentHarnessLayers.astro')).default : undefined;
+const CareerSignalMap = hasCareerSignalMap ? (await import('../../components/CareerSignalMap.astro')).default : undefined;
+const TokenSilos = hasTokenSilos ? (await import('../../components/TokenSilos.astro')).default : undefined;
+
+const GitHubFlowModernized = hasVisualization('github-workshop') ? (await import('../../components/GitHubFlowModernized.astro')).default : undefined;
+const AgentActionLoop = hasVisualization('github-workshop') ? (await import('../../components/AgentActionLoop.astro')).default : undefined;
+const WorkshopObjectives = hasVisualization('github-workshop') ? (await import('../../components/WorkshopObjectives.astro')).default : undefined;
+const SessionRunOfShow = hasVisualization('github-workshop') ? (await import('../../components/SessionRunOfShow.astro')).default : undefined;
+const WhatIsGitHub = hasVisualization('github-workshop') ? (await import('../../components/WhatIsGitHub.astro')).default : undefined;
+const WorkshopTools = hasVisualization('github-workshop') ? (await import('../../components/WorkshopTools.astro')).default : undefined;
+const DiffPreview = hasVisualization('github-workshop') ? (await import('../../components/DiffPreview.astro')).default : undefined;
 
 const runtimeParts = hasRuntimeChart ? processedHtml.split(runtimeChartMarker) : [];
 const careerParts = hasCareerDevPlan ? processedHtml.split(careerDevPlanMarker) : [];
@@ -155,7 +162,7 @@ const agentHarnessLayersParts = hasAgentHarnessLayers ? processedHtml.split(agen
 const careerSignalMapParts = hasCareerSignalMap ? processedHtml.split(careerSignalMapMarker) : [];
 const tokenSilosParts = hasTokenSilos ? processedHtml.split(tokenSilosMarker) : [];
 
-const hasGhWorkshop = processedHtml.includes(ghWorkshopMarker);
+const hasGhWorkshop = hasVisualization('github-workshop');
 const ghWorkshopParts = hasGhWorkshop ? processedHtml.split(ghWorkshopMarker) : [];
 const ghWorkshopBody = hasGhWorkshop ? ghWorkshopParts.slice(1).join(ghWorkshopMarker) : '';
 const ghWorkshopMarkerRegex = /\[\[(?:WHAT_IS_GITHUB|GITHUB_FLOW|YOUR_TOOLS|AGENT_LOOP|DIFF_PREVIEW|WORKSHOP_OBJECTIVES|SESSION_PLAN)\]\]/g;
@@ -176,7 +183,15 @@ if (hasGhWorkshop) {
 }
 ---
 
-<Layout pageTitle={post.title} pageDescription={post.excerpt} currentPath={post.permalink} pageType="article">
+<Layout
+  pageTitle={post.title}
+  pageDescription={post.excerpt}
+  currentPath={post.permalink}
+  pageType="article"
+  socialImage={`/social/${post.category}/${post.slug}.png`}
+  publishedTime={post.date.toISOString()}
+>
+  <PostReadingTools headings={post.headings} renderMode={post.experience.renderMode} />
   {hasSocialLoop ? (
     <>
       <article class="shell-container">
@@ -340,7 +355,7 @@ if (hasGhWorkshop) {
           <span class="eyebrow">{post.category}</span>
           <h1 class="post-heading">{post.title}</h1>
           <div class="post-meta-row">
-            <span>{post.date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
+            <span>{post.date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' })}</span>
             <span>{post.readingTime} min read</span>
           </div>
           {post.tags.length > 0 && (
@@ -398,7 +413,7 @@ if (hasGhWorkshop) {
           <span class="eyebrow">{post.category}</span>
           <h1 class="post-heading">{post.title}</h1>
           <div class="post-meta-row">
-            <span>{post.date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
+            <span>{post.date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' })}</span>
             <span>{post.readingTime} min read</span>
           </div>
           {post.tags.length > 0 && (
@@ -449,7 +464,7 @@ if (hasGhWorkshop) {
           <span class="eyebrow">{post.category}</span>
           <h1 class="post-heading">{post.title}</h1>
           <div class="post-meta-row">
-            <span>{post.date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
+            <span>{post.date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' })}</span>
             <span>{post.readingTime} min read</span>
           </div>
           {post.tags.length > 0 && (
@@ -500,7 +515,7 @@ if (hasGhWorkshop) {
         <span class="eyebrow">{post.category}</span>
         <h1 class="post-heading">{post.title}</h1>
         <div class="post-meta-row">
-          <span>{post.date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
+          <span>{post.date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' })}</span>
           <span>{post.readingTime} min read</span>
         </div>
         {post.tags.length > 0 && (

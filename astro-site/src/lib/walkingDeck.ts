@@ -56,7 +56,7 @@ export const imageSlots: ImageSlot[] = [
     {
         id: 'portrait',
         label: 'Cover portrait',
-        src: `${postImageRoot}/hero-portrait.jpg`,
+        src: `${postImageRoot}/hero-portrait.webp`,
         alt: 'Thor Draper Jr portrait',
         role: 'First impression',
         note: 'Professional photo or favorite candid that feels like you.',
@@ -74,7 +74,7 @@ export const imageSlots: ImageSlot[] = [
     {
         id: 'banff',
         label: 'Banff wedding',
-        src: `${postImageRoot}/banff-wedding.jpg`,
+        src: `${postImageRoot}/banff-wedding.webp`,
         alt: 'Thor and his wife in Banff',
         role: 'Family',
         note: 'The 7/11 story deserves a real visual anchor.',
@@ -84,7 +84,7 @@ export const imageSlots: ImageSlot[] = [
     {
         id: 'lloyd',
         label: 'Lloyd',
-        src: `${postImageRoot}/lloyd.jpg`,
+        src: `${postImageRoot}/lloyd.webp`,
         alt: 'Lloyd the dog',
         role: 'Home life',
         note: 'The personality photo. Let it be charming.',
@@ -94,7 +94,7 @@ export const imageSlots: ImageSlot[] = [
     {
         id: 'teacher',
         label: 'Teaching and tech',
-        src: `${postImageRoot}/teaching-tech.png`,
+        src: `${postImageRoot}/teaching-tech.webp`,
         alt: 'Teaching, technical work, or Microsoft community moment',
         role: 'Craft',
         note: 'Bootcamp teaching, Microsoft event, or technical community photo.',
@@ -140,7 +140,7 @@ export const chapters: Chapter[] = [
         ],
         cx: 160,
         cy: 230,
-        image: chapterImage('military-thor.png'),
+        image: chapterImage('military-thor.webp'),
         imageFocus: 'center 18%',
     },
     {
@@ -169,7 +169,7 @@ export const chapters: Chapter[] = [
         ],
         cx: 500,
         cy: 170,
-        image: chapterImage('teaching-tech.png'),
+        image: chapterImage('teaching-tech.webp'),
         imageFocus: 'center top',
     },
     {
