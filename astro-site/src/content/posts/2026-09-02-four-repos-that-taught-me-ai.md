@@ -1,18 +1,18 @@
 ---
 layout: post
-title: "Four Repos I Kept, Seventeen I Deleted, and What They Taught Me About Working With AI"
+title: "Four Repos That Taught Me How to Work With AI, and Why I Deleted Three of Them"
 date: 2026-09-02
 draft: true
 categories: [tech]
 tags: [technical, ai, cloud, career]
-excerpt: "I cut my GitHub account from 32 repositories to 15. Here is the rule I used, and what the four survivors say about where AI actually helps."
+excerpt: "I cut my GitHub account from 32 repositories to 12. Here is the rule I used, and what four of the deletions say about where AI actually helps."
 ---
 
-I spent an afternoon pruning my GitHub account from 32 repositories down to 15. Seventeen deletions, one archive bundle kept on a local disk, and no attempt to preserve the contribution graph.
+I spent an afternoon pruning my GitHub account from 32 repositories down to 12. Twenty deletions, four archive bundles kept on a local disk, and no attempt to preserve the contribution graph.
 
-Four repos survived the pass for the same reason: each one marks a point where the way I work with AI changed. Not the way I talk about AI at work. The way I actually sit down and build something.
+Four of those repos are worth writing about before they go, because each one marks a point where the way I work with AI changed. Not the way I talk about AI at work. The way I actually sit down and build something. Three of the four are deleted now and this post is the record; the history lives in a bundle on my disk.
 
-First, why the other seventeen went.
+First, why the rest went.
 
 ## The pruning rule
 
@@ -20,7 +20,7 @@ A public repository is a claim that you maintain something. Thirty-two of them w
 
 So I sorted every repo by one question: if someone opened this tomorrow and asked me about it, could I explain what it does and why it still exists?
 
-The seventeen that failed fell into four groups.
+The seventeen easy ones fell into four groups.
 
 **The product shipped it.** `AI-Red-Teaming-Workshop` was a real workshop I built and taught. Microsoft then built red teaming into Foundry, which is the correct outcome and also the end of that repo's usefulness. Same with `SecCopilot-CDR-Custom-Plugin`, which no longer works against the current API surface. Teaching material has a shelf life tied to the gap it fills.
 
@@ -32,15 +32,17 @@ The seventeen that failed fell into four groups.
 
 I archived a batch first, then went back and deleted the archives too. Archiving is a way of not deciding. If a repo is not worth maintaining and not worth reading, leaving it visible with a gray banner on it is just a slower delete.
 
-The one exception is `AI-Red-Teaming-Workshop`. I made a Git bundle of the full history before deleting it and put it on local disk. That is 104 MB holding every commit, and it costs me nothing. Preserving history and publishing history are different decisions, and conflating them is why most people's accounts look like mine did.
+The one exception was `AI-Red-Teaming-Workshop`. I made a Git bundle of the full history before deleting it and put it on local disk. That is 104 MB holding every commit, and it costs me nothing. Preserving history and publishing history are different decisions, and conflating them is why most people's accounts look like mine did.
+
+I ended up doing the same thing for the three repos below. Writing this post was what made them safe to delete: once the story is written down and the commits are bundled, the repository itself was doing nothing except taking up a slot.
 
 What I did not weigh at all: the green squares. Deleting repositories can change what shows up on a contribution graph, and I decided in about ten seconds that I did not care. A wall of green that represents abandoned work is a claim about volume. I would rather make a claim about maintenance.
 
-Now the four that stayed.
+Now the four worth explaining.
 
 ## 2021: I typed every line
 
-[IaC-Pipeline](https://github.com/Thor-DraperJr/IaC-Pipeline) is four commits. An `azuredeploy.json`, a parameters file, and a GitHub Actions workflow I updated three times to get it green. There is no README. The [walkthrough I wrote about it](/tech/iac/) is longer than the repository.
+`IaC-Pipeline` is four commits. An `azuredeploy.json`, a parameters file, and a GitHub Actions workflow I updated three times to get it green. There is no README. The [walkthrough I wrote about it](/tech/iac/) is longer than the repository.
 
 That post opens with "I have a sneaking suspicion that Infrastructure as Code will become increasingly important as time goes on." I was a gym owner teaching myself Azure. The whole method was transcription. Read the Microsoft doc, type the JSON, watch the deploy fail, read the error, type it again.
 
@@ -50,7 +52,7 @@ The learning was slow and it stuck. I still know what an ARM template does, beca
 
 Nine days before the wedding, I decided our reception needed a board game app. Twenty games, a live view of which ones were in play, YouTube links for rules, updating across every guest's phone.
 
-[BoardGameWebAppWedding2025](https://github.com/Thor-DraperJr/BoardGameWebAppWedding2025) went from empty to deployed in a single day. Twelve commits, all on June 23. The README says it plainly: "some serious collaborative coding between Thor and Claude."
+`BoardGameWebAppWedding2025` went from empty to deployed in a single day. Twelve commits, all on June 23. The README says it plainly: "some serious collaborative coding between Thor and Claude."
 
 Read the commit titles in order and you can see exactly where the model helped and where it did not.
 
@@ -70,7 +72,7 @@ That is the first thing these repos taught me. AI collapsed the time between ide
 
 ## July 2025: the deploy loop is the real skill
 
-Two weeks later I built [WeddingTimeline](https://github.com/Thor-DraperJr/WeddingTimeline), a Next.js site so guests could see what was happening and when. This one got a custom domain, `thorandlina.love`, bought from Namecheap with a CNAME into Azure Static Web Apps.
+Two weeks later I built `WeddingTimeline`, a Next.js site so guests could see what was happening and when. This one got a custom domain, `thorandlina.love`, bought from Namecheap with a CNAME into Azure Static Web Apps.
 
 Five of the pull requests on that repo are deployment fixes in a row.
 
@@ -90,7 +92,7 @@ Both of those are lessons the model cannot hand you. It will happily generate a 
 
 ## September 2025: the part AI could not do
 
-[identity-defense-in-depth](https://github.com/Thor-DraperJr/identity-defense-in-depth) is different from the other three. Nothing in it deploys. It is a maturity framework: nine capability layers from credential core out to telemetry and posture, an L0 through L5 ladder, and a set of stall patterns I kept seeing in real conversations. MFA plateau. Legacy protocol bypass. Static secret sprawl. Standing privilege nobody wants to own.
+`identity-defense-in-depth` is different from the other three. Nothing in it deploys. It is a maturity framework: nine capability layers from credential core out to telemetry and posture, an L0 through L5 ladder, and a set of stall patterns I kept seeing in real conversations. MFA plateau. Legacy protocol bypass. Static secret sprawl. Standing privilege nobody wants to own.
 
 AI was all over the production of that repo. Mermaid diagrams, a render script, PNG and SVG in dark and light, an executive brief converted to PDF. The build tooling took an afternoon instead of a week.
 
@@ -113,6 +115,8 @@ The rule I use now is boring, and I trust it: let the model do the work you coul
 
 The board game app was the right call for a model to write. I did not need to learn Vite the week of my wedding. The identity framework was the wrong call for a model to write, because the sequencing was the deliverable.
 
-That rule is also what made the deletions easy. Seventeen of those repos existed because building something had gotten cheap. None of them existed because I had judgment worth keeping around. The four that stayed are not my best code. They are the four I can still explain.
+That rule is also what made the deletions easy. Twenty of those repos existed because building something had gotten cheap. None of them existed because I had judgment worth keeping around.
 
-Thanks for reading. If your own account has a repo you would not delete, it is probably worth writing down why.
+The first three rows of that table are gone from GitHub now. The bundles are on my disk and this post is the explanation, which is more than the repositories themselves were providing. `identity-defense-in-depth` stays, private, because the sequencing argument in it is still one I make out loud.
+
+Thanks for reading. If your own account has a repo you would not delete, it is probably worth writing down why, and you may find that writing it down is what lets you delete it.
