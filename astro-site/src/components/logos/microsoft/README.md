@@ -23,10 +23,9 @@ _None._ Every product currently maps to an official icon. Entra Agent ID reuses
 the base Entra ID mark (`entra.svg`); swap it for a dedicated Agent ID icon when
 Microsoft publishes one.
 
-To wire one in: drop the SVG here (e.g. `copilot-studio.svg`), then in
-`../AllAboardStation.astro` add the import + an entry to `msLogos` + set
-`logo: 'copilot-studio'` on the matching `msft` entry. The component
-already falls back to the colored monogram tile if `logo` is missing.
+To wire one in: drop the SVG here (e.g. `copilot-studio.svg`), then import
+it from the live component that needs it. Keep the SVG inline rather than
+adding a runtime URL or dynamic import.
 
 ## Source
 
