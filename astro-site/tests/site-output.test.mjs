@@ -34,6 +34,14 @@ test('presentation workflow article resolves its live visual marker', async () =
     assert.doesNotMatch(html, /<p>\[\[PRESENTATION_WORKFLOW\]\]<\/p>/);
 });
 
+test('archive keeps full-text search out of the initial HTML payload', async () => {
+    const html = await readFile(path.join(distPath, 'archive/index.html'), 'utf8');
+    const searchIndex = await readFile(path.join(distPath, 'archive-search.json'), 'utf8').catch(() => '');
+
+    assert.ok(Buffer.byteLength(html) < 150_000, 'archive HTML should stay below 150 KB');
+    assert.ok(searchIndex.length > 0, 'build should emit a lazy full-text search index');
+});
+
 test('homepage emits canonical social metadata', async () => {
     const html = await readFile(path.join(distPath, 'index.html'), 'utf8');
 
