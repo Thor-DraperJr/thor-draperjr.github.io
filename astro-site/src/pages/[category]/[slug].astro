@@ -23,6 +23,8 @@ import GatewayProcessMap from '../../components/GatewayProcessMap.astro';
 import AgentHarnessLayers from '../../components/AgentHarnessLayers.astro';
 import CareerSignalMap from '../../components/CareerSignalMap.astro';
 import TokenSilos from '../../components/TokenSilos.astro';
+import PostHeader from '../../components/PostHeader.astro';
+import PostPagination from '../../components/PostPagination.astro';
 import { getPosts } from '../../lib/content';
 
 export function getStaticPaths() {
@@ -57,6 +59,7 @@ const threeNewYearsMarker = '[[THREE_NEW_YEARS]]';
 const performanceNarrativeMarker = '[[PERFORMANCE_NARRATIVE]]';
 const ghWorkshopMarker = '[[GH_WORKSHOP]]';
 const ghWorkshopFigureMarkers = ['WHAT_IS_GITHUB', 'GITHUB_FLOW', 'YOUR_TOOLS', 'AGENT_LOOP', 'DIFF_PREVIEW', 'WORKSHOP_OBJECTIVES', 'SESSION_PLAN'].map((n) => `[[${n}]]`);
+const presentationWorkflowMapMarker = '[[PRESENTATION_WORKFLOW]]';
 const presentationWorkflowMarkers = ['ASK', 'RULES', 'TEAM', 'PROOF', 'GATE'].map((name) => `[[PRESENTATION_WORKFLOW_${name}]]`);
 const socialLoopMarker = '[[SOCIAL_LOOP]]';
 const gatewayProcessMapMarker = '[[GATEWAY_PROCESS_MAP]]';
@@ -81,6 +84,7 @@ processedHtml = processedHtml.replace(`<p>${ghWorkshopMarker}</p>`, ghWorkshopMa
 for (const figureMarker of ghWorkshopFigureMarkers) {
   processedHtml = processedHtml.replace(`<p>${figureMarker}</p>`, figureMarker);
 }
+processedHtml = processedHtml.replace(`<p>${presentationWorkflowMapMarker}</p>`, presentationWorkflowMapMarker);
 for (const workflowMarker of presentationWorkflowMarkers) {
   processedHtml = processedHtml.replace(`<p>${workflowMarker}</p>`, workflowMarker);
 }
@@ -98,6 +102,7 @@ const hasAgent365Deck = processedHtml.includes(agent365DeckMarker);
 const hasAllAboard = processedHtml.includes(allAboardMarker);
 const hasThreeNewYears = processedHtml.includes(threeNewYearsMarker);
 const hasPerformanceNarrative = processedHtml.includes(performanceNarrativeMarker);
+const hasPresentationWorkflowMap = processedHtml.includes(presentationWorkflowMapMarker);
 const hasPresentationWorkflow = presentationWorkflowMarkers.some((marker) => processedHtml.includes(marker));
 const hasWebsitePresentation = hasPresentationWorkflow && post.presentation === 'website-presentation';
 const hasSocialLoop = processedHtml.includes(socialLoopMarker);
@@ -135,6 +140,7 @@ if (hasAllAboard) {
 }
 const threeNewYearsParts = hasThreeNewYears ? processedHtml.split(threeNewYearsMarker) : [];
 const performanceNarrativeParts = hasPerformanceNarrative ? processedHtml.split(performanceNarrativeMarker) : [];
+const presentationWorkflowMapParts = hasPresentationWorkflowMap ? processedHtml.split(presentationWorkflowMapMarker) : [];
 const presentationWorkflowMarkerRegex = /\[\[PRESENTATION_WORKFLOW_(?:ASK|RULES|TEAM|PROOF|GATE)\]\]/g;
 const presentationWorkflowSegments: Array<{ kind: 'html' | 'marker'; value: string }> = [];
 if (hasWebsitePresentation) {
@@ -182,19 +188,7 @@ if (hasGhWorkshop) {
   {hasSocialLoop ? (
     <>
       <article class="shell-container">
-        <header class="post-hero">
-          <span class="eyebrow">{post.category}</span>
-          <h1 class="post-heading">{post.title}</h1>
-          <div class="post-meta-row">
-            <span>{post.date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
-            <span>{post.readingTime} min read</span>
-          </div>
-          {post.tags.length > 0 && (
-            <div class="post-tags" style="margin-top: 1rem;">
-              {post.tags.map((tag) => <span class="post-tag">{tag}</span>)}
-            </div>
-          )}
-        </header>
+        <PostHeader post={post} />
 
         {socialLoopParts.length > 0 && socialLoopParts[0].trim() && (
           <section class="prose panel">
@@ -214,39 +208,13 @@ if (hasGhWorkshop) {
           </section>
         )}
 
-        <nav class="post-pagination">
-          {previous ? (
-            <a href={previous.permalink}>
-              <span>Older</span>
-              {previous.title}
-            </a>
-          ) : <div></div>}
-
-          {next ? (
-            <a href={next.permalink} style="text-align: right;">
-              <span>Newer</span>
-              {next.title}
-            </a>
-          ) : <div></div>}
-        </nav>
+        <PostPagination previous={previous} next={next} />
       </article>
     </>
   ) : hasGatewayProcessMap ? (
     <>
       <article class="shell-container">
-        <header class="post-hero">
-          <span class="eyebrow">{post.category}</span>
-          <h1 class="post-heading">{post.title}</h1>
-          <div class="post-meta-row">
-            <span>{post.date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
-            <span>{post.readingTime} min read</span>
-          </div>
-          {post.tags.length > 0 && (
-            <div class="post-tags" style="margin-top: 1rem;">
-              {post.tags.map((tag) => <span class="post-tag">{tag}</span>)}
-            </div>
-          )}
-        </header>
+        <PostHeader post={post} />
 
         {gatewayProcessMapParts.length > 0 && gatewayProcessMapParts[0].trim() && (
           <section class="prose panel">
@@ -266,44 +234,13 @@ if (hasGhWorkshop) {
           </section>
         )}
 
-        <nav class="post-pagination">
-          {previous ? (
-            <a href={previous.permalink}>
-              <span>Older</span>
-              {previous.title}
-            </a>
-          ) : <div></div>}
-
-          {next ? (
-            <a href={next.permalink} style="text-align: right;">
-              <span>Newer</span>
-              {next.title}
-            </a>
-          ) : <div></div>}
-        </nav>
+        <PostPagination previous={previous} next={next} />
       </article>
     </>
   ) : hasGhWorkshop ? (
     <>
       <article class="shell-container">
-        <header class="post-hero">
-          <span class="eyebrow">{post.category}</span>
-          <h1 class="post-heading">{post.title}</h1>
-          <div class="post-meta-row">
-            <span>{post.date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
-            <span>{post.readingTime} min read</span>
-          </div>
-          {post.tags.length > 0 && (
-            <div class="post-tags" style="margin-top: 1rem;">
-              {post.tags.map((tag) => <span class="post-tag">{tag}</span>)}
-            </div>
-          )}
-          {post.presentHref && (
-            <div class="post-hero-actions">
-              <a class="post-hero-action" href={post.presentHref}>Present</a>
-            </div>
-          )}
-        </header>
+        <PostHeader post={post} showPresentAction={true} />
 
         {ghWorkshopParts.length > 0 && ghWorkshopParts[0].trim() && (
           <section class="prose panel">
@@ -355,39 +292,13 @@ if (hasGhWorkshop) {
       ))}
 
       <article class="shell-container">
-        <nav class="post-pagination">
-          {previous ? (
-            <a href={previous.permalink}>
-              <span>Older</span>
-              {previous.title}
-            </a>
-          ) : <div></div>}
-
-          {next ? (
-            <a href={next.permalink} style="text-align: right;">
-              <span>Newer</span>
-              {next.title}
-            </a>
-          ) : <div></div>}
-        </nav>
+        <PostPagination previous={previous} next={next} />
       </article>
     </>
   ) : hasPerformanceNarrative ? (
     <>
       <article class="shell-container">
-        <header class="post-hero">
-          <span class="eyebrow">{post.category}</span>
-          <h1 class="post-heading">{post.title}</h1>
-          <div class="post-meta-row">
-            <span>{post.date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
-            <span>{post.readingTime} min read</span>
-          </div>
-          {post.tags.length > 0 && (
-            <div class="post-tags" style="margin-top: 1rem;">
-              {post.tags.map((tag) => <span class="post-tag">{tag}</span>)}
-            </div>
-          )}
-        </header>
+        <PostHeader post={post} />
 
         {performanceNarrativeParts.length > 0 && performanceNarrativeParts[0].trim() && (
           <section class="prose panel">
@@ -407,39 +318,13 @@ if (hasGhWorkshop) {
           </section>
         )}
 
-        <nav class="post-pagination">
-          {previous ? (
-            <a href={previous.permalink}>
-              <span>Older</span>
-              {previous.title}
-            </a>
-          ) : <div></div>}
-
-          {next ? (
-            <a href={next.permalink} style="text-align: right;">
-              <span>Newer</span>
-              {next.title}
-            </a>
-          ) : <div></div>}
-        </nav>
+        <PostPagination previous={previous} next={next} />
       </article>
     </>
   ) : hasCareerDevPlan ? (
     <>
       <article class="shell-container">
-        <header class="post-hero">
-          <span class="eyebrow">{post.category}</span>
-          <h1 class="post-heading">{post.title}</h1>
-          <div class="post-meta-row">
-            <span>{post.date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
-            <span>{post.readingTime} min read</span>
-          </div>
-          {post.tags.length > 0 && (
-            <div class="post-tags" style="margin-top: 1rem;">
-              {post.tags.map((tag) => <span class="post-tag">{tag}</span>)}
-            </div>
-          )}
-        </header>
+        <PostHeader post={post} />
       </article>
 
       <div class="cdp-breakout">
@@ -453,21 +338,7 @@ if (hasGhWorkshop) {
           </section>
         )}
 
-        <nav class="post-pagination">
-          {previous ? (
-            <a href={previous.permalink}>
-              <span>Older</span>
-              {previous.title}
-            </a>
-          ) : <div></div>}
-
-          {next ? (
-            <a href={next.permalink} style="text-align: right;">
-              <span>Newer</span>
-              {next.title}
-            </a>
-          ) : <div></div>}
-        </nav>
+        <PostPagination previous={previous} next={next} />
       </article>
     </>
   ) : hasAgent365Deck ? (
@@ -722,11 +593,11 @@ if (hasGhWorkshop) {
             <WalkingDeck />
             <Fragment set:html={walkingDeckParts.slice(1).join(walkingDeckMarker)} />
           </>
-        ) : hasPresentationWorkflow ? (
+        ) : hasPresentationWorkflowMap ? (
           <>
-            <Fragment set:html={presentationWorkflowParts[0]} />
+            <Fragment set:html={presentationWorkflowMapParts[0]} />
             <PresentationWorkflowMap />
-            <Fragment set:html={presentationWorkflowParts.slice(1).join(presentationWorkflowMarker)} />
+            <Fragment set:html={presentationWorkflowMapParts.slice(1).join(presentationWorkflowMapMarker)} />
           </>
         ) : hasAgentHarnessLayers ? (
           <>

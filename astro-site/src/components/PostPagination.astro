@@ -1,0 +1,32 @@
+---
+import type { Post } from '../lib/content';
+
+interface Props {
+  previous: Post | null;
+  next: Post | null;
+}
+
+const { previous, next } = Astro.props;
+---
+
+<nav class="post-pagination">
+  {previous ? (
+    <a href={previous.permalink}>
+      <span>Older</span>
+      {previous.title}
+    </a>
+  ) : <div></div>}
+
+  {next ? (
+    <a class="post-pagination-next" href={next.permalink}>
+      <span>Newer</span>
+      {next.title}
+    </a>
+  ) : <div></div>}
+</nav>
+
+<style>
+  .post-pagination-next {
+    text-align: right;
+  }
+</style>

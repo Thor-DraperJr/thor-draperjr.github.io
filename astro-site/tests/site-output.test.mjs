@@ -27,6 +27,13 @@ for (const outputPath of criticalOutputs) {
     });
 }
 
+test('presentation workflow article resolves its live visual marker', async () => {
+    const html = await readFile(path.join(distPath, 'tech/presentation-workflow/index.html'), 'utf8');
+
+    assert.match(html, /class="pwm-fig"/);
+    assert.doesNotMatch(html, /<p>\[\[PRESENTATION_WORKFLOW\]\]<\/p>/);
+});
+
 test('homepage emits canonical social metadata', async () => {
     const html = await readFile(path.join(distPath, 'index.html'), 'utf8');
 
