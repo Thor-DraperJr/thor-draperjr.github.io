@@ -34,7 +34,7 @@ const recentPosts = posts.filter((post) => post !== heroPost).slice(0, 6);
 						<h2 class="feature-panel-title"><a href={heroPost.permalink}>{heroPost.title}</a></h2>
 						<p class="card-copy">{heroPost.excerpt}</p>
 						<div class="meta-row">
-							<span>{heroPost.date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
+							<span>{heroPost.date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' })}</span>
 							<span>{heroPost.readingTime} min read</span>
 						</div>
 					</article>
@@ -61,7 +61,7 @@ const recentPosts = posts.filter((post) => post !== heroPost).slice(0, 6);
 					<article class="home-post-card" data-reveal data-reveal-delay={String(Math.min(index + 1, 4))}>
 						<div class="card-topline">
 							<span class="eyebrow">{post.categories[0]}</span>
-							<span class="stream-date">{post.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
+							<span class="stream-date">{post.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' })}</span>
 						</div>
 						<h3 class="stream-title"><a href={post.permalink}>{post.title}</a></h3>
 						<p class="stream-excerpt">{post.excerpt}</p>

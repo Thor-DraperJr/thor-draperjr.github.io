@@ -9,6 +9,7 @@ const { startInPresent = false, scene, launcherOnly = false } = Astro.props;
 const articleHref = '/tech/how-my-website-becomes-a-presentation/';
 const presentationHref = `${articleHref}present/`;
 const fullDeck = scene === undefined && !launcherOnly;
+const includeStyles = launcherOnly || fullDeck;
 const showScene = (index: number) => fullDeck || scene === index;
 const slides = [
   { id: 'vw-ask', title: 'The Request', note: 'I start with the article and one request: read this, find the idea readers need to remember, and create a visual that makes it easier to understand.' },
@@ -181,7 +182,8 @@ const slides = [
 </section>
 )}
 
-<style>
+{includeStyles && (
+<style is:inline>
   .vw-deck { --ink:#132235; --depth:#06171f; --stage:#0a2130; --mid:#143247; --paper:#fbfaf6; --blue:#008fd3; --bright:#34baff; --gold:#f4c430; --peri:#a5b8ee; --mint:#e2f9d9; container-type:inline-size; width:min(calc(100vw - 2rem),76rem); margin:2rem auto; color:var(--paper); font-family:'Manrope',sans-serif; }
   .vw-deck * { box-sizing:border-box; letter-spacing:0; }
   .vw-deck h2,.vw-deck p,.vw-deck blockquote { margin:0; }
@@ -490,3 +492,4 @@ const slides = [
     .vw-deck[data-present='true'] .vw-slide { transform:none; }
   }
 </style>
+)}
