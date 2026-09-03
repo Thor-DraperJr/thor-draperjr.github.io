@@ -2,7 +2,7 @@
 layout: post
 title: "MFA Everywhere Is Where Identity Programs Stall"
 date: 2026-09-03
-draft: true
+draft: false
 categories: [tech]
 tags: [technical, security, identity, zero-trust]
 excerpt: "A year ago I wrote a nine-layer identity maturity framework. The part that still holds up is the ordering, and the four gates that tell you whether you have earned the next layer."

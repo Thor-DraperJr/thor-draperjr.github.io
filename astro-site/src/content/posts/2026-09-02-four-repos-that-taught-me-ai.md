@@ -2,7 +2,7 @@
 layout: post
 title: "Four Repos That Taught Me How to Work With AI, and Why I Deleted Them"
 date: 2026-09-02
-draft: true
+draft: false
 categories: [tech]
 tags: [technical, ai, cloud, career]
 excerpt: "I cut my GitHub account from 32 repositories to 9. Here is the rule I used, and what four of the deletions say about where AI actually helps."
