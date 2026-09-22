@@ -5,22 +5,20 @@ date: 2026-09-22
 categories: [tech]
 tags: [ai, automation, ownership, home-assistant, open-source]
 draft: false
-excerpt: "My progression toward digital sovereignty: subscription and closed source, no subscription and closed source, then no subscription and open source."
+excerpt: "A three-level rubric for taking more control of the technology I own, with Reolink as a stepping stone and AI helping with the work."
 ---
 
-I'm moving away from Blink and toward Reolink because I want more ownership of the cameras I buy.
+My Reolink camera is a Level 2 resource. I'm good with that.
 
-The recurring bill is the first thing I want to remove. The longer-term question is how much control I have over the equipment after I buy it. Can I use another app? Keep it working without the vendor's cloud? Change the software if the company stops maintaining it?
+Moving away from Blink is part of a bigger effort to take more ownership of the technology in my house. I want fewer required subscriptions, more local control, and a way to keep things working without depending entirely on the company that sold them.
 
-**Digital sovereignty** is the direction I'm working toward. In my home, that means having practical control over the technology I depend on: how it runs, where the data lives, and what happens when I want to leave a vendor.
+**Digital sovereignty** is the direction I'm working toward: practical control over how my technology runs, where my data lives, and what happens when I want to leave a vendor.
 
-I'm getting there gradually. Home Assistant is already part of my setup. Some of the equipment connected to it still depends on proprietary software or cloud services. Reolink is a step I'm pursuing, with its own limitations. I don't have a fully open-source home, and replacing everything at once would miss the point.
+AI makes the work more approachable. Reading documentation, configuring Home Assistant, and troubleshooting an integration take effort. Having help with that work makes alternatives worth considering that I might have passed over before.
 
-AI makes the work more approachable. It can help me read documentation, configure integrations, and troubleshoot the parts that used to turn a small improvement into a weekend project. I want to use that help to move up a simple ladder.
+## The three levels
 
-## My digital sovereignty rubric
-
-These are the three levels I'm using to evaluate a product or software layer. **No subscription** means no required recurring payment for the features I intend to keep. It doesn't mean hardware, electricity, storage, or maintenance are free.
+I use this rubric for the product or software layer I'm evaluating.
 
 <div role="region" aria-label="Digital sovereignty rubric" tabindex="0" style="overflow-x:auto; margin:1.5rem 0; border:1px solid var(--line); border-radius:var(--radius-md);">
 <table style="width:100%; min-width:300px; border-collapse:collapse; margin:0; text-align:left; font-size:1rem; line-height:1.5;">
@@ -36,117 +34,78 @@ These are the three levels I'm using to evaluate a product or software layer. **
 </table>
 </div>
 
-**Level 1: subscription and closed source.** Keeping the required features means continuing to pay, and I don't have the software freedoms needed to maintain an alternative myself. My first question is whether I can keep those features without the subscription.
+At **Level 1**, I have to keep paying for the features I need, and the vendor controls the proprietary software. At **Level 2**, I've removed that payment requirement. At **Level 3**, I also gain the rights to inspect, modify, and redistribute the software.
 
-**Level 2: no subscription and closed source.** I've removed the recurring payment, but the vendor still controls the proprietary software. This can be a worthwhile place to stop, especially when the product works locally and lets me export my data.
+**Required** matters. Choosing to pay for support, hosting, or development shouldn't lower a product's standing when I can still operate it independently. Hardware, power, backups, and my time still cost something.
 
-**Level 3: no subscription and open source.** I can run the software without a required subscription, and its license gives me rights to inspect, modify, and redistribute it. I have more options for maintaining it myself or getting help from someone besides the original vendor.
+These levels measure payment dependence and software freedom. A subscription-free product can still depend on a cloud service that disappears. Alongside each level, I want two short notes:
 
-This is my purchasing and migration rubric, rather than a universal certification. Open-source software can have paid hosting and support. A no-fee product can still depend on a vendor's cloud. I record those dependencies alongside the level instead of pretending the level answers every question.
+- **Remaining dependency:** What still requires the vendor?
+- **Exit path:** What can I keep using, export, or replace?
 
-I also name the layer I'm evaluating. **A Level 3 controller connected to a Level 2 camera doesn't turn the camera into Level 3 equipment.** The app, controller, device firmware, and hardware design can have different degrees of openness.
+Level 2 is legitimate progress. Level 3 is the preferred direction when it meets my needs and I can sustain it.
 
-## What the FOSS movement is about
+## What FOSS means
 
-**FOSS means Free and Open Source Software.** The movement is about giving people the freedom to use, understand, change, and share the software they rely on. The community can improve it together, and the original developer doesn't have to be the only party capable of maintaining it.
+**FOSS means Free and Open Source Software.** The movement is about giving people the freedom to use, understand, change, and share the software they rely on.
 
-The Free Software Foundation's [definition](https://www.gnu.org/philosophy/free-sw.html) describes four essential freedoms:
+The Free Software Foundation's [definition](https://www.gnu.org/philosophy/free-sw.html) describes four essential freedoms: run the program for any purpose, study and change it, redistribute copies, and share modified versions.
 
-- Run the program for any purpose.
-- Study how it works and change it.
-- Redistribute copies.
-- Distribute modified versions so other people can benefit.
+Here, *free* refers to freedom. FOSS can be sold. A free download can still be proprietary. The free-software and open-source traditions have different emphases, but overlap heavily; the Open Source Initiative's [definition](https://opensource.org/osd) also requires rights beyond simply viewing the code.
 
-Here, *free* refers to freedom. FOSS can be sold, and people can charge for support or hosting. Paying a developer doesn't make software proprietary. Downloading an app for free doesn't make it FOSS.
+That's what makes Level 3 valuable. Someone besides the original company can legally maintain and improve the software. Those rights give me options, even when I hire someone else to do the work.
 
-The free-software and open-source traditions overlap heavily, with different philosophical emphasis. Free software emphasizes users' freedoms; the Open Source Initiative sets out [licensing requirements](https://opensource.org/osd) that include source availability, redistribution, and permission for derived works. A public code repository with restrictive terms doesn't automatically qualify.
+## Reolink is a useful stepping stone
 
-That distinction explains why Level 3 matters to me. Someone other than the original company can legally study and improve the software. Whether anyone has the time and skill to do that is a separate question. Open source creates options; maintenance still takes work.
+Home Assistant documents a [local Reolink integration without a required cloud account or subscription](https://www.home-assistant.io/integrations/reolink/). That fits the Level 2 direction I want. The camera's proprietary firmware remains a limitation.
 
-## Where my setup is today
+- **Remaining dependency:** Vendor firmware and future security updates.
+- **Exit path:** Supported local recording, viewing, and alternative clients, verified against the exact model and the features I use.
 
-I'm building on equipment I already own. The useful story is the movement between these levels, including the pieces that haven't moved yet.
+Connecting it to Home Assistant doesn't make the camera open source. A Level 3 controller and a Level 2 camera can be a perfectly reasonable combination.
 
-### Home Assistant: Level 3 at the controller layer
+If Reolink disappeared, keeping a local video feed would be useful. Fixing a future firmware vulnerability would be a different challenge. I'm accepting that limit while improving on the arrangement I had before.
 
-[Home Assistant](https://www.home-assistant.io/) is open-source home automation focused on local control. I already run it as the common controller for devices that previously lived in separate systems.
+The integration still needs testing in my setup. Two-way audio isn't supported through the Home Assistant integration, and battery models and hub requirements need checking. **Feature parity means preserving the jobs my household needs**, rather than declaring success because the new dashboard looks good.
 
-That gives me an open foundation I can configure and maintain without a required controller subscription. It doesn't guarantee that every connected device works offline. Each integration still has its own requirements.
+One qualification: [compatible Blink setups already offer subscription-free local storage](https://support.blinkforhome.com/using-your-camera/blink-storage-options). Score the configuration, not the brand. Someone else may reach Level 2 without buying another camera.
 
-### LIFX and Lutron: keep useful hardware, improve the control path
+## What I've already put in place
 
-My setup includes LIFX lights and Lutron Caséta lighting and fan controls. Home Assistant documents [LIFX as Local Polling](https://www.home-assistant.io/integrations/lifx/) and [Lutron Caséta as Local Push](https://www.home-assistant.io/integrations/lutron_caseta/).
+**Home Assistant: Level 3 at the controller layer.** I already run this [open-source controller](https://www.home-assistant.io/). It gives me a common place to manage devices without a required controller subscription. The connected equipment keeps its own dependencies.
 
-Those are useful existing paths toward subscription-free local control. I'm treating the devices as Level 2 candidates, rather than claiming their firmware is FOSS because an open-source controller can operate them. Replacing working lights just to make the inventory look more open would need a better reason.
+**LIFX and Lutron: keep the useful hardware.** My lights and fan controls have documented local paths through [LIFX](https://www.home-assistant.io/integrations/lifx/) and [Lutron Caséta](https://www.home-assistant.io/integrations/lutron_caseta/). That's worth using before replacing working equipment. Local control alone doesn't establish open-source firmware.
 
-### Obsidian: Level 2 can still give me a useful exit
+**Obsidian: Level 2 for local notes.** The editor is [free to use](https://obsidian.md/license) under a [proprietary license](https://obsidian.md/terms). My [Markdown files stay local](https://help.obsidian.md/Files+and+folders/How+Obsidian+stores+data) and can open in another editor. The remaining dependency is the app; the exit path is ordinary files. Optional paid services and plugin-specific features need separate consideration.
 
-I already use Obsidian for notes. Its [core application is free to use](https://obsidian.md/license), but its [proprietary license](https://obsidian.md/terms) doesn't grant the freedoms of FOSS. Its optional paid services are separate from local editing.
+**Ecobee and Google: cloud dependencies remain.** My [ecobee integration](https://www.home-assistant.io/integrations/ecobee/) uses cloud polling. My manual [Google Assistant connection](https://www.home-assistant.io/integrations/google_assistant/) still uses Google's cloud. Putting everything in one dashboard doesn't remove those dependencies. I haven't completed an offline and recovery test for every device.
 
-The part I value is that my notes are [local Markdown files](https://help.obsidian.md/Files+and+folders/How+Obsidian+stores+data). Another editor can read them. For the core local-note workflow, this is a useful Level 2 example: proprietary software with a practical way to leave. Plugin-specific features would need their own migration check.
+## Even a TV antenna counts
 
-### Ecobee and Google: dependencies I still need to account for
+A compatible TV and antenna can receive [free over-the-air broadcasts](https://www.fcc.gov/consumers/guides/antennas-and-digital-television) without a streaming subscription or internet connection. Sometimes the useful improvement is simpler hardware.
 
-My thermostat currently uses Home Assistant's [ecobee integration](https://www.home-assistant.io/integrations/ecobee/), which is classified as Cloud Polling. My manual [Google Assistant connection](https://www.home-assistant.io/integrations/google_assistant/) avoids requiring the optional Home Assistant Cloud subscription for that connection, but still uses Google's cloud.
+The antenna itself has no software to classify. Apply that question to the tuner or recorder, where relevant. Check reception and the channels you actually watch before canceling anything. A network tuner or DVR can introduce new app or guide-data dependencies.
 
-Neither becomes independent of its vendor just because it appears in my dashboard. The configuration review wasn't a billing audit, so I'm leaving unverified subscription details unscored. The cloud dependencies are already clear enough to put on the improvement list.
+It belongs in the same conversation: what job am I paying for, and can something I own do it?
 
-These observations come from my current configuration. I haven't disconnected the house or completed an outage and recovery test for every device. Installed, documented, and tested are different states.
+## Two targets I'd consider next
 
-## Reolink: the Level 2 step I'm pursuing
+These are possibilities, not installations I've already completed.
 
-Moving away from Blink gives me a concrete place to apply the rubric. I want useful recordings, viewing, and alerts without an ongoing camera subscription.
+**Frigate for the recording layer.** [Frigate](https://docs.frigate.video/) offers local recording and object detection under an [MIT license](https://github.com/blakeblackshear/frigate/blob/dev/LICENSE). Its core self-hosted software could be a Level 3 addition if I need more than the camera provides. It would also add storage, compute, and maintenance work. The camera firmware would remain separate.
 
-There is an important qualification: [Blink already supports subscription-free local clip storage](https://support.blinkforhome.com/using-your-camera/blink-storage-options) on compatible setups. A brand isn't permanently assigned to one level. A subscription-dependent Blink workflow fits Level 1; a suitable no-subscription configuration may already meet Level 2. Canceling a plan and replacing hardware are separate decisions.
+**An ESPHome-based sensor.** [ESPHome](https://esphome.io/) supports locally controlled devices with its own code under [GPLv3 and MIT licenses](https://github.com/esphome/esphome/blob/dev/LICENSE). I'd start with a supported, low-voltage temperature sensor and verify that I can rebuild and reinstall its firmware. The board and any proprietary dependencies still need checking. Heating and locks can wait.
 
-Reolink interests me because Home Assistant documents a [local integration path without a cloud account or subscription](https://www.home-assistant.io/integrations/reolink/). I'm evaluating it as a Level 2 step. I haven't established an open, independently maintainable firmware path for the camera, and integrating it with Home Assistant wouldn't create one.
+## Put AI to work on one move
 
-If Reolink disappeared, a working local connection would be valuable. Fixing future firmware vulnerabilities would remain a different problem. I want that limitation visible instead of claiming complete sovereignty because I removed a bill.
+I'd start with one subscription or device and give AI a bounded assignment:
 
-The Home Assistant inventory for this article didn't show a Reolink integration, so this remains a direction in progress rather than a completed migration. Before calling it successful, I'd test the exact camera and the features we use. The integration currently lacks two-way audio, and battery models and hub requirements need model-specific checks.
+> Identify its level, remaining dependency, and exit path. List the features I use. Propose one reversible improvement, help me configure it, and test the result. Ask before buying equipment, flashing firmware, deleting data, or canceling a subscription.
 
-**Feature parity means keeping the jobs my household needs.** Moving up a level while losing a required feature needs an explicit trade-off.
+Keep the old arrangement until the replacement survives normal use, a restart, and a recovery test. Someone else in the household should be able to use it without opening my AI conversation.
 
-## Even a TV antenna belongs here
+Count hardware, power, storage, backups, AI fees, and maintenance time before claiming savings. More control may be worth an extra cost, but I want to make that decision deliberately.
 
-An antenna is a useful reminder that more control can come from simpler equipment. A compatible TV and antenna can receive [free over-the-air broadcasts](https://www.fcc.gov/consumers/guides/antennas-and-digital-television) without a streaming subscription or internet connection.
+I'm building this gradually. Reolink can be Level 2. Home Assistant can be Level 3. Useful equipment can stay while I improve how I control it.
 
-The passive antenna itself has no software to classify as open or closed source. I'd apply the software question to the tuner or recorder, where relevant, and mark it not applicable for the antenna. Forcing every object into Level 3 would make the rubric less useful.
-
-The practical test is whether I can receive the stations I actually watch. The [FCC's reception maps](https://www.fcc.gov/media/engineering/dtvmaps) are a starting point, not proof of reception inside my house. An antenna won't replace programming that isn't broadcast locally. Adding a network tuner or DVR also means checking for new app, guide-data, or subscription dependencies.
-
-I haven't established an antenna installation in this inventory. It belongs in the decision framework without becoming an invented part of my setup.
-
-## Two possible next steps toward Level 3
-
-I don't need a catalog of applications to install. I'd start with two candidates close to what I'm already doing.
-
-### 1. Frigate for the recording layer
-
-[Frigate](https://docs.frigate.video/) provides local video recording and object detection and uses an [open-source MIT license](https://github.com/blakeblackshear/frigate/blob/dev/LICENSE). Its core self-hosted software is a possible Level 3 recording layer if the camera's own features don't meet my needs.
-
-That would still leave the camera firmware as a separate dependency. It would also add storage, compute, and maintenance work. I'd test one supported camera first, then check recordings, alerts, playback, and recovery before expanding. This is a candidate, not an installed system I'm claiming to use.
-
-### 2. An ESPHome-based sensor for the device-software layer
-
-[ESPHome](https://esphome.io/) lets people build and configure devices that communicate locally with Home Assistant. Its own code is released under [GPLv3 and MIT licenses](https://github.com/esphome/esphome/blob/dev/LICENSE).
-
-A simple, supported temperature sensor would be a reasonable experiment in controlling more of the device software. I'd check the exact board, dependencies, and ability to rebuild and reinstall the firmware. ESPHome's open code doesn't establish that every chip, vendor library, or hardware design is open.
-
-I'd start with a low-voltage, noncritical sensor. Heating, locks, and safety equipment can wait. This is another target to evaluate, not something I've already added.
-
-## Where AI earns its place
-
-FOSS gives me permission to do more with software. AI can help me do some of the work that permission makes possible: understand a configuration, inspect code, write a small integration, or interpret a failure log.
-
-For a migration, I'd give it a bounded assignment:
-
-> Identify the product and software layer. Place it in Level 1, 2, or 3 using its required fees and license. Mark unknowns. List the features I use and the cloud dependencies that remain. Propose one reversible improvement, then help me test it and document recovery. Ask before purchasing, flashing firmware, deleting data, or canceling a subscription.
-
-I'd keep the old arrangement until the replacement passes normal use, restart, and recovery checks. Someone else in the household should be able to use it without opening my AI conversation.
-
-The savings also need to survive an honest cost comparison. Hardware, storage, power, backups, AI fees, and my maintenance time can exceed the subscription I removed. Sometimes the extra control is worth paying for. I want to know which decision I'm making.
-
-My progression is straightforward: move from **subscription and closed source**, to **no subscription and closed source**, and toward **no subscription and open source** where it makes sense.
-
-A Level 2 improvement is still progress. Level 3 is a direction, with the remaining dependencies written down. I want each addition to leave me with more control than I had before.
+Pick one thing you depend on, identify its level, and work out the next reasonable step. That's how I'm approaching digital sovereignty.
