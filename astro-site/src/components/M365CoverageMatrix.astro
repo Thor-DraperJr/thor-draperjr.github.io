@@ -1,6 +1,6 @@
 ---
-import { TIERS, PRICE, FUNCS, ROWS, DATA, PLATFORM, GLOSSARY } from '../lib/m365Coverage';
-const model = { TIERS, PRICE, FUNCS, ROWS, DATA, PLATFORM, GLOSSARY };
+import { TIERS, FUNCS, ROWS, DATA, PLATFORM, GLOSSARY } from '../lib/m365Coverage';
+const model = { TIERS, FUNCS, ROWS, DATA, PLATFORM, GLOSSARY };
 ---
 
 <div class="m365-breakout">
@@ -12,7 +12,7 @@ const model = { TIERS, PRICE, FUNCS, ROWS, DATA, PLATFORM, GLOSSARY };
       </div>
       <div class="mcx-controls">
         <div class="mcx-seg" role="group" aria-label="License tier">
-          {TIERS.map((t) => <button type="button" data-tier={t} aria-pressed={t === 'E3' ? 'true' : 'false'}>{t} · ${PRICE[t]}</button>)}
+          {TIERS.map((t) => <button type="button" data-tier={t} aria-pressed={t === 'E3' ? 'true' : 'false'}>{t}</button>)}
         </div>
         <button type="button" class="mcx-btn" data-play>Play</button>
         <label class="mcx-toggle"><input type="checkbox" data-only-new /> Only improved cells</label>
@@ -23,7 +23,6 @@ const model = { TIERS, PRICE, FUNCS, ROWS, DATA, PLATFORM, GLOSSARY };
       <div class="mcx-kpi"><span class="lbl">Matrix coverage</span><span class="val" data-k="cov">0%</span><span class="delta" data-k="covd"></span><span class="meter"><i data-k="covm"></i></span></div>
       <div class="mcx-kpi"><span class="lbl">Cells fully covered</span><span class="val" data-k="full">0 / 36</span><span class="delta" data-k="fulld"></span></div>
       <div class="mcx-kpi"><span class="lbl">Improved by this step</span><span class="val" data-k="new">-</span><span class="delta" data-k="newd"></span></div>
-      <div class="mcx-kpi"><span class="lbl">List price / user / month</span><span class="val" data-k="price">$39</span><span class="delta" data-k="priced"></span></div>
     </div>
 
     <div class="mcx-main">
@@ -69,8 +68,7 @@ const model = { TIERS, PRICE, FUNCS, ROWS, DATA, PLATFORM, GLOSSARY };
     </details>
 
     <figcaption>
-      Ratings are my simplified, opinionated view for discussion, not a licensing statement. US list prices with Teams, effective July 1, 2026.
-      Recover for networks is out of scope for Microsoft 365 suites; Microsoft 365 Backup is a separate purchase.
+      Ratings are my simplified, opinionated view for discussion, not a licensing statement.      Recover for networks is out of scope for Microsoft 365 suites; Microsoft 365 Backup is a separate purchase.
       Palette: NOSHIMEHANA 熨斗目花 from <a href="https://nipponcolors.com/">Nippon Colors</a>, climbing KAMENOZOKI → NOSHIMEHANA → KON, with AKE marking what is new.
     </figcaption>
     <div class="mcx-tip" role="tooltip" data-tip></div>
@@ -84,7 +82,7 @@ const model = { TIERS, PRICE, FUNCS, ROWS, DATA, PLATFORM, GLOSSARY };
   const root = document.getElementById('m365-coverage');
   const raw = document.getElementById('m365-coverage-data');
   if (root && raw) {
-    const { TIERS, PRICE, FUNCS, ROWS, DATA, PLATFORM, GLOSSARY } = JSON.parse(raw.textContent || '{}');
+    const { TIERS, FUNCS, ROWS, DATA, PLATFORM, GLOSSARY } = JSON.parse(raw.textContent || '{}');
     const $ = (s: string) => root.querySelector(s) as HTMLElement;
     const k = (s: string) => $(`[data-k="${s}"]`);
     const idx = (t: Tier) => TIERS.indexOf(t);
@@ -148,8 +146,6 @@ const model = { TIERS, PRICE, FUNCS, ROWS, DATA, PLATFORM, GLOSSARY };
       k('fulld').textContent = prev ? `+${full - prevFull} vs ${prev}` : '';
       k('new').textContent = prev ? String(gained) : '-';
       k('newd').textContent = prev ? `cells improved from ${prev}` : 'Pick E5 or E7';
-      k('price').textContent = '$' + PRICE[current];
-      k('priced').textContent = prev ? `+$${PRICE[current] - PRICE[prev]} vs ${prev}` : '';
       renderClimb(); renderBand(); renderDetail();
     }
 
@@ -188,7 +184,7 @@ const model = { TIERS, PRICE, FUNCS, ROWS, DATA, PLATFORM, GLOSSARY };
           return `<div class="tierblock ${on ? 'on' : 'off'}"><div class="tn">${t}${t === 'E3' ? '' : ' adds'}${on ? '' : ' (locked)'}</div>
             ${items.length ? `<ul>${items.map((i: string) => `<li>${annotate(i)}</li>`).join('')}</ul>` : '<div class="empty">Nothing new at this tier</div>'}</div>`;
         }).join('')}
-        ${selected.r === 'AI Agents' ? '<p class="hint">E5 customers can add Agent 365 ($15). From June 1, 2026, E3 alone does not qualify for new Agent 365 purchases.</p>' : ''}`;
+        ${selected.r === 'AI Agents' ? '<p class="hint">E5 customers can add Agent 365. From June 1, 2026, E3 alone does not qualify for new Agent 365 purchases.</p>' : ''}`;
     }
 
     // Glossary (collapsed by default)
@@ -305,7 +301,7 @@ const model = { TIERS, PRICE, FUNCS, ROWS, DATA, PLATFORM, GLOSSARY };
   .mcx-btn:hover { border-color: var(--accent); color: var(--accent); }
   .mcx-toggle { display: inline-flex; align-items: center; gap: 6px; color: var(--muted); cursor: pointer; user-select: none; font-size: 13px; }
 
-  .mcx-kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 1rem; }
+  .mcx-kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 1rem; }
   .mcx-kpi { display: flex; flex-direction: column; background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 12px 14px; box-shadow: var(--shadow); }
   .mcx-kpi .lbl { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: .04em; }
   .mcx-kpi .val { font-size: 26px; font-weight: 700; }

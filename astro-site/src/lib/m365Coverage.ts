@@ -1,9 +1,8 @@
 // Microsoft 365 E3 -> E5 -> E7 coverage model (Cyber Defense Matrix: NIST CSF 2.0 x asset classes).
-// Ratings are an opinionated discussion view, not a licensing statement. Prices: US list, with Teams, from July 1, 2026.
+// Ratings are an opinionated discussion view, not a licensing statement.
 export type Tier = 'E3' | 'E5' | 'E7';
 export interface Cell { lv: [number, number, number]; tag: string[]; items: Record<Tier, string[]> }
 export const TIERS: Tier[] = ['E3', 'E5', 'E7'];
-export const PRICE: Record<Tier, number> = { E3: 39, E5: 60, E7: 99 };
 export const FUNCS: [string, string][] = [
   ['Govern', 'policy & oversight'], ['Identify', 'inventory & posture'], ['Protect', 'prevent'],
   ['Detect', 'find threats'], ['Respond', 'contain & fix'], ['Recover', 'restore'],
