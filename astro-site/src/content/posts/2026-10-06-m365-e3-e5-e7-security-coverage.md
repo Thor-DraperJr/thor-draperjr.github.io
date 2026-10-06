@@ -2,7 +2,7 @@
 layout: post
 title: "E3, E5, E7: What Each Step Adds to Security"
 date: 2026-10-06
-draft: true
+draft: false
 categories: [tech]
 tags: [technical, security, microsoft-365, licensing, zero-trust, ai]
 excerpt: "A one-screen visual of the security coverage Microsoft 365 E3, E5, and E7 each add, mapped to the Cyber Defense Matrix."
