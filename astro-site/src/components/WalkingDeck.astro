@@ -328,16 +328,18 @@ const voices = [
 <style>
   /* Palette: change these and the whole deck follows. */
   .wd {
-    --ink: #132235;
-    --muted: #526273;
-    --paper: #fbfaf6;
-    --night: #0c1d2e;
-    --night-2: #12364a;
-    --on-dark: rgba(255, 255, 255, 0.9);
-    --on-dark-muted: rgba(255, 255, 255, 0.68);
-    --accent: #008fd3;
-    --warm: #f1b75f;
-    --cool: #5fb8a6;
+    /* Palette from the Japanese traditional colors used in the M365 E3/E5/E7 visual. */
+    --ink: #1C1C1C;          /* 墨 sumi */
+    --muted: #434343;
+    --paper: #FCFAF2;        /* 白練 shironeri */
+    --night: #0F2540;        /* 紺 kon */
+    --night-2: #2B5F75;      /* 藍 ai */
+    --on-dark: #FFFFFB;
+    --on-dark-muted: color-mix(in srgb, #FFFFFB 72%, transparent);
+    --accent: #006284;       /* 縹 hanada */
+    --warm: #A5DEE4;         /* 水 mizu: labels and lines on dark */
+    --hi: #CC543A;           /* 朱 shu: results and the active chapter only */
+    --cool: #91989F;         /* 銀鼠 ginnezumi */
     --line: color-mix(in srgb, currentColor 14%, transparent);
     --radius: 1rem;
     --gap: clamp(0.75rem, 2cqi, 1.5rem);
@@ -366,7 +368,7 @@ const voices = [
     color: var(--muted); background: none; font: 700 0.78rem/1 inherit; text-decoration: none; cursor: pointer;
   }
   .wd-rail a.is-active { color: var(--paper); background: var(--ink); }
-  .wd-present { color: var(--night); background: var(--warm); }
+  .wd-present { color: var(--on-dark); background: var(--hi); }
 
   /* Slides: one layout, sized by its own width */
   .wd-slide {
@@ -394,7 +396,7 @@ const voices = [
   .wd-collage { display: grid; gap: var(--gap); grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 1fr)); }
   .wd-collage figure {
     padding: 0.5rem 0.5rem 0.4rem; background: #fff; border-radius: 0.3rem;
-    box-shadow: 0 12px 30px rgba(12, 24, 38, 0.14); transform: rotate(var(--tilt)); transition: transform 0.3s;
+    box-shadow: 0 12px 30px color-mix(in srgb, var(--night) 16%, transparent); transform: rotate(var(--tilt)); transition: transform 0.3s;
   }
   .wd-collage figure:hover { transform: rotate(0) scale(1.03); }
   .wd-collage img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
@@ -423,15 +425,15 @@ const voices = [
   @keyframes wd-blink { 50% { opacity: 0; } }
   .wd-portrait { position: relative; overflow: hidden; border: 1px solid color-mix(in srgb, var(--warm) 60%, transparent); border-radius: var(--radius); }
   .wd-portrait img { display: block; width: 100%; max-height: 80svh; aspect-ratio: 4 / 5; object-fit: cover; object-position: center 20%; }
-  .wd-portrait figcaption { position: absolute; inset: auto 0 0; display: grid; padding: 2.5rem 1rem 0.9rem; background: linear-gradient(transparent, rgba(8, 18, 30, 0.92)); }
+  .wd-portrait figcaption { position: absolute; inset: auto 0 0; display: grid; padding: 2.5rem 1rem 0.9rem; background: linear-gradient(transparent, color-mix(in srgb, var(--night) 92%, transparent)); }
   .wd-portrait figcaption span { color: var(--warm); font-size: 0.7rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; }
 
   /* Range */
   .wd-strengths { --min: 16rem; }
   .wd-strengths li { background: #fff; }
   .wd-proof { --min: 11rem; }
-  .wd-proof li { border-top: 3px solid var(--accent); border-radius: 0.3rem; }
-  .wd-proof strong { font-size: clamp(1.4rem, 3.4cqi, 2.2rem); line-height: 1; }
+  .wd-proof li { border-top: 3px solid var(--hi); border-radius: 0.3rem; }
+  .wd-proof strong { color: var(--hi); font-size: clamp(1.4rem, 3.4cqi, 2.2rem); line-height: 1; }
 
   /* Journey */
   .wd-journey { display: grid; gap: var(--gap); }
@@ -447,7 +449,7 @@ const voices = [
     border: 2px solid rgba(255, 255, 255, 0.3); background: var(--night); font: 700 clamp(0.9rem, 2cqi, 1.2rem) 'Lora', serif; transition: 0.3s;
   }
   .wd-node.is-lit .wd-glyph { border-color: var(--warm); color: var(--warm); }
-  .wd-node.is-active .wd-glyph { background: var(--warm); color: var(--night); box-shadow: 0 0 0 0.4rem color-mix(in srgb, var(--warm) 25%, transparent); }
+  .wd-node.is-active .wd-glyph { background: var(--hi); border-color: var(--hi); color: var(--on-dark); box-shadow: 0 0 0 0.4rem color-mix(in srgb, var(--hi) 30%, transparent); }
   .wd-node-label { display: grid; font-size: 0.66rem; letter-spacing: 0.08em; text-transform: uppercase; white-space: nowrap; }
   .wd-node-label em { font-style: normal; color: var(--warm); }
   .wd-leaf { display: grid; justify-items: center; gap: 0.2rem; max-width: 7rem; font-size: 0.6rem; letter-spacing: 0.08em; text-align: center; text-transform: uppercase; opacity: 0.35; transition: opacity 0.4s; }
@@ -464,7 +466,7 @@ const voices = [
   .wd-chapter-img { width: 100%; max-height: 18rem; aspect-ratio: 3 / 4; object-fit: cover; border-radius: calc(var(--radius) * 0.6); }
   .wd-chapter-main, .wd-chapter-side { display: grid; gap: 0.8rem; align-content: start; }
   .wd-chapter h3 { font-family: 'Lora', serif; }
-  .wd-carry { padding: 0.6rem 0.8rem; border-left: 3px solid var(--warm); background: rgba(255, 255, 255, 0.04); }
+  .wd-carry { padding: 0.6rem 0.8rem; border-left: 3px solid var(--hi); background: rgba(255, 255, 255, 0.04); }
   .wd-carry strong { color: var(--on-dark); }
   .wd-highlights { display: grid; gap: 0.5rem; }
   .wd-highlights li { padding-left: 1rem; border-left: 2px solid var(--warm); line-height: 1.45; }
@@ -507,7 +509,7 @@ const voices = [
     display: none; position: fixed; z-index: 10001; left: 50%; bottom: max(0.75rem, env(safe-area-inset-bottom)); translate: -50% 0;
     align-items: center; gap: 0.4rem; padding: 0.35rem 0.4rem 0.35rem 1rem;
     border: 1px solid color-mix(in srgb, var(--warm) 45%, transparent); border-radius: 999px;
-    background: rgba(8, 18, 30, 0.9); color: var(--on-dark); backdrop-filter: blur(10px);
+    background: color-mix(in srgb, var(--night) 92%, transparent); color: var(--on-dark); backdrop-filter: blur(10px);
   }
   .wd-hud-count { color: var(--warm); font: 700 0.75rem 'JetBrains Mono', monospace; }
   .wd-hud-title { padding: 0 0.5rem; font-size: 0.75rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; }
