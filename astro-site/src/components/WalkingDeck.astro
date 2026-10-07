@@ -18,9 +18,11 @@ const pitchTerminalLines = [
   { out: 'Azure Networking Rapid Response, then Security STU after three years.' },
   { prompt: '$', text: 'echo $THESIS' },
   { out: 'I did not leave sales because I was burnt out. I loved it.' },
-  { out: 'I rebuilt on technical depth so the next sales seat compounds everything.' },
+  { out: 'I rebuilt on security depth so the next sales seat compounds everything.' },
+  { prompt: '$', text: 'grep FY26 results.log' },
+  { out: '4 of 4 revenue buckets exceeded. 100% attainment, US HLS.' },
   { prompt: '$', text: 'echo $NEXT' },
-  { out: 'Account Executive in the AI era, then sales leadership.' },
+  { out: 'GBB Security Solution Sales Advisor. Then sales leadership.' },
   { prompt: '$', text: '_' },
 ];
 
@@ -43,7 +45,7 @@ const pitchStory = [
 ];
 
 const salesProof = [
-  { metric: '4 / 4', detail: 'FY26 revenue buckets exceeded' },
+  { metric: '4 / 4', detail: 'FY26 revenue buckets exceeded, 100% attainment (US HLS)' },
   { metric: '8-figure TCV', detail: 'Microsoft 365 E5 step-up' },
   { metric: '7-figure', detail: 'Identity governance motion' },
   { metric: 'Mid-6-figure', detail: 'Defender Experts expansion' },
@@ -91,8 +93,8 @@ const recognitionBadges = [
 
 <section class="walking-signal" data-walking-signal data-present={startInPresent ? 'true' : undefined} data-exit-href={exitHref}>
   <nav class="signal-rail" aria-label="Walking deck sections">
-    <a href="#signal-cover" data-rail-link>Cover</a>
-    <a href="#signal-human" data-rail-link>Human</a>
+    <a href="#signal-human" data-rail-link>Intro</a>
+    <a href="#signal-cover" data-rail-link>Signal</a>
     <a href="#signal-strengths" data-rail-link>Range</a>
     <a href="#signal-impact" data-rail-link>Journey</a>
     <a href="#signal-recognition" data-rail-link>Recognition</a>
@@ -103,7 +105,7 @@ const recognitionBadges = [
 
   <div class="present-hud" data-present-hud aria-hidden={startInPresent ? 'false' : 'true'}>
     <span class="present-counter" data-present-counter>Section 01 / 07</span>
-    <span class="present-title" data-present-title>Cover</span>
+    <span class="present-title" data-present-title>Intro</span>
     <div class="present-controls">
       <button type="button" class="present-btn" data-present-prev aria-label="Previous section">&lsaquo;</button>
       <button type="button" class="present-btn" data-present-next aria-label="Next section">&rsaquo;</button>
@@ -111,10 +113,41 @@ const recognitionBadges = [
     </div>
   </div>
 
-  <section class:list={[ 'signal-cover', startInPresent && 'is-current' ]} id="signal-cover" data-signal-section aria-labelledby="signal-cover-title">
+  <section class:list={[ 'human-section', startInPresent && 'is-current' ]} id="signal-human" data-signal-section aria-labelledby="signal-human-title">
+    <div class="section-copy">
+      <span class="signal-kicker">Section 01 &middot; Hi, I'm Thor</span>
+      <h2 id="signal-human-title" data-pretext-fit data-pretext-lines="2" data-pretext-min-ratio="0.62" data-pretext-width-ratio="1">Start with the person.</h2>
+      <p data-pretext-fit data-pretext-lines="4" data-pretext-min-ratio="0.78" data-pretext-width-ratio="1">Thor Draper Jr. Charlotte native, back in uptown two blocks from the Belk Theater. Sports junkie: Panthers, Hornets, Yankees. Married my wife in Banff on 7/11 (her birthday plus mine). Our adopted mutt Lloyd handles the household charisma.</p>
+    </div>
+
+    <div class="photo-collage" aria-label="Photo collage">
+      {imageSlots.slice(1).map((slot, index) => (
+        <figure
+          class:list={[ 'collage-card', slot.id, slotExists(slot) && 'has-image' ]}
+          style={`--tilt: ${slot.tilt ?? 0}deg; --i: ${index};`}
+        >
+          {slotExists(slot) ? (
+            <>
+              <img src={slot.src} alt={slot.alt} loading="lazy" />
+              {slot.caption && <figcaption>{slot.caption}</figcaption>}
+            </>
+          ) : (
+            <div class="slot-placeholder">
+              <span>{slot.role}</span>
+              <strong>{slot.label}</strong>
+              <code>{slot.src}</code>
+              <p>{slot.note}</p>
+            </div>
+          )}
+        </figure>
+      ))}
+    </div>
+  </section>
+
+  <section class="signal-cover" id="signal-cover" data-signal-section aria-labelledby="signal-cover-title">
     <canvas class="signal-canvas" data-signal-canvas aria-hidden="true"></canvas>
     <div class="cover-copy">
-      <span class="signal-kicker">Thor Draper Jr &middot; Walking Deck</span>
+      <span class="signal-kicker">Section 02 &middot; The Career Signal</span>
       <h2 id="signal-cover-title" data-pretext-fit data-pretext-lines="3" data-pretext-min-ratio="0.55" data-pretext-width-ratio="0.62">A seller's instinct, rebuilt on technical depth.</h2>
       <p class="cover-role" aria-label="Senior Security Solution Engineer, Microsoft, Charlotte, NC"><span>Senior Security Solution Engineer, Microsoft</span><span>Charlotte, NC</span></p>
 
@@ -128,7 +161,7 @@ const recognitionBadges = [
           <div class="pitch-exec-head">
             <span class="pitch-eyebrow">Career signal</span>
             <h3 data-pretext-fit data-pretext-lines="2" data-pretext-min-ratio="0.78" data-pretext-width-ratio="0.68">I loved sales enough to rebuild the technical depth around it.</h3>
-            <p class="pitch-exec-summary" data-pretext-fit data-pretext-lines="2" data-pretext-min-ratio="0.86" data-pretext-width-ratio="0.72">A deliberate reinvention from sales into security &mdash; earning the associate's and bachelor's while working full time.</p>
+            <p class="pitch-exec-summary" data-pretext-fit data-pretext-lines="2" data-pretext-min-ratio="0.86" data-pretext-width-ratio="0.72">A decade of selling and leading, then six years of hands-on cloud and security work. Now I want to carry the security number.</p>
           </div>
           <div class="pitch-story" role="list">
             {pitchStory.map((item, index) => (
@@ -144,8 +177,8 @@ const recognitionBadges = [
           </div>
           <div class="pitch-thesis">
             <span>Thesis</span>
-            <p data-pretext-fit data-pretext-lines="2" data-pretext-min-ratio="0.84" data-pretext-width-ratio="0.72">Sales judgment, now backed by technical depth.</p>
-            <strong data-pretext-fit data-pretext-lines="1" data-pretext-min-ratio="0.82" data-pretext-width-ratio="0.72">I can connect the customer problem to the full Microsoft story.</strong>
+            <p data-pretext-fit data-pretext-lines="2" data-pretext-min-ratio="0.84" data-pretext-width-ratio="0.72">Sales judgment, now backed by security depth.</p>
+            <strong data-pretext-fit data-pretext-lines="1" data-pretext-min-ratio="0.82" data-pretext-width-ratio="0.72">I can connect a customer's security risk to a business case and a deal.</strong>
           </div>
         </div>
 
@@ -181,46 +214,15 @@ const recognitionBadges = [
     </figure>
   </section>
 
-  <section class="human-section" id="signal-human" data-signal-section aria-labelledby="signal-human-title">
-    <div class="section-copy">
-      <span class="signal-kicker">Section 02 &middot; The Human Behind the Headline</span>
-      <h2 id="signal-human-title" data-pretext-fit data-pretext-lines="2" data-pretext-min-ratio="0.62" data-pretext-width-ratio="1">The person behind the resume.</h2>
-      <p data-pretext-fit data-pretext-lines="4" data-pretext-min-ratio="0.78" data-pretext-width-ratio="1">Charlotte native, back in uptown two blocks from the Belk Theater. Sports junkie: Panthers, Hornets, Yankees. Married my wife in Banff on 7/11 (her birthday plus mine). Our adopted mutt Lloyd handles the household charisma.</p>
-    </div>
-
-    <div class="photo-collage" aria-label="Photo collage">
-      {imageSlots.slice(1).map((slot, index) => (
-        <figure
-          class:list={[ 'collage-card', slot.id, slotExists(slot) && 'has-image' ]}
-          style={`--tilt: ${slot.tilt ?? 0}deg; --i: ${index};`}
-        >
-          {slotExists(slot) ? (
-            <>
-              <img src={slot.src} alt={slot.alt} loading="lazy" />
-              {slot.caption && <figcaption>{slot.caption}</figcaption>}
-            </>
-          ) : (
-            <div class="slot-placeholder">
-              <span>{slot.role}</span>
-              <strong>{slot.label}</strong>
-              <code>{slot.src}</code>
-              <p>{slot.note}</p>
-            </div>
-          )}
-        </figure>
-      ))}
-    </div>
-  </section>
-
   <section class="strengths-section" id="signal-strengths" data-signal-section aria-labelledby="signal-strengths-title">
     <div class="section-copy compact">
       <span class="signal-kicker">Section 03 &middot; What I Bring</span>
-      <h2 id="signal-strengths-title" data-pretext-fit data-pretext-lines="2" data-pretext-min-ratio="0.62" data-pretext-width-ratio="1">I connect the full customer picture.</h2>
+      <h2 id="signal-strengths-title" data-pretext-fit data-pretext-lines="2" data-pretext-min-ratio="0.62" data-pretext-width-ratio="1">I sell security the way a GBB should.</h2>
     </div>
     <ul class="strengths-list" role="list">
-      <li><strong>I earn trust and carry the story.</strong><span>Sales taught me to hear the business problem, connect value across the portfolio, and move a decision forward.</span></li>
-      <li><strong>I go deep without losing the room.</strong><span>Security is my deepest technical lane. I've also built range across cloud, AI, and business applications.</span></li>
-      <li><strong>I own the outcome.</strong><span>Leading teams, carrying a P&amp;L, and running work end to end taught me to stay accountable for the result.</span></li>
+      <li><strong>I make the market with the account team.</strong><span>Pre-sales across U.S. healthcare payors, providers, and life sciences. I shape security opportunities with the seller and build trust with the people who own the budget and the risk.</span></li>
+      <li><strong>I run the v-team from discovery to proof.</strong><span>I lead discovery, architecture reviews, workshops, and demos, then pull in specialists, engineering, and partners to get a customer to a deployment plan.</span></li>
+      <li><strong>I build the business case.</strong><span>A 40-plus-person branch with a P&amp;L, a business I owned and sold, and payroll and technology sales before Microsoft. I translate posture gaps into cost, risk, and a decision.</span></li>
     </ul>
     <div class="strengths-proof" role="list" aria-label="FY26 sales outcomes">
       {salesProof.map((proof) => (
@@ -467,13 +469,13 @@ const recognitionBadges = [
   <section class="ask-section" id="signal-ask" data-signal-section aria-labelledby="signal-ask-title">
     <span class="signal-kicker">Section 07 &middot; The Next Seat</span>
     <div class="ask-body">
-      <h2 id="signal-ask-title" data-pretext-fit data-pretext-lines="2" data-pretext-min-ratio="0.6" data-pretext-width-ratio="1">A Sales seat, then sales leadership.</h2>
-      <p data-pretext-fit data-pretext-lines="5" data-pretext-min-ratio="0.78" data-pretext-width-ratio="1">AE is the seat I want most. I want to carry Microsoft's full story, connect customer priorities across the portfolio, and own the commercial outcome. I'm also confident I can perform in Security, Cloud &amp; AI Platforms, or AI Business Solutions specialist roles. That range also prepares me to be a stronger AE.</p>
+      <h2 id="signal-ask-title" data-pretext-fit data-pretext-lines="2" data-pretext-min-ratio="0.6" data-pretext-width-ratio="1">GBB Security, then sales leadership.</h2>
+      <p data-pretext-fit data-pretext-lines="5" data-pretext-min-ratio="0.78" data-pretext-width-ratio="1">The seat I want is Solution Sales Advisor on the Security GBB. Be the security expert for a region, coach account teams on pipeline and deal shaping, own the C-level relationships, and orchestrate the v-team and partners from discovery through pilot. I've done the technical half of that job for two years. The decade before it was the sales half.</p>
     </div>
     <ul class="ask-arc" role="list" aria-label="Career direction">
       <li><strong>Now</strong><span>Senior Security SE</span></li>
-      <li><strong>Target seat</strong><span>Account Executive</span></li>
-      <li><strong>Specialist range</strong><span>Security &middot; Cloud &amp; AI &middot; Business Apps</span></li>
+      <li><strong>Target seat</strong><span>Solution Sales Advisor, GBB Security</span></li>
+      <li><strong>Proof</strong><span>4 / 4 FY26 buckets &middot; 22 certs &middot; SANS B.P.S.</span></li>
       <li><strong>Then</strong><span>Sales leadership</span></li>
     </ul>
     <a class="signal-link" href="/career/career-development-plan/">Open the career development plan</a>
