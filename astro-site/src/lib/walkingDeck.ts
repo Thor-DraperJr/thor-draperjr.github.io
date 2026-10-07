@@ -190,11 +190,11 @@ export const chapters: Chapter[] = [
         highlights: [
             'Azure Networking Support (contractor, Apr 2021) -> Rapid Response + Support Escalations (FTE, Oct 2021)',
             'Senior Security Solution Engineer + SANS B.S. in cybersecurity',
-            'Built range across security, identity, cloud, and AI',
+            'FY26: 4 of 4 revenue buckets exceeded, 100% attainment (US HLS)',
         ],
         branches: [
             { kind: 'education', label: 'SANS B.S.', detail: 'Cybersecurity', cx: 740, cy: 360 },
-            { kind: 'career', label: 'AE-ready', detail: 'Next: Account Executive in the AI era', cx: 940, cy: 360 },
+            { kind: 'career', label: 'GBB-ready', detail: 'Next: Security Solution Sales Advisor', cx: 940, cy: 360 },
         ],
         cx: 840,
         cy: 230,
