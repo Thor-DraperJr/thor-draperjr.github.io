@@ -9,6 +9,7 @@ const src = '/visuals/m365-zta-map.html?embed=1';
       src={src}
       title="Interactive Zero Trust architecture map showing which components Microsoft 365 E3, E5, and E7 cover"
       loading="lazy"
+      scrolling="no"
       data-zta-frame
     ></iframe>
     <figcaption>
@@ -24,7 +25,8 @@ const src = '/visuals/m365-zta-map.html?embed=1';
   const size = () => {
     const doc = frame?.contentDocument;
     if (!frame || !doc?.body) return;
-    const fit = () => { frame.style.height = `${(doc.querySelector<HTMLElement>(".wrap") ?? doc.body).offsetHeight}px`; };
+    const fit = () => { const wrap = doc.querySelector<HTMLElement>(".wrap") ?? doc.body;
+      frame.style.height = `${Math.ceil(wrap.getBoundingClientRect().height + frame.offsetHeight - frame.clientHeight)}px`; };
     fit();
     new ResizeObserver(fit).observe(frame);
     doc.addEventListener('click', () => setTimeout(fit, 50));

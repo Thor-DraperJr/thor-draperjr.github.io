@@ -191,6 +191,7 @@ body:not(.base) #framework { display: none; }
 .pinfo b { display: block; font-size: 13px; color: var(--cp-text); }
 .pinfo .gap { margin-top: 4px; border-left-color: var(--cp-accent); }
 
+html:has(body.embed), body.embed { overflow: hidden; }
 body.embed header > div:first-child { display: none; }
 body.embed header { justify-content: flex-start; }
 body.embed .wrap { padding: 8px 4px 16px; }
