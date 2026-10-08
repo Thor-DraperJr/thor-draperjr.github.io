@@ -2,7 +2,7 @@
 layout: post
 title: "E3, E5, E7 on the Zero Trust Architecture"
 date: 2026-10-08
-draft: true
+draft: false
 categories: [tech]
 tags: [technical, security, microsoft-365, licensing, zero-trust, ai]
 excerpt: "The same E3, E5, and E7 question, this time mapped onto the Microsoft Zero Trust architecture, component by component."
