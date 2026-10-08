@@ -62,8 +62,12 @@ const mapHeadings = headings.filter((heading) => heading.depth === 2).slice(0, 8
   }
 
   .reading-map {
-    grid-column: aside;
+    /* Sits in the right margin: from the end of the text column across the free space. */
+    grid-column: feature-end / full-end;
     grid-row: 1 / span 999;
+    justify-self: start;
+    width: min(13rem, 100%);
+    margin-left: 2rem;
     position: sticky;
     top: 6rem;
     align-self: start;
