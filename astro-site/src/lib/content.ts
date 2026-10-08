@@ -4,11 +4,8 @@ import { getCollection } from 'astro:content';
 import fs from 'node:fs';
 import path from 'node:path';
 import { siteConfig } from './site';
-import {
-  validatePostExperience,
-  type PostExperience,
-  type PresentationId,
-} from './visualizations';
+import type { CollectionEntry } from 'astro:content';
+import type { PresentationId } from './visualizations';
 
 export interface SiteConfig {
   title: string;
@@ -39,14 +36,15 @@ export interface Post {
   categories: string[];
   tags: string[];
   excerpt: string;
-  html: string;
-  headings: Array<{ depth: number; id: string; text: string }>;
+  entry: CollectionEntry<'posts'>;
   rawContent: string;
+  professional: boolean;
+  /** True when a wide or full-bleed figure needs the side column. */
+  hasWideFigures: boolean;
   date: Date;
   permalink: string;
   presentation?: PresentationId;
   presentHref?: string;
-  experience: PostExperience;
   readingTime: number;
   draft: boolean;
 }
@@ -75,8 +73,12 @@ function normalizeSegment(value: string): string {
     .replace(/^-+|-+$/g, '');
 }
 
+export const PROFESSIONAL_CATEGORIES = new Set(['tech', 'business', 'career']);
+
 function stripMarkup(markdown: string): string {
   return markdown
+    .replace(/^(import|export) .*$/gm, ' ')
+    .replace(/\{\/\*[\s\S]*?\*\/\}/g, ' ')
     .replace(/```[\s\S]*?```/g, ' ')
     .replace(/`[^`]*`/g, ' ')
     .replace(/<[^>]+>/g, ' ')
@@ -106,7 +108,7 @@ function calculateReadingTime(content: string): number {
 // repeat the title with a leading `#` would produce a duplicate <h1>, which is
 // an accessibility and SEO defect. Strip only a leading body <h1> (before any
 // other content); section headings use <h2>+ and are untouched.
-function stripLeadingH1(html: string): string {
+export function stripLeadingH1(html: string): string {
   return html.replace(/^\s*<h1[^>]*>[\s\S]*?<\/h1>\s*/i, '');
 }
 
@@ -136,8 +138,10 @@ function escapeAttribute(value: string): string {
   return value.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 
-function enhanceHeadings(html: string): { html: string; headings: Post['headings'] } {
-  const headings: Post['headings'] = [];
+export type Heading = { depth: number; id: string; text: string };
+
+export function enhanceHeadings(html: string): { html: string; headings: Heading[] } {
+  const headings: Heading[] = [];
   const seen = new Map<string, number>();
   const enhanced = html.replace(/<h([2-4])([^>]*)>([\s\S]*?)<\/h\1>/gi, (_, depthValue, attributes, content) => {
     const depth = Number(depthValue);
@@ -220,7 +224,10 @@ export function getPosts(): Post[] {
       const source = entry.filePath ? path.basename(entry.filePath) : `${entry.id}.md`;
       const content = entry.body?.trim();
       if (!content) {
-        throw new Error(`${source} has no Markdown body`);
+        throw new Error(`${source} has no body`);
+      }
+      if (/^ {0,3}\[\[[A-Z][A-Z0-9_]*\]\][ \t]*$/m.test(content.replace(/^(```|~~~)[\s\S]*?^\1/gm, ''))) {
+        throw new Error(`${source} uses a legacy [[MARKER]]; import the component in an .mdx post instead`);
       }
 
       const slug = entry.id;
@@ -236,9 +243,7 @@ export function getPosts(): Post[] {
       const excerpt = deriveExcerpt(content, entry.data.excerpt);
       const draft = entry.data.draft;
       const presentation = entry.data.presentation as PresentationId | undefined;
-      const experience = validatePostExperience(content, presentation, source);
       const permalink = `/${category}/${slug}/`;
-      const rendered = enhanceHeadings(stripLeadingH1(marked.parse(content) as string));
 
       return {
         title: entry.data.title,
@@ -247,14 +252,14 @@ export function getPosts(): Post[] {
         categories,
         tags,
         excerpt,
-        html: rendered.html,
-        headings: rendered.headings,
+        entry,
         rawContent: content,
+        professional: categories.some((value) => PROFESSIONAL_CATEGORIES.has(value)),
+        hasWideFigures: /<Figure size="(wide|full)"/.test(content),
         date,
         permalink,
         presentation,
         presentHref: presentation ? `${permalink}present/` : undefined,
-        experience,
         readingTime: calculateReadingTime(content),
         draft,
       } satisfies Post;

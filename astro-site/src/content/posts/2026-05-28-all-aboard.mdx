@@ -1,5 +1,4 @@
 ---
-layout: post
 title: "All Aboard"
 date: 2026-05-28
 categories: [tech]
@@ -7,6 +6,10 @@ tags: [technical, ai, cybersecurity, leadership]
 draft: false
 excerpt: "Your environment is already a platform. The agentic shift does not ask you to build a second one. It asks you to run agents across the same identity, data protection, investigation, and governance machinery your people already depend on."
 ---
+
+import Figure from '../../components/Figure.astro';
+import AllAboardSlide from '../../components/AllAboardSlide.astro';
+
 
 > **Your environment is already a platform. The agentic shift does not ask you to build a second platform for a second workforce. It asks you to carry one thread of context across every domain an agent touches, from the first idea, through every day it runs, to the moment you retire it. Same identity, same data protection, same investigation, now connected end to end across the life of the agent.**
 
@@ -22,9 +25,8 @@ That is the posture that works right now. The category is moving too quickly for
 
 The station is the customer's environment: built by them, owned by them, run for their people every day. The trains are the domains: Ops, Dev, the business, Identity, Security, Networking. An agent is the passenger who crosses every one of those lines before lunch. A station works when three things line up: a passenger with one ticket, a departure board everyone reads from, and a station master who coordinates across the lines. Most enterprises already have the passengers and the trains. What the agent estate is missing is the board and the station master.
 
-[[ALL_ABOARD]]
 
-[[SLIDE_03]]
+<Figure size="wide"><AllAboardSlide n="03" /></Figure>
 
 The Frontier Suite is a different kind of platform shift. The public Frontier Firm framing says the useful part plainly: this is not just software making people more productive. It is people and agents operating as one loop.
 
@@ -34,13 +36,13 @@ This is where the conversation moves off generic interoperability and onto the r
 
 Talking with customers, I hear the same two questions in every room. First: what is Microsoft doing? We are customer zero. We are living this on our own workforce before we ask anyone else to. Second: what are you seeing everywhere else? That answer changed. It used to be generic: the controls and platforms you could leverage, whatever was already on the truck. Frontier changed that. Now customers are sitting right next to the innovation, not waiting for it to ship and then figuring out the control story later.
 
-[[SLIDE_04]]
+<Figure size="wide"><AllAboardSlide n="04" /></Figure>
 
 The familiar starting slide still matters, but I do not spend much time arguing whose forecast is exact. The numbers all point the same direction. The hard part moved. Last year it was getting value out of your first agent. This year it is keeping control of your thousandth, and those agents are already in production, in regulated workflows, in front of customers.
 
 That is why I will not let a room treat this as a straight-up tooling decision. It is an operating-model decision. A pilot that misbehaves embarrasses a team. An agent in a regulated workflow can become a reportable event. The blast radius moved the moment agents started touching real work.
 
-[[SLIDE_05]]
+<Figure size="wide"><AllAboardSlide n="05" /></Figure>
 
 This is the Frontier Firm with an operating model underneath it. The public phrase is human-led, agent-operated enterprise, and the line works because it keeps leadership where it belongs. Your people still lead. The operating extends to a second population you now have to run.
 
@@ -52,7 +54,7 @@ That is when the talk gets practical. After I walked through the station analogy
 
 That question is the whole shift. The problem is no longer whether someone can build one useful agent. The problem is whether the system behind it can produce the right information, enforce the right boundary, and name the person who owns the outcome.
 
-[[SLIDE_06]]
+<Figure size="wide"><AllAboardSlide n="06" /></Figure>
 
 ## Same lifecycle, two populations
 
@@ -66,13 +68,13 @@ A new doctor never gets the keys to the whole hospital on her first day, and tha
 
 Now look at the documentation agent that starts drafting notes on the unit. If nobody vouched for it, nobody scoped what it could touch, nobody set a review date, and nobody planned for the day its job ends, the agent did not need a new governance system. It needed to walk through the same door the clinician already walks through.
 
-[[SLIDE_07]]
+<Figure size="wide"><AllAboardSlide n="07" /></Figure>
 
 To unlock the potential of agentic AI, we have to start with trust. And trust starts with security. I keep this one short on purpose because it is the hinge the whole talk turns on.
 
 Every executive nods at that sentence and then quietly asks the harder version: trust based on what? The answer is four plain questions about any agent. What is it? What can it touch? What did it do? Who is on the hook for it?
 
-[[SLIDE_08]]
+<Figure size="wide"><AllAboardSlide n="08" /></Figure>
 
 This slide is the receipts: established security leadership across the threat surface. I read it as one thing. The security estate you would extend to agents is already mature. You are not betting on a newcomer.
 
@@ -82,7 +84,7 @@ Right now a CISO cannot answer, "what agents are running in my environment this 
 
 If you came up in security, you have seen this movie. Detection lived in silos: endpoint in one tool, email in another, identity in a third. An attacker walked across all three while three teams each saw a third of the story. The fix was XDR: pull the signal into one timeline everyone trusted, add the context no single tool had, and act at the speed of signal instead of the speed of the next status meeting.
 
-[[SLIDE_09]]
+<Figure size="wide"><AllAboardSlide n="09" /></Figure>
 
 The same consolidation is happening again, one level up. The seam no longer sits inside security. It runs across the org chart. Ops, Dev, the business, Identity, Security, every one of them is standing up agents, and the agent does not respect the line between them. We are not theorizing about this consolidation. We have seen this pattern before. XDR pulled a whole company's signal out of four silos into one timeline everyone trusted. That same pattern is what the agent estate now needs.
 
@@ -94,7 +96,7 @@ Notice what he was really asking for. Not a dashboard. A registry. The reason "h
 
 Two things then carry the bridge. [Microsoft Entra Agent ID](https://learn.microsoft.com/en-us/entra/agent-id/whats-new-agent-id) gives agents first-class identity in the directory that already holds your people. Agent 365 registry sync can pull agents running on other platforms into one inventory without moving them off where they run. The directory stays where it is. What changes is what you can see and govern from one place.
 
-[[SLIDE_10]]
+<Figure size="wide"><AllAboardSlide n="10" /></Figure>
 
 ## The six-step trip
 
@@ -106,7 +108,7 @@ That is the moment I say it out loud: all aboard. The platforms are converging o
 
 Three ideas ride along with these six steps. Trust before control: you earn the right to govern by earning trust first. Control plane, not IDP: you do not have to own the directory to run the control plane. Agents are users: if they can act on your data, they need to be named, managed, reviewed, and retired.
 
-[[SLIDE_11]]
+<Figure size="wide"><AllAboardSlide n="11" /></Figure>
 
 Build: someone in the business decides they want an agent. Identify: the agent needs a name and a credential. Entitle: it gets the keys to do its job. Run: it does the work. Observe: someone has to know what it did, what it tried to do, what it cost, and when it started behaving differently. Govern: when the project ends, the team rotates, or the model retires, the agent gets turned off and evidenced like any other user.
 
@@ -120,7 +122,7 @@ The piece that makes this survivable at scale is the blueprint. Instead of polic
 
 I want to be honest about traceability because it is boring until it is the only thing that matters. The day an agent sends the wrong file, touches the wrong record, or makes a call no one expected, the first question is not "how smart was the model." It is "what exactly did it do, on whose authority, and can you prove it." If every action ties back to one agent identity with one accountable human, that is a fifteen-minute investigation. If it ran on a borrowed credential with no owner, that is a very bad week with counsel, regulators, and auditors in the room.
 
-[[SLIDE_12]]
+<Figure size="wide"><AllAboardSlide n="12" /></Figure>
 
 Now watch the same six steps play out the way they do in most environments today. Same trip, Build, Identify, Entitle, Run, Observe, Govern, but a different operator at every stop. A model vendor at Build. An identity vendor at Identify. A different tool at Entitle, another at Run, another for Observe, another for Govern. Six stops, six different operators. You are riding the local.
 
@@ -128,7 +130,7 @@ None of those are bad products. Each one is real, and somebody bought it on purp
 
 That is where the room stops arguing about features and starts seeing the seam. It is not a missing tool, every box is filled. It is a missing platform. And the platform is not a seventh logo. It is the day you stop doing that integration by hand.
 
-[[SLIDE_13]]
+<Figure size="wide"><AllAboardSlide n="13" /></Figure>
 
 Now look at those same stops when one control plane carries the route.
 
@@ -136,7 +138,7 @@ The lifecycle did not change. The platform underneath it did. Instead of six ope
 
 Being the IDP makes life easier, but it is not a prerequisite. The identity provider a customer picked a decade ago does not move on a dime, and they should not have to wait through a migration to govern agents already running this week. The control plane can sit in front of what they have, govern agents now, and give them a path to converge at their own pace. It is a bridge, not a hostage note.
 
-[[SLIDE_14]]
+<Figure size="wide"><AllAboardSlide n="14" /></Figure>
 
 The same controls, the same teams. Identities, endpoints, cloud, data, and apps feed one signal graph, with a shared foundation underneath: registry, access control, observability, runtime protection. None of that is new architecture. It is the picture you already run for your people.
 

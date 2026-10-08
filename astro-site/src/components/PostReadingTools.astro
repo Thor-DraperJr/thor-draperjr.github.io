@@ -1,14 +1,13 @@
 ---
-import type { Post } from '../lib/content';
+import type { Heading } from '../lib/content';
 
 interface Props {
-  headings: Post['headings'];
-  renderMode: Post['experience']['renderMode'];
+  headings: Heading[];
+  showMap: boolean;
 }
 
-const { headings, renderMode } = Astro.props;
+const { headings, showMap } = Astro.props;
 const mapHeadings = headings.filter((heading) => heading.depth === 2).slice(0, 8);
-const showMap = (renderMode === 'standard' || renderMode === 'inline') && mapHeadings.length >= 4;
 ---
 
 <div class="reading-progress" aria-hidden="true"><span data-reading-progress></span></div>
@@ -25,7 +24,7 @@ const showMap = (renderMode === 'standard' || renderMode === 'inline') && mapHea
 
 <script>
   const bar = document.querySelector<HTMLElement>('[data-reading-progress]');
-  const article = document.querySelector<HTMLElement>('main article');
+  const article = document.querySelector<HTMLElement>('main article .article-body');
   if (bar && article) {
     let frame = 0;
     const update = () => {
@@ -63,11 +62,11 @@ const showMap = (renderMode === 'standard' || renderMode === 'inline') && mapHea
   }
 
   .reading-map {
-    position: fixed;
-    z-index: 20;
-    top: 8.5rem;
-    right: max(1rem, calc((100vw - 90rem) / 2));
-    width: 12.5rem;
+    grid-column: aside;
+    grid-row: 1 / span 999;
+    position: sticky;
+    top: 6rem;
+    align-self: start;
     padding-left: 1rem;
     border-left: 1px solid var(--border);
   }

@@ -3,78 +3,24 @@ import fs from 'node:fs';
 import path from 'node:path';
 import test from 'node:test';
 
-import {
-  PRESENTATION_IDS,
-  VISUALIZATION_DEFINITIONS,
-  extractVisualizationMarkers,
-  validatePostExperience,
-} from '../src/lib/visualizations.ts';
+const postsDirectory = path.join(process.cwd(), 'src', 'content', 'posts');
+const posts = fs.readdirSync(postsDirectory).filter((file) => /\.mdx?$/.test(file));
+const withoutFences = (source) => source.replace(/^(```|~~~)[\s\S]*?^\1/gm, '');
 
-const knownMarkers = VISUALIZATION_DEFINITIONS.flatMap((definition) => definition.markers);
-
-test('visualization registry owns each marker exactly once', () => {
-  assert.equal(knownMarkers.length, 40);
-  assert.equal(new Set(knownMarkers).size, knownMarkers.length);
-  assert.ok(knownMarkers.includes('RUNTIME_CONTROL_CHART'));
-  assert.ok(knownMarkers.includes('SLIDE_14'));
-  assert.ok(knownMarkers.includes('PRESENTATION_WORKFLOW_GATE'));
+test('no post uses legacy [[MARKER]] placeholders', () => {
+  for (const file of posts) {
+    const source = withoutFences(fs.readFileSync(path.join(postsDirectory, file), 'utf8'));
+    assert.doesNotMatch(source, /^ {0,3}\[\[[A-Z][A-Z0-9_]*\]\][ \t]*$/m, `${file} still uses a [[MARKER]]`);
+  }
 });
 
-test('marker extraction ignores fenced and inline authoring examples', () => {
-  const markdown = `Before\n\n[[TOKEN_SILOS]]\n\n\`\`\`text\n[[YOUR_VISUAL_MARKER]]\n\`\`\`\n\n~~~text\n[[RUNTIME_CONTROL_CHART]]\n~~~\n\nInline \`[[SOCIAL_LOOP]]\``;
-
-  assert.deepEqual(extractVisualizationMarkers(markdown), ['TOKEN_SILOS']);
-});
-
-test('marker extraction ignores indented Markdown code', () => {
-  assert.deepEqual(extractVisualizationMarkers('    [[TOKEN_SILOS]]'), []);
-});
-
-test('registry covers every standalone visualization marker in the post corpus', () => {
-  const postsDirectory = path.join(process.cwd(), 'src', 'content', 'posts');
-  const corpusMarkers = fs.readdirSync(postsDirectory)
-    .filter((fileName) => fileName.endsWith('.md'))
-    .flatMap((fileName) => extractVisualizationMarkers(fs.readFileSync(path.join(postsDirectory, fileName), 'utf8')));
-
-  assert.equal(corpusMarkers.length, 40);
-  assert.deepEqual([...new Set(corpusMarkers)].sort(), [...knownMarkers].sort());
-});
-
-test('post experience validation rejects unknown live markers with source context', () => {
-  assert.throws(
-    () => validatePostExperience('Before\n\n[[UNKNOWN_VISUAL]]', undefined, 'example.md'),
-    /example\.md.*UNKNOWN_VISUAL/,
-  );
-});
-
-test('post experience validation rejects unsupported owner combinations', () => {
-  assert.throws(
-    () => validatePostExperience('[[TOKEN_SILOS]]\n[[SOCIAL_LOOP]]', undefined, 'mixed.md'),
-    /mixed\.md combines unsupported visualization owners: token-silos, social-loop/,
-  );
-});
-
-test('post experience validation rejects unknown presentation identifiers', () => {
-  assert.throws(
-    () => validatePostExperience('Plain article', 'unknown-deck', 'example.md'),
-    /example\.md.*unknown-deck/,
-  );
-});
-
-test('post experience validation resolves registered experiences', () => {
-  const experience = validatePostExperience('Before\n\n[[ALL_ABOARD]]\n\n[[SLIDE_03]]', undefined, 'all-aboard.md');
-
-  assert.deepEqual(experience.visualizationIds, ['all-aboard']);
-  assert.equal(experience.renderMode, 'sequence');
-  assert.deepEqual(PRESENTATION_IDS, ['first-pull-request', 'website-presentation']);
-});
-
-test('explicit presentation metadata takes precedence over marker render modes', () => {
-  const experience = validatePostExperience(
-    '[[PRESENTATION_WORKFLOW_ASK]]',
-    'website-presentation',
-    'presentation.md',
-  );
-
-  assert.equal(experience.renderMode, 'presentation');
+test('every embedded visual is placed on the article grid through <Figure>', () => {
+  for (const file of posts.filter((name) => name.endsWith('.mdx'))) {
+    const source = fs.readFileSync(path.join(postsDirectory, file), 'utf8');
+    const imported = [...source.matchAll(/^import (\w+) from '\.\.\/\.\.\/components\/\w+\.astro';$/gm)].map((match) => match[1]).filter((name) => name !== 'Figure');
+    assert.ok(imported.length > 0, `${file} is MDX without a visual; keep it as .md`);
+    for (const name of imported) {
+      assert.match(source, new RegExp(`<Figure size="(text|feature|wide|full)"><${name}\\b`), `${file} renders ${name} outside <Figure>`);
+    }
+  }
 });

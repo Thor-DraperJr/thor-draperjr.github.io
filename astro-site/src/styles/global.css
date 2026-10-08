@@ -1750,6 +1750,59 @@ img {
   margin-bottom: 2rem;
 }
 
+/* ── Article grid ─────────────────────────────────
+   One grid, named columns. Text sits on the reading measure; figures opt
+   into feature / wide / full. The side "aside" column holds the field index. */
+.article-grid {
+  --gutter: clamp(1rem, 4vw, 2rem);
+  --measure: 42rem;
+  display: grid;
+  grid-template-columns:
+    [full-start] minmax(var(--gutter), 1fr)
+    [wide-start] minmax(0, 8rem)
+    [feature-start] minmax(0, 4rem)
+    [text-start] min(var(--measure), 100% - var(--gutter) * 2) [text-end]
+    minmax(0, 4rem) [feature-end aside-start]
+    minmax(0, 8rem) [aside-end wide-end]
+    minmax(var(--gutter), 1fr) [full-end];
+  padding-bottom: 2rem;
+}
+
+.article-grid > *,
+.article-body > * {
+  grid-column: text;
+}
+
+.article-body {
+  grid-column: full;
+  display: grid;
+  grid-template-columns: subgrid;
+}
+
+.article-body > .article-figure { margin-block: 2.5rem; min-width: 0; }
+.article-body > .article-figure[data-size='text'] { grid-column: text; }
+.article-body > .article-figure[data-size='feature'] { grid-column: feature; }
+.article-body > .article-figure[data-size='wide'] { grid-column: wide; }
+.article-body > .article-figure[data-size='full'] { grid-column: full; padding-inline: var(--gutter); }
+
+/* Legacy self-centering breakouts inside figures: the grid owns width now. */
+.article-figure :is(.m365-breakout, .zta-breakout) {
+  position: static;
+  left: auto;
+  width: auto;
+  transform: none;
+  margin: 0;
+}
+
+.article-body > pre,
+.article-body > table {
+  grid-column: feature;
+}
+
+@media (max-width: 1180px) {
+  .article-body > .reading-map { display: none; }
+}
+
 .post-hero-actions {
   display: flex;
   flex-wrap: wrap;

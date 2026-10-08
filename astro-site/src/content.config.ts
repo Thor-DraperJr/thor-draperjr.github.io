@@ -6,10 +6,10 @@ import { PRESENTATION_IDS } from './lib/visualizations';
 
 const posts = defineCollection({
   loader: glob({
-    pattern: '[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]-*.md',
+    pattern: '[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]-*.{md,mdx}',
     base: './src/content/posts',
     retainBody: true,
-    generateId: ({ entry }) => entry.replace(/\.md$/i, '').replace(/^\d{4}-\d{2}-\d{2}-/, ''),
+    generateId: ({ entry }) => entry.replace(/\.mdx?$/i, '').replace(/^\d{4}-\d{2}-\d{2}-/, ''),
   }),
   schema: z.strictObject({
     layout: z.literal('post').optional(),
