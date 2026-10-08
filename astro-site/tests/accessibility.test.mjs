@@ -13,12 +13,12 @@ async function htmlFiles(directory) {
 
 test('the static route manifest remains complete', async () => {
   const contentDirectory = path.resolve('src/content/posts');
-  const postFiles = (await readdir(contentDirectory)).filter((file) => file.endsWith('.md'));
+  const postFiles = (await readdir(contentDirectory)).filter((file) => /\.mdx?$/.test(file));
   const postRoutes = await Promise.all(postFiles.map(async (file) => {
     const source = await readFile(path.join(contentDirectory, file), 'utf8');
     const category = source.match(/^categories:\s*\[([^,\]]+)/m)?.[1]?.trim();
     assert.ok(category, `missing category in ${file}`);
-    const slug = file.replace(/\.md$/i, '').replace(/^\d{4}-\d{2}-\d{2}-/, '');
+    const slug = file.replace(/\.mdx?$/i, '').replace(/^\d{4}-\d{2}-\d{2}-/, '');
     return `${category}/${slug}/index.html`;
   }));
   const staticRoutes = [

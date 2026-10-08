@@ -1,5 +1,4 @@
 ---
-layout: post
 title: "Stop Rebuilding the CRM You Already Pay For"
 date: 2026-08-31
 categories: [tech]
@@ -7,6 +6,10 @@ tags: [technical, ai, leadership, business]
 draft: false
 excerpt: "Most enterprise AI projects I see are a new front door onto software the company already owns. My philosophy for AI transformation is three moves in order: make today faster, get the rest of what you bought, then buy more precisely."
 ---
+
+import Figure from '../../components/Figure.astro';
+import TokenSilos from '../../components/TokenSilos.astro';
+
 
 Someone walks you through an agent they built. It is genuinely good work. It pulls up account context, drafts the follow-up, and summarizes where the deal stands, all without the seller opening the CRM.
 
@@ -28,7 +31,7 @@ For an individual, building your own version is fine. It is how you learn what t
 
 At enterprise scale it stops being fine. I do not want to spend tokens avoiding the CRM.
 
-[[TOKEN_SILOS]]
+<Figure size="feature"><TokenSilos /></Figure>
 
 ## Why the failures cluster where they do
 

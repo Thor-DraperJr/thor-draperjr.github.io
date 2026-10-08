@@ -10,8 +10,7 @@ function linkedCss(route) {
   return { bytes: chunks.reduce((total, css) => total + Buffer.byteLength(css), 0), content: chunks.join('\n') };
 }
 
-// Known gap: Astro bundles every lazily imported visual's CSS into each article. Fixed in the layout/structure stage.
-test.todo('ordinary articles do not load specialist experience styles', () => {
+test('ordinary articles do not load specialist experience styles', () => {
   const css = linkedCss(path.join('tech', 'coding'));
   assert.ok(css.bytes < 90_000, `ordinary article CSS is ${css.bytes} bytes`);
   assert.doesNotMatch(css.content, /\.wd-slide/);

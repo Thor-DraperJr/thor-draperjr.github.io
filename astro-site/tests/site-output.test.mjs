@@ -166,7 +166,7 @@ test('website presentation article interleaves scenes and keeps one complete pre
     assert.match(article, /phone in landscape/);
     assert.match(article, /screenshots and measurements for all eight conditions/);
     assert.match(article, /Visual Storytelling fixes the problem/);
-    assert.match(article, /same role doesn(?:'|&#39;)t build and approve the visual/);
+    assert.match(article, /same role doesn(?:'|&#39;|’)t build and approve the visual/);
     assert.match(article, /tool and approval settings still control what it can do/);
     assert.match(article, /handle the repeatable work while I stay responsible/);
     assert.match(article, /Before I publish, I can see what Copilot built/);
@@ -259,6 +259,6 @@ test('articles publish branded social metadata and structured data', async () =>
     assert.match(html, /<meta property="article:published_time" content="2021-08-08T12:00:00\.000Z">/);
     assert.match(html, /<script type="application\/ld\+json">.*"@type":"BlogPosting".*<\/script>/s);
     assert.deepEqual([...socialCard.subarray(0, 8)], [137, 80, 78, 71, 13, 10, 26, 10]);
-    const postCount = (await readdir(path.resolve('src/content/posts'))).filter((file) => file.endsWith('.md')).length;
+    const postCount = (await readdir(path.resolve('src/content/posts'))).filter((file) => /\.mdx?$/.test(file)).length;
     assert.equal(socialCards.length, postCount);
 });

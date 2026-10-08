@@ -1,5 +1,4 @@
 ---
-layout: post
 title: "How I Turn Articles Into Presentations I Can Actually Teach From"
 date: 2026-06-25
 categories: [tech]
@@ -8,13 +7,17 @@ draft: false
 excerpt: "A copyable markdown workflow for building presentation-ready articles with Copilot agents, optional present mode, and screenshots that prove the layout works."
 ---
 
+import Figure from '../../components/Figure.astro';
+import PresentationWorkflowMap from '../../components/PresentationWorkflowMap.astro';
+
+
 I used to think about presentations as files. Open PowerPoint, make the slides, rehearse, send it somewhere, hope the export did not do anything strange. That still has a place, but it is not how I want the best pieces on this site to work.
 
 For the first-pull-request session, the deck is not separate from the article. The article teaches the idea in prose. The visuals give the room something to look at. The present view lets me stand in front of the same material and run it like a talk. Same source, different posture.
 
 The lesson I keep coming back to is simple: Copilot can help put the pieces together, but I still have to own the call. The article needs to sound like me, the visuals need to teach something, and the browser needs to prove it works before I put my name on it.
 
-[[PRESENTATION_WORKFLOW]]
+<Figure size="feature"><PresentationWorkflowMap /></Figure>
 
 I am not trying to win the speed-run deck contest here. I want something I can read, teach from, revise later, and trust on the screen I will actually use.
 
@@ -51,7 +54,6 @@ Then I make the markdown look like the artifact I want to read. The article shou
 
 ```markdown
 ---
-layout: post
 title: "Your Article Title"
 date: YYYY-MM-DD
 categories: [tech]

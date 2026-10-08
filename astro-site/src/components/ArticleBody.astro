@@ -1,0 +1,20 @@
+---
+import type { Post } from '../lib/content';
+import { enhanceHeadings, stripLeadingH1 } from '../lib/content';
+import PostReadingTools from './PostReadingTools.astro';
+
+// Wraps the rendered post body (passed as the default slot) and adds heading
+// anchors plus the "field index" map for long, text-first articles.
+interface Props {
+  post: Post;
+}
+
+const { post } = Astro.props;
+const { html, headings } = enhanceHeadings(stripLeadingH1(await Astro.slots.render('default')));
+const showMap = !post.hasWideFigures && headings.filter((heading) => heading.depth === 2).length >= 4;
+---
+
+<div class="article-body">
+  <PostReadingTools headings={headings} showMap={showMap} />
+  <Fragment set:html={html} />
+</div>

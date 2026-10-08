@@ -1,5 +1,4 @@
 ---
-layout: post
 title: "How I Build Presentations in the Browser with GitHub Copilot"
 date: 2026-08-11
 categories: [tech]
@@ -8,6 +7,13 @@ draft: false
 presentation: website-presentation
 excerpt: "How I use GitHub Copilot, saved instructions, and browser checks to turn an article into a visual presentation."
 ---
+
+import Figure from '../../components/Figure.astro';
+import CopilotVisualWorkflow from '../../components/CopilotVisualWorkflow.astro';
+
+<Figure size="wide"><CopilotVisualWorkflow launcherOnly /></Figure>
+
+
 
 I write this blog in VS Code. Lately, I've been using GitHub Copilot to create visual aids for my articles and turn them into full-screen presentations.
 
@@ -21,7 +27,7 @@ That request starts a process I set up for this site. One role builds the visual
 
 The five scenes throughout this article follow that process from my request to my final approval.
 
-[[PRESENTATION_WORKFLOW_ASK]]
+<Figure size="wide"><CopilotVisualWorkflow scene={0} /></Figure>
 
 ## What I configured once
 
@@ -81,7 +87,7 @@ For a visual request, the repository instructions point Copilot to `.github/prom
 
 Copilot uses only the roles needed for the request. My tool and approval settings still control what it can do.
 
-[[PRESENTATION_WORKFLOW_RULES]]
+<Figure size="wide"><CopilotVisualWorkflow scene={1} /></Figure>
 
 ## What happens after I ask
 
@@ -108,7 +114,7 @@ Visual Storytelling then uses the design rules to choose the colors, type, spaci
 
 If the right design isn't clear, the **Presentation Reviewer** checks the brief before the build and returns `ACCEPT`, `REVISE`, or `BLOCKED`.
 
-[[PRESENTATION_WORKFLOW_TEAM]]
+<Figure size="wide"><CopilotVisualWorkflow scene={2} /></Figure>
 
 ### 3. The build owner creates one shared visual
 
@@ -147,7 +153,7 @@ The checks look for clipped content, unreadable labels, broken controls, keyboar
 
 The screenshots and audit reports show what happened in the browser. Reading the source code can't prove that the visual works.
 
-[[PRESENTATION_WORKFLOW_PROOF]]
+<Figure size="wide"><CopilotVisualWorkflow scene={3} /></Figure>
 
 ### 5. The reviewer gets the results
 
@@ -179,7 +185,7 @@ With the required tools available and approved, Copilot can edit files, run the 
 
 I let Copilot handle the repeatable work while I stay responsible for what goes public.
 
-[[PRESENTATION_WORKFLOW_GATE]]
+<Figure size="wide"><CopilotVisualWorkflow scene={4} /></Figure>
 
 ## The repository pieces
 

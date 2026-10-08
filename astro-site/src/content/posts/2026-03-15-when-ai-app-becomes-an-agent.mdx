@@ -1,5 +1,4 @@
 ---
-layout: post
 title: "AI in the Enterprise Is Crossing a Control Boundary"
 date: 2026-03-15
 categories: [tech]
@@ -7,6 +6,10 @@ tags: [technical, ai, cybersecurity]
 excerpt: "The current enterprise AI conversation is full of category mistakes. This post starts a series on how to tell the difference between an AI-enhanced app, an assistive agent, an autonomous runtime, and the security controls that should change as authority increases."
 draft: false
 ---
+
+import Figure from '../../components/Figure.astro';
+import RuntimeControlChart from '../../components/RuntimeControlChart.astro';
+
 
 I've noticed a common theme in the current enterprise AI conversation: it is confused in a very specific way.
 
@@ -51,7 +54,7 @@ That is the heart of the difference.
 
 I typically find it easiest to reason about controls as a ladder:
 
-[[RUNTIME_CONTROL_CHART]]
+<Figure size="feature"><RuntimeControlChart /></Figure>
 
 ### Level 0: AI-enhanced application
 

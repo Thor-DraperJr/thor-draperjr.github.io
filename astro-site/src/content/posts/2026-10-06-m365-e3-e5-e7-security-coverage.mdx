@@ -1,5 +1,4 @@
 ---
-layout: post
 title: "E3, E5, E7: What Each Step Adds to Security"
 date: 2026-10-06
 draft: false
@@ -8,13 +7,17 @@ tags: [technical, security, microsoft-365, licensing, zero-trust, ai]
 excerpt: "A one-screen visual of the security coverage Microsoft 365 E3, E5, and E7 each add, mapped to the Cyber Defense Matrix."
 ---
 
+import Figure from '../../components/Figure.astro';
+import M365CoverageMatrix from '../../components/M365CoverageMatrix.astro';
+
+
 I wanted one picture that answers a simple question: what does each step from E3 to E5 to E7 add to security?
 
 So I mapped the three suites onto Sounil Yu's [Cyber Defense Matrix](https://www.cyberdefensematrix.com/). The six NIST CSF 2.0 functions run across the top, and asset classes run down the side. I added a sixth row for AI agents, because agents are identities now and they need the same coverage as people.
 
 Pick a tier and watch the grid fill. Select any cell to see the products behind it.
 
-[[M365_COVERAGE]]
+<Figure size="wide"><M365CoverageMatrix /></Figure>
 
 ## The floor is better than it was
 

@@ -1,5 +1,4 @@
 ---
-layout: post
 title: "Let the Session Write the Post"
 date: 2026-07-04
 categories: [tech]
@@ -7,6 +6,10 @@ tags: [technical, ai, leadership]
 draft: false
 excerpt: "Staying present on social media usually dies as a separate chore. If the drafting capability lives inside the same agent session that ships the work, and the risky parts are deterministic guardrails, the post becomes a byproduct instead of a second job."
 ---
+
+import Figure from '../../components/Figure.astro';
+import AgenticSocialLoop from '../../components/AgenticSocialLoop.astro';
+
 
 I finished a real piece of work today. I redesigned the visual system on this site, closed the issue that tracked it, and pushed it live. Right after that, in the same session, I asked the agent to turn the most interesting thing I had done into a social post. A few minutes later a text-only post was on X, in my voice, priced before it sent, and approved by me on the exact words.
 
@@ -32,7 +35,7 @@ Because the capability is an MCP server and not a script buried in one repo, it 
 
 When I say "post the most interesting thing we did," the agent runs a fixed sequence. It starts by loading my voice profile and sampling the full text of recent posts, so the drafts calibrate on how I actually write instead of a generic tone. From there the run is the same every time. Watch where the work changes hands.
 
-[[SOCIAL_LOOP]]
+<Figure size="wide"><AgenticSocialLoop /></Figure>
 
 The handoff is the point. The model owns the words. The server owns the rules, the cost, and the publish button. Generating options is free. Spending money and speaking in public is gated, and the gate is me.
 

@@ -1,0 +1,11 @@
+---
+// Places an embedded visual on the article grid. `size` picks the column:
+// text = reading measure, feature = slightly wider, wide = content width, full = edge to edge.
+interface Props {
+  size?: 'text' | 'feature' | 'wide' | 'full';
+}
+
+const { size = 'feature' } = Astro.props;
+---
+
+<div class="article-figure" data-size={size}><slot /></div>
