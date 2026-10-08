@@ -365,7 +365,7 @@ const voices = [
   }
   .wd-rail a, .wd-present {
     padding: 0.4rem 0.75rem; border: 0; border-radius: 999px;
-    color: var(--muted); background: none; font: 700 0.78rem/1 inherit; text-decoration: none; cursor: pointer;
+    color: var(--muted); background: none; font-family: inherit; font-weight: 700; font-size: 0.78rem; line-height: 1; text-decoration: none; cursor: pointer;
   }
   .wd-rail a.is-active { color: var(--paper); background: var(--ink); }
   .wd-present { color: var(--on-dark); background: var(--hi); }
@@ -408,7 +408,7 @@ const voices = [
   .wd-role { display: flex; flex-wrap: wrap; gap: 0.3rem 1rem; font-weight: 700; }
   .wd-role span + span { color: var(--warm); letter-spacing: 0.08em; text-transform: uppercase; }
   .wd-toggle { display: inline-flex; padding: 0.2rem; border: 1px solid var(--line); border-radius: 999px; }
-  .wd-toggle button { padding: 0.4rem 0.9rem; border: 0; border-radius: 999px; background: none; color: inherit; font: 800 0.72rem/1 inherit; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; }
+  .wd-toggle button { padding: 0.4rem 0.9rem; border: 0; border-radius: 999px; background: none; color: inherit; font-family: inherit; font-weight: 800; font-size: 0.72rem; line-height: 1; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; }
   .wd-toggle .is-active { background: var(--warm); color: var(--night); }
   .wd-pitch { display: grid; gap: 0.75rem; }
   .wd-card, .wd-terminal { display: grid; gap: 0.9rem; padding: 1.1rem; border: 1px solid var(--line); border-radius: var(--radius); background: color-mix(in srgb, var(--white) 5%, transparent); }
@@ -513,7 +513,7 @@ const voices = [
   }
   .wd-hud-count { color: var(--warm); font: 700 0.75rem 'JetBrains Mono', monospace; }
   .wd-hud-title { padding: 0 0.5rem; font-size: 0.75rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; }
-  .wd-hud button { min-width: 2.75rem; min-height: 2.75rem; border: 1px solid var(--line); border-radius: 999px; background: none; color: inherit; font: 800 0.9rem inherit; cursor: pointer; }
+  .wd-hud button { min-width: 2.75rem; min-height: 2.75rem; border: 1px solid var(--line); border-radius: 999px; background: none; color: inherit; font-family: inherit; font-weight: 800; font-size: 0.9rem; cursor: pointer; }
   .wd-hud button:disabled { opacity: 0.35; }
 
   /* Presentation mode: same slides, one at a time, full viewport. */
