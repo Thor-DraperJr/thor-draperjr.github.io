@@ -1,0 +1,55 @@
+---
+// Thor's standalone ZTA map, served from /visuals/ and embedded whole so it stays one source.
+const src = '/visuals/m365-zta-map.html?embed=1';
+---
+
+<div class="zta-breakout">
+  <figure class="zta-figure">
+    <iframe
+      src={src}
+      title="Interactive Zero Trust architecture map showing which components Microsoft 365 E3, E5, and E7 cover"
+      loading="lazy"
+      data-zta-frame
+    ></iframe>
+    <figcaption>
+      Ratings are my simplified, opinionated view for discussion, not a licensing statement.
+      <a href={src.replace('?embed=1', '')} target="_blank" rel="noopener">Open the map full screen</a>.
+    </figcaption>
+  </figure>
+</div>
+
+<script>
+  // Same-origin frame: size it to its content so the page scrolls, not the frame.
+  const frame = document.querySelector<HTMLIFrameElement>('[data-zta-frame]');
+  const size = () => {
+    const doc = frame?.contentDocument;
+    if (!frame || !doc?.body) return;
+    const fit = () => { frame.style.height = `${(doc.querySelector<HTMLElement>(".wrap") ?? doc.body).offsetHeight}px`; };
+    fit();
+    new ResizeObserver(fit).observe(frame);
+    doc.addEventListener('click', () => setTimeout(fit, 50));
+    frame.contentWindow?.addEventListener('resize', fit);
+  };
+  frame?.addEventListener('load', size);
+  if (frame?.contentDocument?.readyState === 'complete') size();
+</script>
+
+<style>
+  .zta-breakout {
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(100vw - 2rem, 96rem);
+    margin: 2rem 0;
+  }
+  .zta-figure { margin: 0; }
+  .zta-figure iframe {
+    display: block;
+    width: 100%;
+    height: 1900px;
+    border: 1px solid color-mix(in srgb, #BDC0BA 60%, #FFFFFB);
+    border-radius: 16px;
+    background: #FCFAF2;
+  }
+  .zta-figure figcaption { margin-top: 0.75rem; font-size: 0.85rem; opacity: 0.8; }
+</style>

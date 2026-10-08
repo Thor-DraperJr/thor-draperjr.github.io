@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Microsoft 365 E3 → E5 → E7 · Zero Trust Architecture Map</title>
+<style>
+/* NOSHIMEHANA scheme — same tokens as coverage-matrix.html; every value is a named color from NIPPON COLORS */
+:root {
+  color-scheme: light;
+  --cp-bg: #FCFAF2;            /* SHIRONERI 白練 */
+  --cp-bg-elevated: #FFFFFB;   /* GOFUN 胡粉 */
+  --cp-surface: #FFFFFB;       /* GOFUN 胡粉 */
+  --cp-surface-soft: color-mix(in srgb, #BDC0BA 22%, #FFFFFB); /* SHIRONEZUMI tint */
+  --cp-border: color-mix(in srgb, #BDC0BA 60%, #FFFFFB);       /* SHIRONEZUMI tint */
+  --cp-border-strong: #91989F; /* GINNEZUMI 銀鼠 */
+  --cp-text: #1C1C1C;          /* SUMI 墨 */
+  --cp-text-muted: #434343;    /* KESHIZUMI 消炭 */
+  --cp-text-soft: #656765;     /* NIBI 鈍 */
+  --cp-accent: #2B5F75;        /* NOSHIMEHANA 熨斗目花 */
+  --cp-accent-hover: #255359;  /* TETSUONANDO 鉄御納戸 */
+  --cp-accent-soft: rgba(43, 95, 117, 0.09);
+  --cp-accent-fg: #FFFFFB;     /* GOFUN */
+  --cp-success: #5DAC81;       /* WAKATAKE 若竹 */
+  --cp-danger: #CB4042;        /* AKABENI 赤紅 */
+  --cp-warning: #FFB11B;       /* YAMABUKI 山吹 */
+  --cp-link: #006284;          /* HANADA 縹 */
+  --cp-shadow: 0 18px 48px rgba(8, 25, 45, 0.14);
+  --cp-panel-strong: rgba(255, 255, 251, 0.97);
+
+  --tier-e3: #A5DEE4;          /* KAMENOZOKI 瓶覗 */
+  --tier-e5: #2B5F75;          /* NOSHIMEHANA 熨斗目花 */
+  --tier-e7: #0F2540;          /* KON 紺 */
+  --tier-e3-fg: #0F2540;
+  --tier-e5-fg: #FFFFFB;
+  --tier-e7-fg: #FFFFFB;
+  --hi: #1B813E;               /* TOKIWA 常磐: green marks what a step adds */
+  --partial: color-mix(in srgb, #A5DEE4 45%, #FFFFFB); /* KAMENOZOKI tint */
+  --partial-fill: repeating-linear-gradient(135deg, var(--partial) 0 5px, var(--cp-surface) 5px 10px);
+  --outside-fill: radial-gradient(color-mix(in srgb, var(--cp-border-strong) 55%, transparent) 1px, transparent 1.3px) 0 0 / 6px 6px, var(--cp-surface);
+  --card-shadow: 0 0 2px rgba(8,25,45,0.12), 0 1px 2px rgba(8,25,45,0.14);
+
+  /* ZTA group strips echo the Microsoft diagram roles: sources, policy engine, network, resources */
+  --grp-src: #434343;          /* KESHIZUMI 消炭 */
+  --grp-engine: #2B5F75;       /* NOSHIMEHANA 熨斗目花 */
+  --grp-net: #FFB11B;          /* YAMABUKI 山吹 */
+  --grp-res: #5DAC81;          /* WAKATAKE 若竹 */
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--cp-bg);
+  color: var(--cp-text);
+  font-family: "Segoe UI", Aptos, Calibri, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  line-height: 1.45;
+}
+.wrap { max-width: 1520px; margin: 0 auto; padding: 24px 24px 48px; }
+
+header { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: 20px; }
+h1 { font-size: 24px; margin: 0 0 4px; font-weight: 600; }
+.sub { color: var(--cp-text-muted); margin: 0; }
+.sub a, footer a { color: var(--cp-link); }
+.controls { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.seg { display: inline-flex; background: var(--cp-surface); border: 1px solid var(--cp-border); border-radius: 0.625rem; padding: 4px; box-shadow: var(--card-shadow); }
+.seg button {
+  border: 0; background: transparent; color: var(--cp-text); font: inherit; font-weight: 600;
+  padding: 8px 18px; border-radius: 0.5rem; cursor: pointer; transition: background .2s, color .2s;
+}
+.seg button:hover { background: var(--cp-accent-soft); }
+.seg button[aria-pressed="true"] { background: var(--cp-accent); color: var(--cp-accent-fg); }
+label.toggle { display: inline-flex; align-items: center; gap: 6px; color: var(--cp-text-muted); cursor: pointer; user-select: none; }
+
+.kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 20px; }
+.kpi { background: var(--cp-surface); border: 1px solid var(--cp-border); border-radius: 16px; padding: 14px 16px; box-shadow: var(--card-shadow); }
+.kpi .lbl { color: var(--cp-text-muted); font-size: 12px; text-transform: uppercase; letter-spacing: .04em; }
+.kpi .val { font-size: 28px; font-weight: 700; margin-top: 2px; }
+.kpi .delta { color: var(--cp-accent); font-weight: 600; font-size: 13px; }
+.meter { height: 6px; background: var(--cp-surface-soft); border-radius: 3px; margin-top: 8px; overflow: hidden; }
+.meter > i { display: block; height: 100%; background: var(--cp-accent); width: 0; transition: width .6s ease; }
+
+.card { background: var(--cp-surface); border: 1px solid var(--cp-border); border-radius: 16px; padding: 16px; box-shadow: var(--card-shadow); }
+.card h2 { font-size: 15px; margin: 0 0 4px; font-weight: 600; }
+.card .hint { color: var(--cp-text-muted); font-size: 12px; margin: 0 0 12px; }
+.section { margin-top: 16px; }
+
+/* ---------- ZTA stage (fixed 1440 × 840 coordinate space, scaled to fit) ---------- */
+.zwrap { position: relative; width: 100%; overflow: hidden; }
+.stage { position: absolute; left: 0; top: 0; width: 1440px; height: 840px; transform-origin: 0 0; background: var(--cp-bg); border-radius: 12px; }
+.stage svg.lines { position: absolute; left: 0; top: 0; width: 1440px; height: 840px; overflow: visible; }
+.lines path { fill: none; stroke: var(--cp-border-strong); stroke-width: 1.5; stroke-dasharray: 5 4; }
+.lines marker path { fill: var(--cp-border-strong); stroke: none; stroke-dasharray: none; }
+.ztitle { position: absolute; left: 40px; top: 26px; font-size: 44px; font-weight: 700; line-height: 1.04; letter-spacing: -.01em; }
+.ztier { position: absolute; left: 42px; top: 128px; font-size: 18px; font-weight: 600; color: var(--cp-accent); }
+.ztier small { display: block; font-size: 13px; font-weight: 400; color: var(--cp-text-muted); }
+/* The tier label repeats the tier buttons and KPIs, so it shows only in the exported image */
+.ztier { display: none; }
+body.export .ztier { display: block; }
+
+.pillar { position: absolute; background: var(--cp-surface); border: 1px solid var(--cp-border); border-radius: 10px; box-shadow: var(--card-shadow); overflow: hidden; }
+.pillar .ph {
+  height: 36px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 16px;
+  border-top: 5px solid var(--grp); background: color-mix(in srgb, var(--grp) 16%, var(--cp-surface));
+}
+.pillar.g-src { --grp: var(--grp-src); }
+.pillar.g-engine { --grp: var(--grp-engine); }
+.pillar.g-net { --grp: var(--grp-net); }
+.pillar.g-res { --grp: var(--grp-res); }
+
+.zc { font: inherit; color: var(--cp-text); cursor: pointer; transition: background .5s ease, border-color .5s ease, box-shadow .3s, opacity .3s; }
+.zc:focus-visible { outline: 2px solid var(--cp-accent); outline-offset: -2px; }
+.zc .st {
+  font-size: 9px; font-weight: 700; padding: 0 5px; border-radius: 999px; line-height: 15px; white-space: nowrap; flex: none;
+  background: var(--cp-surface); color: var(--cp-text); border: 1px solid var(--cp-border);
+}
+.row {
+  display: flex; width: 100%; height: 24px; align-items: center; justify-content: space-between; gap: 4px;
+  padding: 0 6px 0 8px; border: 0; border-top: 1px solid var(--cp-border); font-size: 12px; text-align: left;
+  background: var(--cp-surface-soft); color: var(--cp-text-muted);
+}
+.row .nm { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.jit { color: var(--cp-accent); margin-right: 4px; display: inline-flex; vertical-align: -1px; }
+.node {
+  position: absolute; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px;
+  border-radius: 10px; border: 1px dashed var(--cp-border-strong); background: var(--cp-surface-soft);
+  padding: 4px 6px; font-size: 12px; line-height: 1.2; text-align: center; color: var(--cp-text-muted); box-shadow: var(--card-shadow);
+}
+.zc.partial { background: var(--partial-fill); color: var(--cp-text); }
+.node.partial { border-style: solid; border-color: var(--cp-border); }
+.zc.outside { background: var(--outside-fill); color: var(--cp-text-muted); }
+.node.outside { border-style: dotted; border-color: var(--cp-border-strong); }
+.zc.full-E3 { background: var(--tier-e3); color: var(--tier-e3-fg); }
+.zc.full-E5 { background: var(--tier-e5); color: var(--tier-e5-fg); }
+.zc.full-E7 { background: var(--tier-e7); color: var(--tier-e7-fg); }
+.node.full-E3, .node.full-E5, .node.full-E7 { border-style: solid; border-color: transparent; }
+.row.full-E3, .row.full-E5, .row.full-E7 { border-top-color: color-mix(in srgb, var(--cp-surface) 35%, transparent); }
+.row.full-E3 .jit, .row.full-E5 .jit, .row.full-E7 .jit { color: inherit; }
+.row.gained { box-shadow: inset 0 0 0 2px var(--hi), inset 0 0 0 3.5px var(--cp-surface); }
+.node.gained { box-shadow: 0 0 0 1.5px var(--cp-surface), 0 0 0 3.5px var(--hi), var(--card-shadow); }
+.node.gained .nm::before {
+  content: "+"; display: inline-block; width: 14px; height: 14px; line-height: 14px; margin-right: 4px; text-align: center;
+  border-radius: 999px; background: var(--cp-surface); color: var(--hi); font-weight: 800; font-size: 11px;
+}
+.row.gained .st::before { content: "+ "; color: var(--hi); font-weight: 800; }
+.row.selected { outline: 2px solid var(--cp-text); outline-offset: -3px; }
+.node.selected { outline: 2px solid var(--cp-text); outline-offset: 2px; }
+.zc:hover { filter: brightness(1.04); }
+body.only-new .zc:not(.gained), body.only-new .tele:not(.gained) { opacity: .28; }
+
+.tele { cursor: pointer; }
+.tele circle { fill: var(--cp-surface-soft); stroke: var(--cp-border-strong); stroke-width: 1; stroke-dasharray: 3 2; transition: fill .5s; }
+.tele path { fill: none; stroke: var(--cp-text-muted); stroke-width: 2; stroke-linecap: round; stroke-dasharray: none; }
+.tele.partial circle { fill: var(--partial); stroke-dasharray: none; }
+.tele.full-E3 circle { fill: var(--tier-e3); stroke: none; } .tele.full-E3 path { stroke: var(--tier-e3-fg); }
+.tele.full-E5 circle { fill: var(--tier-e5); stroke: none; } .tele.full-E5 path { stroke: var(--tier-e5-fg); }
+.tele.full-E7 circle { fill: var(--tier-e7); stroke: none; } .tele.full-E7 path { stroke: var(--tier-e7-fg); }
+.tele.gained circle { stroke: var(--hi); stroke-width: 2.5; stroke-dasharray: none; }
+.tele.selected circle { stroke: var(--cp-text); stroke-width: 2.5; stroke-dasharray: none; }
+.tele:focus-visible circle { stroke: var(--cp-accent); stroke-width: 3; }
+
+.callout {
+  position: absolute; display: flex; flex-wrap: wrap; align-content: flex-start; gap: 3px 10px;
+  background: var(--cp-panel-strong); border: 1px solid var(--cp-border); border-radius: 8px;
+  padding: 5px 8px; box-shadow: var(--card-shadow); font-size: 11px; line-height: 16px; transition: opacity .3s;
+}
+.pc { display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; transition: opacity .4s; }
+.pc.locked { opacity: .38; }
+.tb { font-size: 9px; font-weight: 700; padding: 0 4px; border-radius: 4px; line-height: 14px; border: 1px solid transparent; }
+.tb.t-E3 { background: var(--tier-e3); color: var(--tier-e3-fg); }
+.tb.t-E5 { background: var(--tier-e5); color: var(--tier-e5-fg); }
+.tb.t-E7 { background: var(--tier-e7); color: var(--tier-e7-fg); }
+.tb.t-SEP { background: var(--outside-fill); color: var(--cp-text); border: 1px dotted var(--cp-border-strong); }
+body.no-products .callout { opacity: 0; pointer-events: none; }
+.zlegend { position: absolute; left: 40px; top: 796px; display: flex; gap: 18px; font-size: 12px; color: var(--cp-text-muted); align-items: center; white-space: nowrap; }
+.zlegend span { display: inline-flex; align-items: center; gap: 6px; }
+
+/* Zero Trust framework view: neutral components, no products, no tier legend */
+body.base .zc { background: var(--cp-surface); color: var(--cp-text); }
+body.base .node { border-style: solid; border-color: var(--cp-border-strong); }
+body.base .zc .st, body.base .callout, body.base .zlegend .tl, body.base #gaps, body.base #climbCard, body.base .meter { display: none; }
+body.base .tele circle { fill: var(--cp-surface); stroke: var(--cp-accent); stroke-dasharray: none; }
+body.base .tele path { stroke: var(--cp-accent); }
+body.base.only-new .zc, body.base.only-new .tele { opacity: 1; }
+body:not(.base) #framework { display: none; }
+.principles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-bottom: 14px; }
+.principle { border: 1px solid var(--cp-border); border-top: 4px solid var(--cp-accent); border-radius: 0.625rem; padding: 8px 10px; background: var(--cp-bg-elevated); font-size: 12px; color: var(--cp-text-muted); }
+.principle b { display: block; font-size: 13px; color: var(--cp-text); margin-bottom: 2px; }
+.pillars { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 16px; }
+.pinfo { font-size: 12px; color: var(--cp-text-muted); padding: 6px 0; border-top: 1px solid var(--cp-border); }
+.pinfo b { display: block; font-size: 13px; color: var(--cp-text); }
+.pinfo .gap { margin-top: 4px; border-left-color: var(--cp-accent); }
+
+body.embed header > div:first-child { display: none; }
+body.embed header { justify-content: flex-start; }
+body.embed .wrap { padding: 8px 4px 16px; }
+/* ?export=1 shows only the diagram at 1440 × 840 for slide images */
+body.export header, body.export .kpis, body.export .lower, body.export .section, body.export footer,
+body.export .card > h2, body.export .card > .hint { display: none; }
+body.export .wrap { max-width: none; padding: 0; }
+body.export .card { border: 0; padding: 0; box-shadow: none; border-radius: 0; background: var(--cp-bg); }
+body.export .stage { border-radius: 0; }
+body.export *, body.export *::before { transition: none !important; }
+
+.legend { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 12px; font-size: 12px; color: var(--cp-text-muted); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.sw { width: 18px; height: 14px; border-radius: 4px; display: inline-block; border: 1px solid var(--cp-border); }
+.sw.none { background: var(--cp-surface-soft); border-style: dashed; border-color: var(--cp-border-strong); }
+.sw.partial { background: var(--partial-fill); }
+.sw.outside { background: var(--outside-fill); border-style: dotted; border-color: var(--cp-border-strong); }
+.sw.e3 { background: var(--tier-e3); }
+.sw.e5 { background: var(--tier-e5); }
+.sw.e7 { background: var(--tier-e7); }
+.sw.gain { background: var(--cp-surface); box-shadow: 0 0 0 1px var(--cp-surface), 0 0 0 3px var(--hi); border-color: transparent; }
+
+/* ---------- Gaps + detail ---------- */
+.lower { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 16px; align-items: start; margin-top: 16px; }
+.gcols { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.gcol h3 { font-size: 13px; margin: 0 0 8px; display: flex; align-items: center; gap: 8px; }
+.gcol h3 .n { font-size: 11px; font-weight: 700; padding: 0 7px; border-radius: 999px; border: 1px solid var(--cp-border); }
+.gcol.c-E5 h3 .n { background: var(--tier-e5); color: var(--tier-e5-fg); border-color: transparent; }
+.gcol.c-E7 h3 .n { background: var(--tier-e7); color: var(--tier-e7-fg); border-color: transparent; }
+.gcol.c-SEP h3 .n { background: var(--outside-fill); }
+.gcol .none { color: var(--cp-text-soft); font-style: italic; font-size: 12px; }
+.gcol .closer { font-size: 12px; color: var(--cp-text-muted); margin: -4px 0 10px; }
+.gpil { margin-bottom: 8px; }
+.gpil .pl { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: var(--cp-text-soft); margin-bottom: 3px; }
+.gap {
+  display: inline-flex; align-items: center; gap: 5px; font: inherit; font-size: 12px; color: var(--cp-text); cursor: pointer;
+  border: 1px solid var(--cp-border); border-left: 4px solid var(--cp-border-strong); border-radius: 0.5rem;
+  background: var(--cp-bg-elevated); padding: 3px 8px; margin: 0 4px 4px 0;
+}
+.gcol.c-E5 .gap { border-left-color: var(--tier-e5); }
+.gcol.c-E7 .gap { border-left-color: var(--tier-e7); }
+.gcol.c-SEP .gap { border-left-style: dotted; }
+.gap:hover, .gap.sel { border-color: var(--cp-accent); }
+.gap.sel { box-shadow: 0 0 0 1px var(--cp-accent); }
+.gap .lvl { font-size: 10px; color: var(--cp-text-soft); }
+
+.detail h3 { margin: 0; font-size: 16px; }
+.detail .crumb { color: var(--cp-text-muted); font-size: 12px; margin-bottom: 8px; }
+.detail .status { display: inline-block; font-size: 12px; font-weight: 600; padding: 2px 8px; border-radius: 999px; background: var(--cp-accent-soft); color: var(--cp-accent); margin-bottom: 10px; }
+.tierblock { border-left: 3px solid var(--cp-border); padding: 4px 0 4px 10px; margin: 8px 0; }
+.tierblock.on { border-left-color: var(--cp-accent); }
+.tierblock.off { opacity: .45; }
+.tierblock.ext { border-left-style: dotted; border-left-color: var(--cp-border-strong); }
+.tierblock .tn { font-weight: 700; font-size: 12px; letter-spacing: .04em; }
+.tierblock ul { margin: 4px 0 0; padding-left: 16px; }
+.tierblock li { margin: 2px 0; }
+.empty { color: var(--cp-text-soft); font-style: italic; }
+
+.climb { display: grid; grid-template-columns: 150px 1fr 64px; gap: 8px 10px; align-items: center; }
+.bar { position: relative; height: 22px; background: var(--cp-surface-soft); border-radius: 6px; overflow: hidden; display: flex; }
+.bar > i { display: block; height: 100%; transition: width .6s ease; }
+.bar > i.e3 { background: var(--tier-e3); }
+.bar > i.e5 { background: var(--tier-e5); }
+.bar > i.e7 { background: var(--tier-e7); }
+.bar > i.sep { background: var(--outside-fill); opacity: .9; }
+.pct { font-weight: 700; text-align: right; }
+.climb .rl { font-weight: 600; }
+
+abbr[data-term] { text-decoration: underline dotted; text-underline-offset: 2px; cursor: help; }
+a.term, a.doc { color: inherit; text-underline-offset: 2px; }
+a.term { text-decoration: underline dotted; }
+a.doc { text-decoration: underline; text-decoration-color: color-mix(in srgb, var(--cp-link) 45%, transparent); }
+a.term:hover, a.doc:hover, a.term:focus-visible, a.doc:focus-visible { color: var(--cp-link); text-decoration-style: solid; text-decoration-color: currentColor; }
+.docs { margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--cp-border); font-size: 12px; }
+.docs .tn { font-weight: 700; font-size: 11px; letter-spacing: .04em; color: var(--cp-text-muted); margin-bottom: 4px; }
+.docs ul { margin: 0; padding-left: 16px; }
+.docs li { margin: 3px 0; }
+.docs a { color: var(--cp-link); }
+.docs .host { color: var(--cp-text-soft); font-size: 11px; margin-left: 6px; white-space: nowrap; }
+#tip .go { margin-top: 6px; color: var(--cp-link); font-size: 11px; }
+#tip {
+  position: fixed; z-index: 50; max-width: 320px; pointer-events: none; opacity: 0; transition: opacity .12s;
+  background: var(--cp-panel-strong); color: var(--cp-text); border: 1px solid var(--cp-border);
+  border-radius: 0.625rem; padding: 10px 12px; box-shadow: var(--cp-shadow); font-size: 12px; line-height: 1.4;
+}
+#tip.show { opacity: 1; }
+#tip b { display: block; font-size: 13px; margin-bottom: 2px; }
+#tip .ms { margin-top: 6px; color: var(--cp-accent); font-weight: 600; }
+footer { margin-top: 20px; color: var(--cp-text-muted); font-size: 12px; }
+
+@media (max-width: 1180px) {
+  .lower { grid-template-columns: 1fr; }
+  .gcols { grid-template-columns: 1fr; }
+  .kpis { grid-template-columns: repeat(2, 1fr); }
+}
+@media print {
+  .controls { display: none; }
+  body { background: var(--cp-surface); }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Microsoft 365 E3 → E5 → E7 · Zero Trust Architecture Map</h1>
+      <p class="sub">The Microsoft Zero Trust architecture. Start with the framework, then select a tier to see which components it covers, which gaps close, and which gaps need a product outside the suite.
+        <br />Other view: <a href="/tech/m365-e3-e5-e7-security-coverage/" target="_top">Coverage matrix (NIST CSF × asset classes)</a></p>
+    </div>
+    <div class="controls">
+      <div class="seg" role="group" aria-label="View">
+        <button data-tier="ZTA" aria-pressed="false">Zero Trust</button>
+        <button data-tier="E3" aria-pressed="false">E3</button>
+        <button data-tier="E5" aria-pressed="false">E5</button>
+        <button data-tier="E7" aria-pressed="false">E7</button>
+      </div>
+      <label class="toggle"><input type="checkbox" id="showProducts" checked /> Show products</label>
+      <label class="toggle"><input type="checkbox" id="onlyNew" /> Show only new</label>
+    </div>
+  </header>
+
+  <section class="kpis" aria-live="polite">
+    <div class="kpi"><div class="lbl" id="kCovL">ZTA coverage</div><div class="val" id="kCov">0%</div><div class="delta" id="kCovD"></div><div class="meter"><i id="kCovM"></i></div></div>
+    <div class="kpi"><div class="lbl" id="kFullL">Components fully covered</div><div class="val" id="kFull">0</div><div class="delta" id="kFullD"></div></div>
+    <div class="kpi"><div class="lbl" id="kNewL">Components improved by this step</div><div class="val" id="kNew">0</div><div class="delta" id="kNewD"></div></div>
+    <div class="kpi"><div class="lbl" id="kGapL">Open gaps at this tier</div><div class="val" id="kGap">0</div><div class="delta" id="kGapD"></div></div>
+  </section>
+
+  <section class="card">
+    <h2>Zero Trust architecture</h2>
+    <p class="hint" id="stageHint"></p>
+    <div class="zwrap" id="zwrap">
+      <div class="stage" id="stage">
+        <svg class="lines" id="lines" viewBox="0 0 1440 840" aria-hidden="true"></svg>
+        <div class="ztitle">Zero Trust<br />architecture</div>
+        <div class="ztier" id="zTier"></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="lower">
+    <section class="card">
+      <h2 id="gapTitle">Where the gaps are</h2>
+      <p class="hint" id="gapHint">Each open component, sorted by the step that closes it. Select a component to see the details.</p>
+      <div class="gcols" id="gaps"></div>
+      <div id="framework"></div>
+    </section>
+    <aside class="card detail" id="detail">
+      <div class="crumb">Component details</div>
+      <h3>Select a component</h3>
+      <p class="empty">Select a component in the diagram or in the gap list to see which products cover it at each tier, with links to the Microsoft Learn pages.</p>
+    </aside>
+  </div>
+
+  <section class="card section" id="climbCard">
+    <h2>Coverage climb by ZTA pillar</h2>
+    <p class="hint">Each bar shows the coverage score of one pillar (full = 1, partial = ½). Segments show how much each tier adds. The dotted segment is the part that only a product outside the suite closes.</p>
+    <div class="climb" id="climb"></div>
+  </section>
+
+  <footer>
+    <p><b>Method:</b> The layout follows the updated Microsoft Zero Trust architecture (with Agent and Workload identities, External endpoints, Access Controls, AI Resources, In-App Controls, and Posture Management). Each component is rated for E3, E5, and E7 with the same rules as the coverage matrix: 0 = none, ½ = partial, 1 = full. Ratings are a simplified, opinionated view for discussion, not a formal licensing statement. “Outside the suite” means that no Microsoft 365 E-suite includes the product: for example, Defender for Cloud and Azure API Management (Azure purchases) or Entra Workload ID Premium (a standalone Entra SKU that is not in Entra ID P2 or the Entra Suite).</p>
+    <p><b>Sources:</b> Select a component. The details panel lists the Microsoft Learn pages for that component, and each underlined product or acronym opens its page.</p>
+  </footer>
+</div>
+
+<script>
+const TIERS = ["E3", "E5", "E7"];
+const PRICE = { E3: 39, E5: 60, E7: 99 };
+const idx = t => TIERS.indexOf(t);
+
+// Component: label, climb pillar, levels [E3, E5, E7] (0 none · 1 partial · 2 full), items per tier,
+// ext = products outside the Microsoft 365 suite that close (or complement) the component, note
+const C = (label, pillar, lv, e3 = [], e5 = [], e7 = [], ext = [], note = "") => ({ label, pillar, lv, items: { E3: e3, E5: e5, E7: e7 }, ext, note });
+const A365_NOTE = "E5 customers can buy Agent 365 as an add-on. From June 1, 2026, E3 alone does not qualify for Agent 365.";
+const COMP = {
+  // Identities
+  human: C("Human", "Identities", [1, 2, 2],
+    ["Entra ID P1: SSO, MFA, passwordless, Conditional Access", "SSPR, sign-in and audit logs"],
+    ["Entra ID P2: ID Protection (user and sign-in risk), PIM", "ITDR: Defender for Identity", "Access Reviews, Entitlement Management"],
+    ["Full IGA: Entra ID Governance lifecycle workflows", "IDV: Verified ID Face Check"]),
+  agent: C("Agent", "Identities", [1, 1, 2],
+    ["NHI: Entra Agent ID platform (agent identities, blueprints, sign-in and audit logs)"],
+    [],
+    ["Agent 365: Conditional Access, ID Protection, and ID Governance for agents", "Agent Registry, sponsors, access packages for agents"],
+    [], A365_NOTE),
+  workload: C("Workload", "Identities", [1, 1, 1],
+    ["Workload identities, managed identities, workload identity federation, and app registrations (free features)", "Service principal sign-in logs and audit trail"],
+    ["OAuth App Governance: risky app detection (Defender for Cloud Apps)"],
+    [],
+    ["Entra Workload ID Premium (per workload identity): Conditional Access, ID Protection, access reviews, and app health recommendations for service principals"],
+    "Entra ID P2 (E5) and the Entra Suite (E7) give Conditional Access, ID Protection, and access reviews for users, and for agents with Agent 365. They don't cover service principals. Learn: “Workload ID Premium is a standalone product and isn't included in other premium product plans.” Access reviews of privileged service principals need P2 for the reviewers and Workload ID Premium for the service principals. One license in the tenant unlocks the features for all workload identities."),
+  // Endpoints
+  corporate: C("Corporate", "Endpoints", [1, 2, 2],
+    ["UEM: Intune P1 + P2, compliance policies, Windows Autopatch", "EPP/NGAV: Defender for Endpoint P1, ASR rules", "Windows Enterprise: BitLocker, Credential Guard, LAPS"],
+    ["EDR: Defender for Endpoint P2", "RBVM: Defender Vulnerability Management", "EPM, Cloud PKI, Enterprise App Management"],
+    []),
+  personal: C("Personal", "Endpoints", [1, 2, 2],
+    ["Intune app protection policies (MAM) for BYOD", "Conditional Access: approved app and app protection policy"],
+    ["CASB session control for unmanaged devices (Defender for Cloud Apps)", "Risk-based Conditional Access"],
+    []),
+  external: C("External", "Endpoints", [1, 2, 2],
+    ["Conditional Access for guests (B2B)", "Block download on unmanaged devices (SharePoint)"],
+    ["CASB session control for partner and unmanaged devices", "Access Reviews and Entitlement Management for guests"],
+    ["Entra ID Governance: guest lifecycle and sponsors", "Verified ID Face Check for external onboarding"]),
+  // Signals
+  strongauth: C("Strong authentication", "Signals", [2, 2, 2],
+    ["MFA, passwordless, passkeys (FIDO2), Windows Hello for Business (Entra ID P1)"],
+    ["Risk-based step-up MFA (ID Protection)"],
+    ["IDV: Verified ID Face Check for high-assurance recovery"]),
+  devcomp: C("Device compliance", "Signals", [2, 2, 2],
+    ["Intune compliance policies feed Conditional Access", "Defender for Endpoint P1 device risk in compliance"],
+    ["EDR-quality device risk (Defender for Endpoint P2)"],
+    []),
+  reqenh: C("Request enhancement", "Signals", [1, 2, 2],
+    ["Conditional Access conditions: user, group, device, location, app"],
+    ["User and sign-in risk (ID Protection)", "Insider Risk level (Adaptive Protection)"],
+    ["Agent risk signals (Agent 365)", "Compliant-network signal (Global Secure Access)"]),
+  risk: C("Risk assessment", "Signals", [1, 2, 2],
+    ["Device risk from Defender for Endpoint P1"],
+    ["XDR: compromised-user and device signals feed Conditional Access", "Insider Risk drives Adaptive Protection"],
+    ["Agent risk feeds Conditional Access for agents"]),
+  // Policy Optimization
+  governance: C("Governance", "Policy Optimization", [1, 1, 2],
+    ["Retention policies, Compliance Manager (basic)", "Conditional Access policy engine"],
+    ["PAM: PIM; basic IGA: Access Reviews, Entitlement Management", "Records Management"],
+    ["Full IGA: Entra ID Governance", "SAM: site lifecycle, ownership, and attestation policies", "Agent 365: agent governance and sponsors"]),
+  compliance: C("Compliance", "Policy Optimization", [1, 2, 2],
+    ["Compliance Manager (Data Protection Baseline)", "Audit Standard, eDiscovery Standard"],
+    ["Compliance Manager premium assessments", "Audit Premium, eDiscovery Premium, Communication Compliance"],
+    ["Purview audit, retention, and eDiscovery for agents"]),
+  posture: C("Security Posture Assessment", "Policy Optimization", [1, 2, 2],
+    ["Secure Score"],
+    ["CTEM: Exposure Management (attack paths, critical assets)", "DSPM, SSPM, RBVM"],
+    ["AI-SPM for agents", "SAM: data access governance (oversharing) reports"],
+    ["Defender for Cloud CSPM: posture for Azure, AWS, and GCP infrastructure (Azure purchase)"]),
+  productivity: C("Productivity Optimization", "Policy Optimization", [1, 2, 2],
+    ["SSO and passwordless (less friction)", "DEX: Intune Advanced Analytics", "Copilot Chat upgrades"],
+    ["Security Copilot (400 SCU / 1,000 users / month)", "EPM: no permanent local admin, fewer help-desk tickets"],
+    ["Microsoft 365 Copilot", "SharePoint Admin Agent"]),
+  // Access Controls
+  evaluation: C("Evaluation", "Access Controls", [1, 2, 2],
+    ["Conditional Access policy evaluation (Entra ID P1)"],
+    ["Risk-based Conditional Access (user, sign-in, and device risk)", "Adaptive Protection: Insider Risk level drives DLP"],
+    ["Conditional Access for agents (Agent 365)", "Network-aware policies (Global Secure Access)"]),
+  enforcement: C("Enforcement", "Access Controls", [1, 2, 2],
+    ["Grant controls: block, MFA, compliant device", "Continuous access evaluation for Microsoft 365 apps"],
+    ["CASB session controls: block download, monitor (Defender for Cloud Apps)", "JIT admin enforcement (PIM)"],
+    ["Universal Continuous Access Evaluation across network traffic", "Block risky agent actions"]),
+  // Network
+  traffic: C("Traffic filtering & segmentation", "Network", [1, 1, 2],
+    ["Network protection and web content filtering (Defender for Endpoint P1)", "Windows Firewall"],
+    ["Block unsanctioned cloud apps (Defender for Cloud Apps + Defender for Endpoint)"],
+    ["SWG: Entra Internet Access (web category and threat filtering)", "ZTNA segmentation: Entra Private Access per-app access", "AI Gateway: prompt injection protection"]),
+  public: C("Public", "Network", [1, 1, 2],
+    ["Network protection (Defender for Endpoint P1)"],
+    ["Cloud app blocking (Defender for Cloud Apps)"],
+    ["SWG: Entra Internet Access", "Shadow AI discovery and generative AI insights", "Global Secure Access traffic logs"]),
+  private: C("Private", "Network", [1, 1, 2],
+    ["Always On VPN", "Entra application proxy for internal web apps"],
+    ["Lateral-movement detection (Defender for Identity)"],
+    ["ZTNA: Entra Private Access (VPN replacement for any TCP/UDP app)"]),
+  // Threat Protection
+  contassess: C("Continuous Assessment", "Threat Protection", [1, 2, 2],
+    ["AV alerts (Defender for Endpoint P1)", "Email detections (Defender for Office 365 P1)", "Secure Score"],
+    ["XDR: unified incidents across endpoint, identity, email, and SaaS", "EDR, ITDR, and CASB detections", "CTEM: Exposure Management"],
+    ["Defender detection for agent compromise", "AI-SPM for agents"]),
+  ti: C("Threat Intelligence", "Threat Protection", [0, 2, 2],
+    [],
+    ["Threat intelligence in Defender (ex-MDTI Premium)", "CTI: Threat Analytics"],
+    []),
+  forensics: C("Forensics", "Threat Protection", [1, 2, 2],
+    ["Audit Standard (180 days)", "eDiscovery Standard"],
+    ["Advanced Hunting (KQL), live response", "Audit Premium (1 year)", "eDiscovery Premium"],
+    ["Investigate and hunt with agent logs"]),
+  response: C("Response Automation", "Threat Protection", [1, 2, 2],
+    ["ZAP", "Manual device actions, session revoke, password reset"],
+    ["XDR automatic attack disruption", "AIR for endpoint and email", "Security Copilot agents", "ISOC (preview) automation"],
+    ["Block risky agent actions"]),
+  telemetry: C("Telemetry / analytics / assessment", "Threat Protection", [1, 2, 2],
+    ["Sign-in and audit logs, Secure Score, Intune reports"],
+    ["Defender XDR signals and Advanced Hunting", "ISOC (preview) / Sentinel data grant"],
+    ["Global Secure Access traffic logs", "Agent 365 observability: agent map, tool-call traces"],
+    ["Microsoft Sentinel ingestion beyond the grant (Azure)"]),
+  // Data
+  classify: C("Classify, label, encrypt", "Data", [1, 2, 2],
+    ["Manual sensitivity labels, sensitive info types, BYOK"],
+    ["Auto-labeling, EDM, trainable classifiers", "HYOK: Customer Key, Double Key Encryption"],
+    ["Agents inherit labels", "SAM: Restricted Access Control, Restricted Content Discovery"]),
+  emaildocs: C("Emails & documents", "Data", [1, 2, 2],
+    ["ICES: Defender for Office 365 P1", "DLP for Exchange, SharePoint, OneDrive"],
+    ["Endpoint and Teams DLP, Insider Risk, DSPM", "Defender for Office 365 P2"],
+    ["SAM: oversharing control for Copilot grounding"]),
+  structured: C("Structured data", "Data", [0, 1, 1],
+    [],
+    ["EDM uses your structured data to find records", "Sensitivity labels and DLP for Power BI"],
+    [],
+    ["Microsoft Purview Data Map and Unified Catalog (pay-as-you-go)", "Defender for Databases (Defender for Cloud)"]),
+  // Apps
+  adaptive: C("Adaptive Access", "Apps", [1, 2, 2],
+    ["Conditional Access app enforcement"],
+    ["Risk-based Conditional Access", "CASB session control (Defender for Cloud Apps)"],
+    ["Universal Continuous Access Evaluation"]),
+  saas: C("SaaS", "Apps", [1, 2, 2],
+    ["SSO to SaaS apps", "Shadow IT discovery (Cloud Discovery)"],
+    ["CASB, SSPM, OAuth App Governance (Defender for Cloud Apps)"],
+    ["Shadow AI discovery (Global Secure Access)"],
+    ["GitHub Advanced Security: code and supply-chain security for apps you build (separate purchase)"]),
+  onprem: C("On-premises", "Apps", [1, 1, 2],
+    ["Entra application proxy for web apps", "Always On VPN"],
+    ["ITDR for Active Directory (Defender for Identity)"],
+    ["ZTNA: Entra Private Access with Conditional Access and MFA for any app"]),
+  // AI Resources
+  inapp: C("In-App Controls", "AI Resources", [1, 1, 2],
+    ["DSPM for AI (basic)", "Copilot honors user permissions (enterprise data protection)"],
+    ["DLP for Microsoft 365 Copilot interactions", "DSPM for AI (prompt and response view)"],
+    ["Inline DLP for agent prompts", "Runtime protection: block risky agent actions", "Tool-level control for MCP servers (Agent 365)"],
+    [], A365_NOTE),
+  agents: C("Agents", "AI Resources", [1, 1, 2],
+    ["Entra Agent ID platform", "DSPM for AI (basic)"],
+    ["DSPM for AI (prompt and response view)"],
+    ["Agent 365: Agent Registry, agent map, governance, and security", "Defender and Purview for agents", "AI-SPM for Foundry and Copilot Studio agents"],
+    [], A365_NOTE),
+  mcp: C("MCP Servers", "AI Resources", [0, 0, 1],
+    [],
+    [],
+    ["Agent 365 tooling gateway: MCP server inventory, block and allow, tool-call tracing", "Global Secure Access: shadow AI discovery for SaaS MCP servers, MCP traffic insights"],
+    ["Azure API Management AI Gateway: runtime enforcement for customer-hosted MCP servers (Azure)"],
+    "Learn: “Microsoft Agent 365 doesn't automatically route agents through a customer-hosted gateway.” " + A365_NOTE),
+  // Infrastructure
+  posturemgmt: C("Posture Management", "Infrastructure", [0, 0, 0], [], [], [],
+    ["CSPM: Defender for Cloud (Defender CSPM plan)", "Azure Arc for on-premises and multicloud servers"]),
+  serverless: C("Serverless", "Infrastructure", [0, 0, 0], [], [], [],
+    ["Defender for Cloud: Defender CSPM and Defender for App Service (Functions)"]),
+  containers: C("Containers", "Infrastructure", [0, 0, 0], [], [], [],
+    ["CWPP: Defender for Containers", "DevOps security: GitHub Advanced Security, Defender for Cloud DevOps"]),
+  iaas: C("IaaS", "Infrastructure", [0, 0, 0], [], [], [],
+    ["CWPP: Defender for Servers (includes Defender for Endpoint for servers)", "Azure Arc for on-premises and other clouds"]),
+  paas: C("PaaS", "Infrastructure", [0, 0, 0], [], [], [],
+    ["Defender for Cloud plans: Storage, Databases, Key Vault, Resource Manager", "Defender for APIs"]),
+  internal: C("Internal Sites", "Infrastructure", [1, 1, 2],
+    ["Entra application proxy for internal web sites"],
+    [],
+    ["ZTNA: Entra Private Access for internal sites"]),
+};
+
+const PILLAR_ORDER = ["Identities", "Endpoints", "Signals", "Policy Optimization", "Access Controls", "Threat Protection", "Network", "Data", "Apps", "AI Resources", "Infrastructure"];
+
+// Layout in the 1440 × 840 stage
+const BOXES = [
+  { title: "Policy Optimization", g: "engine", x: 494, y: 120, w: 226, rows: ["governance", "compliance", "posture", "productivity"] },
+  { title: "Identities", g: "src", x: 110, y: 296, w: 124, rows: ["human", "agent", "workload"] },
+  { title: "Endpoints", g: "src", x: 110, y: 540, w: 124, rows: ["corporate", "personal", "external"] },
+  { title: "Access Controls", g: "engine", x: 494, y: 406, w: 226, rows: ["evaluation", "enforcement"] },
+  { title: "Threat Protection", g: "engine", x: 494, y: 650, w: 226, rows: ["contassess", "ti", "forensics", "response"] },
+  { title: "Network", g: "net", x: 892, y: 404, w: 120, rows: ["public", "private"] },
+  { title: "Data", g: "res", x: 1180, y: 146, w: 176, rows: ["emaildocs", "structured"] },
+  { title: "Apps", g: "res", x: 1180, y: 290, w: 176, rows: ["saas", "onprem"] },
+  { title: "AI Resources", g: "res", x: 1180, y: 432, w: 176, rows: ["agents", "mcp"] },
+  { title: "Infrastructure", g: "res", x: 1180, y: 574, w: 176, rows: ["serverless", "containers", "iaas", "paas", "internal"], jit: true },
+];
+const NODES = [
+  { id: "strongauth", x: 278, y: 314, w: 110, h: 46 },
+  { id: "reqenh", x: 330, y: 420, w: 130, h: 56 },
+  { id: "devcomp", x: 278, y: 566, w: 110, h: 46 },
+  { id: "risk", x: 404, y: 566, w: 96, h: 46 },
+  { id: "traffic", x: 752, y: 462, w: 132, h: 58 },
+  { id: "classify", x: 1056, y: 137, w: 98, h: 62 },
+  { id: "adaptive", x: 1056, y: 281, w: 98, h: 62 },
+  { id: "inapp", x: 1056, y: 423, w: 98, h: 62 },
+  { id: "posturemgmt", x: 1056, y: 565, w: 98, h: 62 },
+];
+const GAUGES = [[607, 570], [790, 128], [790, 196], [790, 716], [790, 770]];
+const BR = [168, 312, 454, 596]; // branch rows: Data, Apps, AI Resources, Infrastructure
+const PATHS = [
+  "M234,337 H278", "M300,360 V448 H330", "M300,566 V448", "M234,589 H278",
+  "M460,448 H494", "M607,252 V406", "M607,490 V650",
+  "M494,700 H452 V612", "M452,566 V476",
+  "M720,448 H892", "M952,404 V196 H720", "M952,488 V716 H720",
+  "M1012,448 H1036", "M1036,168 V596",
+  ...BR.flatMap(y => [`M1036,${y} H1056`, `M1154,${y} H1180`, `M1356,${y} H1370`]),
+  "M1370,128 V770", "M1370,128 H720", "M1370,770 H720",
+];
+const ARROWS = new Set(["M300,360 V448 H330", "M460,448 H494", "M607,252 V406", "M607,490 V650", "M452,566 V476", "M720,448 H892", "M952,404 V196 H720", "M952,488 V716 H720", "M1370,128 H720", "M1370,770 H720", ...BR.map(y => `M1154,${y} H1180`)]);
+
+// Product callouts: [name, tier] — tier "SEP" = outside the Microsoft 365 suite
+const CALLOUTS = [
+  { x: 494, y: 50, w: 300, items: [["Secure Score", "E3"], ["Compliance Manager", "E3"], ["Exposure Management", "E5"], ["Defender for Cloud CSPM", "SEP"]] },
+  { x: 16, y: 178, w: 250, items: [["Entra ID P1", "E3"], ["Entra Agent ID", "E3"], ["Entra ID P2 · Defender for Identity", "E5"], ["Entra ID Governance", "E7"], ["Agent 365", "E7"], ["Workload ID Premium", "SEP"]] },
+  { x: 622, y: 300, w: 180, items: [["Conditional Access", "E3"], ["Risk-based CA", "E5"], ["Universal CAE", "E7"]] },
+  { x: 16, y: 658, w: 236, items: [["Intune P1 + P2", "E3"], ["Defender for Endpoint P1", "E3"], ["Defender for Endpoint P2", "E5"], ["Intune EPM · Cloud PKI", "E5"]] },
+  { x: 262, y: 632, w: 182, items: [["Defender XDR", "E5"], ["Security Copilot", "E5"], ["Threat intelligence", "E5"], ["ISOC · Sentinel grant", "E5"]] },
+  { x: 740, y: 530, w: 172, items: [["Entra Internet Access", "E7"], ["Entra Private Access", "E7"]] },
+  { x: 1180, y: 58, w: 256, items: [["Defender for Office 365 P1", "E3"], ["Purview", "E3"], ["Purview E5 · DSPM", "E5"], ["SAM", "E7"], ["Purview Data Map", "SEP"]] },
+  { x: 1180, y: 240, w: 256, items: [["App proxy", "E3"], ["Defender for Cloud Apps", "E5"], ["GitHub Advanced Security", "SEP"]] },
+  { x: 1180, y: 382, w: 256, items: [["DSPM for AI", "E3"], ["Agent 365", "E7"], ["API Management AI Gateway", "SEP"]] },
+  { x: 1040, y: 640, w: 132, items: [["Defender for Cloud", "SEP"], ["Azure Arc", "SEP"], ["Defender for APIs", "SEP"]] },
+];
+
+// ---- Shared docs + glossary: generated, keep identical in coverage-matrix.html and zta-map.html ----
+const DOCS = {"agent365":["https://learn.microsoft.com/en-us/microsoft-agent-365/overview"],"dex":["https://learn.microsoft.com/en-us/intune/advanced-analytics/"],"intune":["https://learn.microsoft.com/en-us/intune/fundamentals/what-is-intune"],"epm":["https://learn.microsoft.com/en-us/intune/epm/overview"],"pki":["https://learn.microsoft.com/en-us/intune/cloud-pki/"],"eam":["https://learn.microsoft.com/en-us/intune/app-management/deployment/enterprise-app-management"],"remotehelp":["https://learn.microsoft.com/en-us/intune/remote-help/"],"mam":["https://learn.microsoft.com/en-us/intune/app-management/protection/overview"],"dspm":["https://learn.microsoft.com/en-us/purview/data-security-posture-management-learn-about"],"byok":["https://learn.microsoft.com/en-us/purview/rights-management-tenant-key"],"datamap":["https://learn.microsoft.com/en-us/purview/data-map"],"defdb":["https://learn.microsoft.com/en-us/azure/defender-for-cloud/tutorial-enable-databases-plan"],"dspmai":["https://learn.microsoft.com/en-us/purview/dspm-for-ai"],"sam":["https://learn.microsoft.com/en-us/sharepoint/advanced-management"],"dag":["https://learn.microsoft.com/en-us/sharepoint/data-access-governance-reports"],"aispm":["https://learn.microsoft.com/en-us/azure/defender-for-cloud/ai-security-posture"],"ucae":["https://learn.microsoft.com/en-us/entra/global-secure-access/concept-universal-continuous-access-evaluation"],"lcw":["https://learn.microsoft.com/en-us/entra/id-governance/what-are-lifecycle-workflows"],"facecheck":["https://learn.microsoft.com/en-us/entra/verified-id/using-facecheck"],"kql":["https://learn.microsoft.com/en-us/kusto/query/"],"sspm":["https://learn.microsoft.com/en-us/defender-cloud-apps/posture-overview"],"appgov":["https://learn.microsoft.com/en-us/defender-cloud-apps/app-governance-manage-app-governance"],"teamsphone":["https://learn.microsoft.com/en-us/microsoftteams/what-is-phone-system-in-office-365"],"m365copilot":["https://learn.microsoft.com/en-us/microsoft-365/copilot/microsoft-365-copilot-overview"],"copilotchat":["https://learn.microsoft.com/en-us/copilot/overview"],"whfb":["https://learn.microsoft.com/en-us/windows/security/identity-protection/hello-for-business/"],"passkey":["https://learn.microsoft.com/en-us/entra/identity/authentication/how-to-authentication-passkeys-fido2"],"autopatch":["https://learn.microsoft.com/en-us/windows/deployment/windows-autopatch/overview/windows-autopatch-overview"],"aovpn":["https://learn.microsoft.com/en-us/windows-server/remote/remote-access/overview-always-on-vpn"],"ueba":["https://learn.microsoft.com/en-us/azure/sentinel/identify-threats-with-entity-behavior-analytics"],"ioc":["https://learn.microsoft.com/en-us/defender-endpoint/indicators-overview"],"edrov":["https://learn.microsoft.com/en-us/defender-endpoint/overview-endpoint-detection-response"],"ngp":["https://learn.microsoft.com/en-us/defender-endpoint/next-generation-protection"],"av":["https://learn.microsoft.com/en-us/defender-endpoint/microsoft-defender-antivirus-windows"],"asr":["https://learn.microsoft.com/en-us/defender-endpoint/attack-surface-reduction-rules-overview"],"air":["https://learn.microsoft.com/en-us/defender-xdr/m365d-autoir"],"zap":["https://learn.microsoft.com/en-us/defender-office-365/zero-hour-auto-purge"],"antiphish":["https://learn.microsoft.com/en-us/defender-office-365/anti-phishing-protection-about"],"edm":["https://learn.microsoft.com/en-us/purview/sit-learn-about-exact-data-match-based-sits"],"sit":["https://learn.microsoft.com/en-us/purview/sit-sensitive-information-type-learn-about"],"dcap":["https://learn.microsoft.com/en-us/purview/information-protection"],"rac":["https://learn.microsoft.com/en-us/sharepoint/restricted-access-control"],"rcd":["https://learn.microsoft.com/en-us/sharepoint/restricted-content-discovery"],"defapis":["https://learn.microsoft.com/en-us/azure/defender-for-cloud/defender-for-apis-introduction"],"defappsvc":["https://learn.microsoft.com/en-us/azure/defender-for-cloud/defender-for-app-service-introduction"],"defservers":["https://learn.microsoft.com/en-us/azure/defender-for-cloud/defender-for-servers-overview"],"defcont":["https://learn.microsoft.com/en-us/azure/defender-for-cloud/defender-for-containers-introduction"],"cspm":["https://learn.microsoft.com/en-us/azure/defender-for-cloud/concept-cloud-security-posture-management"],"devops":["https://learn.microsoft.com/en-us/azure/defender-for-cloud/defender-for-devops-introduction"],"ghas":["https://docs.github.com/en/get-started/learning-about-github/about-github-advanced-security"],"arc":["https://learn.microsoft.com/en-us/azure/azure-arc/overview"],"sentinel":["https://learn.microsoft.com/en-us/azure/sentinel/overview"],"securescore":["https://learn.microsoft.com/en-us/defender-xdr/microsoft-secure-score"],"compmgr":["https://learn.microsoft.com/en-us/purview/compliance-manager"],"dlp":["https://learn.microsoft.com/en-us/purview/dlp-learn-about-dlp"],"irm":["https://learn.microsoft.com/en-us/purview/insider-risk-management"],"adaptive":["https://learn.microsoft.com/en-us/purview/insider-risk-management-adaptive-protection"],"commcomp":["https://learn.microsoft.com/en-us/purview/communication-compliance"],"edisc":["https://learn.microsoft.com/en-us/purview/edisc"],"audit":["https://learn.microsoft.com/en-us/purview/audit-solutions-overview"],"records":["https://learn.microsoft.com/en-us/purview/records-management"],"retention":["https://learn.microsoft.com/en-us/purview/retention"],"labels":["https://learn.microsoft.com/en-us/purview/sensitivity-labels"],"autolabel":["https://learn.microsoft.com/en-us/purview/apply-sensitivity-label-automatically"],"classifiers":["https://learn.microsoft.com/en-us/purview/trainable-classifiers-learn-about"],"customerkey":["https://learn.microsoft.com/en-us/purview/customer-key-overview"],"dke":["https://learn.microsoft.com/en-us/purview/double-key-encryption"],"ib":["https://learn.microsoft.com/en-us/purview/information-barriers"],"gsa":["https://learn.microsoft.com/en-us/entra/global-secure-access/overview-what-is-global-secure-access"],"eia":["https://learn.microsoft.com/en-us/entra/global-secure-access/concept-internet-access"],"epa":["https://learn.microsoft.com/en-us/entra/global-secure-access/concept-private-access"],"appproxy":["https://learn.microsoft.com/en-us/entra/identity/app-proxy/overview-what-is-app-proxy"],"idprot":["https://learn.microsoft.com/en-us/entra/id-protection/overview-identity-protection"],"ca":["https://learn.microsoft.com/en-us/entra/identity/conditional-access/overview"],"cae":["https://learn.microsoft.com/en-us/entra/identity/conditional-access/concept-continuous-access-evaluation"],"idgov":["https://learn.microsoft.com/en-us/entra/id-governance/identity-governance-overview"],"accrev":["https://learn.microsoft.com/en-us/entra/id-governance/access-reviews-overview"],"entmgmt":["https://learn.microsoft.com/en-us/entra/id-governance/entitlement-management-overview"],"pim":["https://learn.microsoft.com/en-us/entra/id-governance/privileged-identity-management/pim-configure"],"mfa":["https://learn.microsoft.com/en-us/entra/identity/authentication/concept-mfa-howitworks"],"sso":["https://learn.microsoft.com/en-us/entra/identity/enterprise-apps/what-is-single-sign-on"],"sspr":["https://learn.microsoft.com/en-us/entra/identity/authentication/concept-sspr-howitworks"],"agentid":["https://learn.microsoft.com/en-us/entra/agent-id/what-is-microsoft-entra-agent-id"],"entralic":["https://learn.microsoft.com/en-us/entra/fundamentals/licensing","Microsoft Entra licensing"],"mdi":["https://learn.microsoft.com/en-us/defender-for-identity/what-is"],"mde":["https://learn.microsoft.com/en-us/defender-endpoint/microsoft-defender-endpoint"],"mdvm":["https://learn.microsoft.com/en-us/defender-vulnerability-management/defender-vulnerability-management"],"mdo":["https://learn.microsoft.com/en-us/defender-office-365/mdo-about"],"eop":["https://learn.microsoft.com/en-us/defender-office-365/eop-about"],"ast":["https://learn.microsoft.com/en-us/defender-office-365/attack-simulation-training-get-started"],"mdca":["https://learn.microsoft.com/en-us/defender-cloud-apps/what-is-defender-for-cloud-apps"],"clouddisc":["https://learn.microsoft.com/en-us/defender-cloud-apps/set-up-cloud-discovery"],"xdr":["https://learn.microsoft.com/en-us/defender-xdr/microsoft-365-defender"],"disrupt":["https://learn.microsoft.com/en-us/defender-xdr/automatic-attack-disruption"],"ah":["https://learn.microsoft.com/en-us/defender-xdr/advanced-hunting-overview"],"ta":["https://learn.microsoft.com/en-us/defender-xdr/threat-analytics"],"ti":["https://learn.microsoft.com/en-us/defender-xdr/defender-threat-intelligence"],"xspm":["https://learn.microsoft.com/en-us/security-exposure-management/microsoft-security-exposure-management"],"secopilot":["https://learn.microsoft.com/en-us/copilot/security/security-copilot-inclusion"],"isoc":["https://learn.microsoft.com/en-us/defender-xdr/isoc-overview"],"mdc":["https://learn.microsoft.com/en-us/azure/defender-for-cloud/defender-for-cloud-introduction"],"zt":["https://learn.microsoft.com/en-us/security/zero-trust/zero-trust-overview","Zero Trust overview"],"tooling":["https://learn.microsoft.com/en-us/microsoft-agent-365/tooling-servers-overview","Agent 365 tooling servers (MCP)"],"apim":["https://learn.microsoft.com/en-us/azure/api-management/agent-365","Govern MCP tools with Agent 365 and Azure API Management"],"pip":["https://learn.microsoft.com/en-us/entra/global-secure-access/how-to-ai-prompt-injection-protection","Prompt injection protection (Global Secure Access)"],"shadowai":["https://learn.microsoft.com/en-us/entra/global-secure-access/concept-shadow-ai-discovery","Shadow AI discovery (Global Secure Access)"],"ztnet":["https://learn.microsoft.com/en-us/entra/fundamentals/zero-trust-protect-networks","Zero Trust: protect networks with Entra"],"wlfaq":["https://learn.microsoft.com/en-us/entra/workload-id/workload-identities-faqs","Workload ID FAQ: Premium licensing"],"wlca":["https://learn.microsoft.com/en-us/entra/identity/conditional-access/workload-identity","Conditional Access for workload identities"],"mdeca":["https://learn.microsoft.com/en-us/defender-endpoint/configure-conditional-access","Conditional Access with Defender for Endpoint device risk"],"lic":["https://learn.microsoft.com/en-us/microsoft-365/copilot/microsoft-365-copilot-license-feature-overview","Licensing: E3 vs E5 vs E7 feature comparison"],"sharepointagent":["https://learn.microsoft.com/en-us/sharepoint/content-governance-agent"],"nist":["https://www.nist.gov/cyberframework"],"laps":["https://learn.microsoft.com/en-us/windows-server/identity/laps/laps-overview"],"bitlocker":["https://learn.microsoft.com/en-us/windows/security/operating-system-security/data-protection/bitlocker/"],"unicat":["https://learn.microsoft.com/en-us/purview/unified-catalog"]};
+const GLOSSARY = [["Identity","MFA","Multifactor Authentication","A sign-in needs two or more proofs, such as a password and a phone or a security key.","Entra ID P1 (E3)","mfa"], ["Identity","SSO","Single Sign-On","One sign-in gives access to many apps.","Entra ID P1 (E3)","sso"], ["Identity","CA","Conditional Access","The Zero Trust policy engine. It allows, blocks, or asks for MFA based on user, device, location, and risk.","Entra ID P1 (E3); risk-based CA needs Entra ID P2 (E5)","ca"], ["Identity","CAE","Continuous Access Evaluation","Ends a session in near real time when risk or policy changes, not only when the token expires. Universal CAE also applies to network traffic.","Universal CAE: Entra Suite (E7)","cae"], ["Identity","SSPR","Self-Service Password Reset","Users reset their own passwords with no help-desk call.","Entra ID P1 (E3)","sspr"], ["Identity","PAM","Privileged Access Management","Controls admin rights: just-in-time, time-limited, and approved elevation.","Entra Privileged Identity Management (E5)","pim"], ["Identity","PIM","Privileged Identity Management","The Microsoft product for PAM in Entra.","Entra ID P2 (E5)","pim"], ["Identity","IGA","Identity Governance and Administration","Controls who has access to what, why, and for how long: joiner-mover-leaver processes and access reviews.","Basic: Entra ID P2 (E5). Full: Entra ID Governance (E7)","idgov"], ["Identity","ITDR","Identity Threat Detection and Response","Detects and stops attacks on identity systems (Active Directory, Entra ID), such as password spray or golden-ticket attacks.","Defender for Identity + Entra ID Protection (E5)","mdi"], ["Identity","IDV","Identity Verification","Proves that a person is who they say they are, for example with a government ID and a live selfie.","Entra Verified ID Face Check (E7)","facecheck"], ["Identity","NHI","Non-Human Identity","An identity for an app, a workload, or an AI agent, not a person.","Entra Agent ID (all tenants); security controls need Agent 365 (E7)","agentid"], ["Endpoint","UEM","Unified Endpoint Management","Manages and configures all device types from one tool (device and app management).","Intune Plan 1 (E3)","intune"], ["Endpoint","DEX","Digital Employee Experience","Measures device health as the user feels it (boot time, app crashes, battery) so IT can fix problems before users open tickets.","Intune Advanced Analytics (E3 from 2026)","dex"], ["Endpoint","EPM","Endpoint Privilege Management","Users work as standard users and get admin rights only for one approved task, not permanent local admin rights.","Intune Endpoint Privilege Management (E5 from 2026)","epm"], ["Endpoint","PKI","Public Key Infrastructure","Issues and manages certificates, for example for Wi-Fi, VPN, and device authentication.","Microsoft Cloud PKI (E5 from 2026)","pki"], ["Endpoint","EPP","Endpoint Protection Platform","Prevention on the device: antivirus, exploit protection, and attack surface reduction.","Defender for Endpoint P1 (E3)","mde"], ["Endpoint","NGAV","Next-Generation Antivirus","Antivirus that uses behavior and cloud machine learning, not only signatures.","Defender Antivirus (E3)","ngp"], ["Endpoint","AV","Antivirus","Software that finds and removes malware.","Defender Antivirus (E3)","av"], ["Endpoint","ASR","Attack Surface Reduction","Rules that block risky behavior, for example Office macros that start other programs.","Defender for Endpoint P1 (E3)","asr"], ["Endpoint","EDR","Endpoint Detection and Response","Records device activity, detects attacks, and lets analysts investigate and respond.","Defender for Endpoint P2 (E5)","edrov"], ["Endpoint","RBVM","Risk-Based Vulnerability Management","Ranks vulnerabilities by real risk (known exploits, exposure, asset value), not only by CVSS score.","Defender Vulnerability Management (E5)","mdvm"], ["Endpoint","AIR","Automated Investigation and Response","Investigates alerts and fixes them automatically.","Defender for Endpoint P2 and Defender for Office 365 P2 (E5)","air"], ["Endpoint","KQL","Kusto Query Language","The query language for threat hunting in Defender and Sentinel.","Advanced Hunting (E5)","kql"], ["Email & SaaS","SEG","Secure Email Gateway","Filters email before it arrives (the MX record points to it). Blocks spam and known malware.","Exchange Online Protection (E3)","eop"], ["Email & SaaS","ICES","Integrated Cloud Email Security","Email security that is built into the cloud mailbox, not a separate gateway in front of it. It finds phishing, BEC, and bad links and files that pass the gateway, and can remove mail after delivery. Gartner term.","Defender for Office 365 P1 (E3 from 2026); P2 adds investigation (E5)","mdo"], ["Email & SaaS","BEC","Business Email Compromise","Fraud by email, for example a fake CEO who asks for a wire transfer.","Defender for Office 365 anti-impersonation","antiphish"], ["Email & SaaS","ZAP","Zero-hour Auto Purge","Removes email from inboxes after delivery when the email is later found to be malicious.","Exchange Online Protection and Defender for Office 365 (E3)","zap"], ["Email & SaaS","SAT","Security Awareness Training","Phishing simulations and short training for users.","Attack Simulation Training (E5)","ast"], ["Email & SaaS","CASB","Cloud Access Security Broker","Shows and controls the use of cloud apps: discovery, policies, and session control.","Defender for Cloud Apps (discovery in E3, full in E5)","mdca"], ["Email & SaaS","SSPM","SaaS Security Posture Management","Finds security misconfigurations in SaaS apps.","Defender for Cloud Apps (E5)","sspm"], ["Email & SaaS","OAuth","Open Authorization","The protocol that lets apps get access to data on a user's behalf. Risky OAuth apps are an attack path.","App Governance (E5)","appgov"], ["Network","SSE","Security Service Edge","Network security delivered from the cloud: SWG + ZTNA + CASB.","Entra Internet Access + Entra Private Access (E7)","gsa"], ["Network","ZTNA","Zero Trust Network Access","Access to one private app at a time, based on identity and device. Replaces the VPN.","Entra Private Access (E7)","epa"], ["Network","SWG","Secure Web Gateway","Filters internet traffic by web category, threat, and AI app.","Entra Internet Access (E7)","eia"], ["Network","VPN","Virtual Private Network","A tunnel that connects a device to the corporate network.","Windows Always On VPN (E3)","aovpn"], ["Data","DLP","Data Loss Prevention","Stops sensitive data from leaving through email, sharing, devices, or AI prompts.","Purview DLP (M365 workloads in E3; endpoint and Teams in E5)","dlp"], ["Data","DSPM","Data Security Posture Management","Shows where sensitive data is, who can get to it, and the risk. DSPM for AI adds AI prompts and responses.","Purview DSPM (E5); DSPM for AI basic in E3","dspm"], ["Data","EDM","Exact Data Match","Finds your real records (for example, a customer table) instead of only patterns.","Purview (E5)","edm"], ["Data","BYOK","Bring Your Own Key","You supply the root encryption key.","Azure Rights Management (E3)","byok"], ["Data","HYOK","Hold Your Own Key","You keep a key that Microsoft never sees.","Double Key Encryption (E5)","dke"], ["Data","DKE","Double Key Encryption","Two keys protect the content: one held by Microsoft and one held by you.","Purview (E5)","dke"], ["Data","DAG","Data Access Governance","Reports on oversharing: sharing links, 'everyone' access, and permissions.","SharePoint Advanced Management (with Copilot or E7)","dag"], ["Data","SAM","SharePoint Advanced Management","Copilot-readiness tools that control oversharing and content sprawl in SharePoint and OneDrive.","Included with Copilot licenses and E7","sam"], ["Data","RAC","Restricted Access Control","Limits a SharePoint site to a named security group.","SharePoint Advanced Management","rac"], ["Data","RCD","Restricted Content Discovery","Hides a site from search and Copilot results.","SharePoint Advanced Management","rcd"], ["SOC & AI","XDR","Extended Detection and Response","One incident view and response across endpoint, identity, email, and cloud apps.","Defender XDR (E5)","xdr"], ["SOC & AI","CTEM","Continuous Threat Exposure Management","A Gartner program that continuously finds, ranks, and fixes exposures, including attack paths to critical assets.","Microsoft Security Exposure Management (E5)","xspm"], ["SOC & AI","SIEM","Security Information and Event Management","Collects logs from many sources and correlates them into alerts.","Microsoft Sentinel; ISOC preview (E5/E7)","sentinel"], ["SOC & AI","ISOC","Integrated Security Operations Center","SIEM features inside the Defender portal, with no separate Sentinel deployment.","Preview for E5/E7 from Sept 23, 2026","isoc"], ["SOC & AI","MDTI","Microsoft Defender Threat Intelligence","Microsoft threat intelligence: actor profiles, indicators, and reports.","Now 'Threat intelligence' in Defender, no extra cost (E5)","ti"], ["SOC & AI","IoC","Indicator of Compromise","Evidence of an attack, such as a bad IP address, domain, or file hash.","Threat intelligence in Defender (E5)","ioc"], ["SOC & AI","SCU","Security Compute Unit","The capacity unit for Security Copilot.","400 SCUs per 1,000 users each month (E5/E7)","secopilot"], ["SOC & AI","AI-SPM","AI Security Posture Management","Finds misconfigurations and risk in AI apps and agents.","Defender via Agent 365 (E7)","aispm"], ["SOC & AI","CSF","Cybersecurity Framework (NIST)","Six functions: Govern, Identify, Protect, Detect, Respond, Recover. The columns of the matrix.","Framework, not a product","nist"], ["SOC & AI","AI TRiSM","AI Trust, Risk, and Security Management","A Gartner category for governing and securing AI: model and agent inventory, data protection, runtime controls.","Agent 365 + Purview DSPM for AI (E7)","agent365"], ["SOC & AI","CTI","Cyber Threat Intelligence","Research about attackers, their tools, and campaigns.","Threat Analytics (E5)","ta"], ["SOC & AI","TIP","Threat Intelligence Platform","A tool that collects, enriches, and searches threat intelligence (actors, IoCs).","Threat intelligence in Defender, ex-MDTI Premium (E5)","ti"], ["SOC & AI","UEBA","User and Entity Behavior Analytics","Learns normal behavior for users and devices and flags unusual activity.","Sentinel / ISOC workspace; Insider Risk Management for data (E5)","ueba"], ["Data","DCAP","Data-Centric Audit and Protection","Protection that travels with the data: classification, labels, encryption, and audit.","Purview Information Protection (manual in E3, automatic in E5)","dcap"], ["Data","IRM","Insider Risk Management","Microsoft meaning: detects risky user activity with data, such as data theft by a leaving employee. Older industry meaning: Information Rights Management (encryption).","Purview Insider Risk Management (E5)","irm"], ["Endpoint","PKIaaS","Public Key Infrastructure as a Service","A certificate authority that the vendor runs in the cloud, so you need no on-premises CA servers.","Microsoft Cloud PKI (E5 from 2026)","pki"], ["Productivity","UCaaS","Unified Communications as a Service","Cloud telephony, meetings, and chat.","Teams Phone + Audio Conferencing (E5)","teamsphone"], ["Identity","JIT","Just-in-Time access","A user gets access or admin rights only when needed, and only for a limited time.","PIM for admin roles and EPM for local admin rights (E5)","pim"], ["SOC & AI","ZTA","Zero Trust Architecture","A security model that verifies every request explicitly, uses least privilege, and assumes breach. NIST SP 800-207 defines the reference model.","Framework, not a product. See the ZTA map for the tier view","zt"], ["SOC & AI","MCP","Model Context Protocol","An open standard that lets AI agents call tools and data through MCP servers.","Agent 365 tooling gateway and Global Secure Access MCP insights (E7); Azure API Management AI Gateway for customer-hosted servers (Azure)","tooling"], ["Cloud","CSPM","Cloud Security Posture Management","Finds misconfigurations and attack paths in cloud infrastructure (Azure, AWS, GCP).","Defender for Cloud: an Azure purchase, not in any Microsoft 365 suite","cspm"], ["Cloud","CWPP","Cloud Workload Protection Platform","Threat protection for servers, containers, databases, storage, and other cloud workloads.","Defender for Cloud plans, for example Defender for Servers and Defender for Containers (Azure purchase)","mdc"]];
+const PRODUCTS = [["Entra ID P1","entralic"],["Entra ID P2","entralic"],["Entra Suite","entralic"],["Entra ID Protection","idprot"],["ID Protection","idprot"],["Conditional Access","ca"],["Entra ID Governance","idgov"],["ID Governance","idgov"],["Access Reviews","accrev"],["Entitlement Management","entmgmt"],["lifecycle workflows","lcw"],["Verified ID Face Check","facecheck"],["Face Check","facecheck"],["Entra Agent ID","agentid"],["Microsoft Agent 365","agent365"],["Agent 365 tooling gateway","tooling"],["Agent 365","agent365"],["Entra Workload ID Premium","wlfaq"],["Workload ID Premium","wlfaq"],["Privileged Identity Management","pim"],["Defender for Identity","mdi"],["Defender for Endpoint","mde"],["Defender Vulnerability Management","mdvm"],["Intune Remote Help","remotehelp"],["Remote Help","remotehelp"],["Intune Advanced Analytics","dex"],["Advanced Analytics","dex"],["Intune Endpoint Privilege Management","epm"],["Endpoint Privilege Management","epm"],["Cloud PKI","pki"],["Enterprise App Management","eam"],["Enterprise Application Management","eam"],["app protection policies","mam"],["app protection policy","mam"],["Windows Autopatch","autopatch"],["Intune","intune"],["BitLocker","bitlocker"],["LAPS","laps"],["Defender for Office 365","mdo"],["Exchange Online Protection","eop"],["Attack Simulation Training","ast"],["Defender for Cloud Apps","mdca"],["Cloud Discovery","clouddisc"],["App Governance","appgov"],["Defender XDR","xdr"],["attack disruption","disrupt"],["Advanced Hunting","ah"],["Threat Analytics","ta"],["Threat intelligence in Defender","ti"],["Threat intelligence","ti"],["Exposure Management","xspm"],["Security Copilot","secopilot"],["Microsoft Sentinel","sentinel"],["Sentinel","sentinel"],["Secure Score","securescore"],["Compliance Manager","compmgr"],["Insider Risk Management","irm"],["Insider Risk","irm"],["Adaptive Protection","adaptive"],["Communication Compliance","commcomp"],["eDiscovery","edisc"],["Audit Standard","audit"],["Audit Premium","audit"],["Records Management","records"],["Retention policies","retention"],["sensitivity labels","labels"],["Auto-labeling","autolabel"],["trainable classifiers","classifiers"],["sensitive info types","sit"],["Sensitive information types","sit"],["Customer Key","customerkey"],["Double Key Encryption","dke"],["Information Barriers","ib"],["DSPM for AI","dspmai"],["Data Security Posture Management","dspm"],["Purview Data Map","datamap"],["Data Map","datamap"],["Unified Catalog","unicat"],["Entra Internet Access","eia"],["Internet Access","eia"],["Entra Private Access","epa"],["Private Access","epa"],["Global Secure Access","gsa"],["Universal Continuous Access Evaluation","ucae"],["Universal CAE","ucae"],["application proxy","appproxy"],["prompt injection protection","pip"],["Shadow AI discovery","shadowai"],["Azure API Management","apim"],["API Management AI Gateway","apim"],["Defender for Cloud DevOps","devops"],["Defender for Cloud","mdc"],["Defender CSPM","cspm"],["Defender for Servers","defservers"],["Defender for Containers","defcont"],["Defender for APIs","defapis"],["Defender for App Service","defappsvc"],["Defender for Databases","defdb"],["GitHub Advanced Security","ghas"],["Azure Arc","arc"],["SharePoint Advanced Management","sam"],["Restricted Access Control","rac"],["Restricted Content Discovery","rcd"],["SharePoint Admin Agent","sharepointagent"],["Microsoft 365 Copilot","m365copilot"],["Copilot Chat","copilotchat"],["Windows Hello for Business","whfb"],["passkeys","passkey"],["Always On VPN","aovpn"],["Teams Phone","teamsphone"],["Automated investigation","air"],["Zero-hour auto purge","zap"]];
+const GMAP = Object.fromEntries(GLOSSARY.map(([grp, ac, full, plain, ms, doc]) => [ac, { grp, ac, full, plain, ms, url: DOCS[doc][0] }]));
+const PMAP = Object.fromEntries(PRODUCTS.map(([name, doc]) => [name.toLowerCase(), { name, url: DOCS[doc][0] }]));
+const rxEsc = s => s.replace(/[.*+?^${}()|[\]\\-]/g, "\\$&");
+const rxOf = (keys, flags) => new RegExp("(?<![A-Za-z0-9-])(" + keys.sort((a, b) => b.length - a.length).map(rxEsc).join("|") + ")(?![A-Za-z0-9-])", flags);
+const GRX = rxOf(Object.keys(GMAP), "g");
+const PRX = rxOf(PRODUCTS.map(p => p[0]), "gi");
+const esc = s => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+// Product names first (case-insensitive), then acronyms. link=false gives tooltip-only terms (for use inside buttons).
+function annotate(text, link = true) {
+  const keep = [];
+  const hold = h => { keep.push(h); return "\u0000" + (keep.length - 1) + "\u0000"; };
+  let s = esc(text).replace(PRX, m => link ? hold(`<a class="doc" href="${PMAP[m.toLowerCase()].url}" target="_blank" rel="noopener" data-prod="${esc(PMAP[m.toLowerCase()].name)}">${m}</a>`) : hold(m));
+  s = s.replace(GRX, m => link
+    ? `<a class="term" href="${GMAP[m].url}" target="_blank" rel="noopener" data-term="${m}">${m}</a>`
+    : `<abbr data-term="${m}" tabindex="0">${m}</abbr>`);
+  return s.replace(/\u0000(\d+)\u0000/g, (_, i) => keep[+i]);
+}
+// Collect the doc pages that a list of texts refers to: Map(url -> label)
+function docsIn(texts, out = new Map()) {
+  texts.forEach(t => {
+    const rest = t.replace(PRX, m => { const p = PMAP[m.toLowerCase()]; if (!out.has(p.url)) out.set(p.url, p.name[0].toUpperCase() + p.name.slice(1)); return " "; });
+    rest.replace(GRX, m => { const g = GMAP[m]; if (!out.has(g.url)) out.set(g.url, `${g.ac}: ${g.full}`); return m; });
+  });
+  return out;
+}
+const docHost = url => (url.includes("learn.microsoft.com") ? "Microsoft Learn" : url.includes("github.com") ? "GitHub Docs" : "the source page");
+// ---- end shared ----
+
+const IDS = Object.keys(COMP);
+const N = IDS.length;
+const levelAt = (c, t) => c.lv[idx(t)];
+const firstFull = c => TIERS.find(t => levelAt(c, t) === 2);
+const maxLv = c => Math.max(...c.lv);
+const prevTier = t => (idx(t) > 0 ? TIERS[idx(t) - 1] : null);
+const needsExt = c => maxLv(c) < 2 && c.ext.length > 0;
+
+const BASE = "ZTA"; // framework view: no tier, no products
+const STEPS = [BASE, ...TIERS];
+const isBase = () => current === BASE;
+let current = BASE;
+let selected = null;
+
+const PRINCIPLES = [
+  ["Verify explicitly", "Authenticate and authorize every request with all available signals: identity, location, device health, data, and anomalies."],
+  ["Use least privilege access", "Give just-in-time and just-enough access, with risk-based adaptive policies and data protection."],
+  ["Assume breach", "Limit the blast radius, segment access, encrypt end to end, and use analytics to find and stop threats."],
+];
+const PILLAR_INFO = {
+  "Identities": "Who or what asks for access: people, AI agents, and workloads (apps and services).",
+  "Endpoints": "The device that sends the request: corporate, personal, or external.",
+  "Signals": "The context that goes with each request into the policy engine: strong authentication, device compliance, and risk.",
+  "Policy Optimization": "Governance, compliance, and posture assessment. They tune the policies over time.",
+  "Access Controls": "The policy engine. It evaluates each request and enforces the decision, every time.",
+  "Threat Protection": "Continuous assessment, threat intelligence, forensics, and automated response. Risk goes back into each access decision.",
+  "Network": "The public and private paths to resources, with traffic filtering and segmentation.",
+  "Data": "Emails, documents, and structured data. Classify, label, and encrypt them.",
+  "Apps": "SaaS and on-premises apps, with adaptive access.",
+  "AI Resources": "AI agents and MCP servers, with in-app controls.",
+  "Infrastructure": "Serverless, containers, IaaS, PaaS, and internal sites, with posture management.",
+};
+const KPI_LABELS = {
+  base: ["Zero Trust principles", "Components to secure", "ZTA pillars", "Products shown"],
+  tier: ["ZTA coverage", "Components fully covered", "Components improved by this step", "Open gaps at this tier"],
+};
+const STAGE_HINT = {
+  base: "The Zero Trust reference architecture, with no products. Each request goes from an identity and an endpoint, through the policy engine and the network, to a resource. Select a component to see what it does. Then select E3 to start the climb.",
+  tier: "Color shows the <b>tier that first gives full coverage</b> for each component. A hatched component has partial coverage. A dashed component has no coverage at this tier. A dotted component needs a product <b>outside the Microsoft 365 suite</b> (for example, an Azure service). A ring and “+” show what this step improved. Select a component to see the products.",
+};
+
+const BRANCH_SVG = `<svg width="11" height="13" viewBox="0 0 11 13" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="3" cy="2.2" r="1.6"></circle><circle cx="3" cy="10.8" r="1.6"></circle><circle cx="8.5" cy="4.5" r="1.6"></circle><path d="M3 3.8V9.2M8.5 6.1C8.5 8.2 3 7.6 3 9.2"></path></svg>`;
+const GAUGE_SVG = `<circle r="12"></circle><path d="M-7,4 A8,8 0 1,1 7,4"></path><path d="M0,2 L4,-5"></path>`;
+
+function buildStage() {
+  const stage = document.getElementById("stage");
+  const svg = document.getElementById("lines");
+  svg.innerHTML = `<defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z"></path></marker></defs>` +
+    PATHS.map(d => `<path d="${d}"${ARROWS.has(d) ? ' marker-end="url(#arr)"' : ""}></path>`).join("") +
+    GAUGES.map(([x, y]) => `<g class="tele" data-id="telemetry" transform="translate(${x},${y})" tabindex="0" role="button" aria-label="Telemetry, analytics, and assessment">${GAUGE_SVG}</g>`).join("");
+
+  BOXES.forEach(b => {
+    const el = document.createElement("div");
+    el.className = `pillar g-${b.g}`;
+    el.style.cssText = `left:${b.x}px;top:${b.y}px;width:${b.w}px`;
+    el.innerHTML = `<div class="ph">${b.title}</div>` + b.rows.map(id =>
+      `<button class="zc row" data-id="${id}"><span class="nm">${b.jit ? `<span class="jit" aria-hidden="true">${BRANCH_SVG}</span>` : ""}${COMP[id].label}</span><span class="st"></span></button>`).join("");
+    stage.appendChild(el);
+  });
+  NODES.forEach(n => {
+    const el = document.createElement("button");
+    el.className = "zc node";
+    el.dataset.id = n.id;
+    el.style.cssText = `left:${n.x}px;top:${n.y}px;width:${n.w}px;height:${n.h}px`;
+    el.innerHTML = `<span class="nm">${COMP[n.id].label}</span><span class="st"></span>`;
+    stage.appendChild(el);
+  });
+  CALLOUTS.forEach(c => {
+    const el = document.createElement("div");
+    el.className = "callout";
+    el.style.cssText = `left:${c.x}px;top:${c.y}px;width:${c.w}px`;
+    el.innerHTML = c.items.map(([name, t]) => `<span class="pc" data-t="${t}"><i class="tb t-${t}">${t === "SEP" ? "↗" : t}</i>${esc(name)}</span>`).join("");
+    stage.appendChild(el);
+  });
+  stage.insertAdjacentHTML("beforeend", `<div class="zlegend">
+    <span class="tl"><i class="sw none"></i>No coverage</span>
+    <span class="tl"><i class="sw partial"></i>Partial</span>
+    <span class="tl"><i class="sw e3"></i>Full from E3</span>
+    <span class="tl"><i class="sw e5"></i>Full from E5</span>
+    <span class="tl"><i class="sw e7"></i>Full from E7</span>
+    <span class="tl"><i class="sw outside"></i>Outside the M365 suite</span>
+    <span class="tl"><i class="sw gain"></i>Improved by this step</span>
+    <span><svg width="22" height="22" viewBox="-13 -13 26 26"><g class="tele full-E5">${GAUGE_SVG}</g></svg>Telemetry / analytics / assessment</span>
+    <span><span class="jit">${BRANCH_SVG}</span>JIT &amp; version control</span>
+  </div>`);
+
+  stage.addEventListener("click", e => {
+    const t = e.target.closest("[data-id]");
+    if (t) { selected = t.dataset.id; render(); }
+  });
+  stage.addEventListener("keydown", e => {
+    const t = e.target.closest(".tele");
+    if (t && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); selected = "telemetry"; render(); }
+  });
+  fit();
+  new ResizeObserver(fit).observe(document.getElementById("zwrap"));
+}
+
+function fit() {
+  const wrap = document.getElementById("zwrap");
+  const s = document.body.classList.contains("export") ? 1 : Math.min(1.15, wrap.clientWidth / 1440);
+  document.getElementById("stage").style.transform = `scale(${s})`;
+  wrap.style.height = 840 * s + "px";
+}
+
+function stateClasses(c) {
+  const lv = levelAt(c, current);
+  const prev = prevTier(current);
+  const cls = [];
+  if (lv === 1) cls.push("partial");
+  if (lv === 2) cls.push("full-" + firstFull(c));
+  if (lv === 0 && maxLv(c) === 0 && c.ext.length) cls.push("outside");
+  if (prev && lv > levelAt(c, prev)) cls.push("gained");
+  return cls;
+}
+function badge(c) {
+  const lv = levelAt(c, current);
+  if (lv === 2) return "Full";
+  if (lv === 1) return needsExt(c) ? "Partial ↗" : "Partial";
+  return maxLv(c) === 0 && c.ext.length ? "↗ Outside" : "Gap";
+}
+
+function setChrome(mode) {
+  document.body.classList.toggle("base", mode === "base");
+  ["kCovL", "kFullL", "kNewL", "kGapL"].forEach((id, i) => { document.getElementById(id).textContent = KPI_LABELS[mode][i]; });
+  document.getElementById("stageHint").innerHTML = STAGE_HINT[mode];
+}
+
+function renderBase() {
+  setChrome("base");
+  document.querySelectorAll(".zc").forEach(el => {
+    const c = COMP[el.dataset.id];
+    el.className = (el.classList.contains("row") ? "zc row" : "zc node") + (selected === el.dataset.id ? " selected" : "");
+    el.querySelector(".st").textContent = "";
+    el.setAttribute("aria-label", `${c.pillar}, ${c.label}`);
+  });
+  document.querySelectorAll("#lines .tele").forEach(el => el.setAttribute("class", "tele" + (selected === "telemetry" ? " selected" : "")));
+  const set = (id, v) => { document.getElementById(id).textContent = v; };
+  set("kCov", "3"); set("kCovD", "Verify explicitly · least privilege · assume breach");
+  document.getElementById("kCovM").style.width = "0%";
+  set("kFull", N); set("kFullD", "Identities, endpoints, network, and resources");
+  set("kNew", PILLAR_ORDER.length); set("kNewD", "From identities to infrastructure");
+  set("kGap", "None"); set("kGapD", "Select E3 to start the climb");
+  document.getElementById("zTier").innerHTML = `The reference architecture<small>${N} components to secure · no products yet</small>`;
+  document.getElementById("gapTitle").textContent = "The Zero Trust model";
+  document.getElementById("gapHint").textContent = "Three principles apply to every request. Each pillar of the diagram has a different job. Select a component to see details.";
+  document.getElementById("framework").innerHTML =
+    `<div class="principles">${PRINCIPLES.map(([t, d]) => `<div class="principle"><b>${t}</b>${annotate(d)}</div>`).join("")}</div>
+     <div class="pillars">${PILLAR_ORDER.map(p => `<div class="pinfo"><b>${p}</b>${annotate(PILLAR_INFO[p])}<div>${IDS.filter(id => COMP[id].pillar === p)
+       .map(id => `<button class="gap${selected === id ? " sel" : ""}" data-gid="${id}">${COMP[id].label}</button>`).join("")}</div></div>`).join("")}</div>`;
+  renderDetail();
+}
+
+function render() {
+  document.querySelectorAll(".seg button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.tier === current)));
+  if (isBase()) return renderBase();
+  setChrome("tier");
+  document.getElementById("gapHint").textContent = "Each open component, sorted by the step that closes it. Select a component to see the details.";
+  const prev = prevTier(current);
+
+  document.querySelectorAll(".zc").forEach(el => {
+    const c = COMP[el.dataset.id];
+    el.className = (el.classList.contains("row") ? "zc row " : "zc node ") + stateClasses(c).join(" ");
+    if (selected === el.dataset.id) el.classList.add("selected");
+    el.querySelector(".st").textContent = badge(c);
+    el.setAttribute("aria-label", `${c.pillar}, ${c.label}: ${badge(c)} at ${current}`);
+  });
+  document.querySelectorAll("#lines .tele").forEach(el => {
+    const c = COMP.telemetry;
+    el.setAttribute("class", "tele " + stateClasses(c).join(" ") + (selected === "telemetry" ? " selected" : ""));
+  });
+  document.querySelectorAll(".pc").forEach(el => {
+    const t = el.dataset.t;
+    el.classList.toggle("locked", t !== "SEP" && idx(t) > idx(current));
+  });
+
+  let total = 0, prevTotal = 0, full = 0, prevFull = 0, gained = 0, open = 0, openExt = 0;
+  IDS.forEach(id => {
+    const c = COMP[id];
+    const lv = levelAt(c, current);
+    total += lv / 2; if (lv === 2) full++;
+    if (lv < 2) { open++; if (!TIERS.slice(idx(current) + 1).some(t => levelAt(c, t) === 2)) openExt++; }
+    if (prev) { const p = levelAt(c, prev); prevTotal += p / 2; if (p === 2) prevFull++; if (lv > p) gained++; }
+  });
+  const pct = Math.round((total / N) * 100);
+  const ppct = Math.round((prevTotal / N) * 100);
+  document.getElementById("kCov").textContent = pct + "%";
+  document.getElementById("kCovM").style.width = pct + "%";
+  document.getElementById("kCovD").textContent = prev ? `+${pct - ppct} pts vs ${prev}` : "Starting point";
+  document.getElementById("kFull").textContent = `${full} / ${N}`;
+  document.getElementById("kFullD").textContent = prev ? `+${full - prevFull} vs ${prev}` : "";
+  document.getElementById("kNew").textContent = prev ? gained : "-";
+  document.getElementById("kNewD").textContent = prev ? `components improved from ${prev} to ${current}` : "Select E5 or E7 to see the step-up";
+  document.getElementById("kGap").textContent = open;
+  document.getElementById("kGapD").textContent = current === "E7"
+    ? `${openExt} need a product outside the suite`
+    : `${open - openExt} close at a higher tier · ${openExt} need a product outside the suite`;
+  document.getElementById("zTier").innerHTML = `Microsoft 365 ${current}<small>${pct}% of ZTA components covered · ${full} of ${N} full</small>`;
+
+  renderGaps();
+  renderClimb();
+  renderDetail();
+}
+
+const CLOSERS = {
+  E5: "XDR (EDR, ITDR, CASB), CTEM, Entra ID P2, Purview E5, Security Copilot, threat intelligence",
+  E7: "Entra Suite (Internet Access, Private Access, ID Governance, Universal CAE), Agent 365, Microsoft 365 Copilot + SAM. E5 + Agent 365 add-on closes the agent gaps only.",
+  SEP: "Defender for Cloud (CSPM, CWPP), Azure Arc, Azure API Management AI Gateway, Entra Workload ID Premium, Purview Data Map",
+};
+function renderGaps() {
+  const groups = { E5: [], E7: [], SEP: [] };
+  IDS.forEach(id => {
+    const c = COMP[id];
+    if (levelAt(c, current) === 2) return;
+    const closer = TIERS.slice(idx(current) + 1).find(t => levelAt(c, t) === 2);
+    groups[closer || "SEP"].push(id);
+  });
+  const cols = [
+    ["E5", "Closed by the step to E5", ""],
+    ["E7", "Closed by the step to E7", ""],
+    ["SEP", "Not closed by any suite tier", "outside the suite"],
+  ].filter(([k]) => k === "SEP" || idx(k) > idx(current));
+  document.getElementById("gapTitle").textContent = `Where the gaps are at ${current}`;
+  document.getElementById("gaps").style.gridTemplateColumns = `repeat(${cols.length}, minmax(0, 1fr))`;
+  document.getElementById("gaps").innerHTML = cols.map(([k, title, sub]) => {
+    const ids = groups[k];
+    const byPillar = PILLAR_ORDER.map(p => [p, ids.filter(id => COMP[id].pillar === p)]).filter(([, l]) => l.length);
+    return `<div class="gcol c-${k}">
+      <h3><span class="n">${ids.length}</span>${title} <small style="font-weight:400;color:var(--cp-text-soft)">${sub}</small></h3>
+      ${ids.length ? `<div class="closer">${annotate(CLOSERS[k])}</div>` + byPillar.map(([p, l]) => `<div class="gpil"><div class="pl">${p}</div>${l.map(id => {
+        const lv = levelAt(COMP[id], current);
+        return `<button class="gap${selected === id ? " sel" : ""}" data-gid="${id}">${COMP[id].label}<span class="lvl">${lv === 1 ? "◐ partial" : "○ none"}</span></button>`;
+      }).join("")}</div>`).join("") : `<div class="none">${k === "SEP" ? "None" : "No gaps close at this step"}</div>`}
+    </div>`;
+  }).join("");
+}
+
+function renderClimb() {
+  const el = document.getElementById("climb");
+  el.innerHTML = PILLAR_ORDER.map(p => {
+    const ids = IDS.filter(id => COMP[id].pillar === p);
+    const s = t => ids.reduce((a, id) => a + levelAt(COMP[id], t) / 2, 0) / ids.length * 100;
+    const segs = TIERS.map((t, i) => (i > idx(current) ? 0 : s(t) - (i ? s(TIERS[i - 1]) : 0)));
+    const sep = 100 - s("E7");
+    const tot = s(current);
+    return `<div class="rl">${p}</div>
+      <div class="bar" role="img" aria-label="${p}: ${Math.round(tot)}% at ${current}">
+        <i class="e3" style="width:${segs[0]}%"></i><i class="e5" style="width:${segs[1]}%"></i><i class="e7" style="width:${segs[2]}%"></i>
+        <i class="sep" style="margin-left:auto;width:${sep}%" title="Closed only by products outside the suite"></i>
+      </div>
+      <div class="pct">${Math.round(tot)}%</div>`;
+  }).join("");
+}
+
+function renderDetail() {
+  const d = document.getElementById("detail");
+  if (!selected) return;
+  if (isBase()) {
+    const c = COMP[selected];
+    d.innerHTML = `
+      <div class="crumb">${c.pillar} · ${c.label}</div>
+      <h3>${c.label}</h3>
+      <p>${annotate(PILLAR_INFO[c.pillar])}</p>
+      <p class="empty">Select E3, E5, or E7 to see which Microsoft products cover this component.</p>
+      <div class="docs"><div class="tn">DOCUMENTATION</div><ul><li><a href="${DOCS.zt[0]}" target="_blank" rel="noopener">${DOCS.zt[1]}</a><span class="host">Microsoft Learn ↗</span></li></ul></div>`;
+    return;
+  }
+  const c = COMP[selected];
+  const lv = levelAt(c, current);
+  const ff = firstFull(c);
+  const status = lv === 2 ? `Full coverage (from ${ff})` : lv === 1 ? "Partial coverage" : "No coverage at this tier";
+  const top = lv === 0 ? "No coverage" : [...TIERS.slice(0, idx(current) + 1)].reverse().map(t => c.items[t][0]).find(Boolean) || c.label;
+  d.innerHTML = `
+    <div class="crumb">${c.pillar} · ${c.label}</div>
+    <h3>${annotate(top)}</h3>
+    <div class="status">${current}: ${status}</div>
+    ${TIERS.map(t => {
+      const items = c.items[t];
+      const on = idx(t) <= idx(current);
+      return `<div class="tierblock ${on ? "on" : "off"}">
+        <div class="tn">${t}${t === "E3" ? "" : " adds"}${on ? "" : " (locked)"}</div>
+        ${items.length ? `<ul>${items.map(i => `<li>${annotate(i)}</li>`).join("")}</ul>` : `<div class="empty">Nothing new at this tier</div>`}
+      </div>`;
+    }).join("")}
+    ${c.ext.length ? `<div class="tierblock ext"><div class="tn">↗ OUTSIDE THE MICROSOFT 365 SUITE${maxLv(c) < 2 ? " (closes the gap)" : " (complements)"}</div>
+      <ul>${c.ext.map(i => `<li>${annotate(i)}</li>`).join("")}</ul></div>` : ""}
+    ${c.note ? `<p class="hint">${annotate(c.note)}</p>` : ""}
+    ${docsBlock([...TIERS.flatMap(t => c.items[t]), ...c.ext, c.note], COMP_DOCS[selected])}
+  `;
+}
+
+// Component-specific pages that support a rating (in addition to the pages linked from the item text)
+const COMP_DOCS = {
+  workload: ["wlfaq", "wlca"], devcomp: ["mdeca"], risk: ["mdeca"], mcp: ["apim", "tooling"],
+  traffic: ["pip", "ztnet"], public: ["shadowai", "ztnet"], private: ["ztnet"],
+};
+function docsBlock(texts, extra = []) {
+  const out = new Map();
+  extra.forEach(k => out.set(DOCS[k][0], DOCS[k][1]));
+  docsIn(texts.filter(Boolean), out);
+  out.set(DOCS.lic[0], DOCS.lic[1]);
+  return `<div class="docs"><div class="tn">DOCUMENTATION · ${out.size} PAGES</div><ul>${[...out].map(([u, label]) =>
+    `<li><a href="${u}" target="_blank" rel="noopener">${esc(label)}</a><span class="host">${docHost(u)} ↗</span></li>`).join("")}</ul></div>`;
+}
+
+document.querySelector(".lower").addEventListener("click", e => {
+  const b = e.target.closest(".gap"); if (!b) return;
+  selected = b.dataset.gid; render();
+  if (innerWidth <= 1180) document.getElementById("detail").scrollIntoView({ behavior: "smooth", block: "start" });
+});
+document.querySelectorAll(".seg button").forEach(b => b.addEventListener("click", () => { current = b.dataset.tier; render(); }));
+document.getElementById("onlyNew").addEventListener("change", e => document.body.classList.toggle("only-new", e.target.checked));
+document.getElementById("showProducts").addEventListener("change", e => document.body.classList.toggle("no-products", !e.target.checked));
+
+const tip = document.createElement("div");
+tip.id = "tip"; tip.setAttribute("role", "tooltip");
+document.body.appendChild(tip);
+function showTip(a) {
+  if (a.dataset.prod) {
+    tip.innerHTML = `<b>${esc(a.dataset.prod)}</b><div class="go">Select to open ${docHost(a.href)} ↗</div>`;
+  } else {
+    const g = GMAP[a.dataset.term]; if (!g) return;
+    tip.innerHTML = `<b>${g.ac}: ${esc(g.full)}</b>${esc(g.plain)}<div class="ms">In Microsoft 365: ${esc(g.ms)}</div>` +
+      (a.tagName === "A" ? `<div class="go">Select to open ${docHost(g.url)} ↗</div>` : "");
+  }
+  const r = a.getBoundingClientRect();
+  tip.classList.add("show");
+  const tw = tip.offsetWidth, th = tip.offsetHeight;
+  const x = Math.min(Math.max(8, r.left + r.width / 2 - tw / 2), innerWidth - tw - 8);
+  let y = r.top - th - 8; if (y < 8) y = r.bottom + 8;
+  tip.style.left = x + "px"; tip.style.top = y + "px";
+}
+const hideTip = () => tip.classList.remove("show");
+const TIP_SEL = "[data-term], [data-prod]";
+document.addEventListener("mouseover", e => { const a = e.target.closest(TIP_SEL); a ? showTip(a) : hideTip(); });
+document.addEventListener("focusin", e => { const a = e.target.closest(TIP_SEL); a ? showTip(a) : hideTip(); });
+document.addEventListener("scroll", hideTip, true);
+
+
+buildStage();
+const params = new URLSearchParams(location.search);
+if (params.get("embed") === "1") document.body.classList.add("embed");
+if (params.get("export") === "1") { document.body.classList.add("export"); fit(); }
+if (STEPS.includes(params.get("tier"))) current = params.get("tier");
+if (params.get("products") === "0") { document.getElementById("showProducts").checked = false; document.body.classList.add("no-products"); }
+render();
+</script>
+</body>
+</html>

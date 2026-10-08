@@ -22,6 +22,7 @@ import AgentHarnessLayers from '../../components/AgentHarnessLayers.astro';
 import CareerSignalMap from '../../components/CareerSignalMap.astro';
 import TokenSilos from '../../components/TokenSilos.astro';
 import M365CoverageMatrix from '../../components/M365CoverageMatrix.astro';
+import M365ZtaMap from '../../components/M365ZtaMap.astro';
 import PostHeader from '../../components/PostHeader.astro';
 import PostPagination from '../../components/PostPagination.astro';
 import { getPosts } from '../../lib/content';
@@ -64,6 +65,7 @@ const agentHarnessLayersMarker = '[[AGENT_HARNESS_LAYERS]]';
 const careerSignalMapMarker = '[[CAREER_SIGNAL_MAP]]';
 const tokenSilosMarker = '[[TOKEN_SILOS]]';
 const m365CoverageMarker = '[[M365_COVERAGE]]';
+const m365ZtaMarker = '[[M365_ZTA_MAP]]';
 
 let processedHtml = post.html;
 processedHtml = processedHtml.replace(`<p>${runtimeChartMarker}</p>`, runtimeChartMarker);
@@ -90,6 +92,7 @@ processedHtml = processedHtml.replace(`<p>${agentHarnessLayersMarker}</p>`, agen
 processedHtml = processedHtml.replace(`<p>${careerSignalMapMarker}</p>`, careerSignalMapMarker);
 processedHtml = processedHtml.replace(`<p>${tokenSilosMarker}</p>`, tokenSilosMarker);
 processedHtml = processedHtml.replace(`<p>${m365CoverageMarker}</p>`, m365CoverageMarker);
+processedHtml = processedHtml.replace(`<p>${m365ZtaMarker}</p>`, m365ZtaMarker);
 
 const hasRuntimeChart = processedHtml.includes(runtimeChartMarker);
 const hasCareerDevPlan = processedHtml.includes(careerDevPlanMarker);
@@ -107,6 +110,7 @@ const hasAgentHarnessLayers = processedHtml.includes(agentHarnessLayersMarker);
 const hasCareerSignalMap = processedHtml.includes(careerSignalMapMarker);
 const hasTokenSilos = processedHtml.includes(tokenSilosMarker);
 const hasM365Coverage = processedHtml.includes(m365CoverageMarker);
+const hasM365Zta = processedHtml.includes(m365ZtaMarker);
 
 const runtimeParts = hasRuntimeChart ? processedHtml.split(runtimeChartMarker) : [];
 const careerParts = hasCareerDevPlan ? processedHtml.split(careerDevPlanMarker) : [];
@@ -159,6 +163,7 @@ const agentHarnessLayersParts = hasAgentHarnessLayers ? processedHtml.split(agen
 const careerSignalMapParts = hasCareerSignalMap ? processedHtml.split(careerSignalMapMarker) : [];
 const tokenSilosParts = hasTokenSilos ? processedHtml.split(tokenSilosMarker) : [];
 const m365CoverageParts = hasM365Coverage ? processedHtml.split(m365CoverageMarker) : [];
+const m365ZtaParts = hasM365Zta ? processedHtml.split(m365ZtaMarker) : [];
 
 const hasGhWorkshop = processedHtml.includes(ghWorkshopMarker);
 const ghWorkshopParts = hasGhWorkshop ? processedHtml.split(ghWorkshopMarker) : [];
@@ -557,6 +562,12 @@ if (hasGhWorkshop) {
             <Fragment set:html={careerSignalMapParts[0]} />
             <CareerSignalMap />
             <Fragment set:html={careerSignalMapParts.slice(1).join(careerSignalMapMarker)} />
+          </>
+        ) : hasM365Zta ? (
+          <>
+            <Fragment set:html={m365ZtaParts[0]} />
+            <M365ZtaMap />
+            <Fragment set:html={m365ZtaParts.slice(1).join(m365ZtaMarker)} />
           </>
         ) : hasM365Coverage ? (
           <>
