@@ -39,6 +39,7 @@ export interface Post {
   entry: CollectionEntry<'posts'>;
   rawContent: string;
   professional: boolean;
+  featured: boolean;
   /** True when a wide or full-bleed figure needs the side column. */
   hasWideFigures: boolean;
   date: Date;
@@ -255,6 +256,7 @@ export function getPosts(): Post[] {
         entry,
         rawContent: content,
         professional: categories.some((value) => PROFESSIONAL_CATEGORIES.has(value)),
+        featured: entry.data.featured ?? false,
         hasWideFigures: /<Figure size="(wide|full)"/.test(content),
         date,
         permalink,
