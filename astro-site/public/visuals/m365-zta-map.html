@@ -194,7 +194,9 @@ body:not(.base) #framework { display: none; }
 html:has(body.embed), body.embed { overflow: hidden; }
 body.embed header > div:first-child { display: none; }
 body.embed header { justify-content: flex-start; }
-body.embed .wrap { padding: 8px 4px 16px; }
+body.embed .wrap { padding: 8px 16px 20px; }
+body.embed footer { margin-top: 16px; }
+body.embed footer p:last-child { margin-bottom: 0; }
 /* ?export=1 shows only the diagram at 1440 × 840 for slide images */
 body.export header, body.export .kpis, body.export .lower, body.export .section, body.export footer,
 body.export .card > h2, body.export .card > .hint { display: none; }
