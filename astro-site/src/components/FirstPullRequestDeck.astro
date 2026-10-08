@@ -238,14 +238,14 @@ const slides = [
 
 <style>
   .fpr-deck {
-    --fpr-bg: #081a36;
-    --fpr-bg-2: #0e2a52;
-    --fpr-blue: #599FFD;
-    --fpr-yellow: #FADC14;
-    --fpr-peri: #A5B8EE;
-    --fpr-mint: #E2F9D9;
-    --fpr-ink: #eaf1fb;
-    --fpr-muted: #cfe0ff;
+    --fpr-bg: var(--viz-night);
+    --fpr-bg-2: var(--viz-navy);
+    --fpr-blue: var(--viz-blue);
+    --fpr-yellow: var(--signal-yellow);
+    --fpr-peri: var(--signal-periwinkle);
+    --fpr-mint: var(--signal-mint);
+    --fpr-ink: var(--viz-mist);
+    --fpr-muted: var(--viz-sky);
     --fpr-glass: rgba(7, 20, 43, 0.72);
     width: min(calc(100vw - 2rem), 76rem);
     margin: 2rem auto;
@@ -260,7 +260,7 @@ const slides = [
   }
 
   .fpr-deck h2 {
-    color: #fff;
+    color: var(--white);
     font-size: clamp(2rem, 3.6vw, 4.3rem);
     line-height: 0.98;
   }
@@ -290,10 +290,10 @@ const slides = [
     gap: 0.35rem;
     margin-bottom: 1rem;
     padding: 0.55rem;
-    border: 1px solid rgba(89, 159, 253, 0.24);
+    border: 1px solid color-mix(in srgb, var(--viz-blue) 24%, transparent);
     border-radius: 10px;
-    background: rgba(8, 26, 54, 0.9);
-    box-shadow: 0 18px 42px rgba(8, 20, 40, 0.18);
+    background: color-mix(in srgb, var(--viz-night) 90%, transparent);
+    box-shadow: 0 18px 42px color-mix(in srgb, var(--viz-night-2) 18%, transparent);
     backdrop-filter: blur(12px);
   }
 
@@ -314,14 +314,14 @@ const slides = [
 
   .fpr-rail a:hover,
   .fpr-rail a.is-active {
-    color: #fff;
-    border-color: rgba(89, 159, 253, 0.42);
-    background: rgba(89, 159, 253, 0.16);
+    color: var(--white);
+    border-color: color-mix(in srgb, var(--viz-blue) 42%, transparent);
+    background: color-mix(in srgb, var(--viz-blue) 16%, transparent);
   }
 
   .fpr-present-toggle {
     margin-left: auto;
-    color: #081a36;
+    color: var(--viz-night);
     background: var(--fpr-yellow);
     border-color: var(--fpr-yellow);
     cursor: pointer;
@@ -332,13 +332,13 @@ const slides = [
     min-height: min(42rem, calc((100vw - 2rem) * 9 / 16));
     margin-top: 1rem;
     overflow: hidden;
-    border: 1px solid rgba(89, 159, 253, 0.22);
+    border: 1px solid color-mix(in srgb, var(--viz-blue) 22%, transparent);
     border-radius: 18px;
     background:
-      radial-gradient(130% 95% at 12% -10%, rgba(89, 159, 253, 0.32), transparent 58%),
-      radial-gradient(120% 95% at 92% 115%, rgba(250, 220, 20, 0.16), transparent 55%),
-      linear-gradient(150deg, #0e2a52 0%, #0b2344 55%, #081a36 100%);
-    box-shadow: 0 24px 64px rgba(8, 20, 40, 0.28);
+      radial-gradient(130% 95% at 12% -10%, color-mix(in srgb, var(--viz-blue) 32%, transparent), transparent 58%),
+      radial-gradient(120% 95% at 92% 115%, color-mix(in srgb, var(--signal-yellow) 16%, transparent), transparent 55%),
+      linear-gradient(150deg, var(--viz-navy) 0%, var(--viz-navy-2) 55%, var(--viz-night) 100%);
+    box-shadow: 0 24px 64px color-mix(in srgb, var(--viz-night-2) 28%, transparent);
   }
 
   .fpr-slide::before {
@@ -347,8 +347,8 @@ const slides = [
     inset: -20%;
     pointer-events: none;
     background:
-      radial-gradient(circle at 20% 20%, rgba(250, 220, 20, 0.16), transparent 24%),
-      radial-gradient(circle at 78% 64%, rgba(89, 159, 253, 0.18), transparent 28%);
+      radial-gradient(circle at 20% 20%, color-mix(in srgb, var(--signal-yellow) 16%, transparent), transparent 24%),
+      radial-gradient(circle at 78% 64%, color-mix(in srgb, var(--viz-blue) 18%, transparent), transparent 28%);
     filter: blur(6px);
     animation: fpr-ambient 18s ease-in-out infinite;
   }
@@ -408,11 +408,11 @@ const slides = [
   }
 
   .fpr-chip-row span {
-    border: 1px solid rgba(250, 220, 20, 0.4);
+    border: 1px solid color-mix(in srgb, var(--signal-yellow) 40%, transparent);
     border-radius: 999px;
     padding: 0.38rem 0.68rem;
     color: #fff7bc;
-    background: rgba(250, 220, 20, 0.1);
+    background: color-mix(in srgb, var(--signal-yellow) 10%, transparent);
     font-size: 0.84rem;
     font-weight: 800;
   }
@@ -424,7 +424,7 @@ const slides = [
     gap: 0.75rem;
     min-height: 21rem;
     padding: clamp(0.8rem, 1.4vw, 1rem);
-    border: 1px solid rgba(165, 184, 238, 0.22);
+    border: 1px solid color-mix(in srgb, var(--signal-periwinkle) 22%, transparent);
     border-radius: 18px;
     background: rgba(6, 16, 34, 0.5);
     overflow: hidden;
@@ -444,8 +444,8 @@ const slides = [
   }
 
   .branch-main {
-    stroke: rgba(89, 159, 253, 0.78);
-    filter: drop-shadow(0 0 10px rgba(89, 159, 253, 0.28));
+    stroke: color-mix(in srgb, var(--viz-blue) 78%, transparent);
+    filter: drop-shadow(0 0 10px color-mix(in srgb, var(--viz-blue) 28%, transparent));
   }
 
   .branch-work {
@@ -456,7 +456,7 @@ const slides = [
   }
 
   .branch-work-glow {
-    stroke: rgba(250, 220, 20, 0.32);
+    stroke: color-mix(in srgb, var(--signal-yellow) 32%, transparent);
     stroke-width: 14;
     opacity: 0;
     filter: blur(6px);
@@ -469,7 +469,7 @@ const slides = [
   .node-review { fill: var(--fpr-yellow); }
 
   .branch-text {
-    fill: #cfe0ff;
+    fill: var(--viz-sky);
     font-family: "JetBrains Mono", monospace;
     font-size: 16px;
     font-weight: 800;
@@ -492,14 +492,14 @@ const slides = [
     gap: 0.18rem;
     min-width: 0;
     padding: 0.62rem;
-    border: 1px solid rgba(89, 159, 253, 0.28);
+    border: 1px solid color-mix(in srgb, var(--viz-blue) 28%, transparent);
     border-radius: 12px;
-    background: rgba(89, 159, 253, 0.09);
+    background: color-mix(in srgb, var(--viz-blue) 9%, transparent);
   }
 
   .branch-legend li:nth-child(2) {
-    border-color: rgba(250, 220, 20, 0.4);
-    background: rgba(250, 220, 20, 0.08);
+    border-color: color-mix(in srgb, var(--signal-yellow) 40%, transparent);
+    background: color-mix(in srgb, var(--signal-yellow) 8%, transparent);
   }
 
   .branch-legend span {
@@ -510,7 +510,7 @@ const slides = [
   }
 
   .branch-legend strong {
-    color: #fff;
+    color: var(--white);
     font-size: 0.9rem;
     line-height: 1.1;
   }
@@ -538,13 +538,13 @@ const slides = [
     min-height: 8rem;
     padding: 1rem;
     border-radius: 16px;
-    border: 1px solid rgba(89, 159, 253, 0.28);
-    background: rgba(89, 159, 253, 0.09);
+    border: 1px solid color-mix(in srgb, var(--viz-blue) 28%, transparent);
+    background: color-mix(in srgb, var(--viz-blue) 9%, transparent);
     animation: fpr-card-rise 0.6s ease both;
   }
 
   .approval-gate li:nth-child(2) { animation-delay: 0.12s; }
-  .approval-gate li:nth-child(3) { animation-delay: 0.24s; border-color: rgba(250, 220, 20, 0.5); background: rgba(250, 220, 20, 0.08); }
+  .approval-gate li:nth-child(3) { animation-delay: 0.24s; border-color: color-mix(in srgb, var(--signal-yellow) 50%, transparent); background: color-mix(in srgb, var(--signal-yellow) 8%, transparent); }
   .approval-gate li:nth-child(4) { animation-delay: 0.36s; }
 
   .approval-gate span {
@@ -554,7 +554,7 @@ const slides = [
     font-weight: 800;
   }
 
-  .approval-gate strong { color: #fff; font-size: 1.2rem; }
+  .approval-gate strong { color: var(--white); font-size: 1.2rem; }
   .approval-gate em { color: var(--fpr-muted); font-style: normal; line-height: 1.35; }
 
   .spotlight {
@@ -566,7 +566,7 @@ const slides = [
     position: absolute;
     inset: 10% -20%;
     pointer-events: none;
-    background: linear-gradient(90deg, transparent, rgba(250, 220, 20, 0.18), transparent);
+    background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--signal-yellow) 18%, transparent), transparent);
     transform: translateX(-80%);
     animation: fpr-spotlight 4.2s ease-in-out infinite;
   }
@@ -582,7 +582,7 @@ const slides = [
     display: grid;
     gap: 0.32rem;
     padding: clamp(0.85rem, 1.4vw, 1.2rem);
-    border: 1px solid rgba(165, 184, 238, 0.24);
+    border: 1px solid color-mix(in srgb, var(--signal-periwinkle) 24%, transparent);
     border-radius: 16px;
     background: rgba(6, 16, 34, 0.58);
   }
@@ -597,8 +597,8 @@ const slides = [
     display: block;
     padding: 0.28rem 0.45rem;
     border-radius: 7px;
-    color: #cfe0ff;
-    background: rgba(255, 255, 255, 0.04);
+    color: var(--viz-sky);
+    background: color-mix(in srgb, var(--white) 4%, transparent);
     font-family: "JetBrains Mono", monospace;
     font-size: clamp(0.72rem, 1vw, 0.9rem);
   }
@@ -634,10 +634,10 @@ const slides = [
     gap: 0.55rem 0.75rem;
     align-items: center;
     padding: 0.5rem 0.65rem;
-    border: 1px solid rgba(165, 184, 238, 0.24);
+    border: 1px solid color-mix(in srgb, var(--signal-periwinkle) 24%, transparent);
     border-radius: 12px;
     background: rgba(3, 10, 22, 0.82);
-    box-shadow: 0 18px 42px rgba(0, 0, 0, 0.35);
+    box-shadow: 0 18px 42px color-mix(in srgb, var(--black) 35%, transparent);
     backdrop-filter: blur(14px);
   }
 
@@ -648,7 +648,7 @@ const slides = [
     font-weight: 800;
   }
 
-  .fpr-title { color: #fff; }
+  .fpr-title { color: var(--white); }
 
   .fpr-controls {
     display: inline-flex;
@@ -660,10 +660,10 @@ const slides = [
     min-width: 2.25rem;
     min-height: 2.1rem;
     padding: 0.35rem 0.62rem;
-    border: 1px solid rgba(89, 159, 253, 0.3);
+    border: 1px solid color-mix(in srgb, var(--viz-blue) 30%, transparent);
     border-radius: 9px;
-    background: rgba(89, 159, 253, 0.12);
-    color: #fff;
+    background: color-mix(in srgb, var(--viz-blue) 12%, transparent);
+    color: var(--white);
     font: inherit;
     font-size: 0.8rem;
     font-weight: 800;
@@ -672,8 +672,8 @@ const slides = [
 
   .fpr-btn:hover,
   .fpr-btn[aria-pressed='true'] {
-    background: rgba(250, 220, 20, 0.16);
-    border-color: rgba(250, 220, 20, 0.5);
+    background: color-mix(in srgb, var(--signal-yellow) 16%, transparent);
+    border-color: color-mix(in srgb, var(--signal-yellow) 50%, transparent);
   }
 
   .fpr-btn:disabled {
@@ -685,7 +685,7 @@ const slides = [
     display: none;
     grid-column: 1 / -1;
     padding-top: 0.45rem;
-    border-top: 1px solid rgba(165, 184, 238, 0.16);
+    border-top: 1px solid color-mix(in srgb, var(--signal-periwinkle) 16%, transparent);
     color: var(--fpr-mint) !important;
     font-size: 0.78rem !important;
     line-height: 1.35 !important;
@@ -703,9 +703,9 @@ const slides = [
     margin: 0;
     overflow: hidden;
     background:
-      radial-gradient(85% 65% at 16% 6%, rgba(89, 159, 253, 0.32), transparent 62%),
-      radial-gradient(80% 70% at 86% 95%, rgba(250, 220, 20, 0.16), transparent 60%),
-      linear-gradient(150deg, #061226 0%, #081a36 58%, #0b2344 100%);
+      radial-gradient(85% 65% at 16% 6%, color-mix(in srgb, var(--viz-blue) 32%, transparent), transparent 62%),
+      radial-gradient(80% 70% at 86% 95%, color-mix(in srgb, var(--signal-yellow) 16%, transparent), transparent 60%),
+      linear-gradient(150deg, #061226 0%, var(--viz-night) 58%, var(--viz-navy-2) 100%);
   }
 
   .fpr-deck[data-present='true'] .fpr-rail { display: none; }

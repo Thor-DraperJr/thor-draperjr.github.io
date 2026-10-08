@@ -275,14 +275,14 @@ const model = { TIERS, FUNCS, ROWS, DATA, PLATFORM, GLOSSARY };
   /* NOSHIMEHANA scheme: every value is a named color from Nippon Colors (nipponcolors.com). Scoped to the figure. */
   .m365-breakout { position: relative; left: 50%; width: min(100vw - 2rem, 76rem); margin: 2.5rem 0; transform: translateX(-50%); }
   .mcx {
-    --bg: #FCFAF2; --surface: #FFFFFB; --soft: color-mix(in srgb, #BDC0BA 22%, #FFFFFB);
-    --border: color-mix(in srgb, #BDC0BA 60%, #FFFFFB); --border-strong: #91989F;
+    --bg: #FCFAF2; --surface: var(--paper-bright); --soft: color-mix(in srgb, #BDC0BA 22%, var(--paper-bright));
+    --border: color-mix(in srgb, #BDC0BA 60%, var(--paper-bright)); --border-strong: #91989F;
     --text: #1C1C1C; --muted: #434343; --faint: #656765;
-    --accent: #2B5F75; --accent-soft: rgba(43, 95, 117, 0.09); --accent-fg: #FFFFFB; --link: #006284;
-    --e3: #A5DEE4; --e5: #2B5F75; --e7: #0F2540; --e3-fg: #0F2540; --e5-fg: #FFFFFB; --e7-fg: #FFFFFB;
-    --hi: #CC543A; --partial: color-mix(in srgb, #A5DEE4 45%, #FFFFFB);
+    --accent: #2B5F75; --accent-soft: rgba(43, 95, 117, 0.09); --accent-fg: var(--paper-bright); --link: #006284;
+    --e3: #A5DEE4; --e5: #2B5F75; --e7: #0F2540; --e3-fg: #0F2540; --e5-fg: var(--paper-bright); --e7-fg: var(--paper-bright);
+    --hi: #CC543A; --partial: color-mix(in srgb, #A5DEE4 45%, var(--paper-bright));
     --shadow: 0 0 2px rgba(8,25,45,0.12), 0 1px 2px rgba(8,25,45,0.14);
-    --tip-bg: rgba(255, 255, 251, 0.97);
+    --tip-bg: color-mix(in srgb, var(--paper-bright) 97%, transparent);
     margin: 0; padding: clamp(1rem, 2.5vw, 1.75rem); border-radius: 18px; border: 1px solid var(--border);
     background: var(--bg); color: var(--text); font-size: 14px; line-height: 1.45;
     font-family: "Segoe UI", Aptos, Calibri, -apple-system, BlinkMacSystemFont, sans-serif;

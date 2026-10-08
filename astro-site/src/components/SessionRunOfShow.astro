@@ -50,11 +50,11 @@ const segments = [
     padding: clamp(1.2rem, 0.7rem + 2.4cqw, 2.4rem);
     border-radius: 18px;
     background:
-      radial-gradient(130% 95% at 12% -10%, rgba(89, 159, 253, 0.3), transparent 58%),
-      radial-gradient(120% 95% at 92% 115%, rgba(250, 220, 20, 0.16), transparent 55%),
-      linear-gradient(150deg, #0e2a52 0%, #0b2344 55%, #081a36 100%);
-    color: #eaf1fb;
-    box-shadow: 0 24px 60px rgba(8, 20, 40, 0.32);
+      radial-gradient(130% 95% at 12% -10%, color-mix(in srgb, var(--viz-blue) 30%, transparent), transparent 58%),
+      radial-gradient(120% 95% at 92% 115%, color-mix(in srgb, var(--signal-yellow) 16%, transparent), transparent 55%),
+      linear-gradient(150deg, var(--viz-navy) 0%, var(--viz-navy-2) 55%, var(--viz-night) 100%);
+    color: var(--viz-mist);
+    box-shadow: 0 24px 60px color-mix(in srgb, var(--viz-night-2) 32%, transparent);
   }
 
   .ros-head { margin-bottom: clamp(1rem, 0.6rem + 1.6cqw, 1.8rem); }
@@ -64,19 +64,19 @@ const segments = [
     font-weight: 800;
     letter-spacing: 0.16em;
     text-transform: uppercase;
-    color: #599ffd;
+    color: var(--viz-blue);
   }
   .ros-title {
     margin: 0.3rem 0 0;
     font-size: clamp(1.1rem, 0.85rem + 1.4cqw, 1.7rem);
     font-weight: 800;
     line-height: 1.12;
-    color: #fff;
+    color: var(--white);
   }
   .ros-sub {
     margin: 0.5rem 0 0;
     font-size: clamp(0.78rem, 0.7rem + 0.3cqw, 0.95rem);
-    color: #a5b8ee;
+    color: var(--signal-periwinkle);
     max-width: 50ch;
   }
 
@@ -95,16 +95,16 @@ const segments = [
     align-items: center;
     padding: clamp(0.6rem, 0.45rem + 0.6cqw, 0.9rem);
     border-radius: 12px;
-    border: 1px solid rgba(89, 159, 253, 0.28);
-    background: rgba(89, 159, 253, 0.07);
+    border: 1px solid color-mix(in srgb, var(--viz-blue) 28%, transparent);
+    background: color-mix(in srgb, var(--viz-blue) 7%, transparent);
     border-left-width: 3px;
     animation: ros-fade 0.5s ease both;
     animation-delay: calc(var(--i) * 0.07s);
   }
-  .ros-seg--both { border-left-color: #599ffd; }
+  .ros-seg--both { border-left-color: var(--viz-blue); }
   .ros-seg--you {
-    border-left-color: #fadc14;
-    background: rgba(250, 220, 20, 0.08);
+    border-left-color: var(--signal-yellow);
+    background: color-mix(in srgb, var(--signal-yellow) 8%, transparent);
   }
 
   .ros-num {
@@ -117,10 +117,10 @@ const segments = [
     font-size: 0.82rem;
     font-weight: 800;
     line-height: 1;
-    color: #081a36;
-    background: #599ffd;
+    color: var(--viz-night);
+    background: var(--viz-blue);
   }
-  .ros-seg--you .ros-num { background: #fadc14; }
+  .ros-seg--you .ros-num { background: var(--signal-yellow); }
 
   .ros-body { display: flex; flex-direction: column; gap: 0.25rem; }
   .ros-row {
@@ -133,7 +133,7 @@ const segments = [
   .ros-label {
     font-size: clamp(0.86rem, 0.76rem + 0.4cqw, 1.04rem);
     font-weight: 800;
-    color: #fff;
+    color: var(--white);
     line-height: 1.12;
   }
   .ros-who {
@@ -144,24 +144,24 @@ const segments = [
     text-transform: uppercase;
     padding: 0.12rem 0.45rem;
     border-radius: 6px;
-    color: #cfe0ff;
-    background: rgba(89, 159, 253, 0.18);
+    color: var(--viz-sky);
+    background: color-mix(in srgb, var(--viz-blue) 18%, transparent);
   }
   .ros-seg--you .ros-who {
     color: #fbe98a;
-    background: rgba(250, 220, 20, 0.16);
+    background: color-mix(in srgb, var(--signal-yellow) 16%, transparent);
   }
   .ros-detail {
     font-size: clamp(0.72rem, 0.65rem + 0.28cqw, 0.86rem);
     line-height: 1.32;
-    color: #cfe0ff;
+    color: var(--viz-sky);
   }
 
   .ros-caption {
     margin: clamp(0.9rem, 0.6rem + 1.2cqw, 1.5rem) 0 0;
     font-size: clamp(0.78rem, 0.7rem + 0.3cqw, 0.95rem);
     font-weight: 700;
-    color: #e2f9d9;
+    color: var(--signal-mint);
   }
 
   @keyframes ros-fade {

@@ -322,8 +322,8 @@ const voices = [
     --paper: #FCFAF2;        /* 白練 shironeri */
     --night: #0F2540;        /* 紺 kon */
     --night-2: #2B5F75;      /* 藍 ai */
-    --on-dark: #FFFFFB;
-    --on-dark-muted: color-mix(in srgb, #FFFFFB 72%, transparent);
+    --on-dark: var(--paper-bright);
+    --on-dark-muted: color-mix(in srgb, var(--paper-bright) 72%, transparent);
     --accent: #006284;       /* 縹 hanada */
     --warm: #A5DEE4;         /* 水 mizu: labels and lines on dark */
     --hi: #CC543A;           /* 朱 shu: results and the active chapter only */
@@ -384,7 +384,7 @@ const voices = [
   /* Intro */
   .wd-collage { display: grid; gap: var(--gap); grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 1fr)); }
   .wd-collage figure {
-    padding: 0.5rem 0.5rem 0.4rem; background: #fff; border-radius: 0.3rem;
+    padding: 0.5rem 0.5rem 0.4rem; background: var(--white); border-radius: 0.3rem;
     box-shadow: 0 14px 34px rgb(0 0 0 / 0.45); transform: rotate(var(--tilt)); transition: transform 0.3s;
   }
   .wd-collage figure:hover { transform: rotate(0) scale(1.03); z-index: 2; }
@@ -426,12 +426,12 @@ const voices = [
   .wd-toggle button { padding: 0.4rem 0.9rem; border: 0; border-radius: 999px; background: none; color: inherit; font: 800 0.72rem/1 inherit; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; }
   .wd-toggle .is-active { background: var(--warm); color: var(--night); }
   .wd-pitch { display: grid; gap: 0.75rem; }
-  .wd-card, .wd-terminal { display: grid; gap: 0.9rem; padding: 1.1rem; border: 1px solid var(--line); border-radius: var(--radius); background: rgba(255, 255, 255, 0.05); }
+  .wd-card, .wd-terminal { display: grid; gap: 0.9rem; padding: 1.1rem; border: 1px solid var(--line); border-radius: var(--radius); background: color-mix(in srgb, var(--white) 5%, transparent); }
   .wd-card[hidden], .wd-terminal[hidden] { display: none; }
   .wd-story { display: grid; gap: 0.9rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), 1fr)); }
   .wd-story span, .wd-thesis span, .wd-era, .wd-carry span { display: block; color: var(--warm); font-size: 0.68rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; }
   .wd-story p { font-size: 0.86rem; line-height: 1.45; }
-  .wd-thesis { padding: 0.7rem 0.9rem; border-left: 3px solid var(--warm); background: rgba(255, 255, 255, 0.04); }
+  .wd-thesis { padding: 0.7rem 0.9rem; border-left: 3px solid var(--warm); background: color-mix(in srgb, var(--white) 4%, transparent); }
   .wd-thesis strong { color: var(--on-dark); }
   .wd-terminal header { display: flex; justify-content: space-between; font: 0.75rem 'JetBrains Mono', monospace; opacity: 0.7; }
   .wd-terminal button { border: 1px solid var(--line); border-radius: 999px; background: none; color: inherit; font: inherit; cursor: pointer; }
@@ -445,7 +445,7 @@ const voices = [
 
   /* Range */
   .wd-strengths { --min: 16rem; }
-  .wd-strengths li { background: rgba(255, 255, 255, 0.05); }
+  .wd-strengths li { background: color-mix(in srgb, var(--white) 5%, transparent); }
   .wd-strengths strong { color: var(--on-dark); }
   .wd-proof { --min: 11rem; }
   .wd-proof li { border-top: 3px solid var(--hi); border-radius: 0.3rem; }
@@ -458,16 +458,16 @@ const voices = [
 
   /* Journey */
   .wd-journey { display: grid; gap: var(--gap); }
-  .wd-map { position: relative; aspect-ratio: 1000 / 420; max-height: 18rem; width: 100%; border-radius: var(--radius); background: rgba(255, 255, 255, 0.03); }
+  .wd-map { position: relative; aspect-ratio: 1000 / 420; max-height: 18rem; width: 100%; border-radius: var(--radius); background: color-mix(in srgb, var(--white) 3%, transparent); }
   .wd-map svg { position: absolute; inset: 0; width: 100%; height: 100%; }
-  .wd-link, .wd-branch { fill: none; stroke: rgba(255, 255, 255, 0.18); stroke-width: 2; stroke-dasharray: 6 6; vector-effect: non-scaling-stroke; transition: stroke 0.4s; }
+  .wd-link, .wd-branch { fill: none; stroke: color-mix(in srgb, var(--white) 18%, transparent); stroke-width: 2; stroke-dasharray: 6 6; vector-effect: non-scaling-stroke; transition: stroke 0.4s; }
   .wd-link.is-lit { stroke: var(--warm); }
   .wd-branch.is-lit { stroke: var(--cool); }
   .wd-node, .wd-leaf { position: absolute; left: var(--x); top: var(--y); translate: -50% -50%; }
   .wd-node { display: grid; justify-items: center; gap: 0.3rem; padding: 0; border: 0; background: none; color: inherit; cursor: pointer; }
   .wd-glyph {
     display: grid; place-items: center; width: clamp(2.4rem, 7cqi, 4rem); aspect-ratio: 1; border-radius: 50%;
-    border: 2px solid rgba(255, 255, 255, 0.3); background: var(--night); font: 700 clamp(0.9rem, 2cqi, 1.2rem) 'Lora', serif; transition: 0.3s;
+    border: 2px solid color-mix(in srgb, var(--white) 30%, transparent); background: var(--night); font: 700 clamp(0.9rem, 2cqi, 1.2rem) 'Lora', serif; transition: 0.3s;
   }
   .wd-node.is-lit .wd-glyph { border-color: var(--warm); color: var(--warm); }
   .wd-node.is-active .wd-glyph { background: var(--hi); border-color: var(--hi); color: var(--on-dark); box-shadow: 0 0 0 0.4rem color-mix(in srgb, var(--hi) 30%, transparent); }
@@ -480,14 +480,14 @@ const voices = [
   .wd-chapter {
     display: grid; gap: var(--gap); align-items: start; padding: clamp(1rem, 2.5cqi, 1.5rem);
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
-    border: 1px solid var(--line); border-radius: var(--radius); background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--line); border-radius: var(--radius); background: color-mix(in srgb, var(--white) 4%, transparent);
     animation: wd-rise 0.45s ease both;
   }
   .wd-chapter[hidden] { display: none; }
   .wd-chapter-img { width: 100%; max-height: 18rem; aspect-ratio: 3 / 4; object-fit: cover; border-radius: calc(var(--radius) * 0.6); }
   .wd-chapter-main, .wd-chapter-side { display: grid; gap: 0.8rem; align-content: start; }
   .wd-chapter h3 { font-family: 'Lora', serif; }
-  .wd-carry { padding: 0.6rem 0.8rem; border-left: 3px solid var(--hi); background: rgba(255, 255, 255, 0.04); }
+  .wd-carry { padding: 0.6rem 0.8rem; border-left: 3px solid var(--hi); background: color-mix(in srgb, var(--white) 4%, transparent); }
   .wd-carry strong { color: var(--on-dark); }
   .wd-highlights { display: grid; gap: 0.5rem; }
   .wd-highlights li { padding-left: 1rem; border-left: 2px solid var(--warm); line-height: 1.45; }
@@ -499,9 +499,16 @@ const voices = [
   .wd-pattern { font-style: italic; text-align: center; }
   @keyframes wd-rise { from { opacity: 0; translate: 0 0.6rem; } }
 
+<<<<<<< HEAD
   /* Voices, ask */
+=======
+  /* Recognition, voices, ask */
+  .wd-badges { --min: 12rem; }
+  .wd-badges li { background: color-mix(in srgb, var(--white) 4%, transparent); }
+  .wd-badges img { width: 100%; height: 9rem; object-fit: contain; }
+>>>>>>> 1b8a9ef (refactor: route site colors through palette tokens)
   .wd-voices { --min: 17rem; }
-  .wd-voices li { border-top: 3px solid hsl(var(--hue) 70% 60%); background: rgba(255, 255, 255, 0.04); }
+  .wd-voices li { border-top: 3px solid hsl(var(--hue) 70% 60%); background: color-mix(in srgb, var(--white) 4%, transparent); }
   .wd-orb { display: grid; place-items: center; width: 2.6rem; aspect-ratio: 1; border-radius: 50%; background: hsl(var(--hue) 60% 55% / 0.2); color: hsl(var(--hue) 80% 72%); font-weight: 800; }
   .wd-voice-role { font-size: 0.68rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; }
   .wd-voices blockquote { line-height: 1.55; font-size: 0.95rem; }

@@ -58,11 +58,11 @@ const tools = [
     padding: clamp(1.2rem, 0.7rem + 2.4cqw, 2.4rem);
     border-radius: 18px;
     background:
-      radial-gradient(130% 95% at 12% -10%, rgba(89, 159, 253, 0.3), transparent 58%),
-      radial-gradient(120% 95% at 92% 115%, rgba(250, 220, 20, 0.16), transparent 55%),
-      linear-gradient(150deg, #0e2a52 0%, #0b2344 55%, #081a36 100%);
-    color: #eaf1fb;
-    box-shadow: 0 24px 60px rgba(8, 20, 40, 0.32);
+      radial-gradient(130% 95% at 12% -10%, color-mix(in srgb, var(--viz-blue) 30%, transparent), transparent 58%),
+      radial-gradient(120% 95% at 92% 115%, color-mix(in srgb, var(--signal-yellow) 16%, transparent), transparent 55%),
+      linear-gradient(150deg, var(--viz-navy) 0%, var(--viz-navy-2) 55%, var(--viz-night) 100%);
+    color: var(--viz-mist);
+    box-shadow: 0 24px 60px color-mix(in srgb, var(--viz-night-2) 32%, transparent);
   }
 
   .wtl-head { margin-bottom: clamp(0.9rem, 0.6rem + 1.4cqw, 1.6rem); }
@@ -72,19 +72,19 @@ const tools = [
     font-weight: 800;
     letter-spacing: 0.16em;
     text-transform: uppercase;
-    color: #599ffd;
+    color: var(--viz-blue);
   }
   .wtl-title {
     margin: 0.3rem 0 0;
     font-size: clamp(1.1rem, 0.85rem + 1.4cqw, 1.7rem);
     font-weight: 800;
     line-height: 1.12;
-    color: #fff;
+    color: var(--white);
   }
   .wtl-sub {
     margin: 0.5rem 0 0;
     font-size: clamp(0.78rem, 0.7rem + 0.3cqw, 0.95rem);
-    color: #a5b8ee;
+    color: var(--signal-periwinkle);
     max-width: 50ch;
   }
 
@@ -99,33 +99,33 @@ const tools = [
     gap: 0.35rem;
     padding: clamp(0.8rem, 0.55rem + 0.8cqw, 1.2rem);
     border-radius: 14px;
-    background: rgba(89, 159, 253, 0.1);
-    border: 1px solid rgba(89, 159, 253, 0.32);
+    background: color-mix(in srgb, var(--viz-blue) 10%, transparent);
+    border: 1px solid color-mix(in srgb, var(--viz-blue) 32%, transparent);
     animation: wtl-fade 0.5s ease both;
     animation-delay: calc(var(--i) * 0.1s);
   }
   .wtl-card:nth-child(2) {
-    background: rgba(250, 220, 20, 0.08);
-    border-color: rgba(250, 220, 20, 0.4);
+    background: color-mix(in srgb, var(--signal-yellow) 8%, transparent);
+    border-color: color-mix(in srgb, var(--signal-yellow) 40%, transparent);
   }
   .wtl-role {
     font-size: clamp(0.62rem, 0.56rem + 0.26cqw, 0.74rem);
     font-weight: 800;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: #a5b8ee;
+    color: var(--signal-periwinkle);
   }
-  .wtl-card:nth-child(2) .wtl-role { color: #fadc14; }
+  .wtl-card:nth-child(2) .wtl-role { color: var(--signal-yellow); }
   .wtl-name {
     font-size: clamp(0.96rem, 0.82rem + 0.5cqw, 1.2rem);
     font-weight: 800;
-    color: #fff;
+    color: var(--white);
     line-height: 1.12;
   }
   .wtl-detail {
     font-size: clamp(0.74rem, 0.66rem + 0.3cqw, 0.9rem);
     line-height: 1.34;
-    color: #cfe0ff;
+    color: var(--viz-sky);
   }
 
   .wtl-flow {
@@ -141,13 +141,13 @@ const tools = [
     padding: 0.28rem 0.6rem;
     border-radius: 8px;
     color: #dfeaff;
-    background: rgba(89, 159, 253, 0.16);
-    border: 1px solid rgba(89, 159, 253, 0.34);
+    background: color-mix(in srgb, var(--viz-blue) 16%, transparent);
+    border: 1px solid color-mix(in srgb, var(--viz-blue) 34%, transparent);
   }
   .wtl-chip--accent {
-    color: #081a36;
-    background: #fadc14;
-    border-color: #fadc14;
+    color: var(--viz-night);
+    background: var(--signal-yellow);
+    border-color: var(--signal-yellow);
   }
   .wtl-arrow {
     color: #7aa6e8;
@@ -158,7 +158,7 @@ const tools = [
     margin: clamp(0.9rem, 0.6rem + 1.2cqw, 1.5rem) 0 0;
     font-size: clamp(0.78rem, 0.7rem + 0.3cqw, 0.95rem);
     font-weight: 700;
-    color: #e2f9d9;
+    color: var(--signal-mint);
   }
 
   @keyframes wtl-fade {

@@ -72,11 +72,11 @@ const rails = [
     padding: clamp(1.2rem, 0.7rem + 2.4cqw, 2.4rem);
     border-radius: 18px;
     background:
-      radial-gradient(130% 95% at 12% -10%, rgba(0, 143, 211, 0.32), transparent 58%),
-      radial-gradient(120% 95% at 92% 115%, rgba(244, 196, 48, 0.16), transparent 55%),
-      linear-gradient(150deg, #0e2a52 0%, #0b2344 55%, #081a36 100%);
-    color: #eaf1fb;
-    box-shadow: 0 24px 60px rgba(8, 20, 40, 0.32);
+      radial-gradient(130% 95% at 12% -10%, color-mix(in srgb, var(--accent) 32%, transparent), transparent 58%),
+      radial-gradient(120% 95% at 92% 115%, color-mix(in srgb, var(--signal-gold) 16%, transparent), transparent 55%),
+      linear-gradient(150deg, var(--viz-navy) 0%, var(--viz-navy-2) 55%, var(--viz-night) 100%);
+    color: var(--viz-mist);
+    box-shadow: 0 24px 60px color-mix(in srgb, var(--viz-night-2) 32%, transparent);
   }
 
   .slp-head { margin-bottom: clamp(1rem, 0.6rem + 1.6cqw, 1.8rem); }
@@ -86,14 +86,14 @@ const rails = [
     font-weight: 800;
     letter-spacing: 0.16em;
     text-transform: uppercase;
-    color: #34baff;
+    color: var(--accent-bright);
   }
   .slp-title {
     margin: 0.3rem 0 0;
     font-size: clamp(1.1rem, 0.85rem + 1.4cqw, 1.7rem);
     font-weight: 800;
     line-height: 1.12;
-    color: #fff;
+    color: var(--white);
   }
   .slp-legend {
     display: flex;
@@ -119,12 +119,12 @@ const rails = [
     height: 0.62rem;
     border-radius: 3px;
   }
-  .slp-key--model { color: #34baff; }
-  .slp-key--model::before { background: #34baff; }
-  .slp-key--server { color: #008fd3; }
-  .slp-key--server::before { background: #008fd3; }
-  .slp-key--you { color: #f4c430; }
-  .slp-key--you::before { background: #f4c430; }
+  .slp-key--model { color: var(--accent-bright); }
+  .slp-key--model::before { background: var(--accent-bright); }
+  .slp-key--server { color: var(--accent); }
+  .slp-key--server::before { background: var(--accent); }
+  .slp-key--you { color: var(--signal-gold); }
+  .slp-key--you::before { background: var(--signal-gold); }
 
   .slp-flow {
     list-style: none;
@@ -140,18 +140,18 @@ const rails = [
     flex-direction: column;
     padding: clamp(0.7rem, 0.5rem + 0.7cqw, 1.05rem) clamp(0.6rem, 0.45rem + 0.5cqw, 0.85rem);
     border-radius: 13px;
-    border: 1px solid rgba(0, 143, 211, 0.32);
-    background: rgba(0, 143, 211, 0.08);
+    border: 1px solid color-mix(in srgb, var(--accent) 32%, transparent);
+    background: color-mix(in srgb, var(--accent) 8%, transparent);
     animation: slp-cycle 12s ease-in-out infinite;
     animation-delay: calc(var(--i) * 2s);
   }
   .slp-stage--model {
-    border-color: rgba(52, 186, 255, 0.4);
-    background: rgba(52, 186, 255, 0.1);
+    border-color: color-mix(in srgb, var(--accent-bright) 40%, transparent);
+    background: color-mix(in srgb, var(--accent-bright) 10%, transparent);
   }
   .slp-stage--you {
-    border-color: rgba(244, 196, 48, 0.5);
-    background: rgba(244, 196, 48, 0.09);
+    border-color: color-mix(in srgb, var(--signal-gold) 50%, transparent);
+    background: color-mix(in srgb, var(--signal-gold) 9%, transparent);
   }
   .slp-order {
     display: inline-flex;
@@ -162,33 +162,33 @@ const rails = [
     border-radius: 50%;
     font-size: 0.72rem;
     font-weight: 800;
-    color: #081a36;
-    background: #34baff;
+    color: var(--viz-night);
+    background: var(--accent-bright);
   }
-  .slp-stage--server .slp-order { background: #008fd3; color: #eaf1fb; }
-  .slp-stage--you .slp-order { background: #f4c430; }
+  .slp-stage--server .slp-order { background: var(--accent); color: var(--viz-mist); }
+  .slp-stage--you .slp-order { background: var(--signal-gold); }
   .slp-who {
     margin-top: 0.5rem;
     font-size: 0.58rem;
     font-weight: 800;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: #34baff;
+    color: var(--accent-bright);
   }
   .slp-stage--server .slp-who { color: #67c4f2; }
-  .slp-stage--you .slp-who { color: #f4c430; }
+  .slp-stage--you .slp-who { color: var(--signal-gold); }
   .slp-stage-label {
     margin-top: 0.1rem;
     font-size: clamp(0.8rem, 0.7rem + 0.4cqw, 0.98rem);
     font-weight: 800;
-    color: #fff;
+    color: var(--white);
     line-height: 1.14;
   }
   .slp-stage-detail {
     margin-top: 0.3rem;
     font-size: clamp(0.68rem, 0.62rem + 0.26cqw, 0.82rem);
     line-height: 1.32;
-    color: #cfe0ff;
+    color: var(--viz-sky);
   }
 
   .slp-rails { margin-top: clamp(1rem, 0.6rem + 1.6cqw, 1.8rem); }
@@ -199,7 +199,7 @@ const rails = [
     font-weight: 800;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: #e2f9d9;
+    color: var(--signal-mint);
   }
   .slp-rail-grid {
     display: grid;
@@ -213,53 +213,53 @@ const rails = [
     padding: clamp(0.65rem, 0.5rem + 0.6cqw, 0.95rem);
     border-radius: 12px;
     background: rgba(6, 16, 34, 0.55);
-    border: 1px solid rgba(165, 184, 238, 0.24);
+    border: 1px solid color-mix(in srgb, var(--signal-periwinkle) 24%, transparent);
   }
   .slp-rail-dot {
     width: 0.55rem;
     height: 0.55rem;
     border-radius: 50%;
-    background: #34baff;
-    box-shadow: 0 0 0 0 rgba(52, 186, 255, 0.55);
+    background: var(--accent-bright);
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent-bright) 55%, transparent);
     animation: slp-pulse 3.2s ease-in-out infinite;
   }
   .slp-rail-label {
     margin-top: 0.5rem;
     font-size: clamp(0.76rem, 0.68rem + 0.3cqw, 0.92rem);
     font-weight: 800;
-    color: #fff;
+    color: var(--white);
     line-height: 1.16;
   }
   .slp-rail-detail {
     margin-top: 0.3rem;
     font-size: clamp(0.68rem, 0.62rem + 0.26cqw, 0.82rem);
     line-height: 1.32;
-    color: #a5b8ee;
+    color: var(--signal-periwinkle);
   }
 
   .slp-caption {
     margin: clamp(0.9rem, 0.6rem + 1.2cqw, 1.5rem) 0 0;
     font-size: clamp(0.78rem, 0.7rem + 0.3cqw, 0.95rem);
     font-weight: 700;
-    color: #e2f9d9;
+    color: var(--signal-mint);
   }
 
   @keyframes slp-cycle {
     0%, 12%, 100% {
-      border-color: rgba(0, 143, 211, 0.32);
+      border-color: color-mix(in srgb, var(--accent) 32%, transparent);
       box-shadow: none;
       transform: none;
     }
     3%, 9% {
-      border-color: rgba(52, 186, 255, 0.85);
-      box-shadow: 0 0 0 1px rgba(52, 186, 255, 0.45), 0 10px 26px rgba(8, 20, 40, 0.4);
+      border-color: color-mix(in srgb, var(--accent-bright) 85%, transparent);
+      box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent-bright) 45%, transparent), 0 10px 26px color-mix(in srgb, var(--viz-night-2) 40%, transparent);
       transform: translateY(-4px);
     }
   }
 
   @keyframes slp-pulse {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(52, 186, 255, 0.5); }
-    50% { box-shadow: 0 0 0 5px rgba(52, 186, 255, 0); }
+    0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent-bright) 50%, transparent); }
+    50% { box-shadow: 0 0 0 5px color-mix(in srgb, var(--accent-bright) 0%, transparent); }
   }
 
   @container (max-width: 860px) {
