@@ -1,6 +1,6 @@
 ---
 // Thor's standalone ZTA map, served from /visuals/ and embedded whole so it stays one source.
-const src = '/visuals/m365-zta-map.html?embed=1&v=2';
+const src = '/visuals/m365-zta-map.html?embed=1&v=3';
 ---
 
 <div class="zta-breakout">
@@ -21,16 +21,23 @@ const src = '/visuals/m365-zta-map.html?embed=1&v=2';
 
 <script>
   // Same-origin frame: size it to its content so the page scrolls, not the frame.
+  // Only grow/shrink on real content changes; never react to the frame's own resize (that loops).
   const frame = document.querySelector<HTMLIFrameElement>('[data-zta-frame]');
   const size = () => {
     const doc = frame?.contentDocument;
-    if (!frame || !doc?.body) return;
-    const fit = () => { const wrap = doc.querySelector<HTMLElement>(".wrap") ?? doc.body;
-      frame.style.height = `${Math.ceil(wrap.getBoundingClientRect().height + frame.offsetHeight - frame.clientHeight)}px`; };
+    const wrap = doc?.querySelector<HTMLElement>('.wrap');
+    if (!frame || !doc || !wrap) return;
+    let last = 0;
+    const fit = () => {
+      const h = Math.ceil(wrap.getBoundingClientRect().height);
+      if (h < 400 || Math.abs(h - last) < 2) return;
+      last = h;
+      frame.style.height = `${h + frame.offsetHeight - frame.clientHeight}px`;
+    };
     fit();
-    new ResizeObserver(fit).observe(frame);
     doc.addEventListener('click', () => setTimeout(fit, 50));
-    frame.contentWindow?.addEventListener('resize', fit);
+    doc.addEventListener('change', () => setTimeout(fit, 50));
+    addEventListener('resize', () => setTimeout(fit, 100));
   };
   frame?.addEventListener('load', size);
   if (frame?.contentDocument?.readyState === 'complete') size();
