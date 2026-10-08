@@ -2,10 +2,10 @@
 import Layout from '../layouts/Layout.astro';
 import { getPosts } from '../lib/content';
 
-const posts = getPosts();
-const professionalCategories = new Set(['tech', 'career', 'business']);
-const heroPost = posts.find((post) => post.categories.some((category) => professionalCategories.has(category)));
-const recentPosts = posts.filter((post) => post !== heroPost).slice(0, 6);
+// The homepage is the professional front door: personal notebook posts live in the archive.
+const professionalPosts = getPosts().filter((post) => post.professional);
+const heroPost = professionalPosts.find((post) => post.featured) ?? professionalPosts[0];
+const recentPosts = professionalPosts.filter((post) => post !== heroPost).slice(0, 6);
 ---
 
 <Layout pageTitle="Home" currentPath="/" wide>
@@ -51,9 +51,9 @@ const recentPosts = posts.filter((post) => post !== heroPost).slice(0, 6);
 			<div class="section-header">
 				<div>
 					<span class="eyebrow">Recent writing</span>
-					<h2 class="section-title">Latest from the notebook.</h2>
+					<h2 class="section-title">Latest professional writing.</h2>
 				</div>
-				<p class="section-copy">Professional work and personal notes, together in straightforward chronological order.</p>
+				<p class="section-copy">Security, AI, cloud, and commercial leadership. Personal essays live in the <a href="/archive/?desk=notebook">notebook archive</a>.</p>
 			</div>
 
 			<div class="home-post-grid">

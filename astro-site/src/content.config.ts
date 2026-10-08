@@ -20,6 +20,8 @@ const posts = defineCollection({
     tags: z.array(z.string().trim().min(1)).min(1),
     excerpt: z.string().trim().min(1),
     presentation: z.enum(PRESENTATION_IDS).optional(),
+    /** Pin a professional post as the homepage feature. */
+    featured: z.boolean().optional(),
   }),
 });
 

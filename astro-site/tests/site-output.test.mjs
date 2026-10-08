@@ -262,3 +262,18 @@ test('articles publish branded social metadata and structured data', async () =>
     const postCount = (await readdir(path.resolve('src/content/posts'))).filter((file) => /\.mdx?$/.test(file)).length;
     assert.equal(socialCards.length, postCount);
 });
+test('homepage is professional-only and the archive keeps the notebook one click away', async () => {
+    const home = await readFile(path.join(distPath, 'index.html'), 'utf8');
+    const archive = await readFile(path.join(distPath, 'archive/index.html'), 'utf8');
+    const notebookPermalinks = [...archive.matchAll(/<article class="archive-record"[^>]*>/g)]
+        .map((match) => match[0])
+        .filter((tag) => tag.includes('data-desk="notebook"'))
+        .map((tag) => tag.match(/data-permalink="([^"]+)"/)[1]);
+
+    assert.ok(notebookPermalinks.length > 0);
+    for (const permalink of notebookPermalinks) {
+        assert.doesNotMatch(home, new RegExp(`href="${permalink}"`), `${permalink} leaked onto the homepage`);
+    }
+    assert.match(home, /href="\/archive\/\?desk=notebook"/);
+    assert.match(archive, /data-archive-desk="notebook"/);
+});
