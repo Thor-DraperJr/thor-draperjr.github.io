@@ -78,11 +78,11 @@ const gates = [
     padding: clamp(1.2rem, 0.7rem + 2.4cqw, 2.4rem);
     border-radius: 18px;
     background:
-      radial-gradient(130% 95% at 12% -10%, rgba(89, 159, 253, 0.3), transparent 58%),
-      radial-gradient(120% 95% at 92% 115%, rgba(250, 220, 20, 0.16), transparent 55%),
-      linear-gradient(150deg, #0e2a52 0%, #0b2344 55%, #081a36 100%);
-    color: #eaf1fb;
-    box-shadow: 0 24px 60px rgba(8, 20, 40, 0.28);
+      radial-gradient(130% 95% at 12% -10%, color-mix(in srgb, var(--viz-blue) 30%, transparent), transparent 58%),
+      radial-gradient(120% 95% at 92% 115%, color-mix(in srgb, var(--signal-yellow) 16%, transparent), transparent 55%),
+      linear-gradient(150deg, var(--viz-navy) 0%, var(--viz-navy-2) 55%, var(--viz-night) 100%);
+    color: var(--viz-mist);
+    box-shadow: 0 24px 60px color-mix(in srgb, var(--viz-night-2) 28%, transparent);
   }
 
   .pwm-head {
@@ -91,7 +91,7 @@ const gates = [
 
   .pwm-eyebrow {
     display: block;
-    color: #599ffd;
+    color: var(--viz-blue);
     font-size: clamp(0.62rem, 0.55rem + 0.3cqw, 0.74rem);
     font-weight: 800;
     letter-spacing: 0.12em;
@@ -100,7 +100,7 @@ const gates = [
 
   .pwm-title {
     margin: 0.3rem 0 0;
-    color: #fff;
+    color: var(--white);
     font-size: clamp(1.2rem, 0.9rem + 1.6cqw, 2rem);
     font-weight: 850;
     line-height: 1.08;
@@ -109,7 +109,7 @@ const gates = [
   .pwm-sub {
     margin: 0.55rem 0 0;
     max-width: 56ch;
-    color: #a5b8ee;
+    color: var(--signal-periwinkle);
     font-size: clamp(0.8rem, 0.72rem + 0.3cqw, 0.98rem);
   }
 
@@ -131,7 +131,7 @@ const gates = [
     top: 1.25rem;
     height: 3px;
     border-radius: 999px;
-    background: linear-gradient(90deg, #599ffd, #fadc14, #e2f9d9);
+    background: linear-gradient(90deg, var(--viz-blue), var(--signal-yellow), var(--signal-mint));
     opacity: 0.55;
   }
 
@@ -143,7 +143,7 @@ const gates = [
     gap: 0.65rem;
     min-height: 13rem;
     padding: clamp(0.75rem, 0.55rem + 0.8cqw, 1rem);
-    border: 1px solid rgba(89, 159, 253, 0.28);
+    border: 1px solid color-mix(in srgb, var(--viz-blue) 28%, transparent);
     border-radius: 14px;
     background: rgba(6, 16, 34, 0.56);
     animation: pwm-rise 0.52s ease both;
@@ -152,8 +152,8 @@ const gates = [
 
   .pwm-lane:nth-child(even) {
     margin-top: clamp(0.6rem, 1.2cqw, 1.1rem);
-    border-color: rgba(250, 220, 20, 0.32);
-    background: rgba(250, 220, 20, 0.07);
+    border-color: color-mix(in srgb, var(--signal-yellow) 32%, transparent);
+    background: color-mix(in srgb, var(--signal-yellow) 7%, transparent);
   }
 
   .pwm-num {
@@ -163,8 +163,8 @@ const gates = [
     width: 2.2rem;
     height: 2.2rem;
     border-radius: 50%;
-    color: #081a36;
-    background: #fadc14;
+    color: var(--viz-night);
+    background: var(--signal-yellow);
     font-family: "JetBrains Mono", monospace;
     font-size: 0.82rem;
     font-weight: 900;
@@ -172,7 +172,7 @@ const gates = [
 
   .pwm-label {
     display: block;
-    color: #599ffd;
+    color: var(--viz-blue);
     font-size: 0.68rem;
     font-weight: 850;
     letter-spacing: 0.1em;
@@ -182,14 +182,14 @@ const gates = [
   .pwm-lane strong {
     display: block;
     margin-top: 0.2rem;
-    color: #fff;
+    color: var(--white);
     font-size: clamp(0.94rem, 0.82rem + 0.48cqw, 1.15rem);
     line-height: 1.12;
   }
 
   .pwm-lane p {
     margin: 0.45rem 0 0;
-    color: #cfe0ff;
+    color: var(--viz-sky);
     font-size: clamp(0.72rem, 0.65rem + 0.28cqw, 0.86rem);
     line-height: 1.35;
   }
@@ -202,11 +202,11 @@ const gates = [
   }
 
   .pwm-gates span {
-    border: 1px solid rgba(226, 249, 217, 0.28);
+    border: 1px solid color-mix(in srgb, var(--signal-mint) 28%, transparent);
     border-radius: 999px;
     padding: 0.32rem 0.62rem;
-    color: #e2f9d9;
-    background: rgba(226, 249, 217, 0.08);
+    color: var(--signal-mint);
+    background: color-mix(in srgb, var(--signal-mint) 8%, transparent);
     font-size: clamp(0.68rem, 0.62rem + 0.26cqw, 0.8rem);
     font-weight: 800;
     animation: pwm-glow 3.8s ease-in-out infinite;
@@ -215,7 +215,7 @@ const gates = [
 
   .pwm-caption {
     margin: clamp(0.9rem, 0.6rem + 1.2cqw, 1.5rem) 0 0;
-    color: #e2f9d9;
+    color: var(--signal-mint);
     font-size: clamp(0.78rem, 0.7rem + 0.3cqw, 0.95rem);
     font-weight: 750;
   }
@@ -227,7 +227,7 @@ const gates = [
 
   @keyframes pwm-glow {
     0%, 100% { box-shadow: none; }
-    50% { box-shadow: 0 0 0 1px rgba(226, 249, 217, 0.22), 0 8px 24px rgba(8, 20, 40, 0.28); }
+    50% { box-shadow: 0 0 0 1px color-mix(in srgb, var(--signal-mint) 22%, transparent), 0 8px 24px color-mix(in srgb, var(--viz-night-2) 28%, transparent); }
   }
 
   @container (max-width: 860px) {

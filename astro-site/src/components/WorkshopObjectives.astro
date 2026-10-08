@@ -66,11 +66,11 @@ const success = [
     padding: clamp(1.2rem, 0.7rem + 2.4cqw, 2.4rem);
     border-radius: 18px;
     background:
-      radial-gradient(130% 95% at 12% -10%, rgba(89, 159, 253, 0.3), transparent 58%),
-      radial-gradient(120% 95% at 92% 115%, rgba(250, 220, 20, 0.16), transparent 55%),
-      linear-gradient(150deg, #0e2a52 0%, #0b2344 55%, #081a36 100%);
-    color: #eaf1fb;
-    box-shadow: 0 24px 60px rgba(8, 20, 40, 0.32);
+      radial-gradient(130% 95% at 12% -10%, color-mix(in srgb, var(--viz-blue) 30%, transparent), transparent 58%),
+      radial-gradient(120% 95% at 92% 115%, color-mix(in srgb, var(--signal-yellow) 16%, transparent), transparent 55%),
+      linear-gradient(150deg, var(--viz-navy) 0%, var(--viz-navy-2) 55%, var(--viz-night) 100%);
+    color: var(--viz-mist);
+    box-shadow: 0 24px 60px color-mix(in srgb, var(--viz-night-2) 32%, transparent);
   }
 
   .wob-head { margin-bottom: clamp(1rem, 0.6rem + 1.6cqw, 1.8rem); }
@@ -80,14 +80,14 @@ const success = [
     font-weight: 800;
     letter-spacing: 0.16em;
     text-transform: uppercase;
-    color: #599ffd;
+    color: var(--viz-blue);
   }
   .wob-title {
     margin: 0.3rem 0 0;
     font-size: clamp(1.1rem, 0.85rem + 1.4cqw, 1.7rem);
     font-weight: 800;
     line-height: 1.12;
-    color: #fff;
+    color: var(--white);
   }
 
   .wob-cols {
@@ -98,12 +98,12 @@ const success = [
   .wob-col {
     padding: clamp(0.8rem, 0.55rem + 0.8cqw, 1.2rem);
     border-radius: 14px;
-    border: 1px solid rgba(89, 159, 253, 0.3);
-    background: rgba(89, 159, 253, 0.08);
+    border: 1px solid color-mix(in srgb, var(--viz-blue) 30%, transparent);
+    background: color-mix(in srgb, var(--viz-blue) 8%, transparent);
   }
   .wob-col--win {
-    border-color: rgba(250, 220, 20, 0.45);
-    background: rgba(250, 220, 20, 0.07);
+    border-color: color-mix(in srgb, var(--signal-yellow) 45%, transparent);
+    background: color-mix(in srgb, var(--signal-yellow) 7%, transparent);
   }
   .wob-col-head {
     display: block;
@@ -112,9 +112,9 @@ const success = [
     font-weight: 800;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: #a5b8ee;
+    color: var(--signal-periwinkle);
   }
-  .wob-col--win .wob-col-head { color: #fadc14; }
+  .wob-col--win .wob-col-head { color: var(--signal-yellow); }
 
   .wob-list {
     list-style: none;
@@ -129,7 +129,7 @@ const success = [
     gap: 0.6rem;
     font-size: clamp(0.76rem, 0.68rem + 0.3cqw, 0.92rem);
     line-height: 1.32;
-    color: #eaf1fb;
+    color: var(--viz-mist);
   }
   .wob-mark {
     flex: 0 0 auto;
@@ -144,19 +144,19 @@ const success = [
     line-height: 1;
   }
   .wob-mark--obj {
-    color: #081a36;
-    background: #599ffd;
+    color: var(--viz-night);
+    background: var(--viz-blue);
   }
   .wob-mark--win {
-    color: #081a36;
-    background: #fadc14;
+    color: var(--viz-night);
+    background: var(--signal-yellow);
   }
 
   .wob-caption {
     margin: clamp(0.9rem, 0.6rem + 1.2cqw, 1.5rem) 0 0;
     font-size: clamp(0.78rem, 0.7rem + 0.3cqw, 0.95rem);
     font-weight: 700;
-    color: #e2f9d9;
+    color: var(--signal-mint);
   }
 
   @container (max-width: 560px) {

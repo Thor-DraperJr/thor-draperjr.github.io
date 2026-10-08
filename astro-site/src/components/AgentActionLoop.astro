@@ -72,11 +72,11 @@ const prompts = [
     padding: clamp(1.2rem, 0.7rem + 2.4cqw, 2.4rem);
     border-radius: 18px;
     background:
-      radial-gradient(130% 95% at 12% -10%, rgba(89, 159, 253, 0.3), transparent 58%),
-      radial-gradient(120% 95% at 92% 115%, rgba(250, 220, 20, 0.16), transparent 55%),
-      linear-gradient(150deg, #0e2a52 0%, #0b2344 55%, #081a36 100%);
-    color: #eaf1fb;
-    box-shadow: 0 24px 60px rgba(8, 20, 40, 0.32);
+      radial-gradient(130% 95% at 12% -10%, color-mix(in srgb, var(--viz-blue) 30%, transparent), transparent 58%),
+      radial-gradient(120% 95% at 92% 115%, color-mix(in srgb, var(--signal-yellow) 16%, transparent), transparent 55%),
+      linear-gradient(150deg, var(--viz-navy) 0%, var(--viz-navy-2) 55%, var(--viz-night) 100%);
+    color: var(--viz-mist);
+    box-shadow: 0 24px 60px color-mix(in srgb, var(--viz-night-2) 32%, transparent);
   }
 
   .agl-head { margin-bottom: clamp(1rem, 0.6rem + 1.6cqw, 1.8rem); }
@@ -86,14 +86,14 @@ const prompts = [
     font-weight: 800;
     letter-spacing: 0.16em;
     text-transform: uppercase;
-    color: #599ffd;
+    color: var(--viz-blue);
   }
   .agl-title {
     margin: 0.3rem 0 0;
     font-size: clamp(1.1rem, 0.85rem + 1.4cqw, 1.7rem);
     font-weight: 800;
     line-height: 1.12;
-    color: #fff;
+    color: var(--white);
   }
 
   .agl-body {
@@ -115,14 +115,14 @@ const prompts = [
     position: relative;
     padding: clamp(0.6rem, 0.45rem + 0.6cqw, 0.9rem) clamp(0.7rem, 0.5rem + 0.6cqw, 1rem);
     border-radius: 12px;
-    border: 1px solid rgba(89, 159, 253, 0.32);
-    background: rgba(89, 159, 253, 0.08);
+    border: 1px solid color-mix(in srgb, var(--viz-blue) 32%, transparent);
+    background: color-mix(in srgb, var(--viz-blue) 8%, transparent);
     animation: agl-cycle 10s ease-in-out infinite;
     animation-delay: calc(var(--i) * 2s);
   }
   .agl-stage--you {
-    border-color: rgba(250, 220, 20, 0.5);
-    background: rgba(250, 220, 20, 0.08);
+    border-color: color-mix(in srgb, var(--signal-yellow) 50%, transparent);
+    background: color-mix(in srgb, var(--signal-yellow) 8%, transparent);
   }
   .agl-who {
     display: inline-block;
@@ -130,15 +130,15 @@ const prompts = [
     font-weight: 800;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: #599ffd;
+    color: var(--viz-blue);
   }
-  .agl-stage--you .agl-who { color: #fadc14; }
+  .agl-stage--you .agl-who { color: var(--signal-yellow); }
   .agl-stage-label {
     display: block;
     margin-top: 0.15rem;
     font-size: clamp(0.84rem, 0.74rem + 0.4cqw, 1.02rem);
     font-weight: 800;
-    color: #fff;
+    color: var(--white);
     line-height: 1.12;
   }
   .agl-stage-detail {
@@ -146,7 +146,7 @@ const prompts = [
     margin-top: 0.2rem;
     font-size: clamp(0.7rem, 0.64rem + 0.26cqw, 0.84rem);
     line-height: 1.3;
-    color: #cfe0ff;
+    color: var(--viz-sky);
   }
 
   .agl-prompts {
@@ -159,21 +159,21 @@ const prompts = [
     font-weight: 800;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: #e2f9d9;
+    color: var(--signal-mint);
   }
   .agl-prompt {
     padding: clamp(0.6rem, 0.45rem + 0.6cqw, 0.9rem);
     border-radius: 12px;
     background: rgba(6, 16, 34, 0.55);
-    border: 1px solid rgba(165, 184, 238, 0.22);
+    border: 1px solid color-mix(in srgb, var(--signal-periwinkle) 22%, transparent);
   }
   .agl-say, .agl-get {
     margin: 0;
     font-size: clamp(0.72rem, 0.64rem + 0.28cqw, 0.86rem);
     line-height: 1.35;
   }
-  .agl-say { color: #eaf1fb; }
-  .agl-get { margin-top: 0.4rem; color: #a5b8ee; }
+  .agl-say { color: var(--viz-mist); }
+  .agl-get { margin-top: 0.4rem; color: var(--signal-periwinkle); }
   .agl-tag {
     display: inline-block;
     margin-right: 0.45rem;
@@ -183,28 +183,28 @@ const prompts = [
     font-weight: 800;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: #081a36;
-    background: #599ffd;
+    color: var(--viz-night);
+    background: var(--viz-blue);
     vertical-align: 0.08em;
   }
-  .agl-tag--get { background: #fadc14; }
+  .agl-tag--get { background: var(--signal-yellow); }
 
   .agl-caption {
     margin: clamp(0.9rem, 0.6rem + 1.2cqw, 1.5rem) 0 0;
     font-size: clamp(0.78rem, 0.7rem + 0.3cqw, 0.95rem);
     font-weight: 700;
-    color: #e2f9d9;
+    color: var(--signal-mint);
   }
 
   @keyframes agl-cycle {
     0%, 14%, 100% {
-      border-color: rgba(89, 159, 253, 0.32);
+      border-color: color-mix(in srgb, var(--viz-blue) 32%, transparent);
       box-shadow: none;
       transform: none;
     }
     4%, 10% {
-      border-color: rgba(250, 220, 20, 0.85);
-      box-shadow: 0 0 0 1px rgba(250, 220, 20, 0.5), 0 10px 26px rgba(8, 20, 40, 0.4);
+      border-color: color-mix(in srgb, var(--signal-yellow) 85%, transparent);
+      box-shadow: 0 0 0 1px color-mix(in srgb, var(--signal-yellow) 50%, transparent), 0 10px 26px color-mix(in srgb, var(--viz-night-2) 40%, transparent);
       transform: translateX(4px);
     }
   }

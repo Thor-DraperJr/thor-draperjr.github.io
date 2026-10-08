@@ -132,14 +132,14 @@ const controlLevels: ControlLevel[] = [
     isolation: isolate;
     overflow: hidden;
     padding: clamp(1.2rem, 2.6cqw, 2rem);
-    border: 1px solid rgba(241, 183, 95, 0.28);
+    border: 1px solid color-mix(in srgb, var(--viz-amber) 28%, transparent);
     border-radius: 1.5rem;
     background:
-      radial-gradient(85% 110% at 10% 0%, rgba(241, 183, 95, 0.2), transparent 52%),
+      radial-gradient(85% 110% at 10% 0%, color-mix(in srgb, var(--viz-amber) 20%, transparent), transparent 52%),
       radial-gradient(80% 100% at 92% 110%, rgba(28, 79, 115, 0.36), transparent 58%),
       linear-gradient(145deg, #060e1c 0%, #0e1d31 54%, #0c1d2e 100%);
-    box-shadow: 0 28px 72px rgba(12, 24, 38, 0.2);
-    color: #fbfaf6;
+    box-shadow: 0 28px 72px color-mix(in srgb, var(--shadow-ink) 20%, transparent);
+    color: var(--paper);
   }
 
   .stage-grid {
@@ -148,8 +148,8 @@ const controlLevels: ControlLevel[] = [
     inset: 0;
     opacity: 0.2;
     background-image:
-      linear-gradient(rgba(165, 184, 238, 0.16) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(165, 184, 238, 0.16) 1px, transparent 1px);
+      linear-gradient(color-mix(in srgb, var(--signal-periwinkle) 16%, transparent) 1px, transparent 1px),
+      linear-gradient(90deg, color-mix(in srgb, var(--signal-periwinkle) 16%, transparent) 1px, transparent 1px);
     background-size: 2.5rem 2.5rem;
     mask-image: linear-gradient(90deg, black, transparent 82%);
   }
@@ -160,7 +160,7 @@ const controlLevels: ControlLevel[] = [
     gap: clamp(0.75rem, 2cqw, 1.5rem);
     align-items: start;
     padding-bottom: clamp(1rem, 2.2cqw, 1.6rem);
-    border-bottom: 1px solid rgba(165, 184, 238, 0.18);
+    border-bottom: 1px solid color-mix(in srgb, var(--signal-periwinkle) 18%, transparent);
   }
 
   .stage-index,
@@ -178,15 +178,15 @@ const controlLevels: ControlLevel[] = [
     place-items: center;
     width: 3.1rem;
     aspect-ratio: 1;
-    border: 1px solid rgba(241, 183, 95, 0.5);
-    color: #f1b75f;
+    border: 1px solid color-mix(in srgb, var(--viz-amber) 50%, transparent);
+    color: var(--viz-amber);
     font-size: 0.68rem;
     font-weight: 800;
   }
 
   .stage-kicker {
     margin: 0 0 0.35rem;
-    color: #f1b75f;
+    color: var(--viz-amber);
     font-size: clamp(0.62rem, 1.2cqw, 0.72rem);
     font-weight: 800;
   }
@@ -194,7 +194,7 @@ const controlLevels: ControlLevel[] = [
   .stage-header h2 {
     max-width: 31ch;
     margin: 0;
-    color: #fbfaf6;
+    color: var(--paper);
     font-family: Lora, Georgia, serif;
     font-size: clamp(1.15rem, 1rem + 1.35cqw, 1.8rem);
     line-height: 1.12;
@@ -205,7 +205,7 @@ const controlLevels: ControlLevel[] = [
     gap: 0.45rem;
     align-items: center;
     padding-top: 0.25rem;
-    color: rgba(251, 250, 246, 0.62);
+    color: color-mix(in srgb, var(--paper) 62%, transparent);
     font-size: 0.62rem;
     white-space: nowrap;
   }
@@ -214,8 +214,8 @@ const controlLevels: ControlLevel[] = [
     width: 0.5rem;
     aspect-ratio: 1;
     border-radius: 50%;
-    background: #f1b75f;
-    box-shadow: 0 0 14px rgba(241, 183, 95, 0.72);
+    background: var(--viz-amber);
+    box-shadow: 0 0 14px color-mix(in srgb, var(--viz-amber) 72%, transparent);
   }
 
   .control-ladder {
@@ -241,12 +241,12 @@ const controlLevels: ControlLevel[] = [
   }
 
   .control-ladder::before {
-    background: rgba(255, 255, 255, 0.16);
+    background: color-mix(in srgb, var(--white) 16%, transparent);
   }
 
   .control-ladder::after {
-    background: linear-gradient(90deg, #6aa9d8, #5fb8a6 38%, #d97a5a 72%, #f1b75f);
-    box-shadow: 0 0 18px rgba(241, 183, 95, 0.46);
+    background: linear-gradient(90deg, #6aa9d8, var(--viz-teal) 38%, #d97a5a 72%, var(--viz-amber));
+    box-shadow: 0 0 18px color-mix(in srgb, var(--viz-amber) 46%, transparent);
     transform: translateY(-50%) scaleX(1);
     transform-origin: left;
   }
@@ -264,7 +264,7 @@ const controlLevels: ControlLevel[] = [
   .level-marker {
     display: flex;
     align-items: center;
-    color: rgba(251, 250, 246, 0.42);
+    color: color-mix(in srgb, var(--paper) 42%, transparent);
     font: 700 0.6rem 'SFMono-Regular', Consolas, monospace;
   }
 
@@ -292,8 +292,8 @@ const controlLevels: ControlLevel[] = [
     bottom: 20%;
     left: 0;
     width: 2px;
-    background: rgba(95, 184, 166, 0.65);
-    box-shadow: 0 0 8px rgba(95, 184, 166, 0.32);
+    background: color-mix(in srgb, var(--viz-teal) 65%, transparent);
+    box-shadow: 0 0 8px color-mix(in srgb, var(--viz-teal) 32%, transparent);
   }
 
   .stage-branches.has-split {
@@ -311,7 +311,7 @@ const controlLevels: ControlLevel[] = [
       rgba(8, 28, 42, 0.92);
     box-shadow:
       inset 3px 0 0 var(--node-color),
-      0 16px 28px rgba(0, 0, 0, 0.2);
+      0 16px 28px color-mix(in srgb, var(--black) 20%, transparent);
     transition: border-color 420ms ease, background 420ms ease, box-shadow 420ms ease, transform 420ms ease;
   }
 
@@ -322,7 +322,7 @@ const controlLevels: ControlLevel[] = [
     right: 100%;
     width: 0.55rem;
     height: 1px;
-    background: rgba(95, 184, 166, 0.7);
+    background: color-mix(in srgb, var(--viz-teal) 70%, transparent);
   }
 
   .control-node::after {
@@ -338,9 +338,9 @@ const controlLevels: ControlLevel[] = [
   }
 
   .tone-blue { --node-color: #6aa9d8; }
-  .tone-teal { --node-color: #5fb8a6; }
+  .tone-teal { --node-color: var(--viz-teal); }
   .tone-rust { --node-color: #d97a5a; }
-  .tone-gold { --node-color: #f1b75f; }
+  .tone-gold { --node-color: var(--viz-amber); }
 
   .node-kicker {
     display: block;
@@ -352,7 +352,7 @@ const controlLevels: ControlLevel[] = [
 
   .control-node strong {
     display: block;
-    color: #fbfaf6;
+    color: var(--paper);
     font-size: clamp(0.94rem, 1.45cqw, 1.08rem);
     line-height: 1.18;
   }
@@ -360,7 +360,7 @@ const controlLevels: ControlLevel[] = [
   .stage-axis {
     display: flex;
     justify-content: space-between;
-    color: rgba(251, 250, 246, 0.58);
+    color: color-mix(in srgb, var(--paper) 58%, transparent);
     font-size: 0.62rem;
   }
 
@@ -394,27 +394,27 @@ const controlLevels: ControlLevel[] = [
   }
 
   .runtime-control.is-sequencing .control-stage.is-active .control-node {
-    border-color: rgba(241, 183, 95, 0.92);
+    border-color: color-mix(in srgb, var(--viz-amber) 92%, transparent);
     background:
-      linear-gradient(120deg, rgba(241, 183, 95, 0.2), rgba(95, 184, 166, 0.12) 58%, transparent),
+      linear-gradient(120deg, color-mix(in srgb, var(--viz-amber) 20%, transparent), color-mix(in srgb, var(--viz-teal) 12%, transparent) 58%, transparent),
       rgba(8, 18, 30, 0.96);
     box-shadow:
-      inset 3px 0 0 #f1b75f,
-      0 0 0 1px rgba(241, 183, 95, 0.2),
-      0 18px 34px rgba(0, 0, 0, 0.32),
-      0 0 24px rgba(241, 183, 95, 0.2);
+      inset 3px 0 0 var(--viz-amber),
+      0 0 0 1px color-mix(in srgb, var(--viz-amber) 20%, transparent),
+      0 18px 34px color-mix(in srgb, var(--black) 32%, transparent),
+      0 0 24px color-mix(in srgb, var(--viz-amber) 20%, transparent);
     transform: scale(1.035);
   }
 
   .runtime-control.is-sequencing .control-stage.is-active .level-marker {
-    color: #f1b75f;
-    text-shadow: 0 0 12px rgba(241, 183, 95, 0.7);
+    color: var(--viz-amber);
+    text-shadow: 0 0 12px color-mix(in srgb, var(--viz-amber) 70%, transparent);
   }
 
   .runtime-control.is-sequencing .control-stage.is-active .stage-branches.has-split::before,
   .runtime-control.is-sequencing .control-stage.is-active .stage-branches.has-split .control-node::before {
-    background: #f1b75f;
-    box-shadow: 0 0 10px rgba(241, 183, 95, 0.72);
+    background: var(--viz-amber);
+    box-shadow: 0 0 10px color-mix(in srgb, var(--viz-amber) 72%, transparent);
   }
 
   .sr-only {
@@ -436,7 +436,7 @@ const controlLevels: ControlLevel[] = [
   }
 
   @keyframes status-pulse {
-    50% { opacity: 0.48; box-shadow: 0 0 5px rgba(226, 249, 217, 0.4); }
+    50% { opacity: 0.48; box-shadow: 0 0 5px color-mix(in srgb, var(--signal-mint) 40%, transparent); }
   }
 
   @container (max-width: 680px) {
@@ -466,7 +466,7 @@ const controlLevels: ControlLevel[] = [
     }
 
     .control-ladder::after {
-      background: linear-gradient(180deg, #6aa9d8, #5fb8a6 38%, #d97a5a 72%, #f1b75f);
+      background: linear-gradient(180deg, #6aa9d8, var(--viz-teal) 38%, #d97a5a 72%, var(--viz-amber));
       transform: scaleY(1);
       transform-origin: top;
     }
@@ -489,7 +489,7 @@ const controlLevels: ControlLevel[] = [
       width: 2.1rem;
       aspect-ratio: 1;
       border: 1px solid var(--node-color);
-      background: #0a2130;
+      background: var(--blue-black);
       color: var(--node-color);
     }
 
