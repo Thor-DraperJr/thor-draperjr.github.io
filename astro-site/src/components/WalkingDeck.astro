@@ -456,7 +456,21 @@ const voices = [
   .wd-recognized strong { font-size: 0.92rem; line-height: 1.25; }
   .wd-recognized span { font-size: 0.78rem; color: var(--on-dark-muted); }
 
-  /* Journey */
+  /* Journey: reserve the viewport for the chapter, not the navigation map. */
+  #signal-impact { --gap: clamp(0.75rem, 1.4cqi, 1rem); padding-inline: clamp(1.25rem, 3cqi, 2rem); padding-top: clamp(1.25rem, 3cqi, 2rem); }
+  #signal-impact .wd-head { max-width: none; gap: 0.5rem; }
+  #signal-impact h2 { font-size: clamp(1.75rem, 3.5cqi, 2.5rem); }
+  #signal-impact .wd-map { max-height: 9rem; }
+  #signal-impact .wd-glyph { width: clamp(2.4rem, 5cqi, 3rem); }
+  #signal-impact .wd-chapter { padding: 1rem; font-size: 0.9375rem; }
+  #signal-impact .wd-chapter h3 { font-size: clamp(1.2rem, 2cqi, 1.4rem); }
+  #signal-impact .wd-chapter p { line-height: 1.45; }
+  #signal-impact .wd-chapter-main, #signal-impact .wd-chapter-side { gap: 0.6rem; }
+  @container wd (min-width: 60rem) {
+    #signal-impact .wd-chapter { grid-template-columns: minmax(0, 0.55fr) minmax(0, 1.45fr) minmax(0, 1.15fr); }
+    #signal-impact .wd-chapter:not(:has(.wd-chapter-img)) { grid-template-columns: minmax(0, 1.45fr) minmax(0, 1.15fr); }
+    #signal-impact .wd-chapter-img { max-height: 13rem; }
+  }
   .wd-journey { display: grid; gap: var(--gap); }
   .wd-map { position: relative; aspect-ratio: 1000 / 420; max-height: 18rem; width: 100%; border-radius: var(--radius); background: color-mix(in srgb, var(--white) 3%, transparent); }
   .wd-map svg { position: absolute; inset: 0; width: 100%; height: 100%; }
@@ -516,7 +530,7 @@ const voices = [
   /* Narrow slides: show only the active chapter label so the map stays legible. */
   @container (max-width: 40rem) {
     .wd-leaf, .wd-node-label { display: none; }
-    .wd-node.is-active .wd-node-label { display: grid; position: absolute; top: 100%; margin-top: 0.3rem; }
+    .wd-node.is-active .wd-node-label { display: grid; position: absolute; top: 100%; margin-top: 0.3rem; width: max-content; max-width: 7rem; white-space: normal; text-align: center; text-wrap: balance; }
     .wd-collage { grid-template-columns: repeat(2, 1fr); }
   }
 
