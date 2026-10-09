@@ -92,7 +92,7 @@ export const timeline: ResumeEra[] = [
     },
     {
         id: "biz-technology",
-        years: "Nov 2020 - May 2021",
+        years: "Dec 2020 - Apr 2021",
         title: "Information Systems Engineer",
         org: "Biz Technology Solutions",
         bullets: [
@@ -115,7 +115,7 @@ export const timeline: ResumeEra[] = [
     },
     {
         id: "stay-fit",
-        years: "2020",
+        years: "Apr 2019 - Jan 2020",
         title: "Owner and Operator",
         org: "Stay Fit CLT",
         bullets: [
@@ -126,7 +126,7 @@ export const timeline: ResumeEra[] = [
     },
     {
         id: "paychex",
-        years: "2019 - 2020",
+        years: "Apr 2018 - Apr 2019",
         title: "Mid-Market Consultant",
         org: "Paychex",
         bullets: [
@@ -147,7 +147,7 @@ export const timeline: ResumeEra[] = [
     },
     {
         id: "enterprise",
-        years: "2013 - 2019",
+        years: "Apr 2012 - Apr 2017",
         title: "Branch Manager",
         org: "Enterprise Rent-A-Car",
         bullets: [
