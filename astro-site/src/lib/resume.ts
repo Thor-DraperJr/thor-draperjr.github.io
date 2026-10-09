@@ -33,8 +33,8 @@ export interface SpeakingEngagement {
 export const summary = {
     name: "Thor G. Draper Jr",
     positioning: "Sales and Security Leader | Enterprise Solution Selling | Cloud, AI, and Cybersecurity",
-    headline: "Senior Security Solution Engineer at Microsoft with a decade of sales, business operations, and people leadership experience strengthened by six years of hands-on cloud and cybersecurity work.",
-    sub: "Led a 40-plus-person branch with P&L responsibility, owned and sold a business, sold payroll and technology solutions, and now guides healthcare and life sciences organizations through security decisions in a pre-sales role. Built technical depth deliberately to bring stronger discovery, customer judgment, and architecture credibility to complex commercial conversations.",
+    headline: "Senior Security Solution Engineer at Microsoft combining sales, business operations, and people leadership with hands-on cloud and cybersecurity experience.",
+    sub: "Led a 40-plus-person branch with P&L responsibility, owned and sold a business, and sold payroll and technology solutions. Built technical depth deliberately to connect commercial judgment with credible security architecture. Now guides healthcare and life sciences organizations through security decisions in a pre-sales role.",
     contact: {
         email: "thordraper2@outlook.com",
         linkedin: "https://www.linkedin.com/in/thor-draperjr/",
@@ -62,8 +62,8 @@ export const timeline: ResumeEra[] = [
         org: "Microsoft Corporation",
         bullets: [
             "Provide pre-sales technical guidance for identity, threat protection, data security, and cloud security across U.S. healthcare payors, providers, and life sciences organizations.",
-            "Lead discovery and architecture discussions that translate security requirements, operating risks, and technical constraints into practical solution paths.",
-            "Work across customers, partners, sales teams, and technical specialists to support security evaluations, deployment readiness, and customer adoption.",
+            "Lead discovery and architecture discussions that connect business priorities, security requirements, and technical constraints to practical solution paths.",
+            "Coordinate customers, partners, sales teams, and technical specialists around security evaluations, deployment readiness, and customer adoption.",
         ],
         skills: ["Consultative Discovery", "Pre-Sales Solution Architecture", "Healthcare & Life Sciences", "Security Strategy", "Cross-Functional Orchestration"],
     },
@@ -74,7 +74,7 @@ export const timeline: ResumeEra[] = [
         org: "Microsoft Corporation",
         bullets: [
             "Supported critical incidents and service-request backlogs across 18 Azure IaaS technologies, helping customers restore service and understand complex infrastructure failures.",
-            "Served as a team lead for proactive Azure architecture and security posture reviews, coordinating technical work across teams and guiding customers through findings and next steps.",
+            "Served as team lead for proactive Azure architecture and security posture reviews, coordinating technical work across teams and guiding customer decisions on findings and next steps.",
             "Applied Microsoft Sentinel and Log Analytics to infrastructure investigation, security review, and operational decision support.",
         ],
         skills: ["Azure IaaS", "Critical Incident Response", "Architecture Reviews", "Security Posture Reviews", "Technical Team Leadership"],
