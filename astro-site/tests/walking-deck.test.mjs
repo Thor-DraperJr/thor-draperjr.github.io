@@ -3,6 +3,10 @@ import fs from 'node:fs';
 import test from 'node:test';
 
 const expected = ['signal-human', 'signal-cover', 'signal-strengths', 'signal-impact', 'signal-voices', 'signal-ask'];
+test('Walking Deck source contains no merge-conflict markers', () => {
+  const source = fs.readFileSync(new URL('../src/components/WalkingDeck.astro', import.meta.url), 'utf8');
+  assert.ok(!/^(?:<{7}|={7}|>{7})(?:\s|$)/m.test(source));
+});
 for (const route of ['career/walking-deck', 'career/walking-deck/present']) {
   test(`${route} preserves the approved six-slide navy deck`, () => {
     const html = fs.readFileSync(new URL(`../dist/${route}/index.html`, import.meta.url), 'utf8');
