@@ -92,7 +92,7 @@ export const timeline: ResumeEra[] = [
     },
     {
         id: "biz-technology",
-        years: "Nov 2020 - May 2021",
+        years: "Dec 2020 - Apr 2021",
         title: "Information Systems Engineer",
         org: "Biz Technology Solutions",
         bullets: [
