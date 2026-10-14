@@ -32,6 +32,8 @@ test('site ZTA map keeps pricing-free links, embed mode and unscaled controls', 
   assert.match(html, /params\.get\("embed"\)/);
   assert.match(html, /href="\/tech\/m365-e3-e5-e7-security-coverage\/"/);
   assert.doesNotMatch(html, /href="(?:coverage-matrix\.html|M365-E3-E5-E7-Step-Up-Map\.md)"/);
-  assert.match(html.slice(html.indexOf('<header>'), html.indexOf('</header>')), /data-tier="E7"/);
+  assert.doesNotMatch(html.slice(html.indexOf('<header>'), html.indexOf('</header>')), /data-tier=/);
+  const toolbar = html.slice(html.indexOf('<div class="map-toolbar">'), html.indexOf('<div class="zwrap"'));
+  assert.match(toolbar, /<h2>Zero Trust architecture<\/h2>[\s\S]*data-tier="E7"/);
   assert.match(html, /min-height: 44px/);
 });

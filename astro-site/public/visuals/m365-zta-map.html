@@ -93,7 +93,11 @@ label.toggle { display: inline-flex; align-items: center; gap: 6px; color: var(-
 .lines path { fill: none; stroke: var(--cp-border-strong); stroke-width: 1.5; stroke-dasharray: 5 4; }
 .lines marker path { fill: var(--cp-border-strong); stroke: none; stroke-dasharray: none; }
 .ztitle { position: absolute; left: 40px; top: 24px; font-size: 34px; font-weight: 700; line-height: 1.1; letter-spacing: -.01em; white-space: nowrap; }
-.zctl { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.map-toolbar { padding: 12px 0 0; margin: 0 0 12px; }
+.map-toolbar h2 { font-size: clamp(24px, 3vw, 34px); margin: 0 0 10px; }
+.zctl { display: flex; flex-direction: column; gap: 8px; align-items: flex-start; }
+body:not(.export) .stage .ztitle { display: none; }
+body.export .map-toolbar { display: none; }
 .zctl .seg button { padding: 8px 14px; min-height: 44px; }
 .ztoggles { display: flex; gap: 14px; font-size: 12.5px; }
 body.export .zctl { display: none; }
@@ -328,6 +332,20 @@ footer { margin-top: 20px; color: var(--cp-text-muted); font-size: 12px; }
       <p class="sub">The Microsoft Zero Trust architecture. Start with the framework, then select a tier to see which components it covers, which gaps close, and which gaps need a product outside the suite.
         <br />Other view: <a href="/tech/m365-e3-e5-e7-security-coverage/" target="_top">Coverage matrix (NIST CSF × asset classes)</a></p>
     </div>
+
+  </header>
+
+  <section class="kpis" aria-live="polite">
+    <div class="kpi"><div class="lbl" id="kCovL">ZTA coverage</div><div class="val" id="kCov">0%</div><div class="delta" id="kCovD"></div><div class="meter"><i id="kCovM"></i></div></div>
+    <div class="kpi"><div class="lbl" id="kFullL">Components fully covered</div><div class="val" id="kFull">0</div><div class="delta" id="kFullD"></div></div>
+    <div class="kpi"><div class="lbl" id="kNewL">Components improved by this step</div><div class="val" id="kNew">0</div><div class="delta" id="kNewD"></div></div>
+    <div class="kpi"><div class="lbl" id="kGapL">Open gaps at this tier</div><div class="val" id="kGap">0</div><div class="delta" id="kGapD"></div></div>
+  </section>
+
+  <section class="card">
+    <p class="hint" id="stageHint"></p>
+    <div class="map-toolbar">
+      <h2>Zero Trust architecture</h2>
         <div class="zctl">
           <div class="seg" role="group" aria-label="View">
             <button data-tier="ZTA" aria-pressed="false">Zero Trust</button>
@@ -340,18 +358,7 @@ footer { margin-top: 20px; color: var(--cp-text-muted); font-size: 12px; }
             <label class="toggle"><input type="checkbox" id="onlyNew" /> Show only new</label>
           </div>
         </div>
-  </header>
-
-  <section class="kpis" aria-live="polite">
-    <div class="kpi"><div class="lbl" id="kCovL">ZTA coverage</div><div class="val" id="kCov">0%</div><div class="delta" id="kCovD"></div><div class="meter"><i id="kCovM"></i></div></div>
-    <div class="kpi"><div class="lbl" id="kFullL">Components fully covered</div><div class="val" id="kFull">0</div><div class="delta" id="kFullD"></div></div>
-    <div class="kpi"><div class="lbl" id="kNewL">Components improved by this step</div><div class="val" id="kNew">0</div><div class="delta" id="kNewD"></div></div>
-    <div class="kpi"><div class="lbl" id="kGapL">Open gaps at this tier</div><div class="val" id="kGap">0</div><div class="delta" id="kGapD"></div></div>
-  </section>
-
-  <section class="card">
-    <h2>Zero Trust architecture</h2>
-    <p class="hint" id="stageHint"></p>
+    </div>
     <div class="zwrap" id="zwrap">
       <div class="stage" id="stage">
         <svg class="lines" id="lines" viewBox="0 0 1440 840" aria-hidden="true"></svg>
