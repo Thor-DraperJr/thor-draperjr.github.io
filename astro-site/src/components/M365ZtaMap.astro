@@ -1,6 +1,6 @@
 ---
 // Thor's standalone ZTA map, served from /visuals/ and embedded whole so it stays one source.
-const src = '/visuals/m365-zta-map.html?embed=1&v=4';
+const src = '/visuals/m365-zta-map.html?embed=1&v=5';
 ---
 
 <div class="zta-breakout">
@@ -33,6 +33,7 @@ const src = '/visuals/m365-zta-map.html?embed=1&v=4';
     fit();
     doc.addEventListener('click', () => setTimeout(fit, 50));
     doc.addEventListener('change', () => setTimeout(fit, 50));
+    doc.addEventListener('keydown', () => setTimeout(fit, 50));
     addEventListener('resize', () => setTimeout(fit, 100));
   };
   frame?.addEventListener('load', size);
