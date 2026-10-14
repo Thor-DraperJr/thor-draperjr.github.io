@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Microsoft 365 E3 → E5 → E7 · Zero Trust Architecture Map</title>
 <style>
-/* NOSHIMEHANA scheme — same tokens as coverage-matrix.html; every value is a named color from NIPPON COLORS */
+/* NOSHIMEHANA scheme - same tokens as coverage-matrix.html; every value is a named color from NIPPON COLORS */
 :root {
   color-scheme: light;
   --cp-bg: #FCFAF2;            /* SHIRONERI 白練 */
@@ -34,6 +34,8 @@
   --tier-e3-fg: #0F2540;
   --tier-e5-fg: #FFFFFB;
   --tier-e7-fg: #FFFFFB;
+  --n26-e3: #CA7A2C;           /* KOHAKU 琥珀: 2026 additions to E3 */
+  --n26-e5: #005CAF;           /* RURI 瑠璃: 2026 additions to E5 */
   --hi: #1B813E;               /* TOKIWA 常磐: green marks what a step adds */
   --partial: color-mix(in srgb, #A5DEE4 45%, #FFFFFB); /* KAMENOZOKI tint */
   --partial-fill: repeating-linear-gradient(135deg, var(--partial) 0 5px, var(--cp-surface) 5px 10px);
@@ -62,7 +64,6 @@ header { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content:
 h1 { font-size: 24px; margin: 0 0 4px; font-weight: 600; }
 .sub { color: var(--cp-text-muted); margin: 0; }
 .sub a, footer a { color: var(--cp-link); }
-.controls { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
 .seg { display: inline-flex; background: var(--cp-surface); border: 1px solid var(--cp-border); border-radius: 0.625rem; padding: 4px; box-shadow: var(--card-shadow); }
 .seg button {
   border: 0; background: transparent; color: var(--cp-text); font: inherit; font-weight: 600;
@@ -91,8 +92,13 @@ label.toggle { display: inline-flex; align-items: center; gap: 6px; color: var(-
 .stage svg.lines { position: absolute; left: 0; top: 0; width: 1440px; height: 840px; overflow: visible; }
 .lines path { fill: none; stroke: var(--cp-border-strong); stroke-width: 1.5; stroke-dasharray: 5 4; }
 .lines marker path { fill: var(--cp-border-strong); stroke: none; stroke-dasharray: none; }
-.ztitle { position: absolute; left: 40px; top: 26px; font-size: 44px; font-weight: 700; line-height: 1.04; letter-spacing: -.01em; }
-.ztier { position: absolute; left: 42px; top: 128px; font-size: 18px; font-weight: 600; color: var(--cp-accent); }
+.ztitle { position: absolute; left: 40px; top: 24px; font-size: 34px; font-weight: 700; line-height: 1.1; letter-spacing: -.01em; white-space: nowrap; }
+.zctl { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.zctl .seg button { padding: 8px 14px; min-height: 44px; }
+.ztoggles { display: flex; gap: 14px; font-size: 12.5px; }
+body.export .zctl { display: none; }
+body.base .ztoggles { visibility: hidden; }
+.ztier { position: absolute; left: 42px; top: 80px; font-size: 18px; font-weight: 600; color: var(--cp-accent); }
 .ztier small { display: block; font-size: 13px; font-weight: 400; color: var(--cp-text-muted); }
 /* The tier label repeats the tier buttons and KPIs, so it shows only in the exported image */
 .ztier { display: none; }
@@ -143,10 +149,26 @@ body.export .ztier { display: block; }
   border-radius: 999px; background: var(--cp-surface); color: var(--hi); font-weight: 800; font-size: 11px;
 }
 .row.gained .st::before { content: "+ "; color: var(--hi); font-weight: 800; }
+/* added: the step adds products, but the rating stays the same */
+.row.added { box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--hi) 55%, transparent); }
+.node.added { box-shadow: 0 0 0 1.5px var(--cp-surface), 0 0 0 3px color-mix(in srgb, var(--hi) 55%, transparent), var(--card-shadow); }
+.tele.added circle { stroke: var(--hi); stroke-width: 2; stroke-dasharray: 3 2; }
+/* ✦ marks a 2026 addition: the suite now includes the product, so no add-on purchase is needed.
+   Amber = added to E3, blue = added to E5. */
+.n26-E3 { --n26: var(--n26-e3); }
+.n26-E5 { --n26: var(--n26-e5); }
+.n26mark { color: var(--n26); font-weight: 700; }
+.n26s { color: var(--n26); }
+.st > .n26s:first-of-type { margin-left: 2px; }
+.zc .st:has(.n26s) { padding: 0 3px 0 4px; }
+.pc.n26::after { content: "✦"; color: var(--n26); font-weight: 700; margin-left: -2px; }
+.n26tag { display: inline-block; font-size: 10.5px; font-weight: 700; line-height: 15px; padding: 0 6px; border-radius: 999px; margin-right: 3px; white-space: nowrap;
+  color: var(--cp-text); background: color-mix(in srgb, var(--n26) 16%, var(--cp-surface)); border: 1px solid color-mix(in srgb, var(--n26) 55%, transparent); }
+.n26tag::first-letter { color: var(--n26); }
 .row.selected { outline: 2px solid var(--cp-text); outline-offset: -3px; }
 .node.selected { outline: 2px solid var(--cp-text); outline-offset: 2px; }
 .zc:hover { filter: brightness(1.04); }
-body.only-new .zc:not(.gained), body.only-new .tele:not(.gained) { opacity: .28; }
+body.only-new .zc:not(.gained):not(.added), body.only-new .tele:not(.gained):not(.added) { opacity: .28; }
 
 .tele { cursor: pointer; }
 .tele circle { fill: var(--cp-surface-soft); stroke: var(--cp-border-strong); stroke-width: 1; stroke-dasharray: 3 2; transition: fill .5s; }
@@ -172,7 +194,7 @@ body.only-new .zc:not(.gained), body.only-new .tele:not(.gained) { opacity: .28;
 .tb.t-E7 { background: var(--tier-e7); color: var(--tier-e7-fg); }
 .tb.t-SEP { background: var(--outside-fill); color: var(--cp-text); border: 1px dotted var(--cp-border-strong); }
 body.no-products .callout { opacity: 0; pointer-events: none; }
-.zlegend { position: absolute; left: 40px; top: 796px; display: flex; gap: 18px; font-size: 12px; color: var(--cp-text-muted); align-items: center; white-space: nowrap; }
+.zlegend { position: absolute; left: 40px; top: 796px; display: flex; gap: 14px; font-size: 12px; color: var(--cp-text-muted); align-items: center; white-space: nowrap; }
 .zlegend span { display: inline-flex; align-items: center; gap: 6px; }
 
 /* Zero Trust framework view: neutral components, no products, no tier legend */
@@ -203,6 +225,8 @@ body.export .card > h2, body.export .card > .hint { display: none; }
 body.export .wrap { max-width: none; padding: 0; }
 body.export .card { border: 0; padding: 0; box-shadow: none; border-radius: 0; background: var(--cp-bg); }
 body.export .stage { border-radius: 0; }
+/* Export canvas is 1536 × 864 (16:9) so the image fills a widescreen slide; the 1440 × 840 diagram sits in the center */
+body.export .zwrap { width: 1440px; margin: 12px auto 0; }
 body.export *, body.export *::before { transition: none !important; }
 
 .legend { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 12px; font-size: 12px; color: var(--cp-text-muted); }
@@ -215,6 +239,7 @@ body.export *, body.export *::before { transition: none !important; }
 .sw.e5 { background: var(--tier-e5); }
 .sw.e7 { background: var(--tier-e7); }
 .sw.gain { background: var(--cp-surface); box-shadow: 0 0 0 1px var(--cp-surface), 0 0 0 3px var(--hi); border-color: transparent; }
+.sw.added { background: var(--cp-surface); box-shadow: 0 0 0 1px var(--cp-surface), 0 0 0 3px color-mix(in srgb, var(--hi) 55%, transparent); border-color: transparent; }
 
 /* ---------- Gaps + detail ---------- */
 .lower { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 16px; align-items: start; margin-top: 16px; }
@@ -290,7 +315,7 @@ footer { margin-top: 20px; color: var(--cp-text-muted); font-size: 12px; }
   .kpis { grid-template-columns: repeat(2, 1fr); }
 }
 @media print {
-  .controls { display: none; }
+  .zctl { display: none; }
   body { background: var(--cp-surface); }
 }
 </style>
@@ -303,16 +328,18 @@ footer { margin-top: 20px; color: var(--cp-text-muted); font-size: 12px; }
       <p class="sub">The Microsoft Zero Trust architecture. Start with the framework, then select a tier to see which components it covers, which gaps close, and which gaps need a product outside the suite.
         <br />Other view: <a href="/tech/m365-e3-e5-e7-security-coverage/" target="_top">Coverage matrix (NIST CSF × asset classes)</a></p>
     </div>
-    <div class="controls">
-      <div class="seg" role="group" aria-label="View">
-        <button data-tier="ZTA" aria-pressed="false">Zero Trust</button>
-        <button data-tier="E3" aria-pressed="false">E3</button>
-        <button data-tier="E5" aria-pressed="false">E5</button>
-        <button data-tier="E7" aria-pressed="false">E7</button>
-      </div>
-      <label class="toggle"><input type="checkbox" id="showProducts" checked /> Show products</label>
-      <label class="toggle"><input type="checkbox" id="onlyNew" /> Show only new</label>
-    </div>
+        <div class="zctl">
+          <div class="seg" role="group" aria-label="View">
+            <button data-tier="ZTA" aria-pressed="false">Zero Trust</button>
+            <button data-tier="E3" aria-pressed="false">E3</button>
+            <button data-tier="E5" aria-pressed="false">E5</button>
+            <button data-tier="E7" aria-pressed="false">E7</button>
+          </div>
+          <div class="ztoggles">
+            <label class="toggle"><input type="checkbox" id="showProducts" checked /> Show products</label>
+            <label class="toggle"><input type="checkbox" id="onlyNew" /> Show only new</label>
+          </div>
+        </div>
   </header>
 
   <section class="kpis" aria-live="polite">
@@ -328,8 +355,9 @@ footer { margin-top: 20px; color: var(--cp-text-muted); font-size: 12px; }
     <div class="zwrap" id="zwrap">
       <div class="stage" id="stage">
         <svg class="lines" id="lines" viewBox="0 0 1440 840" aria-hidden="true"></svg>
-        <div class="ztitle">Zero Trust<br />architecture</div>
+        <div class="ztitle">Zero Trust architecture</div>
         <div class="ztier" id="zTier"></div>
+
       </div>
     </div>
   </section>
@@ -362,7 +390,6 @@ footer { margin-top: 20px; color: var(--cp-text-muted); font-size: 12px; }
 
 <script>
 const TIERS = ["E3", "E5", "E7"];
-const PRICE = { E3: 39, E5: 60, E7: 99 };
 const idx = t => TIERS.indexOf(t);
 
 // Component: label, climb pillar, levels [E3, E5, E7] (0 none · 1 partial · 2 full), items per tier,
@@ -376,7 +403,7 @@ const COMP = {
     ["Entra ID P2: ID Protection (user and sign-in risk), PIM", "ITDR: Defender for Identity", "Access Reviews, Entitlement Management"],
     ["Full IGA: Entra ID Governance lifecycle workflows", "IDV: Verified ID Face Check"]),
   agent: C("Agent", "Identities", [1, 1, 2],
-    ["NHI: Entra Agent ID platform (agent identities, blueprints, sign-in and audit logs)"],
+    ["[NEW26] NHI: Entra Agent ID platform (agent identities, blueprints, sign-in and audit logs)"],
     [],
     ["Agent 365: Conditional Access, ID Protection, and ID Governance for agents", "Agent Registry, sponsors, access packages for agents"],
     [], A365_NOTE),
@@ -388,8 +415,8 @@ const COMP = {
     "Entra ID P2 (E5) and the Entra Suite (E7) give Conditional Access, ID Protection, and access reviews for users, and for agents with Agent 365. They don't cover service principals. Learn: “Workload ID Premium is a standalone product and isn't included in other premium product plans.” Access reviews of privileged service principals need P2 for the reviewers and Workload ID Premium for the service principals. One license in the tenant unlocks the features for all workload identities."),
   // Endpoints
   corporate: C("Corporate", "Endpoints", [1, 2, 2],
-    ["UEM: Intune P1 + P2, compliance policies, Windows Autopatch", "EPP/NGAV: Defender for Endpoint P1, ASR rules", "Windows Enterprise: BitLocker, Credential Guard, LAPS"],
-    ["EDR: Defender for Endpoint P2", "RBVM: Defender Vulnerability Management", "EPM, Cloud PKI, Enterprise App Management"],
+    ["UEM: Intune P1 + [NEW26] P2, compliance policies, Windows Autopatch", "EPP/NGAV: Defender for Endpoint P1, ASR rules", "Windows Enterprise: BitLocker, Credential Guard, LAPS"],
+    ["EDR: Defender for Endpoint P2", "RBVM: Defender Vulnerability Management", "[NEW26] EPM, Cloud PKI, Enterprise App Management"],
     []),
   personal: C("Personal", "Endpoints", [1, 2, 2],
     ["Intune app protection policies (MAM) for BYOD", "Conditional Access: approved app and app protection policy"],
@@ -431,8 +458,8 @@ const COMP = {
     ["AI-SPM for agents", "SAM: data access governance (oversharing) reports"],
     ["Defender for Cloud CSPM: posture for Azure, AWS, and GCP infrastructure (Azure purchase)"]),
   productivity: C("Productivity Optimization", "Policy Optimization", [1, 2, 2],
-    ["SSO and passwordless (less friction)", "DEX: Intune Advanced Analytics", "Copilot Chat upgrades"],
-    ["Security Copilot (400 SCU / 1,000 users / month)", "EPM: no permanent local admin, fewer help-desk tickets"],
+    ["SSO and passwordless (less friction)", "[NEW26] DEX: Intune Advanced Analytics", "[NEW26] Copilot Chat upgrades"],
+    ["[NEW26] Security Copilot (400 SCU / 1,000 users / month)", "[NEW26] EPM: no permanent local admin, fewer help-desk tickets"],
     ["Microsoft 365 Copilot", "SharePoint Admin Agent"]),
   // Access Controls
   evaluation: C("Evaluation", "Access Controls", [1, 2, 2],
@@ -458,12 +485,12 @@ const COMP = {
     ["ZTNA: Entra Private Access (VPN replacement for any TCP/UDP app)"]),
   // Threat Protection
   contassess: C("Continuous Assessment", "Threat Protection", [1, 2, 2],
-    ["AV alerts (Defender for Endpoint P1)", "Email detections (Defender for Office 365 P1)", "Secure Score"],
+    ["AV alerts (Defender for Endpoint P1)", "[NEW26] Email detections (Defender for Office 365 P1)", "Secure Score"],
     ["XDR: unified incidents across endpoint, identity, email, and SaaS", "EDR, ITDR, and CASB detections", "CTEM: Exposure Management"],
     ["Defender detection for agent compromise", "AI-SPM for agents"]),
   ti: C("Threat Intelligence", "Threat Protection", [0, 2, 2],
     [],
-    ["Threat intelligence in Defender (ex-MDTI Premium)", "CTI: Threat Analytics"],
+    ["[NEW26] Threat intelligence in Defender (ex-MDTI Premium)", "CTI: Threat Analytics"],
     []),
   forensics: C("Forensics", "Threat Protection", [1, 2, 2],
     ["Audit Standard (180 days)", "eDiscovery Standard"],
@@ -471,11 +498,11 @@ const COMP = {
     ["Investigate and hunt with agent logs"]),
   response: C("Response Automation", "Threat Protection", [1, 2, 2],
     ["ZAP", "Manual device actions, session revoke, password reset"],
-    ["XDR automatic attack disruption", "AIR for endpoint and email", "Security Copilot agents", "ISOC (preview) automation"],
+    ["XDR automatic attack disruption", "AIR for endpoint and email", "[NEW26] Security Copilot agents", "[NEW26] ISOC (preview) automation"],
     ["Block risky agent actions"]),
   telemetry: C("Telemetry / analytics / assessment", "Threat Protection", [1, 2, 2],
     ["Sign-in and audit logs, Secure Score, Intune reports"],
-    ["Defender XDR signals and Advanced Hunting", "ISOC (preview) / Sentinel data grant"],
+    ["Defender XDR signals and Advanced Hunting", "[NEW26] ISOC (preview) / Sentinel data grant"],
     ["Global Secure Access traffic logs", "Agent 365 observability: agent map, tool-call traces"],
     ["Microsoft Sentinel ingestion beyond the grant (Azure)"]),
   // Data
@@ -484,7 +511,7 @@ const COMP = {
     ["Auto-labeling, EDM, trainable classifiers", "HYOK: Customer Key, Double Key Encryption"],
     ["Agents inherit labels", "SAM: Restricted Access Control, Restricted Content Discovery"]),
   emaildocs: C("Emails & documents", "Data", [1, 2, 2],
-    ["ICES: Defender for Office 365 P1", "DLP for Exchange, SharePoint, OneDrive"],
+    ["[NEW26] ICES: Defender for Office 365 P1", "DLP for Exchange, SharePoint, OneDrive"],
     ["Endpoint and Teams DLP, Insider Risk, DSPM", "Defender for Office 365 P2"],
     ["SAM: oversharing control for Copilot grounding"]),
   structured: C("Structured data", "Data", [0, 1, 1],
@@ -513,7 +540,7 @@ const COMP = {
     ["Inline DLP for agent prompts", "Runtime protection: block risky agent actions", "Tool-level control for MCP servers (Agent 365)"],
     [], A365_NOTE),
   agents: C("Agents", "AI Resources", [1, 1, 2],
-    ["Entra Agent ID platform", "DSPM for AI (basic)"],
+    ["[NEW26] Entra Agent ID platform", "DSPM for AI (basic)"],
     ["DSPM for AI (prompt and response view)"],
     ["Agent 365: Agent Registry, agent map, governance, and security", "Defender and Purview for agents", "AI-SPM for Foundry and Copilot Studio agents"],
     [], A365_NOTE),
@@ -550,10 +577,10 @@ const BOXES = [
   { title: "Access Controls", g: "engine", x: 494, y: 406, w: 226, rows: ["evaluation", "enforcement"] },
   { title: "Threat Protection", g: "engine", x: 494, y: 650, w: 226, rows: ["contassess", "ti", "forensics", "response"] },
   { title: "Network", g: "net", x: 892, y: 404, w: 120, rows: ["public", "private"] },
-  { title: "Data", g: "res", x: 1180, y: 146, w: 176, rows: ["emaildocs", "structured"] },
-  { title: "Apps", g: "res", x: 1180, y: 290, w: 176, rows: ["saas", "onprem"] },
-  { title: "AI Resources", g: "res", x: 1180, y: 432, w: 176, rows: ["agents", "mcp"] },
-  { title: "Infrastructure", g: "res", x: 1180, y: 574, w: 176, rows: ["serverless", "containers", "iaas", "paas", "internal"], jit: true },
+  { title: "Data", g: "res", x: 1180, y: 146, w: 190, rows: ["emaildocs", "structured"] },
+  { title: "Apps", g: "res", x: 1180, y: 290, w: 190, rows: ["saas", "onprem"] },
+  { title: "AI Resources", g: "res", x: 1180, y: 432, w: 190, rows: ["agents", "mcp"] },
+  { title: "Infrastructure", g: "res", x: 1180, y: 574, w: 190, rows: ["serverless", "containers", "iaas", "paas", "internal"], jit: true },
 ];
 const NODES = [
   { id: "strongauth", x: 278, y: 314, w: 110, h: 46 },
@@ -574,20 +601,20 @@ const PATHS = [
   "M494,700 H452 V612", "M452,566 V476",
   "M720,448 H892", "M952,404 V196 H720", "M952,488 V716 H720",
   "M1012,448 H1036", "M1036,168 V596",
-  ...BR.flatMap(y => [`M1036,${y} H1056`, `M1154,${y} H1180`, `M1356,${y} H1370`]),
-  "M1370,128 V770", "M1370,128 H720", "M1370,770 H720",
+  ...BR.flatMap(y => [`M1036,${y} H1056`, `M1154,${y} H1180`, `M1370,${y} H1378`]),
+  "M1378,128 V770", "M1378,128 H720", "M1378,770 H720",
 ];
-const ARROWS = new Set(["M300,360 V448 H330", "M460,448 H494", "M607,252 V406", "M607,490 V650", "M452,566 V476", "M720,448 H892", "M952,404 V196 H720", "M952,488 V716 H720", "M1370,128 H720", "M1370,770 H720", ...BR.map(y => `M1154,${y} H1180`)]);
+const ARROWS = new Set(["M300,360 V448 H330", "M460,448 H494", "M607,252 V406", "M607,490 V650", "M452,566 V476", "M720,448 H892", "M952,404 V196 H720", "M952,488 V716 H720", "M1378,128 H720", "M1378,770 H720", ...BR.map(y => `M1154,${y} H1180`)]);
 
-// Product callouts: [name, tier] — tier "SEP" = outside the Microsoft 365 suite
+// Product callouts: [name, tier] - tier "SEP" = outside the Microsoft 365 suite
 const CALLOUTS = [
   { x: 494, y: 50, w: 300, items: [["Secure Score", "E3"], ["Compliance Manager", "E3"], ["Exposure Management", "E5"], ["Defender for Cloud CSPM", "SEP"]] },
-  { x: 16, y: 178, w: 250, items: [["Entra ID P1", "E3"], ["Entra Agent ID", "E3"], ["Entra ID P2 · Defender for Identity", "E5"], ["Entra ID Governance", "E7"], ["Agent 365", "E7"], ["Workload ID Premium", "SEP"]] },
+  { x: 16, y: 178, w: 250, items: [["Entra ID P1", "E3"], ["Entra Agent ID", "E3", 1], ["Entra ID P2 · Defender for Identity", "E5"], ["Entra ID Governance", "E7"], ["Agent 365", "E7"], ["Workload ID Premium", "SEP"]] },
   { x: 622, y: 300, w: 180, items: [["Conditional Access", "E3"], ["Risk-based CA", "E5"], ["Universal CAE", "E7"]] },
-  { x: 16, y: 658, w: 236, items: [["Intune P1 + P2", "E3"], ["Defender for Endpoint P1", "E3"], ["Defender for Endpoint P2", "E5"], ["Intune EPM · Cloud PKI", "E5"]] },
-  { x: 262, y: 632, w: 182, items: [["Defender XDR", "E5"], ["Security Copilot", "E5"], ["Threat intelligence", "E5"], ["ISOC · Sentinel grant", "E5"]] },
+  { x: 16, y: 658, w: 236, items: [["Intune P1", "E3"], ["Intune P2", "E3", 1], ["Defender for Endpoint P1", "E3"], ["Defender for Endpoint P2", "E5"], ["Intune EPM · Cloud PKI", "E5", 1]] },
+  { x: 262, y: 632, w: 182, items: [["Defender XDR", "E5"], ["Security Copilot", "E5", 1], ["Threat intelligence", "E5", 1], ["ISOC · Sentinel grant", "E5", 1]] },
   { x: 740, y: 530, w: 172, items: [["Entra Internet Access", "E7"], ["Entra Private Access", "E7"]] },
-  { x: 1180, y: 58, w: 256, items: [["Defender for Office 365 P1", "E3"], ["Purview", "E3"], ["Purview E5 · DSPM", "E5"], ["SAM", "E7"], ["Purview Data Map", "SEP"]] },
+  { x: 1180, y: 58, w: 256, items: [["Defender for Office 365 P1", "E3", 1], ["Purview", "E3"], ["Purview E5 · DSPM", "E5"], ["SAM", "E7"], ["Purview Data Map", "SEP"]] },
   { x: 1180, y: 240, w: 256, items: [["App proxy", "E3"], ["Defender for Cloud Apps", "E5"], ["GitHub Advanced Security", "SEP"]] },
   { x: 1180, y: 382, w: 256, items: [["DSPM for AI", "E3"], ["Agent 365", "E7"], ["API Management AI Gateway", "SEP"]] },
   { x: 1040, y: 640, w: 132, items: [["Defender for Cloud", "SEP"], ["Azure Arc", "SEP"], ["Defender for APIs", "SEP"]] },
@@ -632,6 +659,14 @@ const firstFull = c => TIERS.find(t => levelAt(c, t) === 2);
 const maxLv = c => Math.max(...c.lv);
 const prevTier = t => (idx(t) > 0 ? TIERS[idx(t) - 1] : null);
 const needsExt = c => maxLv(c) < 2 && c.ext.length > 0;
+const NEW26 = "[NEW26]";
+const isNew26 = text => text.includes(NEW26);
+// Tiers (up to the current one) that add a 2026 product to this component
+const tiers26 = c => TIERS.slice(0, idx(current) + 1).filter(t => c.items[t].some(isNew26));
+const STAR_TITLE = t => `Added to ${t} in 2026: no add-on purchase needed`;
+const stars26 = c => tiers26(c).map(t => `<span class="n26s n26-${t}" title="${STAR_TITLE(t)}">✦</span>`).join("");
+// Render an item and turn each [NEW26] into a small "✦ 2026" tag, colored by the tier that added it
+const fmtItem = (text, tier = "E3") => text.split(NEW26).map((part, i) => (i ? `<span class="n26tag n26-${tier}" title="${STAR_TITLE(tier)}">✦ 2026</span>` : "") + annotate(part.trimStart())).join("");
 
 const BASE = "ZTA"; // framework view: no tier, no products
 const STEPS = [BASE, ...TIERS];
@@ -662,8 +697,8 @@ const KPI_LABELS = {
   tier: ["ZTA coverage", "Components fully covered", "Components improved by this step", "Open gaps at this tier"],
 };
 const STAGE_HINT = {
-  base: "The Zero Trust reference architecture, with no products. Each request goes from an identity and an endpoint, through the policy engine and the network, to a resource. Select a component to see what it does. Then select E3 to start the climb.",
-  tier: "Color shows the <b>tier that first gives full coverage</b> for each component. A hatched component has partial coverage. A dashed component has no coverage at this tier. A dotted component needs a product <b>outside the Microsoft 365 suite</b> (for example, an Azure service). A ring and “+” show what this step improved. Select a component to see the products.",
+  base: "The Zero Trust reference architecture, with no products. Each request goes from an identity and an endpoint, through the policy engine and the network, to a resource. Select a component to see what it does. Then select E3 (or press →) to start the climb. Keys: ← and → step through the views, and 1–4 jump to a view.",
+  tier: "Color shows the <b>tier that first gives full coverage</b> for each component. A hatched component has partial coverage. A dashed component has no coverage at this tier. A dotted component needs a product <b>outside the Microsoft 365 suite</b> (for example, an Azure service). A ring and “+” show what this step improved. A <span class=\"n26mark n26-E3\">✦</span> or <span class=\"n26mark n26-E5\">✦</span> marks a <b>2026 addition</b> to E3 or to E5: the suite now includes the product, so no add-on purchase is needed. Select a component to see the products. Keys: ← and → step through the views, and 1–4 jump to a view.",
 };
 
 const BRANCH_SVG = `<svg width="11" height="13" viewBox="0 0 11 13" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="3" cy="2.2" r="1.6"></circle><circle cx="3" cy="10.8" r="1.6"></circle><circle cx="8.5" cy="4.5" r="1.6"></circle><path d="M3 3.8V9.2M8.5 6.1C8.5 8.2 3 7.6 3 9.2"></path></svg>`;
@@ -696,7 +731,7 @@ function buildStage() {
     const el = document.createElement("div");
     el.className = "callout";
     el.style.cssText = `left:${c.x}px;top:${c.y}px;width:${c.w}px`;
-    el.innerHTML = c.items.map(([name, t]) => `<span class="pc" data-t="${t}"><i class="tb t-${t}">${t === "SEP" ? "↗" : t}</i>${esc(name)}</span>`).join("");
+    el.innerHTML = c.items.map(([name, t, n26]) => `<span class="pc${n26 ? ` n26 n26-${t}` : ""}" data-t="${t}"${n26 ? ` title="${STAR_TITLE(t)}"` : ""}><i class="tb t-${t}">${t === "SEP" ? "↗" : t}</i>${esc(name)}</span>`).join("");
     stage.appendChild(el);
   });
   stage.insertAdjacentHTML("beforeend", `<div class="zlegend">
@@ -705,9 +740,11 @@ function buildStage() {
     <span class="tl"><i class="sw e3"></i>Full from E3</span>
     <span class="tl"><i class="sw e5"></i>Full from E5</span>
     <span class="tl"><i class="sw e7"></i>Full from E7</span>
-    <span class="tl"><i class="sw outside"></i>Outside the M365 suite</span>
+    <span class="tl"><i class="sw outside"></i>Outside the suite</span>
     <span class="tl"><i class="sw gain"></i>Improved by this step</span>
-    <span><svg width="22" height="22" viewBox="-13 -13 26 26"><g class="tele full-E5">${GAUGE_SVG}</g></svg>Telemetry / analytics / assessment</span>
+    <span class="tl"><i class="sw added"></i>Products added</span>
+    <span class="tl">2026 additions: <b class="n26mark n26-E3">✦</b>E3 <b class="n26mark n26-E5">✦</b>E5</span>
+    <span><svg width="22" height="22" viewBox="-13 -13 26 26"><g class="tele full-E5">${GAUGE_SVG}</g></svg>Telemetry &amp; analytics</span>
     <span><span class="jit">${BRANCH_SVG}</span>JIT &amp; version control</span>
   </div>`);
 
@@ -738,6 +775,7 @@ function stateClasses(c) {
   if (lv === 2) cls.push("full-" + firstFull(c));
   if (lv === 0 && maxLv(c) === 0 && c.ext.length) cls.push("outside");
   if (prev && lv > levelAt(c, prev)) cls.push("gained");
+  else if (prev && c.items[current].length) cls.push("added");
   return cls;
 }
 function badge(c) {
@@ -789,8 +827,8 @@ function render() {
     const c = COMP[el.dataset.id];
     el.className = (el.classList.contains("row") ? "zc row " : "zc node ") + stateClasses(c).join(" ");
     if (selected === el.dataset.id) el.classList.add("selected");
-    el.querySelector(".st").textContent = badge(c);
-    el.setAttribute("aria-label", `${c.pillar}, ${c.label}: ${badge(c)} at ${current}`);
+    el.querySelector(".st").innerHTML = esc(badge(c)) + stars26(c);
+    el.setAttribute("aria-label", `${c.pillar}, ${c.label}: ${badge(c)} at ${current}${tiers26(c).length ? ` (2026 additions in ${tiers26(c).join(" and ")})` : ""}`);
   });
   document.querySelectorAll("#lines .tele").forEach(el => {
     const c = COMP.telemetry;
@@ -896,17 +934,18 @@ function renderDetail() {
   const lv = levelAt(c, current);
   const ff = firstFull(c);
   const status = lv === 2 ? `Full coverage (from ${ff})` : lv === 1 ? "Partial coverage" : "No coverage at this tier";
-  const top = lv === 0 ? "No coverage" : [...TIERS.slice(0, idx(current) + 1)].reverse().map(t => c.items[t][0]).find(Boolean) || c.label;
+  const topTier = lv === 0 ? null : [...TIERS.slice(0, idx(current) + 1)].reverse().find(t => c.items[t][0]);
+  const top = lv === 0 ? "No coverage" : topTier ? c.items[topTier][0] : c.label;
   d.innerHTML = `
     <div class="crumb">${c.pillar} · ${c.label}</div>
-    <h3>${annotate(top)}</h3>
+    <h3>${fmtItem(top, topTier || "E3")}</h3>
     <div class="status">${current}: ${status}</div>
     ${TIERS.map(t => {
       const items = c.items[t];
       const on = idx(t) <= idx(current);
       return `<div class="tierblock ${on ? "on" : "off"}">
         <div class="tn">${t}${t === "E3" ? "" : " adds"}${on ? "" : " (locked)"}</div>
-        ${items.length ? `<ul>${items.map(i => `<li>${annotate(i)}</li>`).join("")}</ul>` : `<div class="empty">Nothing new at this tier</div>`}
+        ${items.length ? `<ul>${items.map(i => `<li>${fmtItem(i, t)}</li>`).join("")}</ul>` : `<div class="empty">Nothing new at this tier</div>`}
       </div>`;
     }).join("")}
     ${c.ext.length ? `<div class="tierblock ext"><div class="tn">↗ OUTSIDE THE MICROSOFT 365 SUITE${maxLv(c) < 2 ? " (closes the gap)" : " (complements)"}</div>
@@ -936,6 +975,18 @@ document.querySelector(".lower").addEventListener("click", e => {
   if (innerWidth <= 1180) document.getElementById("detail").scrollIntoView({ behavior: "smooth", block: "start" });
 });
 document.querySelectorAll(".seg button").forEach(b => b.addEventListener("click", () => { current = b.dataset.tier; render(); }));
+// Presenter keys: ← / → (or PageUp / PageDown, as sent by most clickers) step through the views; 1–4 jump to a view
+document.addEventListener("keydown", e => {
+  if (e.ctrlKey || e.metaKey || e.altKey || e.target.matches?.('input:not([type="checkbox"]), textarea, select, [contenteditable="true"]')) return;
+  const i = STEPS.indexOf(current);
+  let next = null;
+  if (e.key === "ArrowRight" || e.key === "PageDown") next = STEPS[Math.min(i + 1, STEPS.length - 1)];
+  else if (e.key === "ArrowLeft" || e.key === "PageUp") next = STEPS[Math.max(i - 1, 0)];
+  else if (/^[1-4]$/.test(e.key)) next = STEPS[+e.key - 1];
+  if (next === null) return;
+  e.preventDefault();
+  if (next !== current) { current = next; render(); }
+});
 document.getElementById("onlyNew").addEventListener("change", e => document.body.classList.toggle("only-new", e.target.checked));
 document.getElementById("showProducts").addEventListener("change", e => document.body.classList.toggle("no-products", !e.target.checked));
 
@@ -947,7 +998,7 @@ function showTip(a) {
     tip.innerHTML = `<b>${esc(a.dataset.prod)}</b><div class="go">Select to open ${docHost(a.href)} ↗</div>`;
   } else {
     const g = GMAP[a.dataset.term]; if (!g) return;
-    tip.innerHTML = `<b>${g.ac}: ${esc(g.full)}</b>${esc(g.plain)}<div class="ms">In Microsoft 365: ${esc(g.ms)}</div>` +
+    tip.innerHTML = `<b>${g.ac} - ${esc(g.full)}</b>${esc(g.plain)}<div class="ms">In Microsoft 365: ${esc(g.ms)}</div>` +
       (a.tagName === "A" ? `<div class="go">Select to open ${docHost(g.url)} ↗</div>` : "");
   }
   const r = a.getBoundingClientRect();
