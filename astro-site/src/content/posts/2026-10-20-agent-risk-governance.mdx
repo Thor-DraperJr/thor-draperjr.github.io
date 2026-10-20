@@ -1,0 +1,67 @@
+---
+title: "Microsoft Agents: My Risk and Governance Map"
+date: 2026-10-20
+categories: [tech]
+tags: [technical, ai, security, governance, microsoft-365]
+draft: false
+excerpt: "Some agent builders look a lot like large prompt books. My working risk guideline starts with the authority we're adding, then follows the controls as that authority grows."
+---
+
+import Figure from '../../components/Figure.astro';
+import AgentEcosystemGovernance from '../../components/AgentEcosystemGovernance.astro';
+
+I almost wish we'd kept calling some of these things bots.
+
+I've been trying to keep a working guideline for evaluating agent risk. The word "agent" covers a lot of ground, and some agent-builder experiences look to me like large prompt books: reusable instructions, selected knowledge, and a consistent way to ask for something.
+
+Useful, absolutely. But if it still works within your permissions, answers when you ask, and leaves you responsible for taking action, how much new authority did we introduce?
+
+Microsoft describes Agent Builder as respecting existing Microsoft 365 permissions, without granting new privileges.[8] Its current external-service action boundary also matters: adding those actions means moving to Copilot Studio.[6]
+
+For that bounded pattern, I'd expect relatively little net-new authority. I want the governance process to reflect that. A reusable prompt book shouldn't inherit the release process for an autonomous worker just because both are called agents.
+
+There is still risk in what people do with the answer. Microsoft's middle risk tier explicitly includes wrong answers that mislead people or disrupt operations.[1] Existing permissions also remain something to examine; preserving access doesn't tell you whether that access was appropriate in the first place.
+
+This map is how I keep the different solutions and control boundaries straight.
+
+<Figure size="full"><AgentEcosystemGovernance /></Figure>
+
+The six categories and risk progression are my framework. Moving right, I'm thinking about expanding capability, connected systems, and authority. The shared governance foundation stays underneath all of it.
+
+The product name is a starting point. Foundry itself supports configuration-driven and code-based agents.[4] I'd still evaluate the actual deployment before assigning risk.
+
+## The risk changes when the authority changes
+
+Microsoft's Center of Excellence guidance calls the assist-to-execute line its clearest risk signal. It describes three tiers:[1]
+
+- **Individual productivity:** named owner, basic monitoring, release checklist, and self-service guardrails.
+- **Expert knowledge and internal services:** domain validation, knowledge-quality monitoring, formal release review, and accuracy feedback.
+- **Business-critical and external-facing:** process ownership, SLA monitoring, security and responsible AI review, decision rights, incident response, and quarterly maturity review.
+
+Its citizen, partnered, and professional development zones add guidance on how teams build and manage agents.[2]
+
+The platform notes under my map cover the separate identity, onboarding, and Autopilot implementation details.[5][3][7]
+
+My first questions would be: whose permissions does it use, what can it change, and does a person approve the action?
+
+Those answers tell me more than the agent label does.
+
+Thanks for reading!
+
+## Sources
+
+[1] [https://learn.microsoft.com/en-us/agents/center-of-excellence/govern-agents-risk](https://learn.microsoft.com/en-us/agents/center-of-excellence/govern-agents-risk)
+
+[2] [https://learn.microsoft.com/en-us/microsoft-copilot-studio/guidance/sec-gov-phase2](https://learn.microsoft.com/en-us/microsoft-copilot-studio/guidance/sec-gov-phase2)
+
+[3] [https://learn.microsoft.com/en-us/microsoft-agent-365/developer/choose-integration-option](https://learn.microsoft.com/en-us/microsoft-agent-365/developer/choose-integration-option)
+
+[4] [https://learn.microsoft.com/en-us/azure/foundry/agents/overview?view=foundry](https://learn.microsoft.com/en-us/azure/foundry/agents/overview?view=foundry)
+
+[5] [https://learn.microsoft.com/en-us/microsoft-copilot-studio/govern-agents-identities-overview](https://learn.microsoft.com/en-us/microsoft-copilot-studio/govern-agents-identities-overview)
+
+[6] [https://learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/agent-builder](https://learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/agent-builder)
+
+[7] [https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/agent-365-integration](https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/agent-365-integration)
+
+[8] [https://learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/copilot-studio-experience](https://learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/copilot-studio-experience)

@@ -1,0 +1,210 @@
+---
+const agents = [
+  { number: '0', name: 'First-party agents', builder: 'Microsoft', color: '#fb8b47',
+    focus: 'Microsoft-managed lifecycle & experiences',
+    examples: ['Researcher', 'Analyst', 'Sales', 'Cowork', 'PowerPoint', 'Excel'],
+    controls: ['Microsoft-managed experience', 'Microsoft-managed lifecycle', 'Built-in security & compliance', 'Limited extensibility'],
+    audience: 'End user', purpose: 'Personal productivity', identity: 'Typically no separate Agent ID' },
+  { number: '1', name: 'Agent Builder', builder: 'User / team', color: '#a6d97b',
+    focus: 'Knowledge & retrieval agents (primarily knowledge retrieval)',
+    examples: ['On-behalf user agents', 'Team / shared agents', 'Workflow agents'],
+    controls: ['Agent sharing controls', 'Creator-managed lifecycle', 'Connector controls', 'Agent ownership', 'User-delegated permissions'],
+    audience: 'User / team', purpose: 'Personal productivity', identity: 'No separate Agent ID currently required' },
+  { number: '2', name: 'Copilot Studio', builder: 'Maker / IT', color: '#d5a5ed',
+    focus: 'Enterprise agents & process automation',
+    examples: ['Enterprise agents', 'Team agents', 'Workflow agents', 'Business process', 'Connected systems'],
+    controls: ['Power Platform governance', 'Managed Environments', 'Connector policies', 'Agent publishing controls', 'ALM: development / test / production'],
+    audience: 'Enterprise organization', purpose: 'Personal / business', identity: 'Agent ID / legacy app registration' },
+  { number: '3', name: 'Autopilots', builder: 'Individual user', color: '#ff9e91',
+    focus: 'Personal AI assistant that learns preferences and acts proactively on your behalf',
+    examples: ['Local agents', 'Proactive assistance & automation', 'Contextual understanding'],
+    controls: ['User consent & approvals', 'Device compliance', 'Conditional Access', 'Local capability controls', 'Enterprise policy controls'],
+    audience: 'Individual user', purpose: 'Personal / business', identity: 'Own agent identity where supported' },
+  { number: '4', name: 'Foundry agents', builder: 'Developer', color: '#f4ce57',
+    focus: 'Custom AI solutions & multi-agent systems',
+    examples: ['Multi-agent systems', 'Industry solutions', 'Custom AI applications'],
+    controls: ['Azure RBAC', 'Azure policies', 'Network isolation', 'Agent orchestration controls', 'Content safety controls'],
+    audience: 'Enterprise organization', purpose: 'Extensibility', identity: 'Agent identity depends on runtime' },
+  { number: '5', name: 'External agents', builder: 'Partner / ISV', color: '#72cef5',
+    focus: 'Third-party, partner & SaaS agents; ecosystem integration',
+    examples: ['Partner ecosystem agents', 'SaaS / third-party agents', 'Custom external agents'],
+    controls: ['Agent 365 SDK onboarding', 'Registry sync & discovery', 'Agent inventory & visibility', 'Entra Agent ID when onboarded', 'Policy evaluation & audit'],
+    audience: 'Enterprise organization', purpose: 'Extensibility', identity: 'Agent identity when onboarded / supported' },
+];
+const foundations = [
+  { name: 'Identity & access', items: ['Entra ID', 'Conditional Access', 'Authentication (MFA)', 'Agent identity where supported'] },
+  { name: 'Security', items: ['Microsoft Purview', 'DLP policies', 'Sensitivity labels', 'Information protection'] },
+  { name: 'Compliance', items: ['Audit logs', 'eDiscovery', 'Retention policies', 'Communication Compliance'] },
+  { name: 'Operations', items: ['Monitoring', 'Lifecycle management', 'Usage analytics', 'Reporting & dashboards'] },
+];
+---
+
+<figure class="agent-ecosystem" aria-labelledby="agent-ecosystem-title">
+  <header class="ecosystem-heading">
+    <p class="kicker">Thor's framework / Microsoft agent solutions</p>
+    <h2 id="agent-ecosystem-title">One ecosystem. Different control boundaries.</h2>
+    <p>How I organize the builders, experiences, governance, and risk progression.</p>
+  </header>
+
+  <p class="scroll-hint">Scroll across to compare all six categories.</p>
+  <div class="map-scroll" role="region" aria-label="Six agent solution categories; scroll horizontally on smaller laptops" tabindex="0">
+    <div class="ecosystem-canvas" data-agent-ecosystem>
+      <div class="oversight">
+        <ol aria-label="Agent governance lifecycle">
+          {['Discover', 'Inventory', 'Approve', 'Monitor', 'Govern', 'Lifecycle', 'Report'].map((step) => <li>{step}</li>)}
+        </ol>
+        <p><strong>Microsoft Agent 365</strong> monitors and governs registered / onboarded agents across supported platforms. <a href="https://learn.microsoft.com/en-us/microsoft-agent-365/developer/choose-integration-option" aria-label="Agent 365 integration guidance">[3]</a></p>
+      </div>
+      <div class="authoring-axis" aria-label="Authoring spectrum: no code through low code to pro code">
+        <span>No code</span><span>Low code</span><span>Pro code</span>
+      </div>
+      <div class="agent-columns">
+        {agents.map((agent) => (
+          <section class="agent-column" style={`--column-color:${agent.color}`} data-agent-category={agent.number}>
+            <header class="column-heading">
+              <span class="category-number">{agent.number}</span>
+              <h3>{agent.name}</h3>
+              <p class="builder"><span>Builder</span>{agent.builder}</p>
+            </header>
+            <div class="focus"><span>Focus</span><p>{agent.focus}</p></div>
+            <ul class="examples">{agent.examples.map((example) => <li>{example}</li>)}</ul>
+            <div class="platform-controls">
+              <h4>Governance controls</h4>
+              <p class="platform-note">Platform-specific</p>
+              <ul>{agent.controls.map((control) => <li>{control}</li>)}</ul>
+            </div>
+            <div class="audience"><span>Primary audience</span><strong>{agent.audience}</strong></div>
+            <dl class="mobile-boundaries"><div><dt>Purpose</dt><dd>{agent.purpose}</dd></div><div><dt>Identity</dt><dd>{agent.identity}</dd></div></dl>
+          </section>
+        ))}
+      </div>
+      <div class="purpose-bands" aria-label="Purpose groupings">
+        <span>Personal productivity</span><span>Personal / business</span><span>Extensibility</span>
+      </div>
+      <div class="identity-bands" aria-label="Identity boundary">
+        <span>Typically no separate Agent ID</span><span>Agent ID / agent identity where supported</span>
+      </div>
+      <div class="risk-progression">
+        <div class="risk-arrow" aria-hidden="true"></div>
+        <p><strong>Lower risk</strong><span>My directional view: expanding capability, integration, and authority</span><strong>Higher risk</strong></p>
+      </div>
+      <section class="foundation" aria-labelledby="foundation-title">
+        <h3 id="foundation-title">Shared governance foundation <span>Across all six categories</span></h3>
+        <div class="foundation-columns">
+          {foundations.map((foundation) => <div><h4>{foundation.name}</h4><ul>{foundation.items.map((item) => <li>{item}</li>)}</ul></div>)}
+        </div>
+      </section>
+      <p class="support-note">Shared responsibilities, not identical feature coverage. Apply controls where supported. MFA concerns human authentication where applicable; agent and workload identities use their supported authentication controls.</p>
+    </div>
+  </div>
+  <figcaption>
+    My framework and directional risk judgment, recreated from my original diagram. Categories 0–5 are reference labels, not Microsoft's official risk scores. Authoring methods overlap; actual risk depends on permissions, data, actions, and audience. Agent 365 capabilities vary by platform, onboarding, licensing, and configuration.
+  </figcaption>
+  <details class="implementation-notes">
+    <summary>Platform and identity notes</summary>
+    <ul>
+      <li>Agent Builder currently doesn't require its own Entra Agent ID. That does not mean identity or access controls are absent. Connector and workflow entries describe governance boundaries to consider; external-service actions require Copilot Studio. <a href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/govern-agents-identities-overview">Identity guidance [5]</a> · <a href="https://learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/agent-builder">Agent Builder guidance [6]</a></li>
+      <li>Autopilots is a useful operating-pattern category in my map, not a mutually exclusive builder platform. Microsoft's documented autopilot integration uses a Foundry hosted agent. Local-agent examples reflect the broader personal-assistant pattern; the controls must be checked for the actual runtime. <a href="https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/agent-365-integration">Foundry integration [7]</a></li>
+      <li>Foundry supports configuration-driven and code-based agents. Placement toward the pro-code end reflects how I use this map, rather than a platform restriction. <a href="https://learn.microsoft.com/en-us/azure/foundry/agents/overview?view=foundry">Foundry guidance [4]</a></li>
+      <li>Agent 365 onboarding paths include built-in integration, registry sync in preview, and SDK integration. SDK onboarding is one path for external agents, not a requirement for every integration. <a href="https://learn.microsoft.com/en-us/microsoft-agent-365/developer/choose-integration-option">Integration guidance [3]</a></li>
+    </ul>
+  </details>
+</figure>
+
+<style>
+  .agent-ecosystem { --canvas:#0a2130; --text:#fbfaf6; --muted:#c0ced9; position:relative; isolation:isolate; max-width:108rem; margin:1.5rem auto 2.5rem; font-family:var(--font-sans,'Manrope Variable',sans-serif); color:var(--text); background:var(--canvas); border:1px solid #415c70; border-radius:1rem; overflow:hidden; }
+  .ecosystem-heading { padding:2rem 2rem 1.2rem; }
+  .agent-ecosystem .kicker { margin:0 0 .6rem; color:#72cef5; font-size:.75rem; letter-spacing:.14em; text-transform:uppercase; font-weight:800; }
+  .agent-ecosystem h2 { margin:0; color:var(--text); font-size:clamp(1.8rem,3vw,2.9rem); letter-spacing:-.025em; line-height:1.1; }
+  .agent-ecosystem .ecosystem-heading > p:last-child { margin:.8rem 0 0; color:var(--muted); font-size:1rem; }
+  .agent-ecosystem .scroll-hint { display:none; }
+  @media (min-width:701px) and (max-width:1535px) { .agent-ecosystem .scroll-hint { display:block; color:#8bd7fb; margin:0 2rem .8rem; font-size:.875rem; } }
+  .map-scroll { overflow-x:auto; padding:0 2rem; scrollbar-color:#72cef5 #132f42; scrollbar-width:thin; }
+  .ecosystem-canvas { min-width:88rem; padding-bottom:1.4rem; }
+  .oversight { border-top:1px solid #415c70; border-bottom:1px solid #415c70; padding:1rem 0; text-align:center; }
+  .oversight ol { display:flex; justify-content:space-around; gap:1rem; list-style:none; margin:0; padding:0; }
+  .agent-ecosystem .oversight li { margin:0; font-size:1.05rem; color:var(--text); font-weight:700; }
+  .agent-ecosystem .oversight p { margin:.8rem 0 0; color:var(--muted); font-size:.9rem; }
+  .authoring-axis { display:grid; grid-template-columns:repeat(3,1fr); position:relative; border-bottom:2px solid #f4ce57; padding:.9rem 0 .5rem; margin:0 0 1.25rem; color:#f4ce57; font-size:.85rem; font-weight:750; text-transform:uppercase; letter-spacing:.12em; }
+  .authoring-axis span { text-align:center; }
+  .authoring-axis::after { content:''; width:.5rem; height:.5rem; border-top:2px solid #f4ce57; border-right:2px solid #f4ce57; transform:rotate(45deg); position:absolute; right:0; bottom:-.32rem; }
+  .agent-columns { display:grid; grid-template-columns:repeat(6,minmax(0,1fr)); gap:.8rem; }
+  .agent-column { display:flex; flex-direction:column; min-width:0; border:1px solid color-mix(in srgb,var(--column-color) 65%,transparent); border-top:3px solid var(--column-color); border-radius:.4rem; padding:1rem .85rem; background:#102b3c; }
+  .column-heading { display:grid; grid-template-columns:1.7rem minmax(0,1fr); gap:.5rem; align-items:start; min-height:4.6rem; }
+  .category-number { display:grid; place-items:center; width:1.7rem; height:1.7rem; border-radius:50%; background:var(--column-color); color:#0a2130; font-size:1rem; font-weight:850; }
+  .agent-ecosystem h3 { margin:0; color:var(--column-color,var(--text)); font-size:1.05rem; line-height:1.2; letter-spacing:-.02em; }
+  .agent-ecosystem .builder { grid-column:2; margin:.2rem 0 0; color:var(--text); font-size:.85rem; line-height:1.5; }
+  .builder span { display:block; color:var(--muted); text-transform:uppercase; font-size:.65rem; letter-spacing:.1em; }
+  .focus { min-height:7.7rem; padding:.9rem 0; border-bottom:1px solid #415c70; margin-top:.8rem; }
+  .focus > span, .audience > span { text-transform:uppercase; font-size:.65rem; letter-spacing:.1em; color:var(--column-color); font-weight:800; }
+  .agent-ecosystem .focus p { margin:.3rem 0 0; color:var(--text); font-size:.92rem; line-height:1.45; }
+  .agent-ecosystem ul { list-style:none; padding:0; margin:0; }
+  .agent-ecosystem li { color:var(--text); }
+  .agent-ecosystem .examples { min-height:11.5rem; padding:1rem 0; }
+  .agent-column:first-child .examples { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); align-content:start; column-gap:.5rem; }
+  .agent-ecosystem .examples li, .agent-ecosystem .platform-controls li { margin:0 0 .4rem; font-size:.875rem; line-height:1.45; padding-left:.7rem; position:relative; }
+  .examples li::before, .platform-controls li::before { content:''; width:3px; height:3px; background:var(--column-color); position:absolute; top:.55em; left:0; }
+  .platform-controls { border:1px solid color-mix(in srgb,var(--column-color) 55%,transparent); border-radius:.35rem; padding:.9rem .7rem; flex:1; }
+  .agent-ecosystem h4 { margin:0; color:var(--column-color,var(--text)); font-size:.78rem; line-height:1.3; text-transform:uppercase; letter-spacing:.02em; }
+  .agent-ecosystem .platform-note { margin:.2rem 0 .85rem; color:var(--muted); font-size:.72rem; }
+  .audience { text-align:center; margin-top:1rem; }
+  .audience > span { display:block; margin-bottom:.4rem; }
+  .audience strong { display:block; color:#0a2130; background:var(--column-color); border-radius:.2rem; padding:.4rem .25rem; font-size:.8rem; }
+  .mobile-boundaries { display:none; }
+  .purpose-bands { display:grid; grid-template-columns:repeat(3,1fr); gap:.8rem; margin:1rem 0 .7rem; }
+  .purpose-bands span { border-top:1px solid #86c6b4; padding-top:.5rem; text-align:center; color:#a7ddcb; font-size:.875rem; font-weight:700; }
+  .identity-bands { display:grid; grid-template-columns:2fr 4fr; gap:1rem; margin-bottom:1rem; }
+  .identity-bands span { text-align:center; font-size:.8rem; color:var(--muted); }
+  .risk-arrow { height:.65rem; background:linear-gradient(90deg,#fb8b47,#f29b5f); clip-path:polygon(0 15%,98.5% 15%,98.5% 0,100% 50%,98.5% 100%,98.5% 85%,0 85%); }
+  .agent-ecosystem .risk-progression p { display:flex; justify-content:space-between; gap:1rem; align-items:baseline; margin:.5rem 0 1.4rem; color:var(--text); font-size:.85rem; }
+  .risk-progression p > span { color:var(--muted); font-size:.8rem; }
+  .foundation { border:1px solid #607b8f; border-radius:.4rem; padding:1.1rem 1.25rem; }
+  .agent-ecosystem .foundation h3 { color:var(--text); font-size:1rem; margin-bottom:1rem; }
+  .foundation h3 > span { color:var(--muted); font-weight:400; font-size:.85rem; margin-left:.5rem; }
+  .foundation-columns { display:grid; grid-template-columns:repeat(4,1fr); gap:1.5rem; }
+  .foundation-columns > div + div { border-left:1px solid #415c70; padding-left:1.5rem; }
+  .agent-ecosystem .foundation h4 { color:#72cef5; margin-bottom:.5rem; font-size:.85rem; }
+  .agent-ecosystem .foundation li { font-size:.85rem; margin:0 0 .25rem; line-height:1.45; }
+  .agent-ecosystem .support-note { color:var(--muted); margin:.8rem 0 0; font-size:.75rem; line-height:1.5; }
+  .agent-ecosystem figcaption { padding:1rem 2rem; color:var(--muted); font-size:.875rem; line-height:1.6; border-top:1px solid #415c70; }
+  .agent-ecosystem a { color:#8bd7fb; text-decoration:underline; text-underline-offset:.2em; }
+  .implementation-notes { border-top:1px solid #415c70; padding:0 2rem; }
+  .implementation-notes summary { padding:1rem 0; min-height:48px; cursor:pointer; color:var(--text); font-size:1rem; font-weight:700; }
+  .agent-ecosystem .implementation-notes ul { padding:0 0 1rem 1rem; list-style:disc; }
+  .agent-ecosystem .implementation-notes li { margin:0 0 .8rem; font-size:1rem; line-height:1.6; color:var(--muted); }
+  .agent-ecosystem :is(a,summary):focus-visible, .map-scroll:focus-visible { outline:3px solid #72cef5; outline-offset:-3px; }
+  @media (max-width:700px) {
+    .ecosystem-heading { padding:1.5rem 1.25rem 1rem; }
+    .map-scroll { padding:0 1.25rem; }
+    .ecosystem-canvas { min-width:0; }
+    .oversight ol { flex-wrap:wrap; justify-content:center; gap:.5rem 1rem; }
+    .agent-ecosystem .oversight li { font-size:.9rem; }
+    .authoring-axis { font-size:.7rem; letter-spacing:.04em; }
+    .agent-columns { grid-template-columns:minmax(0,1fr); gap:1rem; }
+    .agent-column { padding:1.25rem; }
+    .column-heading { grid-template-columns:2rem minmax(0,1fr); min-height:0; }
+    .agent-ecosystem h3 { font-size:1.3rem; }
+    .agent-ecosystem .builder { grid-column:2; font-size:1rem; }
+    .focus { min-height:0; padding:.85rem 0; }
+    .agent-ecosystem .focus p { font-size:1.05rem; }
+    .agent-ecosystem .examples { min-height:0; padding:1rem 0 .6rem; }
+    .agent-ecosystem .examples li, .agent-ecosystem .platform-controls li { font-size:1rem; }
+    .agent-ecosystem .platform-controls h4 { font-size:.9rem; }
+    .agent-ecosystem .platform-note { font-size:.8rem; }
+    .audience strong { font-size:1rem; }
+    .mobile-boundaries { display:grid; gap:.65rem; font-size:.875rem; margin:1rem 0 0; }
+    .mobile-boundaries dt { color:var(--column-color); font-weight:750; }
+    .mobile-boundaries dd { color:var(--muted); margin:.15rem 0 0; }
+    .purpose-bands, .identity-bands { display:none; }
+    .risk-progression { margin-top:1.5rem; }
+    .agent-ecosystem .risk-progression p { flex-wrap:wrap; }
+    .risk-progression p > span { order:3; flex-basis:100%; }
+    .foundation { padding:1rem; }
+    .foundation h3 > span { display:block; margin:.4rem 0 0; }
+    .foundation-columns { grid-template-columns:minmax(0,1fr); gap:1.2rem; }
+    .foundation-columns > div + div { border-left:0; border-top:1px solid #415c70; padding:1rem 0 0; }
+    .agent-ecosystem .foundation li { font-size:1rem; }
+    .agent-ecosystem figcaption { padding:1rem 1.25rem; }
+    .implementation-notes { padding:0 1.25rem; }
+  }
+</style>
