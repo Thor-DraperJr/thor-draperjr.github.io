@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { readdir, readFile } from 'node:fs/promises';
 import path from 'node:path';
 import test from 'node:test';
+import matter from 'gray-matter';
 
 const dist = path.resolve('dist');
 
@@ -16,7 +17,9 @@ test('the static route manifest remains complete', async () => {
   const postFiles = (await readdir(contentDirectory)).filter((file) => /\.mdx?$/.test(file));
   const postRoutes = await Promise.all(postFiles.map(async (file) => {
     const source = await readFile(path.join(contentDirectory, file), 'utf8');
-    const category = source.match(/^categories:\s*\[([^,\]]+)/m)?.[1]?.trim();
+    const { data } = matter(source);
+    if (data.draft) return null;
+    const category = data.categories?.[0];
     assert.ok(category, `missing category in ${file}`);
     const slug = file.replace(/\.mdx?$/i, '').replace(/^\d{4}-\d{2}-\d{2}-/, '');
     return `${category}/${slug}/index.html`;
@@ -34,7 +37,7 @@ test('the static route manifest remains complete', async () => {
     'visuals/m365-zta-map.html',
   ];
   const actual = (await htmlFiles(dist)).map((file) => path.relative(dist, file).split(path.sep).join('/')).sort();
-  assert.deepEqual(actual, [...staticRoutes, ...postRoutes].sort());
+  assert.deepEqual(actual, [...staticRoutes, ...postRoutes.filter(Boolean)].sort());
 });
 
 test('the shared shell exposes keyboard-first navigation', async () => {

@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { readFile, readdir } from 'node:fs/promises';
 import path from 'node:path';
 import test from 'node:test';
+import matter from 'gray-matter';
 
 const distPath = path.resolve('dist');
 const siteDescription = 'A working library of ideas, experiments, and operator notes on technology, leadership, AI, and career development from Thor Draper Jr.';
@@ -259,7 +260,13 @@ test('articles publish branded social metadata and structured data', async () =>
     assert.match(html, /<meta property="article:published_time" content="2021-08-08T12:00:00\.000Z">/);
     assert.match(html, /<script type="application\/ld\+json">.*"@type":"BlogPosting".*<\/script>/s);
     assert.deepEqual([...socialCard.subarray(0, 8)], [137, 80, 78, 71, 13, 10, 26, 10]);
-    const postCount = (await readdir(path.resolve('src/content/posts'))).filter((file) => /\.mdx?$/.test(file)).length;
+    const postDirectory = path.resolve('src/content/posts');
+    const postFiles = (await readdir(postDirectory)).filter((file) => /\.mdx?$/.test(file));
+    const published = await Promise.all(postFiles.map(async (file) => {
+        const { data } = matter(await readFile(path.join(postDirectory, file), 'utf8'));
+        return !data.draft;
+    }));
+    const postCount = published.filter(Boolean).length;
     assert.equal(socialCards.length, postCount);
 });
 test('homepage is professional-only and the archive keeps the notebook one click away', async () => {
