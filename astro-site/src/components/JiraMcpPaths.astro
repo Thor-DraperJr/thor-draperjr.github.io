@@ -1,0 +1,63 @@
+---
+import { jiraPaths as paths } from '../lib/mcpGovernance';
+---
+
+<figure class="jira-paths" aria-labelledby="jira-path-title">
+  <header class="paths-header">
+    <p class="paths-kicker">Worked example / Reading or updating Jira</p>
+    <h2 id="jira-path-title">The endpoint you configure<br /> is only one possible path.</h2>
+    <p>Separate the network route from the credentials carried on it.</p>
+  </header>
+  <div class="path-comparisons">
+    {paths.map(path => <section class="path-case" data-jira-path={path.id} aria-labelledby={`jira-path-${path.id}`}>
+      <p class="case-label">{path.label}</p>
+      <h3 id={`jira-path-${path.id}`}>{path.headline}</h3>
+      <ol class="request-flow" aria-label={`${path.label}: request route`}>
+        {path.nodes.map((node, index) => <li><span class:list={['flow-node', { 'policy-node': node === 'APIM' || node === 'GSA' || node === 'GSA MCP firewall' }]}>{node}</span>{index < path.nodes.length - 1 && <span class="flow-connector" aria-hidden="true">→</span>}</li>)}
+      </ol>
+      <p class="credential-line"><strong>{path.id === 'combined' ? 'Policy and authentication:' : 'Authentication:'}</strong> {path.credentials}</p>
+      <p class="condition-line"><strong>Coverage:</strong> {path.condition}</p>
+    </section>)}
+  </div>
+  <aside class="governance-plane">
+    <strong>Agent 365: governance above the gateway</strong>
+    <p>Inventory and supported access decisions for connected gateways. It does not automatically route the agent through APIM or replace Atlassian authorization.</p>
+  </aside>
+  <figcaption>Illustrative paths, not a production deployment claim. <a href="https://learn.microsoft.com/en-us/azure/api-management/secure-mcp-servers">APIM authentication</a> · <a href="https://support.atlassian.com/security-and-access-policies/docs/control-atlassian-mcp-server-settings">Atlassian access controls</a> · <a href="https://learn.microsoft.com/en-us/entra/global-secure-access/how-to-configure-mcp-firewall">GSA coverage</a> · <a href="https://learn.microsoft.com/en-us/azure/api-management/agent-365">A365 integration</a></figcaption>
+</figure>
+
+<style>
+  .jira-paths { position:relative; isolation:isolate; max-width:72rem; margin:1.5rem auto 2.5rem; border:1px solid #496171; border-radius:.9rem; background:#0a2130; color:#fbfaf6; overflow:hidden; font-family:var(--font-sans,'Manrope Variable',sans-serif); }
+  .paths-header { padding:clamp(1.25rem,3vw,2rem); border-bottom:1px solid #496171; }
+  .jira-paths .paths-kicker { font-size:.75rem; color:#72cef5; text-transform:uppercase; letter-spacing:.12em; font-weight:800; margin:0 0 .75rem; }
+  .jira-paths h2 { font-size:clamp(1.8rem,3.8vw,3rem); color:#fbfaf6; letter-spacing:-.03em; line-height:1.1; margin:0; }
+  .jira-paths .paths-header > p:last-child { color:#c0ced9; font-size:1.05rem; margin:.9rem 0 0; }
+  .path-comparisons { display:grid; }
+  .path-case { padding:clamp(1.25rem,3vw,2rem); }
+  .path-case + .path-case { border-top:1px solid #496171; }
+  .jira-paths .case-label { color:#72cef5; margin:0 0 .5rem; font-size:.75rem; font-weight:800; letter-spacing:.08em; text-transform:uppercase; }
+  [data-jira-path='bypass'] .case-label { color:#f4c430; }
+  .jira-paths h3 { margin:0 0 1.1rem; color:#fbfaf6; font-size:1.3rem; line-height:1.35; letter-spacing:-.02em; }
+  .jira-paths .request-flow { list-style:none; display:flex; gap:0; margin:0 0 1.1rem; padding:0; align-items:stretch; }
+  .jira-paths .request-flow li { display:flex; flex:1; min-width:0; align-items:center; margin:0; color:#132235; }
+  .jira-paths .request-flow li:last-child { flex:.95; }
+  .flow-node { display:flex; justify-content:center; align-items:center; min-height:4rem; width:100%; padding:.75rem .6rem; border:1px solid #c0ced9; border-radius:.3rem; background:#fbfaf6; font-size:1rem; font-weight:750; line-height:1.35; text-align:center; }
+  .policy-node { background:#143247; border-color:#72cef5; color:#fbfaf6; }
+  .flow-connector { color:#72cef5; font-size:1.4rem; font-weight:600; padding:0 .5rem; }
+  [data-jira-path='bypass'] .flow-connector { color:#f4c430; }
+  .jira-paths .credential-line, .jira-paths .condition-line { font-size:1rem; line-height:1.6; margin:0; color:#d5e0e8; }
+  .jira-paths .condition-line { margin-top:.5rem; color:#c0ced9; font-size:.875rem; }
+  .credential-line strong, .condition-line strong { color:#fbfaf6; }
+  .governance-plane { border-top:1px solid #496171; padding:1.25rem clamp(1.25rem,3vw,2rem); background:#143247; }
+  .governance-plane strong { color:#72cef5; font-size:1rem; }
+  .jira-paths .governance-plane p { margin:.5rem 0 0; font-size:1rem; line-height:1.6; color:#d5e0e8; }
+  .jira-paths figcaption { padding:1rem clamp(1.25rem,3vw,2rem); color:#c0ced9; font-size:.875rem; line-height:1.65; }
+  .jira-paths a { color:#8bd7fb; text-decoration:underline; text-underline-offset:.2em; }
+  .jira-paths a:focus-visible { outline:3px solid #f4c430; outline-offset:3px; }
+  @media (max-width:640px) {
+    .jira-paths .request-flow { flex-direction:column; }
+    .jira-paths .request-flow li { flex-direction:column; }
+    .flow-node { min-height:3rem; font-size:1.05rem; }
+    .flow-connector { transform:rotate(90deg); padding:.3rem 0; line-height:1.2; }
+  }
+</style>

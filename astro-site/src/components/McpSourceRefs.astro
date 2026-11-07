@@ -1,0 +1,9 @@
+---
+import { mcpSources } from '../lib/mcpGovernance';
+interface Props { ids: readonly number[] }
+const { ids } = Astro.props;
+---
+<span class="mcp-refs">{ids.map(id => <a href={mcpSources[id].url} aria-label={`Source ${id}: ${mcpSources[id].title}`}>[{id}]</a>)}</span>
+<style>
+ .mcp-refs{display:inline;font-size:.85em;white-space:normal}.mcp-refs a{color:inherit;text-decoration:underline;text-underline-offset:.18em;margin-inline-end:.25em;overflow-wrap:anywhere}.mcp-refs a:focus-visible{outline:2px solid currentColor;outline-offset:3px}
+</style>

@@ -1,0 +1,344 @@
+---
+title: "Managing MCP Connections Starts With the Request Path"
+date: 2026-10-30
+categories: [tech]
+tags: [technical, ai, security, governance, mcp, microsoft-365]
+draft: false
+excerpt: "A practical comparison of Microsoft's approaches to governing AI and MCP connections, why LiteLLM appeals to platform teams, and where the controls work together."
+---
+
+import Figure from '../../components/Figure.astro';
+import McpScenarioArchitectures from '../../components/McpScenarioArchitectures.astro';
+import McpGuideComparison from '../../components/McpGuideComparison.astro';
+import JiraMcpPaths from '../../components/JiraMcpPaths.astro';
+
+As firms expand their AI adoption, they need to govern more than the harnesses on employee devices. They need to govern the MCP servers those harnesses connect to and the actions available through them.
+
+The way I see it, there are two useful approaches to governing those connections: identity-based controls and an application/API gateway. That's how I group the approaches in this article, using public documentation for the product capabilities.
+
+## Identity-based and application/API approaches enforce control in different places
+
+An identity-based approach starts with who is connecting and the context of that access. It uses identity policy to decide whether a caller can reach a resource. GSA applies that approach across supported network paths, using context such as user, device and risk.[63]
+
+An application/API gateway approach puts a governed endpoint in the request path. The team operating that endpoint applies authentication, authorization and request policies there. APIM is one example.[1][11] Both approaches can use identity and work together; the distinction is where the decision is enforced and which traffic reaches it.
+
+### Identity-based control across the network path
+
+Global Secure Access (GSA) combines network access with identity context. Microsoft describes Entra Internet Access as an identity-based Secure Web Gateway, with Conditional Access integration that can use context such as user, device and risk.[63]
+
+I'd categorize this as the identity-and-security-led approach: govern access across the network path used by covered clients. The MCP firewall can inspect the supported protocol and allow or block servers and tools; it goes beyond a destination-only filter.[2]
+
+That firewall is in preview. The documented device path requires traffic forwarding and TLS inspection, and covers remote HTTP/SSE MCP traffic. Local servers, stdio and JSON-RPC batches are outside that documented inspection coverage.[2]
+
+Cloud execution needs its own path. A laptop client doesn't inspect calls made inside a vendor's cloud runtime. Microsoft separately documents Copilot Studio forwarding to GSA; that integration uses the tenant baseline profile and currently doesn't support Conditional Access-linked security profiles.[6][9]
+
+### Application/API control at the service endpoint
+
+Azure API Management (APIM) gives a team an explicit gateway endpoint through which to expose and manage APIs and remote MCP servers. It can apply authentication, authorization, traffic policies and monitoring to requests that traverse that endpoint.[1]
+
+I'd categorize this as the application/API-platform approach: the firm operates a governed front door for the service. APIM can validate Entra-issued tokens and use separately configured backend credentials, so identity is part of this approach too.[11] The distinction from GSA is the enforcement point, rather than a clean split between identity and networking.
+
+For example, publishing a vendor MCP endpoint through APIM gives us a policy point for that route. It doesn't make that route mandatory; the runtime configuration and available origin/network restrictions still have to prevent direct access.[5]
+
+APIM's AI capabilities and the dedicated Azure AI Gateway preview are distinct products/resource types.[8] The Agent 365 integration guide distinguishes server blocking on supported APIM v2 gateways from AI Gateway tool-level capabilities, requires static allowed tools for tool governance, and excludes classic/v1. Self-hosted APIM support does not establish support for that A365 integration.[5]
+
+### API Center and Agent 365: catalog and estate governance
+
+API Center provides API/MCP inventory and discovery. Agent 365 provides supported agent-estate governance and connections to supported gateways; its Tools Gateway integration is in preview.[17][39] These help answer what is registered, who owns it and which supported access decisions can be managed centrally. They don't automatically place every call behind a gateway.
+
+Entra ID and Agent ID supply the identity foundation. The MCP resource still has to validate the token and authorize the requested operation.[12]
+
+### Defender and Purview: threat and data controls
+
+Defender and Purview add threat detection, supported runtime protection, audit and data-policy capabilities within their documented workload and integration scope.[33][34] They complement access and gateway controls; buying the entitlement doesn't automatically inspect every third-party connection.
+
+## Why LiteLLM appeals to AI platform teams
+
+The AI platform team has another set of concerns: applications need access to different models, teams need budgets, provider credentials need protection, and someone needs to explain the bill.
+
+LiteLLM brings several of those tasks into one self-hosted gateway. Its documentation describes an OpenAI-compatible interface across model providers, virtual keys with model access and budgets, spend tracking, routing/fallbacks, and MCP access through the same deployment.[61]
+
+My interpretation of its appeal is the combination:
+
+- **Provider flexibility:** give applications a common entry point while configuring the approved models behind it.
+- **A team-level operating model:** issue controlled gateway keys, assign model access and limits, and attribute estimated spend to teams or applications.
+- **Shared operations:** manage routing, logs and supported guardrails centrally instead of rebuilding those controls in every application.
+- **Models and tools together:** govern configured model and MCP routes through a common gateway, while keeping their usage measures separate.[61]
+
+SMS describes adopting LiteLLM to centralize provider access, guardrails, usage logging and cost tracking.[62] That account describes one team's choices, not a measurement of overall market share or adoption growth.
+
+APIM also has model-token controls, and Microsoft has its dedicated AI Gateway preview.[8][15] LiteLLM's appeal therefore shouldn't be reduced to a feature that only LiteLLM has. I'd compare the provider integrations, developer workflow, deployment ownership and cost-management model a team actually needs.
+
+Self-hosting also creates work: availability, upgrades, secrets, database operations and telemetry are still someone's responsibility. LiteLLM distinguishes its open-source gateway from Enterprise capabilities such as SSO, management audit logs and delegated administration.[51] Its budgets require a connected database, and a DB-less global-budget configuration fails open.[40]
+
+The Microsoft integration matters because the choice can be complementary. A firm can operate LiteLLM as its AI gateway and separately connect supported governance and threat-evaluation capabilities rather than assume it must choose one vendor for every layer.
+
+### The approaches can overlap and work together
+
+A firm might use GSA to constrain covered clients' network access, APIM to govern an approved service endpoint, and Agent 365 to manage supported gateway inventory and access decisions.[2][5] The comparison below includes LiteLLM's AI-platform approach alongside those Microsoft offerings. Symbols show primary responsibility or conditional contribution; the relationship notes explain useful coexistence.
+
+<Figure size="wide"><McpGuideComparison kind="coverage" /></Figure>
+
+## A365 and LiteLLM have separate integrations
+
+**Inventory and governance:** the preview Tools Gateway connection in the Microsoft 365 admin center can connect LiteLLM and discover its registered MCP servers. Microsoft says this preview is not intended for production use. Discovery is limited to connected gateways, rather than every arbitrary server on the internet.[39]
+
+**Pre-tool threat evaluation:** LiteLLM's A365 guardrail sends the pending tool name, arguments, server and available tool metadata for a Defender verdict before execution. It requires a signed-in user's delegated Entra/OBO context; the current implementation has no service-only identity mode. The user's prompt isn't sent, and ordinary model chat routes are untouched.[4]
+
+Tenant onboarding and delegated `ThreatProtection.Evaluate.All` permission with admin consent are prerequisites. Its unavailable/unscanned fallback defaults to blocking, with configurable behavior. I'd test onboarding, consent and that failure mode rather than infer them from a successful allow.[4]
+
+**Runtime observability:** custom agents can instrument/export activity through Microsoft OpenTelemetry integration. That is separate again, and supports documented delegated or service-to-service export. The guardrail's user-token requirement should not be generalized to all A365 telemetry.[35]
+
+Azure AI Gateway's separate tool-threat policy can evaluate before execution, after execution, or both. It also has delegated-token requirements. A post-execution denial can withhold the result, but cannot undo a write the tool already performed.[7]
+
+## Follow the model call and the tool call separately
+
+For the examples below, I'm using **Codex CLI running locally on a managed workstation**. Claude Code is another possible client; both document MCP connections to external tools.[65][66] I'll keep Codex as the named client throughout rather than switch between abstract labels.
+
+- **Codex CLI:** the application the employee uses. Its agent runtime coordinates model and tool calls; this is part of the Codex session, not another product to deploy.
+- **Model service:** the configured model endpoint Codex calls for inference. It is separate from the client application.
+- **MCP server:** the tool endpoint Codex connects to. In the vendor example, that is Atlassian MCP.
+- **Target system:** Jira or Confluence, where the data and permitted business actions live.
+
+OpenAI documents the MCP connection configuration separately from the model-provider configuration.[65][67] The gateway and vendor credentials still need to be configured and validated; naming Codex doesn't turn these diagrams into a tested connector recipe.
+
+I draw two branches from the Codex session: **Codex → configured model service** and **Codex → MCP gateway/server → target system**. A compatible model gateway can sit on the first branch when the provider/API and authentication configuration support it.[67] Managing the MCP endpoint alone doesn't put the model requests through that gateway; APIM documents separate model-token policies and MCP-request telemetry.[15][18]
+
+This example keeps the MCP caller on the workstation. If execution moves to a cloud or remote host, check that host's actual network path rather than assume the workstation's GSA client covers it.[2]
+
+There are also two meanings of “token” here. An OAuth access token is an authorization credential. A model token is a unit of model input or output. Counting one tells me nothing useful about the other.
+
+## On-premises gives us control of the origin
+
+Start with an employee using Codex CLI to request information from an internal system. Codex connects to the approved MCP gateway; the on-premises MCP server then queries the internal system or database. Because we own that backend path, I'd restrict it to the approved gateway rather than rely on Codex configuration alone.
+
+APIM can manage remote MCP servers, including through a self-hosted gateway. A managed Azure gateway needs appropriate network connectivity to reach an on-premises backend; a private endpoint into APIM only controls the inbound side.[1][22]
+
+<Figure size="wide"><McpScenarioArchitectures scenario="onprem" /></Figure>
+
+The database permission still matters. If a tool runs through a broadly privileged service account, authenticating the human at the gateway doesn't reduce that account's authority. I'd test both the allowed operation and the operation that same identity should be denied.[12]
+
+Self-hosted deployment also changes the emergency plan. It uses classic Developer/Premium licensing, and a disconnected gateway keeps its last configuration. I'd test how we stop access when a new central deny cannot reach it.[21][26]
+
+## Corporate login leaves another API question
+
+Keep Codex CLI as the client and use Jira as the vendor system. An illustrative request is: “Read Jira issue EXAMPLE-123 and tell me its current status.” The intended path is Codex CLI → APIM → Atlassian MCP → Jira.
+
+In that path, Codex sends the tool request to the configured corporate endpoint. APIM validates the corporate credential on the incoming call and uses separately configured Atlassian authorization on the outgoing call.[11] Atlassian MCP then performs the authorized Jira operation. The result returns to Codex for the answer.
+
+The authentication question is still separate from the name of the client. A vendor supporting corporate SSO doesn't establish that its MCP endpoint accepts Entra API tokens. APIM's incoming token and the vendor's outgoing credential are different authorization boundaries.[11][60]
+
+<Figure size="wide"><McpScenarioArchitectures scenario="vendor-integrated" /></Figure>
+
+Atlassian documents `getJiraIssue` for the read and `transitionJiraIssue` for a status change.[57] Asking the same Codex client to change the issue's status adds a write operation. I'd review those permissions separately, even though the employee is still using the same interface.
+
+Microsoft documents Entra SAML SSO for Atlassian Cloud, while Atlassian's MCP documentation describes OAuth 2.1 and administrator-enabled API-token authentication.[56][60] I'd use Jira to illustrate corporate sign-in alongside vendor API authorization. Those documents don't establish native acceptance of Entra-issued API tokens by the vendor MCP endpoint.
+
+The diagram's corporate connection and Atlassian OAuth connection require their own setup. Codex's MCP configuration supports bearer credentials and OAuth with compatible servers; that documents a connection mechanism, not proof this complete APIM-to-Atlassian design has been validated.[65]
+
+Atlassian can restrict MCP access with app permissions, OAuth client/domain controls and IP allowlists. Its domain restrictions do not cover API-token access; its applicable IP restrictions cover both OAuth and API-token calls.[10]
+
+<details>
+<summary>Worked example: Jira through APIM, directly, through GSA, or through both</summary>
+<Figure size="wide"><JiraMcpPaths /></Figure>
+</details>
+
+I would also test revocation at both boundaries. Entra can't directly revoke an application-issued session. Already-issued tokens, vendor grants, keys and sessions need their own termination or reevaluation behavior; turning off corporate sign-in doesn't prove every existing path stopped.[25]
+
+## A vendor credential needs an owner and an exit path
+
+Keep Codex CLI on the workstation, but replace Atlassian with a hypothetical vendor that cannot integrate with our corporate authentication approach. The employee still authenticates to the corporate gateway. The gateway or broker then connects to the vendor MCP server using the vendor's credential. APIM supports separately configured outbound OAuth credentials, subject to provider and gateway compatibility.[11][24]
+
+I'd prefer a per-user vendor connection where individual permissions matter. If the broker uses a shared vendor account, our gateway can identify the employee using Codex while the vendor may see only that shared account. I'd approve its permissions explicitly and preserve the mapping between the corporate caller and vendor credential.
+
+<Figure size="wide"><McpScenarioArchitectures scenario="vendor-separate" /></Figure>
+
+The uncomfortable case is a public vendor endpoint, independently valid credentials and no useful origin restriction. The gateway can deny its own route. It cannot stop a call that never reaches it. Microsoft's guidance recommends origin/network restrictions precisely because gateway configuration alone doesn't close that path.[5]
+
+That's a risk decision I want written down. We can use supported egress controls for covered clients, negotiate better vendor controls, accept the remaining gap, or decline the integration. A registry entry doesn't resolve it.
+
+## Keep usage accounting honest
+
+For the Codex-to-Jira example, I'd account for model inference and Jira tool operations separately, then reconcile them against actual charges:
+
+- **Model usage:** provider/model, input/output/cache usage, policy outcome and estimated cost for the model requests we actually observe.
+- **Tool usage:** MCP server/tool, caller and connection, allow/block outcome, latency and target result. Any configured per-call price is separate from model consumption.
+- **Actual charges:** provider and vendor billing reconciled against the first two records.
+
+APIM can apply model-token limits by a configured counter key. LiteLLM supports model spend tracking by key, user and team, and separate configured or custom MCP cost accounting. Neither mechanism discovers the model spend hidden inside an unrelated SaaS tool.[15][28][32]
+
+For per-user, team and application reporting, I'd bind the actor/app/agent identifiers to validated identity, derive the team from an owned mapping, and carry run/conversation and trace IDs through both branches. A caller-supplied `team_id` header is not evidence that the caller belongs to that team. Shared upstream credentials may leave the target seeing only the shared account.[4][36]
+
+I'd turn that trusted attribution into separate limit keys:
+
+- **User:** validated user ID for an APIM counter or a personal/team-member budget.
+- **Team:** centrally maintained membership mapping for a shared team counter/budget.
+- **Application:** validated app identity or dedicated virtual key for its assigned counter/budget.
+
+APIM counters are independent at each gateway/region, rather than one instance-wide aggregate. LiteLLM team-associated keys use team/team-member budgets; the key owner's personal budget does not apply. I'd design the total allowance around those scopes instead of assuming they add up automatically.[15][40]
+
+I'd use request logs for the detailed attribution ledger, then aggregate for dashboards. APIM's custom token metrics have cardinality limits and can silently discard new series at those limits. They should not be assumed to provide a complete per-employee audit trail.[16]
+
+Limits need failure tests too. APIM documents streaming estimates and temporary concurrency overshoot. LiteLLM's budget enforcement requires a connected database; a DB-less global-budget configuration fails open. Operational budgets and token caps are useful controls, but provider billing remains the actual-charge source.[15][38][40]
+
+Finally, reconcile pricing, cache accounting, interrupted streams and calls that bypassed the proxy. A gateway estimate and a supplier invoice can legitimately differ.[16][31]
+
+## Collect the evidence without collecting everything
+
+For the Jira example, I want to identify the employee using Codex, the corporate credential admitted by the gateway, the tool requested, the policy decision, and the action Jira actually performed. A model trace alone doesn't answer what changed in Jira. That requires joining evidence across the path.
+
+<Figure size="wide"><McpGuideComparison kind="telemetry" /></Figure>
+
+APIM doesn't capture tool arguments/results by default. Enabling payload logging can collect sensitive data and secrets. I'd define redaction, access and retention before enabling it.[18]
+
+A365 custom-agent telemetry also has a specific schema: token counts are optional, while some content fields are required for its documented integration. I'd review that data contract against our collection policy instead of promising full security visibility after removing every payload.[36]
+
+Defender and Purview depend on supported workloads, onboarding, emitted signals and policy scope. GSA/Sentinel correlation likewise requires configured diagnostic export and connectors. Buying the entitlement doesn't populate those records automatically.[33][34][37]
+
+## E7 rights are one part of the operating cost
+
+Microsoft 365 E7 includes E5, Microsoft 365 Copilot, Entra Suite and Agent 365. That covers substantial identity, security and governance rights. It doesn't make every gateway, model, log destination or vendor service part of the same bill.[13][20]
+
+I would keep this entitlement check beside the architecture review, rather than assume that a technically supported integration is already licensed and configured.
+
+<Figure size="wide"><McpGuideComparison kind="licensing" /></Figure>
+
+Two qualifications are easy to miss: API Center Standard can be included through a linked eligible APIM instance, and Sentinel has a bounded benefit for specified M365 ingestion. Those are narrower than “E7 includes all the Azure services in this diagram.”[45][50]
+
+## Put a name beside each remaining decision
+
+My proposed ownership split is central control of identity, gateway/network baselines, registry, secrets infrastructure and log policy; team ownership of runtime configuration, requested tools, human approvals, connection mapping and cost attribution; and target/vendor ownership of backend permissions, credential termination, audit and billing.
+
+Before approving the Codex-to-Jira connection, I'd ask Codex to perform an allowed read, attempt a status change the caller should be denied, and try the direct MCP route. Then I'd revoke access and repeat the request using the previously issued credential. I'd follow the same run through the model record, gateway tool log and Jira audit, including what happens during a gateway or telemetry outage.
+
+In my [last post](/tech/agent-risk-governance/), I started with the authority an agent receives. Here, I'd require an owner, an enforcement point and evidence for each connection carrying that authority. That's the map I want beside the product list.
+
+Thanks for reading!
+
+## Sources
+
+[1] [Microsoft: MCP servers in API Management](https://learn.microsoft.com/en-us/azure/api-management/mcp-server-overview)
+
+[2] [Microsoft: GSA MCP firewall preview](https://learn.microsoft.com/en-us/entra/global-secure-access/how-to-configure-mcp-firewall)
+
+[4] [LiteLLM: Microsoft Agent 365 guardrail](https://docs.litellm.ai/docs/proxy/guardrails/microsoft_agent_365)
+
+[5] [Microsoft: Agent 365 and APIM governance](https://learn.microsoft.com/en-us/azure/api-management/agent-365)
+
+[6] [Microsoft: GSA for Copilot Studio agents](https://learn.microsoft.com/en-us/entra/global-secure-access/concept-secure-web-ai-gateway-agents)
+
+[7] [Microsoft: AI Gateway tool threat protection](https://learn.microsoft.com/en-us/azure/ai-gateway/policy-tool-threat)
+
+[8] [Microsoft: Dedicated AI Gateway preview](https://learn.microsoft.com/en-us/azure/ai-gateway/overview)
+
+[9] [Microsoft: Configure cloud-agent network controls](https://learn.microsoft.com/en-us/entra/global-secure-access/how-to-secure-web-ai-gateway-agents)
+
+[10] [Atlassian MCP access controls](https://support.atlassian.com/security-and-access-policies/docs/control-atlassian-mcp-server-settings)
+
+[11] [APIM inbound and outbound MCP authentication](https://learn.microsoft.com/en-us/azure/api-management/secure-mcp-servers)
+
+[12] [Entra Agent ID and MCP authorization](https://learn.microsoft.com/en-us/entra/agent-id/secure-mcp-server-with-entra-id)
+
+[13] [Microsoft 365 E7 included products](https://www.microsoft.com/en-us/microsoft-365/enterprise/e7)
+
+[14] [Microsoft Entra licensing and E7](https://learn.microsoft.com/en-us/entra/fundamentals/licensing)
+
+[15] [APIM model token limits](https://learn.microsoft.com/en-us/azure/api-management/llm-token-limit-policy)
+
+[16] [APIM model token metrics and cardinality](https://learn.microsoft.com/en-us/azure/api-management/llm-emit-token-metric-policy)
+
+[17] [API Center MCP catalog](https://learn.microsoft.com/en-us/azure/api-center/register-discover-mcp-server)
+
+[18] [APIM MCP traffic monitoring](https://learn.microsoft.com/en-us/azure/api-management/monitor-mcp-servers)
+
+[19] [Agent 365 service description](https://learn.microsoft.com/en-us/office365/servicedescriptions/microsoft-agent-365/microsoft-agent-365)
+
+[20] [Microsoft subscription suite licensing](https://www.microsoft.com/licensing/guidance/subscription-suites)
+
+[21] [APIM self-hosted gateway](https://learn.microsoft.com/en-us/azure/api-management/self-hosted-gateway-overview)
+
+[22] [APIM private networking](https://learn.microsoft.com/en-us/azure/api-management/virtual-network-concepts)
+
+[23] [APIM gateway capability differences](https://learn.microsoft.com/en-us/azure/api-management/api-management-gateways-overview)
+
+[24] [APIM credential manager](https://learn.microsoft.com/en-us/azure/api-management/credentials-overview)
+
+[25] [Entra and application-session revocation](https://learn.microsoft.com/en-us/entra/identity/users/users-revoke-access)
+
+[26] [APIM tier support](https://learn.microsoft.com/en-us/azure/api-management/api-management-features)
+
+[27] [Entra delegated OBO flow](https://learn.microsoft.com/en-us/entra/identity-platform/v2-oauth2-on-behalf-of-flow)
+
+[28] [LiteLLM MCP cost accounting](https://docs.litellm.ai/docs/mcp_cost)
+
+[29] [GSA Generative AI Insights](https://learn.microsoft.com/en-us/entra/global-secure-access/concept-generative-ai-insights)
+
+[30] [Entra agent sign-in and audit logs](https://learn.microsoft.com/en-us/entra/agent-id/sign-in-audit-logs-agents)
+
+[31] [LiteLLM cost reconciliation](https://docs.litellm.ai/docs/troubleshoot/cost_discrepancy)
+
+[32] [LiteLLM spend tracking](https://docs.litellm.ai/docs/proxy/cost_tracking)
+
+[33] [Defender agent detection and protection](https://learn.microsoft.com/en-us/defender-xdr/security-for-ai/ai-agent-detection-protection)
+
+[34] [Purview Agent 365 protections](https://learn.microsoft.com/en-us/purview/ai-agent-365)
+
+[35] [Agent 365 Microsoft OpenTelemetry integration](https://learn.microsoft.com/en-us/microsoft-agent-365/developer/microsoft-opentelemetry)
+
+[36] [Agent 365 observability attributes](https://learn.microsoft.com/en-us/microsoft-agent-365/developer/observability-attribute-reference)
+
+[37] [GSA Sentinel connectors](https://learn.microsoft.com/en-us/entra/global-secure-access/how-to-sentinel-integration)
+
+[38] [Dedicated AI Gateway concepts](https://learn.microsoft.com/en-us/azure/ai-gateway/concepts)
+
+[39] [Agent 365 Tools Gateway setup](https://learn.microsoft.com/en-us/microsoft-agent-365/admin/manage-tools-gateway)
+
+[40] [LiteLLM budget enforcement prerequisites](https://docs.litellm.ai/docs/proxy/users)
+
+[41] [Dedicated AI Gateway live observability](https://ai.gateway.azure.com/docs/observability)
+
+[42] [Security Copilot included capacity](https://learn.microsoft.com/en-us/copilot/security/security-copilot-inclusion)
+
+[43] [Purview per-user and metered billing](https://learn.microsoft.com/en-us/purview/purview-billing-models)
+
+[44] [APIM Azure costs](https://learn.microsoft.com/en-us/azure/api-management/plan-manage-costs)
+
+[45] [API Center plans and APIM benefit](https://learn.microsoft.com/en-us/azure/api-center/overview)
+
+[46] [Azure Monitor and Log Analytics costs](https://learn.microsoft.com/en-us/azure/azure-monitor/logs/cost-logs)
+
+[47] [Foundry model consumption](https://learn.microsoft.com/en-us/azure/foundry/concepts/manage-costs)
+
+[48] [Copilot Studio included usage and credits](https://learn.microsoft.com/en-us/microsoft-copilot-studio/requirements-messages-management)
+
+[49] [Purview service entitlements](https://learn.microsoft.com/en-us/office365/servicedescriptions/microsoft-365-service-descriptions/microsoft-365-tenantlevel-services-licensing-guidance/microsoft-purview-service-description)
+
+[50] [Sentinel Microsoft 365 data benefit](https://azure.microsoft.com/en-us/pricing/offers/sentinel-microsoft-365-offer)
+
+[51] [LiteLLM Enterprise licensing](https://docs.litellm.ai/docs/enterprise)
+
+[52] [Agent 365 per-user licensing FAQ](https://www.microsoft.com/licensing/faqs/122)
+
+[53] [Azure gateway pricing status](https://azure.microsoft.com/en-us/pricing/details/api-management)
+
+[54] [API Center portal authorization](https://learn.microsoft.com/en-us/azure/api-center/authorize-api-access)
+
+[55] [Sentinel unified billing](https://learn.microsoft.com/en-us/azure/sentinel/billing)
+
+[56] [Atlassian MCP authentication methods](https://support.atlassian.com/atlassian-rovo-mcp-server/docs/authentication-and-authorization)
+
+[57] [Atlassian MCP supported tools and scopes](https://support.atlassian.com/atlassian-rovo-mcp-server/docs/supported-tools)
+
+[60] [Entra SAML SSO for Atlassian Cloud](https://learn.microsoft.com/en-us/entra/identity/saas-apps/atlassian-cloud-tutorial)
+
+[61] [LiteLLM AI Gateway capabilities](https://docs.litellm.ai/docs/simple_proxy)
+
+[62] [SMS engineering: adopting LiteLLM for governance](https://www.sms.com/blog/centralize-ai-operations-with-litellm-for-scalable-governance)
+
+[63] [Microsoft Global Secure Access identity-centric network security](https://learn.microsoft.com/en-us/entra/global-secure-access/overview-what-is-global-secure-access)
+
+[65] [OpenAI: Codex MCP connections](https://learn.chatgpt.com/docs/extend/mcp.md?surface=cli)
+
+[66] [Anthropic: Claude Code MCP connections](https://code.claude.com/docs/en/mcp.md)
+
+[67] [OpenAI: Codex custom model-provider configuration](https://learn.chatgpt.com/docs/config-file/config-advanced.md)
