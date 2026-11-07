@@ -1,0 +1,51 @@
+---
+import { scenarios, clientExample } from '../lib/mcpGovernance';
+import McpSourceRefs from './McpSourceRefs.astro';
+interface Props { scenario: typeof scenarios[number]['id'] }
+const s = scenarios.find(s => s.id === Astro.props.scenario);
+if (!s) throw new Error('Unknown MCP scenario');
+---
+<figure class="mcp-architecture" data-mcp-scenario={s.id} aria-labelledby={`${s.id}-heading`}>
+ <header><span class="kicker">Request path / {s.index}</span><h3 id={`${s.id}-heading`}>{s.title}</h3><p class="takeaway">{s.takeaway}</p></header>
+ <div class="request-map">
+  <ol class="flow entry" aria-label="Client to agent runtime">
+   <li class="node"><strong>{clientExample.name}</strong><span>{clientExample.role}</span><small>{clientExample.location}</small></li>
+   <li class="node runtime"><strong>{clientExample.runtime}</strong><span>{clientExample.runtimeNote}</span></li>
+  </ol>
+  <p class="branch-origin">Both branches originate in the Codex session. Client and runtime are logical roles within that session, not two separately deployed services.</p>
+  <section class="branch model-branch" aria-labelledby={`${s.id}-model`}>
+   <h4 id={`${s.id}-model`}>Model request <span>Runtime-controlled inference; tokens, limits and estimated spend</span></h4>
+   <ol class="flow" aria-label="Model request path">
+    <li class="node"><strong>Model gateway <small>(optional)</small></strong><span>APIM, LiteLLM or dedicated AI Gateway. Configure the model route separately.</span></li>
+    <li class="node external"><strong>{s.model}</strong><span>{s.modelNote}</span></li>
+   </ol>
+  </section>
+  <section class="branch tool-branch" aria-labelledby={`${s.id}-tools`}>
+   <h4 id={`${s.id}-tools`}>Tool request <span>Connection, tool and target authorization</span></h4>
+   <ol class="flow" aria-label="MCP tool request path">
+    <li class="node"><strong>{s.gateway}</strong><span>{s.gatewayNote}</span></li>
+    <li class="node origin"><small>{s.zone}</small><strong>{s.server}</strong><span>Executes authorized tools</span></li>
+    <li class="node origin"><small>{s.zone}</small><strong>{s.target}</strong><span>Enforces its own permissions</span></li>
+   </ol>
+   <p class="return-path">Tool results return to the runtime; credentials remain at their authorized connection boundaries.</p>
+  </section>
+ </div>
+ <dl class="planes">
+  <div><dt>Authentication</dt><dd>{s.auth}</dd></div>
+  <div><dt>Network / bypass</dt><dd>{s.boundary} GSA can govern supported traffic actually routed through its network path; it is not a mandatory extra gateway hop.</dd></div>
+  <div><dt>Catalog / governance</dt><dd>API Center: approved assets, owners and discovery. Agent 365: supported agent inventory and preview connected-gateway governance. Neither is drawn as a data-plane hop; A365 integration is not assumed for classic/self-hosted APIM.</dd></div>
+  <div><dt>Monitoring</dt><dd>{s.telemetry} Join Azure Monitor/Application Insights with supported Defender, Purview and Sentinel collection.</dd></div>
+ </dl>
+ <div class="lifecycle">
+  {s.lifecycle.map(([label,text]) => <section><h4>{label}</h4><p>{text}</p></section>)}
+ </div>
+ <aside class="limit"><strong>Coverage to validate</strong><p>{s.limit}</p></aside>
+ <figcaption><p><strong>Who owns what:</strong> {s.ownership}</p><p>Illustrative architecture and operating recommendations, not a tested connector deployment. Documented capability boundaries: <McpSourceRefs ids={[...s.sources, ...clientExample.sources]} /></p></figcaption>
+</figure>
+<style>
+ .mcp-architecture{--ink:#132235;--paper:#fbfaf6;position:relative;isolation:isolate;margin:0;color:var(--ink);background:var(--paper);border:1px solid #c9c4b8;border-radius:12px;overflow:clip;font-family:var(--font-sans,'Manrope',sans-serif)}
+ .mcp-architecture *{box-sizing:border-box}.mcp-architecture :is(p,h3,h4,ol,li,dl,dd){margin:0}.mcp-architecture :is(p,dd,li){color:inherit}.mcp-architecture p,.mcp-architecture dd{font-size:18px;line-height:1.55}.mcp-architecture header{padding:clamp(22px,3vw,40px);background:#132235;color:#fbfaf6}.kicker{color:#a5b8ee;font-size:12px;letter-spacing:.13em;text-transform:uppercase;font-weight:800}.mcp-architecture h3{color:inherit;font-size:clamp(25px,3vw,35px);line-height:1.2;margin:.5rem 0 1rem}.takeaway{max-width:70ch}
+ .request-map{padding:clamp(18px,2.5vw,32px)}.flow{display:flex;list-style:none;padding:0!important;gap:28px;align-items:stretch}.flow>.node{position:relative;flex:1;min-width:0;padding:16px;border:1px solid #6e7c89;border-radius:5px;background:#fff}.flow>.node+.node{margin:0!important}.flow>.node+.node:before{content:'→';position:absolute;left:-26px;top:24px;color:#132235;font-size:22px}.node strong{display:block;font-size:19px;line-height:1.3}.node span{display:block;font-size:18px;line-height:1.45;margin-top:8px}.node small{font-size:13px;font-weight:650;line-height:1.4}.node>small{display:block;margin-bottom:8px}.node.runtime{background:#e8effa;border-color:#5872a1}.node.external{border-style:dashed}.node.origin{border-top:4px solid #72796b;background:#f4f1ea}.branch-origin{padding:18px 0 18px 20px;border-left:3px solid #008fd3;margin-top:14px!important}.branch{border-left:3px solid #008fd3;padding:6px 0 20px 20px}.branch h4{font-size:20px;line-height:1.3;margin-bottom:14px}.branch h4 span{display:block;font-size:16px;font-weight:500;line-height:1.45;margin-top:4px}.return-path{font-size:16px!important;margin-top:14px!important}.model-branch .node:first-child{flex:1}.model-branch .node:last-child{flex:1.5}
+ .planes{border-block:1px solid #ccc6b8}.planes>div{display:grid;grid-template-columns:175px minmax(0,1fr);gap:20px;padding:20px clamp(18px,2.5vw,32px)}.planes>div+div{border-top:1px solid #ded9ce}.planes dt{font-size:17px;font-weight:800}.lifecycle{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;padding:clamp(18px,2.5vw,32px)}.lifecycle h4{font-size:21px;margin-bottom:10px}.limit{margin:0 clamp(18px,2.5vw,32px) 25px;padding:18px 20px;background:#f4f1ea;border-left:4px solid #a87a12}.limit>strong{display:block;font-size:18px;margin-bottom:6px}figcaption{padding:22px clamp(18px,2.5vw,32px);border-top:1px solid #ccc6b8}figcaption p+p{margin-top:12px!important}figcaption p:last-child{font-size:16px}
+ @media(max-width:720px){.flow{flex-direction:column;gap:26px}.flow>.node+.node:before{content:'↓';left:18px;top:-28px}.branch{padding-left:12px}.branch-origin{padding-left:12px}.planes>div{grid-template-columns:1fr;gap:8px}.lifecycle{grid-template-columns:1fr;gap:20px}.lifecycle section+section{padding-top:18px;border-top:1px solid #ded9ce}.entry .node{padding:15px}.mcp-architecture p,.mcp-architecture dd,.node span{font-size:18px}.mcp-architecture{overflow-wrap:break-word}}
+</style>
