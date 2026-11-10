@@ -6,21 +6,21 @@ const stages = [
     index: '01',
     name: 'Agent runtime',
     role: 'Caller / workstation',
-    detail: 'Initiates the MCP tool request on the configured client route.',
+    detail: 'Initiates the MCP tool request and presents the caller Entra token to the APIM endpoint.',
     tone: 'caller',
   },
   {
     index: '02',
     name: 'GSA network path',
     role: 'Optional covered egress',
-    detail: 'Evaluates user, device, risk and remote HTTP MCP traffic on covered paths.',
+    detail: 'Evaluates user, device, risk and remote HTTP MCP traffic, then forwards covered traffic on the network route.',
     tone: 'network',
   },
   {
     index: '03',
     name: 'APIM gateway endpoint',
     role: 'Service enforcement point',
-    detail: 'Validates inbound Entra token, applies tool and rate policy, and attaches outbound authorization.',
+    detail: 'Validates the caller Entra token, applies tool and rate policy, and attaches outbound authorization.',
     tone: 'gateway',
   },
   {
@@ -40,8 +40,9 @@ const stages = [
 ] as const;
 
 const mermaidSource = `flowchart LR
-  A[Agent Runtime] -->|Covered egress| B(GSA Network Path)
-  B -->|Inbound Entra token| C[APIM Gateway Endpoint]
+  A[Agent Runtime] -->|Caller presents Entra token to APIM| C[APIM Gateway Endpoint]
+  A -->|Covered egress| B(GSA Network Path)
+  B -->|Forwards covered traffic| C
   C -->|Outbound credential + policy| D[MCP Server]
   D --> E[Target System]`;
 ---
@@ -68,7 +69,7 @@ const mermaidSource = `flowchart LR
     <div class="apim-handoffs" aria-label="Credential and policy handoffs">
       <div class="handoff-card">
         <span class="handoff-label">Inbound to APIM</span>
-        <p>Caller authenticates to the gateway endpoint (for example, an Entra OAuth token validated by APIM policy).</p>
+        <p>Caller presents its Entra OAuth token to the APIM endpoint (GSA only forwards covered network traffic; APIM validates the token).</p>
       </div>
       <div class="handoff-card">
         <span class="handoff-label">Outbound from APIM</span>
@@ -83,7 +84,7 @@ const mermaidSource = `flowchart LR
   </div>
 
   <figcaption>
-    <p>Illustrative control placement across network egress and the API gateway endpoint. Documented capabilities: <McpSourceRefs ids={[1, 2, 11, 63]} /></p>
+    <p>Illustrative control placement across network egress and the API gateway endpoint. Documented capabilities: <McpSourceRefs ids={[1, 2, 11, 63, 68]} /></p>
   </figcaption>
 </figure>
 

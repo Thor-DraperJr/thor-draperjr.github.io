@@ -262,6 +262,10 @@ export const mcpSources: Record<number, {title: string; url: string}> = {
   "67": {
     "title": "OpenAI: Codex custom model-provider configuration",
     "url": "https://learn.chatgpt.com/docs/config-file/config-advanced.md"
+  },
+  "68": {
+    "title": "Microsoft: APIM rate limit by key policy",
+    "url": "https://learn.microsoft.com/en-us/azure/api-management/rate-limit-by-key-policy"
   }
 };
 

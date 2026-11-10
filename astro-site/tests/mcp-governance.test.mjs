@@ -45,5 +45,11 @@ test('MCP article is published with all three diagrams and comparisons',()=>{
  assert.ok(post.content.includes('<JiraMcpPaths />'));
  assert.ok(!post.content.includes('not intended for production use'));
  assert.ok(!post.content.includes('two meanings of “token”'));
- assert.match(post.content,/If GSA closes the direct path, is GSA alone enough\?/);
+ assert.ok(post.content.includes('If GSA closes the direct path, is GSA alone enough?'));
+ assert.equal(mcpSources[68]?.url,'https://learn.microsoft.com/en-us/azure/api-management/rate-limit-by-key-policy');
+ assert.ok(post.content.includes('(Sources: [1], [2], [10], [11], [15], [25], [56], [57], [60], [65], [68])'));
+ const apimFlow=readFileSync(new URL('../src/components/McpApimConnectionFlow.astro',import.meta.url),'utf8');
+ assert.ok(!apimFlow.includes('B -->|Inbound Entra token| C'));
+ assert.ok(apimFlow.includes('A[Agent Runtime] -->|Caller presents Entra token to APIM| C[APIM Gateway Endpoint]'));
+ assert.ok(apimFlow.includes('B -->|Forwards covered traffic| C'));
 });
