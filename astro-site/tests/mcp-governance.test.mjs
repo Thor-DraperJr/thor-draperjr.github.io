@@ -41,5 +41,9 @@ test('MCP article is published with all three diagrams and comparisons',()=>{
  const raw=readFileSync(new URL('../src/content/posts/2026-10-30-managing-mcp-connections.mdx',import.meta.url),'utf8');const post=matter(raw);assert.equal(post.data.draft,false);
  for(const s of scenarios) assert.ok(post.content.includes(`scenario="${s.id}"`));
  for(const kind of ['coverage','licensing','telemetry']) assert.ok(post.content.includes(`kind="${kind}"`));
+ assert.ok(post.content.includes('<McpApimConnectionFlow />'));
  assert.ok(post.content.includes('<JiraMcpPaths />'));
+ assert.ok(!post.content.includes('not intended for production use'));
+ assert.ok(!post.content.includes('two meanings of “token”'));
+ assert.match(post.content,/If GSA closes the direct path, is GSA alone enough\?/);
 });
